@@ -45,6 +45,7 @@ Global
 		{4BABEC4C-780B-4393-AF09-656EBEA4A62E} = {6A0344E2-DE8A-4D62-AF69-D90E18891476}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+<<<<<<< HEAD
 		SolutionGuid = {BF840011-B60A-44FF-9D38-4CB15C4C9C8A}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 	EndGlobalSection
@@ -68,5 +69,9 @@ Global
 		SccProjectTopLevelParentUniqueName4 = malone.Core.sln
 		SccProjectName4 = malone.Core.Sample.DI
 		SccLocalPath4 = malone.Core.Sample.DI
+=======
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
+		SolutionGuid = {BF840011-B60A-44FF-9D38-4CB15C4C9C8A}
+>>>>>>> ConfiguringProject
 	EndGlobalSection
 EndGlobal
