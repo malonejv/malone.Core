@@ -1,16 +1,8 @@
 ﻿using malone.Core.EL;
+using malone.Core.EL.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Entity;
-using malone.Core.DAL.Base.Repositories;
-using malone.Core.DAL.Base.UnitOfWork;
-using malone.Core.EL.Filters;
-using malone.Core.CL.Log;
-using malone.Core.BL.Components.Implementations;
 
 namespace malone.Core.BL.Components.Interfaces
 {

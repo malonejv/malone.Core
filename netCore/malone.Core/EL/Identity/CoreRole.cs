@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace malone.Core.EL.Identity
 {
@@ -12,7 +7,7 @@ namespace malone.Core.EL.Identity
         public CoreRole() : base() {}
     }
 
-    public class Role<TUserRole> : IdentityRole<int, TUserRole>, IBaseEntity
+    public class Role<TUserRole> : IdentityRole<int>, IBaseEntity
         where TUserRole : CoreUserRole
     {
         public Role()

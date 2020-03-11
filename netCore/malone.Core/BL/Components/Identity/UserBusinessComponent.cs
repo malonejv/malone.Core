@@ -1,19 +1,12 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security.DataProtection;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.BL.Components.Identity.MessageServices;
+﻿using malone.Core.BL.Components.Identity.MessageServices;
 using malone.Core.BL.Components.Identity.Providers;
 using malone.Core.BL.Components.Identity.Validators;
 using malone.Core.CL.Exceptions;
 using malone.Core.CL.Exceptions.Manager.Implementations;
 using malone.Core.EL.Identity;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace malone.Core.BL.Components.Identity
 {

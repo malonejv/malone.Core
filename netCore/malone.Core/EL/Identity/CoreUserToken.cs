@@ -2,7 +2,7 @@
 
 namespace malone.Core.EL.Identity
 {
-    public class CoreUserClaim : IdentityUserClaim<int>
+    public class CoreUserToken : IdentityUserToken<int>
     {
     }
 }

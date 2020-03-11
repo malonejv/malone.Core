@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace malone.Core.DAL.Base.Context
 {
@@ -12,9 +8,9 @@ namespace malone.Core.DAL.Base.Context
     public interface IEFContext : IContext
     {
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
-        DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
+        EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 
-        DbChangeTracker ChangeTracker { get; }
+        ChangeTracker ChangeTracker { get; }
 
     }
 }

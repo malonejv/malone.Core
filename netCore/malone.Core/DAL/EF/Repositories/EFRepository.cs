@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using malone.Core.CL.Exceptions;
 using malone.Core.CL.Exceptions.Handler.Interfaces;
 using malone.Core.CL.Exceptions.Manager.Interfaces;
-using malone.Core.CL.Log;
 using malone.Core.DAL.Base.Repositories;
 using malone.Core.DAL.Base.UnitOfWork;
 using malone.Core.DAL.EF.Context;

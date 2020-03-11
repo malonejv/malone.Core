@@ -10,7 +10,6 @@ using malone.Core.DAL.Base.UnitOfWork;
 using malone.Core.DAL.AdoNet.Context;
 using malone.Core.DAL.Base.Repositories;
 using malone.Core.EL.Filters;
-using malone.Core.CL.Log;
 
 namespace malone.Core.DAL.AdoNet.Repositories
 {

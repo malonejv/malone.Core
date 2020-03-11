@@ -1,12 +1,8 @@
-﻿using System;
+﻿using malone.Core.EL;
+using malone.Core.EL.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.CL.Log;
-using malone.Core.EL;
-using malone.Core.EL.Filters;
 
 namespace malone.Core.DAL.Base.Repositories
 {
