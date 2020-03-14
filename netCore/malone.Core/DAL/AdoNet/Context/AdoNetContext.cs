@@ -1,11 +1,6 @@
-﻿using Microsoft.Practices.EnterpriseLibrary.Data;
+﻿using malone.Core.DAL.Base.Context;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.DAL.Base.Context;
 
 namespace malone.Core.DAL.AdoNet.Context
 {

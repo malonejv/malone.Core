@@ -1,12 +1,5 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using malone.Core.DAL.EF.Context.Identity;
 using malone.Core.EL.Identity;
-using System.Data.Entity;
-using malone.Core.DAL.EF.Context.Identity;
 
 namespace malone.Core.DAL.EF.Repositories.Identity
 {

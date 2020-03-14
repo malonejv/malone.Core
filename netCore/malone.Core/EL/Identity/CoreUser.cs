@@ -1,13 +1,4 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.BL.Components.Identity;
-
-namespace malone.Core.EL.Identity
+﻿namespace malone.Core.EL.Identity
 {
     public class CoreUser : User<CoreUserLogin, CoreUserRole, CoreUserClaim>
     {

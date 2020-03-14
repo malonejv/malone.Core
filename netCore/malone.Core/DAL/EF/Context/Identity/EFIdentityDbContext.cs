@@ -1,6 +1,5 @@
 ﻿using malone.Core.DAL.Base.Context;
 using malone.Core.EL.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
