@@ -1,6 +1,10 @@
-﻿namespace malone.Core.BL.Components.Identity.MessageServices.Interfaces
+﻿using malone.Core.EL.Identity;
+using System.Threading.Tasks;
+
+namespace malone.Core.BL.Components.Identity.MessageServices.Interfaces
 {
-    public interface IEmailMessageService : IIdentityMessageService
+    public interface IEmailMessageService 
     {
+        Task SendAsync(IdentityMessage message);
     }
 }

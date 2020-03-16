@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace malone.Core.DAL.EF.Context.Identity
 {
@@ -37,7 +39,6 @@ namespace malone.Core.DAL.EF.Context.Identity
             return base.Entry<TEntity>(entity);
         }
 
-
         protected virtual void registerUserIdentityMapping(ModelBuilder modelBuilder)
         {
             if (modelBuilder == null) throw new ArgumentNullException(nameof(modelBuilder));
@@ -47,6 +48,24 @@ namespace malone.Core.DAL.EF.Context.Identity
             modelBuilder.AddConfiguration(new CoreUserRolesConfiguration());
             modelBuilder.AddConfiguration(new CoreUserLoginsConfiguration());
             modelBuilder.AddConfiguration(new CoreUserClaimsConfiguration());
+        }
+        public override int SaveChanges()
+        {
+            var entities = (from entry in ChangeTracker.Entries()
+                            where entry.State == EntityState.Modified || entry.State == EntityState.Added
+                            select entry.Entity);
+
+            var validationResults = new List<ValidationResult>();
+            foreach (var entity in entities)
+            {
+                if (!Validator.TryValidateObject(entity, new ValidationContext(entity), validationResults))
+                {
+                    //TODO: Ver comportamiento.
+                    var test = entity;
+                    // throw new ValidationException() or do whatever you want
+                }
+            }
+            return base.SaveChanges();
         }
     }
 
