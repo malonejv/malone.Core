@@ -1,4 +1,5 @@
 ﻿using malone.Core.BL.Components.Identity.MessageServices.Interfaces;
+using malone.Core.EL.Identity;
 using System;
 using System.Threading.Tasks;
 

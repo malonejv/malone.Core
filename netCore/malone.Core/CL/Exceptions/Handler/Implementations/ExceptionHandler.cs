@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.CL.Exceptions.Handler.Interfaces;
-using malone.Core.CL.Log;
+﻿using malone.Core.CL.Exceptions.Handler.Interfaces;
+using malone.Core.CL.Logger;
+using System;
+
 
 namespace malone.Core.CL.Exceptions.Handler.Implementations
 {

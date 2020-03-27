@@ -1,11 +1,12 @@
-﻿using malone.Core.BL.Components.Identity.MessageServices;
-using malone.Core.BL.Components.Identity.Providers;
-using malone.Core.BL.Components.Identity.Validators;
+﻿using malone.Core.BL.Components.Identity.Validators;
 using malone.Core.CL.Exceptions;
 using malone.Core.CL.Exceptions.Manager.Implementations;
 using malone.Core.EL.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace malone.Core.BL.Components.Identity
@@ -13,39 +14,20 @@ namespace malone.Core.BL.Components.Identity
 
     public class UserBusinessComponent : UserBusinessComponent<CoreUser>
     {
-        public UserBusinessComponent(IUserStore<CoreUser, int> store) : base(store)
+        public UserBusinessComponent(IUserStore<CoreUser> store, IOptions<IdentityOptions> optionsAccessor, IPasswordHasher<CoreUser> passwordHasher, IEnumerable<IUserValidator<CoreUser>> userValidators, IEnumerable<IPasswordValidator<CoreUser>> passwordValidators, ILookupNormalizer keyNormalizer, IdentityErrorDescriber errors, IServiceProvider services, ILogger<UserManager<CoreUser>> logger) : base(store, optionsAccessor, passwordHasher, userValidators, passwordValidators, keyNormalizer, errors, services, logger)
         {
         }
     }
 
-    public class UserBusinessComponent<TUserEntity> : UserManager<TUserEntity, int>
+    public class UserBusinessComponent<TUserEntity> : UserManager<TUserEntity>
         where TUserEntity : CoreUser
     {
-        public UserBusinessComponent(IUserStore<TUserEntity, int> store) : base(store)
+        public UserBusinessComponent(IUserStore<TUserEntity> store, IOptions<IdentityOptions> optionsAccessor, IPasswordHasher<TUserEntity> passwordHasher, IEnumerable<IUserValidator<TUserEntity>> userValidators, IEnumerable<IPasswordValidator<TUserEntity>> passwordValidators, ILookupNormalizer keyNormalizer, IdentityErrorDescriber errors, IServiceProvider services, ILogger<UserManager<TUserEntity>> logger) : base(store, optionsAccessor, passwordHasher, userValidators, passwordValidators, keyNormalizer, errors, services, logger)
         {
             // Configure validation logic for usernames
-            this.UserValidator = new CoreUserValidator<TUserEntity>(this)
-            {
-                AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = true
-            };
-            this.PasswordValidator = new PasswordValidator
-            {
-                RequiredLength = 8,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true
-            };
+            this.UserValidators.Add(new CoreUserValidator<TUserEntity>(errors));
 
-            this.EmailService = new EmailService();
-
-            var provider = new DpapiDataProtectionProvider("TLC");
-            var entropy = "D4151DA419C4691E";
-            this.UserTokenProvider = new CoreDataProtectorTokenProvider<TUserEntity>(provider.Create(entropy))
-            {
-                TokenLifespan = TimeSpan.FromDays(1)
-            };
+            this.PasswordValidators.Add(new PasswordValidator<TUserEntity>(errors));
         }
 
         public async Task<TUserEntity> Login(string username, string password, bool rememberUser, string roleName)
@@ -53,18 +35,17 @@ namespace malone.Core.BL.Components.Identity
             var messageManager = new ExceptionMessageManager();
             string message = "";
 
-
-            var user = await this.FindAsync(username, password);
+            var user = await FindByNameAsync(username).ConfigureAwait(false);
 
             if (user != null)
             {
-                if (!await this.IsEmailConfirmedAsync(user.Id))
+                if (!await IsEmailConfirmedAsync(user).ConfigureAwait(false))
                 {
                     message = messageManager.GetDescription((int)CoreErrors.E306);
                     throw new BusinessException((int)CoreErrors.E306, message);
                 }
 
-                if (!await this.IsInRoleAsync(user.Id, roleName))
+                if (!await IsInRoleAsync(user, roleName).ConfigureAwait(false))
                 {
                     message = messageManager.GetDescription((int)CoreErrors.E307);
                     throw new BusinessException((int)CoreErrors.E307, message);
@@ -83,22 +64,26 @@ namespace malone.Core.BL.Components.Identity
         {
             try
             {
-                var create = await base.CreateAsync(user, password);
+                IdentityResult create = await base.CreateAsync(user, password).ConfigureAwait(false);
                 return create;
             }
-            catch (DbEntityValidationException dbEx)
-            {
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        Trace.TraceInformation("Property: {0} Error: {1}",
-                            validationError.PropertyName,
-                            validationError.ErrorMessage);
-                    }
-                }
+            catch (Exception) {
                 return null;
             }
+            //TODO: Ver modo de reemplazar
+            //catch (EntityValidationException dbEx)
+            //{
+            //    foreach (var validationErrors in dbEx.EntityValidationErrors)
+            //    {
+            //        foreach (var validationError in validationErrors.ValidationErrors)
+            //        {
+            //            Trace.TraceInformation("Property: {0} Error: {1}",
+            //                validationError.PropertyName,
+            //                validationError.ErrorMessage);
+            //        }
+            //    }
+            //    
+            //}
         }
     }
 }

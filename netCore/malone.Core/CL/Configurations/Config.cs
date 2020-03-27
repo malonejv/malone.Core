@@ -10,20 +10,20 @@ namespace malone.Core.CL.Configurations
 {
     public static class Config
     {
-        public static string Setting(string key)
-        {
-            string value = "";
-            try
-            {
-                value = ConfigurationManager.AppSettings[key];
-            }
-            catch (Exception)
-            {
+        //public static string Setting(string key)
+        //{
+        //    string value = "";
+        //    try
+        //    {
+        //        value = ConfigurationManager.AppSettings[key];
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
+        //        throw;
+        //    }
 
-            return value;
-        }
+        //    return value;
+        //}
     }
 }

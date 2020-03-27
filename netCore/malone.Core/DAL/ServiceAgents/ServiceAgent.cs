@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using malone.Core.CL.Log;
 using malone.Core.DAL.ServiceAgents;
 
 namespace malone.Core.DAL.ServiceAgents

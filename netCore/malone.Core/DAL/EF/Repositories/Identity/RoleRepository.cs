@@ -1,9 +1,10 @@
 ﻿using malone.Core.DAL.EF.Context.Identity;
 using malone.Core.EL.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace malone.Core.DAL.EF.Repositories.Identity
 {
-    public class RoleRepository : RoleRepository<CoreRole> {
+    public class RoleRepository : RoleRepository<CoreRole,EFIdentityDbContext> {
 
         public RoleRepository(EFIdentityDbContext context) : base(context)
         {
@@ -11,10 +12,11 @@ namespace malone.Core.DAL.EF.Repositories.Identity
 
     }
 
-    public class RoleRepository<TRoleEntity> : RoleStore<TRoleEntity, int, CoreUserRole>
-        where TRoleEntity : CoreRole, new()
+    public class RoleRepository<TRole, TContext> : RoleStore<TRole, TContext, int>
+        where TRole : CoreRole
+        where TContext : EFIdentityDbContext
     {
-        public RoleRepository(EFIdentityDbContext context) : base(context)
+        public RoleRepository(TContext context) : base(context)
         {
         }
     }

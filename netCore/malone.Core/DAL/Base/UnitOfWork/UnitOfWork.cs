@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.DAL.Base.Context;
+﻿using malone.Core.DAL.Base.Context;
+using System;
 
 namespace malone.Core.DAL.Base.UnitOfWork
 {
