@@ -1,5 +1,9 @@
 using System;
+using AutoMapper;
 using malone.core.Sample.DI;
+using malone.Core.CL.Configurations;
+using malone.Core.CL.Configurations.CoreConfiguration;
+using malone.Core.CL.Configurations.Sections;
 using Unity;
 
 namespace malone.Core.Sample.UI
@@ -40,8 +44,15 @@ namespace malone.Core.Sample.UI
             // Make sure to add a Unity.Configuration to the using statements.
             // container.LoadConfiguration();
 
+            var mapperConfiguration = AutoMapperConfig.RegisterProfiles();
+            var mapper = new Mapper(mapperConfiguration);
+            container.RegisterInstance(mapper);
+
+            container.RegisterType<ICoreConfiguration, CoreConfiguration>();
+            var featureSettings = container.Resolve<FeatureSettings>();
+            container.RegisterInstance(featureSettings);
+
             // TODO: Register your type's mappings here.
-            // container.RegisterType<IProductRepository, ProductRepository>();
             RegisterEntitesLayer.RegisterTypes(container);
             RegisterCommonTypes.RegisterTypes(container);
             RegisterDataAccessLayerTypes.RegisterTypes(container);

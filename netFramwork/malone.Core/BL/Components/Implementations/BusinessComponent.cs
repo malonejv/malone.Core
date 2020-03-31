@@ -88,7 +88,7 @@ namespace malone.Core.BL.Components.Implementations
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
         bool includeDeleted = false,
         string includeProperties = "")
-         where TFilter : class, IFilter
+         where TFilter : class, IFilterExpression
         {
             try
             {
@@ -214,7 +214,7 @@ namespace malone.Core.BL.Components.Implementations
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             bool includeDeleted = false,
             string includeProperties = "")
-            where TFilter : class, IFilter
+            where TFilter : class, IFilterExpression
         {
             try
             {

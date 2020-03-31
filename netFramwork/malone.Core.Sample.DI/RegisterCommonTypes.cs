@@ -1,4 +1,6 @@
 ﻿using log4net;
+using malone.Core.CL.Configurations;
+using malone.Core.CL.Configurations.CoreConfiguration;
 using malone.Core.CL.Exceptions;
 using malone.Core.CL.Exceptions.Handler.Implementations;
 using malone.Core.CL.Exceptions.Handler.Interfaces;
@@ -15,6 +17,9 @@ namespace malone.core.Sample.DI
     {
         public static IUnityContainer RegisterTypes(IUnityContainer container)
         {
+
+            container.RegisterType<ICoreConfiguration, CoreConfiguration>();
+
             ILog logger = LogManager.GetLogger("SampleLogger");
             //container.RegisterInstance<ILog>(logger);
 

@@ -42,6 +42,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -86,6 +89,9 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.19.6.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -126,7 +132,19 @@
     <Compile Include="BL\Components\Implementations\BusinessValidator.cs" />
     <Compile Include="BL\Components\Interfaces\IBusinessComponent.cs" />
     <Compile Include="BL\Components\Interfaces\IBusinessValidator.cs" />
-    <Compile Include="CL\Configurations\Config.cs" />
+    <Compile Include="CL\Configurations\Attributes\FeatureDescriptionAttribute.cs" />
+    <Compile Include="CL\Configurations\ConnectionString\ConnectionStringSettings.cs" />
+    <Compile Include="CL\Configurations\ConnectionString\ConnectionStringSettingsDictionary.cs" />
+    <Compile Include="CL\Configurations\CoreConfiguration\CoreConfiguration.cs" />
+    <Compile Include="CL\Configurations\Extensions\FeatureExtensions.cs" />
+    <Compile Include="CL\Configurations\Extensions\IConfigurationExtensions.cs" />
+    <Compile Include="CL\Configurations\ICoreConfiguration.cs" />
+    <Compile Include="CL\Configurations\Sections\BehaviorElement.cs" />
+    <Compile Include="CL\Configurations\Sections\BehaviorElementCollection.cs" />
+    <Compile Include="CL\Configurations\Sections\FeatureElement.cs" />
+    <Compile Include="CL\Configurations\Sections\FeaturesElementCollection.cs" />
+    <Compile Include="CL\Configurations\Sections\FeatureSettings.cs" />
+    <Compile Include="CL\Configurations\Sections\FeatureSettingsSection.cs" />
     <Compile Include="CL\Exceptions\BaseException.cs" />
     <Compile Include="CL\Exceptions\BusinessException.cs" />
     <Compile Include="CL\Exceptions\BusinessValidationException.cs" />
@@ -143,7 +161,6 @@
     </Compile>
     <Compile Include="CL\Exceptions\ServiceAgentException.cs" />
     <Compile Include="CL\Exceptions\ViewException.cs" />
-    <Compile Include="CL\Helpers\Attributes\StringValueAttribute.cs" />
     <Compile Include="CL\Helpers\Extensions\ByteArrayExtensions.cs" />
     <Compile Include="CL\Helpers\Extensions\CharExtensions.cs" />
     <Compile Include="CL\Helpers\Extensions\EnumExtensions.cs" />
@@ -157,8 +174,21 @@
     <Compile Include="CL\Log\LogItem.cs" />
     <Compile Include="CL\Log\LogLevel.cs" />
     <Compile Include="CL\Security\Encryption.cs" />
+    <Compile Include="DAL\AdoNet\Extensions\DbParameterAttributeExtensions.cs" />
+    <Compile Include="DAL\AdoNet\Provider\Oracle\Attributes\OracleResultSetAttribute.cs" />
     <Compile Include="DAL\AdoNet\Context\AdoNetContext.cs" />
-    <Compile Include="DAL\AdoNet\Repositories\AdoNetRepository.cs" />
+    <Compile Include="DAL\AdoNet\Provider\IDatabase.cs" />
+    <Compile Include="DAL\AdoNet\Provider\Oracle\OracleDatabase.cs" />
+    <Compile Include="DAL\AdoNet\Provider\Oracle\Parameters\Oracle\OracleStringToStringParameterConverter.cs" />
+    <Compile Include="DAL\AdoNet\Provider\SqlServer\SqlDatabase.cs" />
+    <Compile Include="DAL\AdoNet\Factory\DatabaseFactory.cs" />
+    <Compile Include="DAL\AdoNet\Parameters\IParameterConverter.cs" />
+    <Compile Include="DAL\AdoNet\Provider\Oracle\Parameters\Oracle\OracleDecimalToIntParameterConverter.cs" />
+    <Compile Include="DAL\AdoNet\Provider\Oracle\Parameters\Oracle\OracleNumberToDecimalConverter.cs" />
+    <Compile Include="DAL\AdoNet\Provider\Oracle\Parameters\Oracle\OracleNumberToFloatConverter.cs" />
+    <Compile Include="DAL\AdoNet\Repositories\Implementations\AdoNetRepository.cs" />
+    <Compile Include="DAL\AdoNet\Attributes\DbFieldAttribute.cs" />
+    <Compile Include="DAL\AdoNet\Attributes\DbParameterAttribute.cs" />
     <Compile Include="DAL\Base\Context\IContext.cs" />
     <Compile Include="DAL\Base\Context\IEFContext.cs" />
     <Compile Include="DAL\Base\Repositories\IRepository.cs" />
@@ -166,13 +196,15 @@
     <Compile Include="DAL\Base\UnitOfWork\UnitOfWork.cs" />
     <Compile Include="DAL\EF\Context\EFDbContext.cs" />
     <Compile Include="DAL\EF\Context\Identity\EFIdentityDbContext.cs" />
-    <Compile Include="DAL\EF\Repositories\EFRepository.cs" />
+    <Compile Include="DAL\EF\Repositories\Implementations\EFRepository.cs" />
     <Compile Include="DAL\EF\Repositories\Identity\RoleRepository.cs" />
     <Compile Include="DAL\EF\Repositories\Identity\UserRepository.cs" />
     <Compile Include="DAL\ServiceAgents\IServiceAgent.cs" />
     <Compile Include="DAL\ServiceAgents\ServiceAgent.cs" />
-    <Compile Include="EL\Filters\IFilter.cs" />
-    <Compile Include="EL\Filters\IFilterEF.cs" />
+    <Compile Include="EL\Filters\Extensions\IFilterExpressionAdoNetExtensions.cs" />
+    <Compile Include="EL\Filters\AdoNet\IFilterExpressionAdoNet.cs" />
+    <Compile Include="EL\Filters\IFilterExpression.cs" />
+    <Compile Include="EL\Filters\EF\IFilterExpressionEF.cs" />
     <Compile Include="EL\IAuditable.cs" />
     <Compile Include="EL\IBaseEntity.cs" />
     <Compile Include="EL\Identity\CoreRole.cs" />
@@ -188,7 +220,9 @@
     <Compile Include="Resources\Exceptions.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="CL\Helpers\Attributes\" />
     <Folder Include="CL\Log\Debug\" />
+    <Folder Include="DAL\AdoNet\Command\" />
     <Folder Include="SL\" />
     <Folder Include="UI\" />
   </ItemGroup>

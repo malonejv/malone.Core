@@ -1,11 +1,9 @@
-﻿using System;
+﻿using malone.Core.CL.Helpers.Extensions;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using malone.Core.CL.Helpers.Attributes;
-using malone.Core.CL.Helpers.Extensions;
 
 namespace malone.Core.CL.Security
 {
@@ -16,9 +14,9 @@ namespace malone.Core.CL.Security
         private const string Salt256Value = "kljsdkkdlo4454GG00155sajuklmbkdl";
         private enum Salts
         {
-            [StringValue(Salt128Value)]
+            [Description(Salt128Value)]
             Salt128,
-            [StringValue(Salt256Value)]
+            [Description(Salt256Value)]
             Salt256
         }
 
@@ -40,7 +38,7 @@ namespace malone.Core.CL.Security
 
         private static byte[] GetKey(Salts salt)
         {
-            var keyValue = salt.GetStringValue();
+            var keyValue = salt.GetDescription();
             var bytesKey = Encoding.UTF8.GetBytes(keyValue);
 
             return bytesKey;
@@ -108,9 +106,9 @@ namespace malone.Core.CL.Security
                 var bytesValue = Convert.FromBase64String(value);
                 ICryptoTransform cTransform = des.CreateDecryptor();
                 var bytesDecrypted = cTransform.TransformFinalBlock(bytesValue, 0, bytesValue.Length);
-                var stringValue = Encoding.UTF8.GetString(bytesDecrypted);
+                var Description = Encoding.UTF8.GetString(bytesDecrypted);
 
-                var encryptConfirm = Encrypt(stringValue);
+                var encryptConfirm = Encrypt(Description);
 
 
                 if (!value.Equals(encryptConfirm))
@@ -118,7 +116,7 @@ namespace malone.Core.CL.Security
                     return null;
                 }
 
-                return stringValue;
+                return Description;
             }
         }
 

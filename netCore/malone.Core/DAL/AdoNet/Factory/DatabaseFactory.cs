@@ -1,4 +1,5 @@
 ﻿using malone.Core.CL.Configurations;
+using malone.Core.CL.Configurations.ConnectionString;
 using malone.Core.DAL.AdoNet.DatabasConnection;
 using malone.Core.DAL.AdoNet.OracleClient;
 using malone.Core.DAL.AdoNet.SqlClient;

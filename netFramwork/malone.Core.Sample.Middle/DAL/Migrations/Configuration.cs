@@ -1,11 +1,9 @@
 namespace malone.Core.Sample.Middle.DAL.Migrations
 {
-    using System;
-    using System.Data.Entity;
+    using malone.Core.Sample.Middle.DAL.Context.EF;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<malone.Core.Sample.Middle.DAL.Context.SampleContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<SampleEFContext>
     {
         public Configuration()
         {
@@ -13,7 +11,7 @@ namespace malone.Core.Sample.Middle.DAL.Migrations
             MigrationsDirectory = @"DAL\Migrations";
         }
 
-        protected override void Seed(malone.Core.Sample.Middle.DAL.Context.SampleContext context)
+        protected override void Seed(SampleEFContext context)
         {
             //  This method will be called after migrating to the latest version.
 

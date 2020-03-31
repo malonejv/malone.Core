@@ -42,6 +42,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -49,6 +52,15 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Flurl, Version=2.8.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Flurl.2.8.2\lib\net40\Flurl.dll</HintPath>
+    </Reference>
+    <Reference Include="Flurl.Http, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Flurl.Http.2.4.2\lib\net46\Flurl.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -68,15 +80,24 @@
     <Compile Include="BL\ITodoListBC.cs" />
     <Compile Include="BL\ITodoListBV.cs" />
     <Compile Include="CL\Exceptions\ErrorCodes.cs" />
-    <Compile Include="DAL\Context\TestCoreContext.cs" />
-    <Compile Include="DAL\Mappings\TaskItemMapping.cs" />
-    <Compile Include="DAL\Mappings\TodoListMapping.cs" />
+    <Compile Include="CL\Features\Configurations.cs" />
+    <Compile Include="CL\Features\Features.cs" />
+    <Compile Include="DAL\Context\AdoNet\SampleAdoNetContext.cs" />
+    <Compile Include="DAL\Context\EF\SampleEFContext.cs" />
+    <Compile Include="DAL\Context\EF\Mappings\TaskItemMapping.cs" />
+    <Compile Include="DAL\Context\EF\Mappings\TodoListMapping.cs" />
+    <Compile Include="DAL\Mappers\DataRowTaskItemProfile.cs" />
+    <Compile Include="DAL\Mappers\DataRowTodoListProfile.cs" />
     <Compile Include="DAL\Migrations\201810171807394_Initial.cs" />
     <Compile Include="DAL\Migrations\201810171807394_Initial.Designer.cs">
       <DependentUpon>201810171807394_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\Migrations\Configuration.cs" />
-    <Compile Include="EL\Filters\TodoListFilter.cs" />
+    <Compile Include="DAL\Repositories\AdoNet\ANTaskItemRepository.cs" />
+    <Compile Include="DAL\Repositories\AdoNet\ANTodoListRepository.cs" />
+    <Compile Include="EL\Filters\AdoNetFilters\TodoList\ANTaskItemGetRequest.cs" />
+    <Compile Include="EL\Filters\AdoNetFilters\TodoList\ANTodoListGetRequest.cs" />
+    <Compile Include="EL\Filters\EFFilters\EFTodoListGetRequest.cs" />
     <Compile Include="EL\TaskItem.cs" />
     <Compile Include="EL\TodoList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,6 +116,12 @@
     <EmbeddedResource Include="DAL\Migrations\201810171807394_Initial.resx">
       <DependentUpon>201810171807394_Initial.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BL\Mappers\" />
+    <Folder Include="CL\Configuration\" />
+    <Folder Include="DAL\ServiceAgents\" />
+    <Folder Include="EL\Filters\EFFilters\TodoList\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -30,7 +30,7 @@ namespace malone.Core.BL.Components.Interfaces
            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
            bool includeDeleted = false,
            string includeProperties = "")
-            where TFilter : class, IFilter;
+            where TFilter : class, IFilterExpression;
 
         IEnumerable<TEntity> GetAll(
            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
@@ -48,7 +48,7 @@ namespace malone.Core.BL.Components.Interfaces
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             bool includeDeleted = false,
             string includeProperties = "")
-            where TFilter : class, IFilter;
+            where TFilter : class, IFilterExpression;
 
         void Add(TEntity entity);
 

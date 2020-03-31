@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.CL.Helpers.Attributes;
 
 namespace malone.Core.CL.Helpers.Extensions
 {
     public static class EnumExtensions
     {
-        public static string GetStringValue(this Enum value)
+        public static string GetDescription(this Enum value)
         {
             // Get the type
             Type type = value.GetType();
@@ -19,22 +16,22 @@ namespace malone.Core.CL.Helpers.Extensions
             FieldInfo fieldInfo = type.GetField(value.ToString());
 
             // Get the stringvalue attributes
-            StringValueAttribute[] attribs = fieldInfo.GetCustomAttributes(typeof(StringValueAttribute), false) as StringValueAttribute[];
+            DescriptionAttribute[] attribs = fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[];
 
             // Return the first if there was a match.
-            return attribs.Length > 0 ? attribs[0].StringValue : null;
+            return attribs.Length > 0 ? attribs[0].Description: null;
         }
 
-        public static List<string> GetStringValues(this Type value)
+        public static List<string> GetDescriptions(this Type value)
         {
             List<string> values = new List<string>();
             Array enumValues = Enum.GetValues(value);
 
             foreach (Enum e in enumValues)
             {
-                values.Add(e.GetStringValue());
+                values.Add(e.GetDescription());
             }
-
+            
             return values;
         }
 
@@ -45,7 +42,7 @@ namespace malone.Core.CL.Helpers.Extensions
             Array vals = Enum.GetValues(enType);
             foreach (Enum e in vals)
             {
-                string att = e.GetStringValue();
+                string att = e.GetDescription();
                 if (att.Equals(attribute))
                 {
                     eRet = e;
