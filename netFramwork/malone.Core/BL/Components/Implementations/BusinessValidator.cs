@@ -11,8 +11,8 @@ using malone.Core.EL;
 
 namespace malone.Core.BL.Components.Implementations
 {
-    public class BusinessValidator<TEntity> : IBusinessValidator<TEntity>
-        where TEntity : class, IBaseEntity
+    public class BusinessValidator<TKey, TEntity> : IBusinessValidator<TKey, TEntity>
+        where TEntity : class, IBaseEntity<TKey>
     {
 
         protected IExceptionMessageManager MessageManager { get; }
@@ -54,5 +54,15 @@ namespace malone.Core.BL.Components.Implementations
         {
             return rule(args);
         }
+    }
+
+    public class BusinessValidator<TEntity> : BusinessValidator<int, TEntity>, IBusinessValidator<TEntity>
+       where TEntity : class, IBaseEntity
+    {
+
+        public BusinessValidator(IExceptionMessageManager exManager, IExceptionHandler exHandler) : base(exManager, exHandler)
+        {
+        }
+
     }
 }

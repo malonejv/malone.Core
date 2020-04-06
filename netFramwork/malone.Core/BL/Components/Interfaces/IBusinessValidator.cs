@@ -60,8 +60,8 @@ namespace malone.Core.BL.Components.Interfaces
         }
     }
 
-    public interface IBusinessValidator<TEntity>
-        where TEntity : class, IBaseEntity
+    public interface IBusinessValidator<TKey, TEntity>
+        where TEntity : class, IBaseEntity<TKey>
     {
 
         List<ValidationRule> AddValidationRules { get; set; }
@@ -70,4 +70,8 @@ namespace malone.Core.BL.Components.Interfaces
 
         ValidationResult Validate(List<ValidationRule> validationRules);
     }
+
+    public interface IBusinessValidator<TEntity> : IBusinessValidator<int, TEntity>
+        where TEntity : class, IBaseEntity
+    { }
 }

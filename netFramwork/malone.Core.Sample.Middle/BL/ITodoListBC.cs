@@ -8,7 +8,7 @@ using malone.Core.Sample.Middle.EL;
 
 namespace malone.Core.Sample.Middle.BL
 {
-    public interface ITodoListBC : IBusinessComponent<TodoList, ITodoListBV>
+    public interface ITodoListBC : IBusinessComponent<decimal,TodoList, ITodoListBV>
     {
     }
 }

@@ -14,9 +14,9 @@ using malone.Core.BL.Components.Implementations;
 
 namespace malone.Core.BL.Components.Interfaces
 {
-    public interface IBusinessComponent<TEntity, TValidator>
-        where TEntity : class, IBaseEntity
-        where TValidator : IBusinessValidator<TEntity>
+    public interface IBusinessComponent<TKey, TEntity, TValidator>
+        where TEntity : class, IBaseEntity<TKey>
+        where TValidator : IBusinessValidator<TKey, TEntity>
     {
 
         #region Properties
@@ -59,5 +59,10 @@ namespace malone.Core.BL.Components.Interfaces
         #endregion
 
     }
+
+    public interface IBusinessComponent<TEntity, TValidator> : IBusinessComponent<int, TEntity, TValidator>
+       where TEntity : class, IBaseEntity
+       where TValidator : IBusinessValidator<TEntity>
+    { }
 
 }

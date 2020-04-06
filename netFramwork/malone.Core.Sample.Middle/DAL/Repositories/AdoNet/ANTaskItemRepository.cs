@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace malone.Core.Sample.Middle.DAL.Repositories.AdoNet
 {
-    public class ANTaskItemRepository : AdoNetRepository<TaskItem>
+    public class ANTaskItemRepository : AdoNetRepository<decimal,TaskItem>
     {
 
         public ANTaskItemRepository(IUnitOfWork unitOfWork, Mapper mapper) : base(unitOfWork, mapper)

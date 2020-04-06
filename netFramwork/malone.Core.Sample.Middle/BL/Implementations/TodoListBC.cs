@@ -14,12 +14,12 @@ using malone.Core.Sample.Middle.EL;
 
 namespace malone.Core.Sample.Middle.BL.Implementations
 {
-    public class TodoListBC : BusinessComponent<TodoList, ITodoListBV>, ITodoListBC
+    public class TodoListBC : BusinessComponent<decimal, TodoList, ITodoListBV>, ITodoListBC
     {
-        public TodoListBC(IUnitOfWork unitOfWork, ITodoListBV businessValidator, IRepository<TodoList> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
+        public TodoListBC(IUnitOfWork unitOfWork, ITodoListBV businessValidator, IRepository<decimal, TodoList> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
             : base(unitOfWork, businessValidator, repository, exManager, exHandler)
         { }
-        
+
         public override void Add(TodoList entity)
         {
             BusinessValidator.AddValidationRules
@@ -29,7 +29,7 @@ namespace malone.Core.Sample.Middle.BL.Implementations
                         Method = BusinessValidator.ValidarNombreRepetido,
                         Arguments = new List<object>() { entity }
                     });
-            
+
             base.Add(entity);
         }
     }

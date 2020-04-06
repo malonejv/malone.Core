@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace malone.Core.Sample.Middle.DAL.Repositories.AdoNet
 {
-    public class ANTodoListRepository : AdoNetRepository<TodoList>
+    public class ANTodoListRepository : AdoNetRepository<decimal, TodoList>
     {
 
         public ANTodoListRepository(IUnitOfWork unitOfWork, Mapper mapper) : base(unitOfWork, mapper)

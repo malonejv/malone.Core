@@ -28,8 +28,8 @@ namespace malone.core.Sample.DI
                 container.RegisterType<IContext, SampleEFContext>(new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
 
                 //Repositories
-                container.RegisterType<IRepository<TodoList>, EFRepository<TodoList>>();
-                container.RegisterType<IRepository<TaskItem>, EFRepository<TaskItem>>();
+                container.RegisterType<IRepository<decimal,TodoList>, EFRepository<decimal,TodoList>>();
+                container.RegisterType<IRepository<decimal,TaskItem>, EFRepository<decimal,TaskItem>>();
 
                 #endregion
             }
@@ -42,8 +42,8 @@ namespace malone.core.Sample.DI
                 container.RegisterType<IContext, SampleAdoNetContext>(new PerRequestLifetimeManager(), new InjectionConstructor(container.Resolve<DatabaseFactory>()));
 
                 //Repositories
-                container.RegisterType<IRepository<TodoList>, ANTodoListRepository>();
-                container.RegisterType<IRepository<TaskItem>, ANTaskItemRepository>();
+                container.RegisterType<IRepository<decimal,TodoList>, ANTodoListRepository>();
+                container.RegisterType<IRepository<decimal, TaskItem>, ANTaskItemRepository>();
 
                 #endregion
             }

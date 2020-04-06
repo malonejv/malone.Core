@@ -8,7 +8,7 @@ using malone.Core.Sample.Middle.EL;
 
 namespace malone.Core.Sample.Middle.BL
 {
-    public interface ITodoListBV : IBusinessValidator<TodoList>
+    public interface ITodoListBV : IBusinessValidator<decimal,TodoList>
     {
         ValidationFailure ValidarNombreRepetido(params object[] args);
     }

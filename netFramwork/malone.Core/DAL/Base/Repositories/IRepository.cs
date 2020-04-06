@@ -10,8 +10,8 @@ using malone.Core.EL.Filters;
 
 namespace malone.Core.DAL.Base.Repositories
 {
-    public interface IRepository<TEntity>
-        where TEntity : class, IBaseEntity
+    public interface IRepository<TKey, TEntity>
+        where TEntity : class, IBaseEntity<TKey>
     {
 
         IEnumerable<TEntity> Get<TFilter>(
@@ -47,5 +47,10 @@ namespace malone.Core.DAL.Base.Repositories
         void Delete(TEntity entityToDelete);
 
         void Update(TEntity entityToUpdate);
+    }
+
+    public interface IRepository<TEntity> : IRepository<int, TEntity>
+        where TEntity : class, IBaseEntity
+    {
     }
 }

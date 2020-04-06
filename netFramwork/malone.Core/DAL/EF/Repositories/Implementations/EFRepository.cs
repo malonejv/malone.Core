@@ -14,8 +14,8 @@ using System.Linq.Expressions;
 
 namespace malone.Core.DAL.EF.Repositories.Implementations
 {
-    public class EFRepository<TEntity> : IRepository<TEntity>
-        where TEntity : class, IBaseEntity
+    public class EFRepository<TKey, TEntity> : IRepository<TKey, TEntity>
+        where TEntity : class, IBaseEntity<TKey>
     {
         protected DbSet<TEntity> _dbSet;
         protected EFDbContext _context;
@@ -160,7 +160,7 @@ namespace malone.Core.DAL.EF.Repositories.Implementations
 
                 query = Get(query, null, includeDeleted, includeProperties);
 
-                return query.Where<TEntity>(e => e.Id == (int)id).FirstOrDefault();
+                return query.Where<TEntity>(e => e.Id.Equals((TKey)id)).FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -269,4 +269,20 @@ namespace malone.Core.DAL.EF.Repositories.Implementations
         }
 
     }
+
+
+    public class EFRepository<TEntity> : EFRepository<int, TEntity>, IRepository<TEntity>
+        where TEntity : class, IBaseEntity
+    {
+
+        public EFRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
+        {
+        }
+
+        public EFRepository(IUnitOfWork unitOfWork, IExceptionMessageManager exManager, IExceptionHandler exHandler) : base(unitOfWork, exManager, exHandler)
+        {
+        }
+
+    }
+
 }

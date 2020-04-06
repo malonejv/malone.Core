@@ -15,8 +15,8 @@ using System.Linq;
 
 namespace malone.Core.DAL.AdoNet.Repositories.Implementations
 {
-    public abstract class AdoNetRepository<TEntity> : IRepository<TEntity>
-        where TEntity : class, IBaseEntity
+    public abstract class AdoNetRepository<TKey, TEntity> : IRepository<TKey, TEntity>
+        where TEntity : class, IBaseEntity<TKey>
     {
         private AdoNetContext _context;
 
@@ -281,5 +281,14 @@ namespace malone.Core.DAL.AdoNet.Repositories.Implementations
 
         public virtual void Delete(TEntity entityToDelete) { }
 
+    }
+
+
+    public abstract class AdoNetRepository<TEntity> : AdoNetRepository<int, TEntity>, IRepository<TEntity>
+        where TEntity : class, IBaseEntity
+    {
+        public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper) : base(unitOfWork, mapper)
+        {
+        }
     }
 }

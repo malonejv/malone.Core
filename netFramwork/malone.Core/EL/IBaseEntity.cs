@@ -1,7 +1,12 @@
 ﻿namespace malone.Core.EL
 {
-    public interface IBaseEntity
+
+    public interface IBaseEntity<TKey>
     {
-        int Id { get; set; }
+        TKey Id { get; set; }
+    }
+    public interface IBaseEntity : IBaseEntity<int>
+    {
+        new int Id { get; set; }
     }
 }

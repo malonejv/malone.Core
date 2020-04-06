@@ -19,11 +19,11 @@ using malone.Core.Sample.Middle.EL.Filters.EFFilters;
 
 namespace malone.Core.Sample.Middle.BL.Implementations
 {
-    public class TodoListBV : BusinessValidator<TodoList>, ITodoListBV
+    public class TodoListBV : BusinessValidator<decimal, TodoList>, ITodoListBV
     {
-        protected IRepository<TodoList> Repository { get; }
+        protected IRepository<decimal, TodoList> Repository { get; }
 
-        public TodoListBV(IRepository<TodoList> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
+        public TodoListBV(IRepository<decimal, TodoList> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
             : base(exManager, exHandler)
         {
             Repository = repository;

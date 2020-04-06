@@ -23,14 +23,13 @@ namespace malone.Core.Sample.UI.Controllers
         // GET: TodoList
         public ActionResult Index()
         {
-
             if (FeatureSettings.IsEnabled(Features.EF))
             {
                 var list = TodoListBC.GetAll(includeProperties: "Items");
 
                 var list2 = TodoListBC.Get(new EFTodoListGetRequest()
                 {
-                    Expression = (x => x.Name.Contains("Test"))
+                    Expression = (x => x.Name.Contains("List"))
                 });
             }
             else if (FeatureSettings.IsEnabled(Features.AdoNet))

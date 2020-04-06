@@ -17,14 +17,14 @@ using malone.Core.CL.Exceptions.Handler.Interfaces;
 
 namespace malone.Core.BL.Components.Implementations
 {
-    public abstract class BusinessComponent<TEntity, TValidator> : IBusinessComponent<TEntity, TValidator>
-        where TEntity : class, IBaseEntity
-        where TValidator : IBusinessValidator<TEntity>
+    public abstract class BusinessComponent<TKey, TEntity, TValidator> : IBusinessComponent<TKey, TEntity, TValidator>
+    where TEntity : class, IBaseEntity<TKey>
+    where TValidator : IBusinessValidator<TKey, TEntity>
     {
 
         #region Properties
 
-        protected IRepository<TEntity> Repository { get; private set; }
+        protected IRepository<TKey, TEntity> Repository { get; private set; }
 
         protected IUnitOfWork UnitOfWork { get; set; }
 
@@ -36,7 +36,7 @@ namespace malone.Core.BL.Components.Implementations
 
         #endregion
 
-        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TEntity> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
+        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TKey,TEntity> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
         {
             UnitOfWork = unitOfWork;
             BusinessValidator = businessValidator;
@@ -363,4 +363,17 @@ namespace malone.Core.BL.Components.Implementations
 
         #endregion
     }
+
+
+    public abstract class BusinessComponent<TEntity, TValidator> : BusinessComponent<int, TEntity, TValidator>, IBusinessComponent<TEntity, TValidator>
+   where TEntity : class, IBaseEntity
+   where TValidator : IBusinessValidator<TEntity>
+    {
+
+        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TEntity> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
+            : base(unitOfWork, businessValidator, repository, exManager, exHandler)
+        {
+        }
+    }
+
 }

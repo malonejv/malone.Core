@@ -14,9 +14,9 @@ using malone.Core.Sample.Middle.EL;
 
 namespace malone.Core.Sample.Middle.BL.Implementations
 {
-    public class TaskItemBC : BusinessComponent<TaskItem, IBusinessValidator<TaskItem>>, ITaskItemBC
+    public class TaskItemBC : BusinessComponent<decimal, TaskItem, IBusinessValidator<decimal, TaskItem>>, ITaskItemBC
     {
-        public TaskItemBC(IUnitOfWork unitOfWork, IBusinessValidator<TaskItem> businessValidator, IRepository<TaskItem> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
+        public TaskItemBC(IUnitOfWork unitOfWork, IBusinessValidator<decimal, TaskItem> businessValidator, IRepository<decimal, TaskItem> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
             : base(unitOfWork, businessValidator, repository, exManager, exHandler)
         {
 
