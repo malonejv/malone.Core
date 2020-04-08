@@ -31,6 +31,8 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.HasDefaultSchema("SAMPLEUSER");
+
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             registerUserIdentityMapping(modelBuilder);
