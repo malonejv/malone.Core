@@ -10,4 +10,5 @@ namespace malone.Core.EL
     {
         bool IsDeleted { get; set; }
     }
+
 }

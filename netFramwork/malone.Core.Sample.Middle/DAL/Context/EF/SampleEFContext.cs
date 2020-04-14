@@ -22,9 +22,9 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
 
-            //Habilita la clase MIPContextInitializer
-            Database.SetInitializer<SampleEFContext>(new SampleContextInitializer());
-            //Database.SetInitializer<SampleContext>(null);
+            //Habilita la clase SampleContextInitializer
+            //Database.SetInitializer<SampleEFContext>(new SampleContextInitializer());
+            Database.SetInitializer<SampleEFContext>(null);
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

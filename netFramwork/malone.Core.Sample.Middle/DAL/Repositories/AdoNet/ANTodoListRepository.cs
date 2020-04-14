@@ -25,9 +25,9 @@ namespace malone.Core.Sample.Middle.DAL.Repositories.AdoNet
             StringBuilder commandText = null;
 
             if (typeof(ISoftDelete).IsAssignableFrom(typeof(TodoList)))
-                commandText = new StringBuilder("SELECT Id, Name, IsDeleted FROM TodoLists WHERE IsDeleted = @IsDeleted;");
+                commandText = new StringBuilder("SELECT Id, Name, IsDeleted FROM Sampleuser.TodoLists WHERE IsDeleted = @IsDeleted;");
             else
-                commandText = new StringBuilder("SELECT Id, Name FROM TodoLists;");
+                commandText = new StringBuilder("SELECT Id, Name FROM Sampleuser.TodoLists;");
 
             return new KeyValuePair<CommandType, string>(CommandType.Text, commandText.ToString());
         }
@@ -42,9 +42,9 @@ namespace malone.Core.Sample.Middle.DAL.Repositories.AdoNet
             StringBuilder commandText = null;
 
             if (typeof(ISoftDelete).IsAssignableFrom(typeof(TodoList)))
-                commandText = new StringBuilder("SELECT Id, Name, IsDeleted FROM TodoLists WHERE lower(Name) like '%'+lower(@Name)+'%' AND IsDeleted = @IsDeleted;");
+                commandText = new StringBuilder("SELECT Id, Name, IsDeleted FROM Sampleuser.TodoLists WHERE lower(Name) like '%'+lower(@Name)+'%' AND IsDeleted = @IsDeleted;");
             else
-                commandText = new StringBuilder("SELECT Id, Name FROM TodoLists WHERE lower(Name) like '%'+lower(@Name)+'%';");
+                commandText = new StringBuilder("SELECT Id, Name FROM Sampleuser.TodoLists WHERE lower(Name) like '%'+lower(@Name)+'%';");
 
             return new KeyValuePair<CommandType, string>(CommandType.Text, commandText.ToString());
         }

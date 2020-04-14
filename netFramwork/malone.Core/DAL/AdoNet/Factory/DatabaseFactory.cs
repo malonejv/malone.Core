@@ -8,7 +8,7 @@ namespace malone.Core.DAL.AdoNet.Factory
     public static class ProviderNames
     {
         public const string SqlProvider = "System.Data.SqlClient";
-        public const string OracleProvider = "System.Data.OracleClient";
+        public const string OracleProvider = "Oracle.ManagedDataAccess.Client";
     }
 
     public class DatabaseFactory

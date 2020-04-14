@@ -77,7 +77,7 @@ namespace malone.Core.DAL.AdoNet.Provider.Oracle
         {
             var parameterIsDeleted = (OracleParameter)CreateParameter(command);
             parameterIsDeleted.ParameterName = IS_DELETED;
-            parameterIsDeleted.Value = (int)isDeleted;
+            parameterIsDeleted.Value = Convert.ToInt32((bool)isDeleted);
             parameterIsDeleted.OracleDbType = OracleDbType.Int32;
 
             command.Parameters.Add(parameterIsDeleted);

@@ -27,9 +27,9 @@ namespace malone.Core.Sample.Middle.DAL.Repositories.AdoNet
             StringBuilder commandText = null;
 
             if (typeof(ISoftDelete).IsAssignableFrom(typeof(TaskItem)))
-                commandText = new StringBuilder("SELECT Id, Description, TodoList_Id, IsDeleted FROM TaskItems WHERE Description = @Description AND IsDeleted = @IsDeleted;");
+                commandText = new StringBuilder("SELECT Id, Description, TodoList_Id, IsDeleted FROM Sampleuser.TaskItems WHERE Description = @Description AND IsDeleted = @IsDeleted;");
             else
-                commandText = new StringBuilder("SELECT Id, Description, TodoList_Id FROM TaskItems WHERE Description = @Description");
+                commandText = new StringBuilder("SELECT Id, Description, TodoList_Id FROM Sampleuser.TaskItems WHERE Description = @Description;");
 
             return new KeyValuePair<CommandType, string>(CommandType.Text, commandText.ToString());
         }

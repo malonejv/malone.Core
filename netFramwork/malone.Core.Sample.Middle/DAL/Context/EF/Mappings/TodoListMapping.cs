@@ -12,7 +12,7 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF.Mappings
     {
         public TodoListMapping()
         {
-            ToTable("TodoLists");
+            ToTable("TODOLISTS", "SAMPLEUSER");
             //Comentar ToTable y habilitar la linea de abajo para filtrar "siempre" los campos eliminados.
             //Map(m => m.ToTable("TodoLists").Requires("IsDeleted").HasValue(false)).Ignore(m => m.IsDeleted);
 
