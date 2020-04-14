@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
-using malone.Core.Sample.Middle.EL;
-using System;
-using System.Collections.Generic;
+using malone.Core.Sample.Middle.EL.Model;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace malone.Core.Sample.Middle.DAL.Mappers
 {

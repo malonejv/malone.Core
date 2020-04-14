@@ -1,19 +1,19 @@
 ﻿using log4net;
 using malone.Core.CL.Configurations;
 using malone.Core.CL.Configurations.CoreConfiguration;
-using malone.Core.CL.Exceptions;
 using malone.Core.CL.Exceptions.Handler.Implementations;
 using malone.Core.CL.Exceptions.Handler.Interfaces;
 using malone.Core.CL.Exceptions.Manager.Implementations;
 using malone.Core.CL.Exceptions.Manager.Interfaces;
 using malone.Core.CL.Log;
 using malone.Core.CL.Log.Log4Net;
+using malone.Core.CL.Logging.Log4Net;
 using Unity;
 using Unity.Injection;
 
 namespace malone.core.Sample.DI
 {
-   public static class RegisterCommonTypes
+    public static class RegisterCommonTypes
     {
         public static IUnityContainer RegisterTypes(IUnityContainer container)
         {

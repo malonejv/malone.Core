@@ -1,15 +1,14 @@
-﻿using malone.Core.CL.Configurations.Sections;
-using malone.Core.DAL.AdoNet.Factory;
-using malone.Core.DAL.AdoNet.Repositories.Implementations;
-using malone.Core.DAL.Base.Context;
-using malone.Core.DAL.Base.Repositories;
-using malone.Core.DAL.Base.UnitOfWork;
-using malone.Core.DAL.EF.Repositories.Implementations;
+﻿using malone.Core.AdoNet.DAL.Database;
+using malone.Core.CL.Configurations.Sections.Feature;
+using malone.Core.DAL.Context;
+using malone.Core.DAL.Repositories;
+using malone.Core.DAL.UnitOfWork;
+using malone.Core.EF.DAL.Repositories.Implementations;
 using malone.Core.Sample.Middle.CL.Features;
 using malone.Core.Sample.Middle.DAL.Context.AdoNet;
 using malone.Core.Sample.Middle.DAL.Context.EF;
 using malone.Core.Sample.Middle.DAL.Repositories.AdoNet;
-using malone.Core.Sample.Middle.EL;
+using malone.Core.Sample.Middle.EL.Model;
 using Unity;
 using Unity.AspNet.Mvc;
 using Unity.Injection;
@@ -28,21 +27,21 @@ namespace malone.core.Sample.DI
                 container.RegisterType<IContext, SampleEFContext>(new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
 
                 //Repositories
-                container.RegisterType<IRepository<decimal,TodoList>, EFRepository<decimal,TodoList>>();
-                container.RegisterType<IRepository<decimal,TaskItem>, EFRepository<decimal,TaskItem>>();
+                container.RegisterType<IRepository<decimal, TodoList>, EFRepository<decimal, TodoList>>();
+                container.RegisterType<IRepository<decimal, TaskItem>, EFRepository<decimal, TaskItem>>();
 
                 #endregion
             }
-            else if(FeatureSettings.IsEnabled(Features.AdoNet))
+            else if (FeatureSettings.IsEnabled(Features.AdoNet))
             {
                 #region AdoNet
 
                 //Context
-                container.RegisterInstance(new DatabaseFactory(Configurations.ConnectionStringName));
+                container.RegisterInstance(new DatabaseFactory());
                 container.RegisterType<IContext, SampleAdoNetContext>(new PerRequestLifetimeManager(), new InjectionConstructor(container.Resolve<DatabaseFactory>()));
 
                 //Repositories
-                container.RegisterType<IRepository<decimal,TodoList>, ANTodoListRepository>();
+                container.RegisterType<IRepository<decimal, TodoList>, ANTodoListRepository>();
                 container.RegisterType<IRepository<decimal, TaskItem>, ANTaskItemRepository>();
 
                 #endregion

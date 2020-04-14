@@ -140,6 +140,22 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\malone.Core.AdoNet\malone.Core.AdoNet.csproj">
+      <Project>{492F80C1-E1F2-4CC9-8DBE-83BA63E7DE4C}</Project>
+      <Name>malone.Core.AdoNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.CL.Logging.Log4Net\malone.Core.CL.Logging.Log4Net.csproj">
+      <Project>{6DFC2083-92EF-4D48-AC33-77542EEC33F8}</Project>
+      <Name>malone.Core.CL.Logging.Log4Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.DAL.EF\malone.Core.DAL.EF.csproj">
+      <Project>{BC436BFA-F343-43E9-A742-141B1598DF2E}</Project>
+      <Name>malone.Core.DAL.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.EF\malone.Core.EF.csproj">
+      <Project>{B3A99961-88EB-4256-984A-01C346541183}</Project>
+      <Name>malone.Core.EF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\malone.Core.Sample.Middle\malone.Core.Sample.Middle.csproj">
       <Project>{13E35096-AC30-4D5E-8834-8B8D0CD53774}</Project>
       <Name>malone.Core.Sample.Middle</Name>

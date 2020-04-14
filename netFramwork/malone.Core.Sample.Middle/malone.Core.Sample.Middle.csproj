@@ -122,14 +122,26 @@
     <Compile Include="DAL\Migrations\Configuration.cs" />
     <Compile Include="DAL\Repositories\AdoNet\ANTaskItemRepository.cs" />
     <Compile Include="DAL\Repositories\AdoNet\ANTodoListRepository.cs" />
-    <Compile Include="EL\Filters\AdoNetFilters\TodoList\ANTaskItemGetRequest.cs" />
-    <Compile Include="EL\Filters\AdoNetFilters\TodoList\ANTodoListGetRequest.cs" />
-    <Compile Include="EL\Filters\EFFilters\EFTodoListGetRequest.cs" />
-    <Compile Include="EL\TaskItem.cs" />
-    <Compile Include="EL\TodoList.cs" />
+    <Compile Include="EL\Filters\AdoNet\TodoListEntity\ANTaskItemGetRequest.cs" />
+    <Compile Include="EL\Filters\AdoNet\TodoListEntity\ANTodoListGetRequest.cs" />
+    <Compile Include="EL\Filters\EF\TodoListEntity\EFTodoListGetRequest.cs" />
+    <Compile Include="EL\Model\TaskItem.cs" />
+    <Compile Include="EL\Model\TodoList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\malone.Core.AdoNet\malone.Core.AdoNet.csproj">
+      <Project>{492F80C1-E1F2-4CC9-8DBE-83BA63E7DE4C}</Project>
+      <Name>malone.Core.AdoNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.DAL.EF\malone.Core.DAL.EF.csproj">
+      <Project>{BC436BFA-F343-43E9-A742-141B1598DF2E}</Project>
+      <Name>malone.Core.DAL.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.EF\malone.Core.EF.csproj">
+      <Project>{B3A99961-88EB-4256-984A-01C346541183}</Project>
+      <Name>malone.Core.EF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\malone.Core\malone.Core.csproj">
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
       <Name>malone.Core</Name>
@@ -148,7 +160,6 @@
     <Folder Include="BL\Mappers\" />
     <Folder Include="CL\Configuration\" />
     <Folder Include="DAL\ServiceAgents\" />
-    <Folder Include="EL\Filters\EFFilters\TodoList\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

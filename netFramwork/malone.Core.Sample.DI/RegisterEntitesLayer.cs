@@ -1,5 +1,6 @@
 ﻿using Unity;
 using malone.Core.Sample.Middle.EL;
+using malone.Core.Sample.Middle.EL.Model;
 
 namespace malone.core.Sample.DI
 {

@@ -1,11 +1,6 @@
 ﻿using malone.Core.CL.Configurations.Attributes;
-using malone.Core.CL.Configurations.Sections;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using malone.Core.CL.Configurations.Sections.Feature;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace malone.Core.CL.Configurations.Extensions
 {

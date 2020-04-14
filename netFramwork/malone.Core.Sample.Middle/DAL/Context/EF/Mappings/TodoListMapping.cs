@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using malone.Core.Sample.Middle.EL;
+using malone.Core.Sample.Middle.EL.Model;
 
 namespace malone.Core.Sample.Middle.DAL.Context.EF.Mappings
 {

@@ -1,10 +1,5 @@
-﻿using System;
+﻿using malone.Core.EL.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.BL.Components.Implementations;
-using malone.Core.EL;
 
 namespace malone.Core.BL.Components.Interfaces
 {

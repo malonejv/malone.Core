@@ -344,6 +344,14 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\malone.Core.AdoNet\malone.Core.AdoNet.csproj">
+      <Project>{492F80C1-E1F2-4CC9-8DBE-83BA63E7DE4C}</Project>
+      <Name>malone.Core.AdoNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.EF\malone.Core.EF.csproj">
+      <Project>{B3A99961-88EB-4256-984A-01C346541183}</Project>
+      <Name>malone.Core.EF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\malone.Core.Sample.DI\malone.Core.Sample.DI.csproj">
       <Project>{4BABEC4C-780B-4393-AF09-656EBEA4A62E}</Project>
       <Name>malone.Core.Sample.DI</Name>

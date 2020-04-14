@@ -3,6 +3,7 @@ using malone.Core.BL.Components.Interfaces;
 using malone.Core.Sample.Middle.BL;
 using malone.Core.Sample.Middle.BL.Implementations;
 using malone.Core.Sample.Middle.EL;
+using malone.Core.Sample.Middle.EL.Model;
 using Unity;
 
 namespace malone.core.Sample.DI

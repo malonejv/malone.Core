@@ -4,6 +4,7 @@ using malone.core.Sample.DI;
 using malone.Core.CL.Configurations;
 using malone.Core.CL.Configurations.CoreConfiguration;
 using malone.Core.CL.Configurations.Sections;
+using malone.Core.CL.Configurations.Sections.Feature;
 using Unity;
 
 namespace malone.Core.Sample.UI

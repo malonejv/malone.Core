@@ -1,10 +1,5 @@
-﻿using malone.Core.DAL.AdoNet.Context;
-using malone.Core.DAL.AdoNet.Factory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using malone.Core.AdoNet.DAL.Context;
+using malone.Core.AdoNet.DAL.Database;
 
 namespace malone.Core.Sample.Middle.DAL.Context.AdoNet
 {

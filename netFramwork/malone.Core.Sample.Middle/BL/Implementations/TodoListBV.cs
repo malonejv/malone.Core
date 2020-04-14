@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.BL.Components.Implementations;
+﻿using malone.Core.BL.Components.Implementations;
 using malone.Core.BL.Components.Interfaces;
-using malone.Core.CL.Configurations.Sections;
-using malone.Core.CL.Exceptions;
+using malone.Core.CL.Configurations.Sections.Feature;
 using malone.Core.CL.Exceptions.Handler.Interfaces;
 using malone.Core.CL.Exceptions.Manager.Interfaces;
-using malone.Core.DAL.Base.Repositories;
+using malone.Core.DAL.Repositories;
 using malone.Core.Sample.Middle.CL.Exceptions;
 using malone.Core.Sample.Middle.CL.Features;
-using malone.Core.Sample.Middle.EL;
-using malone.Core.Sample.Middle.EL.Filters;
-using malone.Core.Sample.Middle.EL.Filters.AdoNetFilters.TodoList;
-using malone.Core.Sample.Middle.EL.Filters.EFFilters;
+using malone.Core.Sample.Middle.EL.Filters.EF.TodoListEntity;
+using malone.Core.Sample.Middle.EL.Model;
+using System;
+using System.Linq;
 
 namespace malone.Core.Sample.Middle.BL.Implementations
 {

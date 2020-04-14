@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.BL.Components.Interfaces;
-using malone.Core.CL.Exceptions;
+﻿using malone.Core.BL.Components.Interfaces;
 using malone.Core.CL.Exceptions.Handler.Interfaces;
 using malone.Core.CL.Exceptions.Manager.Interfaces;
-using malone.Core.EL;
+using malone.Core.EL.Model;
+using System.Collections.Generic;
 
 namespace malone.Core.BL.Components.Implementations
 {
-    public class BusinessValidator<TKey, TEntity> : IBusinessValidator<TKey, TEntity>
+    //TODO: Estudiar dejarlo como abstract para oblicar a escribir las reglas de validacion aca
+    public  class BusinessValidator<TKey, TEntity> : IBusinessValidator<TKey, TEntity>
         where TEntity : class, IBaseEntity<TKey>
     {
 

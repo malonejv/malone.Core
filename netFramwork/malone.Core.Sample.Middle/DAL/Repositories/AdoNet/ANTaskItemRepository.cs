@@ -1,21 +1,16 @@
 ﻿using AutoMapper;
-using malone.Core.DAL.AdoNet.Repositories;
-using malone.Core.DAL.AdoNet.Repositories.Implementations;
-using malone.Core.DAL.Base.UnitOfWork;
-using malone.Core.EL;
-using malone.Core.EL.Filters.Extensions;
-using malone.Core.Sample.Middle.EL;
+using malone.Core.AdoNet.DAL.Repositories;
+using malone.Core.DAL.UnitOfWork;
+using malone.Core.EL.Model;
+using malone.Core.Sample.Middle.EL.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace malone.Core.Sample.Middle.DAL.Repositories.AdoNet
 {
-    public class ANTaskItemRepository : AdoNetRepository<decimal,TaskItem>
+    public class ANTaskItemRepository : AdoNetRepository<decimal, TaskItem>
     {
 
         public ANTaskItemRepository(IUnitOfWork unitOfWork, Mapper mapper) : base(unitOfWork, mapper)

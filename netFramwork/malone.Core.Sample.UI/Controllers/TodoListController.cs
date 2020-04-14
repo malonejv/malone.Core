@@ -1,10 +1,10 @@
-﻿using malone.Core.CL.Configurations.Sections;
-using malone.Core.EL;
+﻿using malone.Core.CL.Configurations.Sections.Feature;
+using malone.Core.EL.Model;
 using malone.Core.Sample.Middle.BL;
 using malone.Core.Sample.Middle.CL.Features;
-using malone.Core.Sample.Middle.EL;
-using malone.Core.Sample.Middle.EL.Filters.AdoNetFilters.TodoList;
-using malone.Core.Sample.Middle.EL.Filters.EFFilters;
+using malone.Core.Sample.Middle.EL.Filters.AdoNet.TodoListEntity;
+using malone.Core.Sample.Middle.EL.Filters.EF.TodoListEntity;
+using malone.Core.Sample.Middle.EL.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

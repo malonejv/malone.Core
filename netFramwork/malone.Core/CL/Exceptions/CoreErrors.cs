@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace malone.Core.CL.Exceptions
 {
-    internal enum CoreErrors
+    public enum CoreErrors
     {
         #region GeneralErrors 0 - 99
         E0 = 0,
