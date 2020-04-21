@@ -16,6 +16,7 @@ using System.Linq.Expressions;
 namespace malone.Core.DAL.EF.Repositories.Implementations
 {
     public class EFRepository<TKey, TEntity> : IRepository<TKey, TEntity>
+        where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
     {
         protected DbSet<TEntity> _dbSet;

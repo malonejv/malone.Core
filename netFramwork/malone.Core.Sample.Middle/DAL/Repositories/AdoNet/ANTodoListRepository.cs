@@ -10,7 +10,7 @@ using System.Text;
 
 namespace malone.Core.Sample.Middle.DAL.Repositories.AdoNet
 {
-    public class ANTodoListRepository : AdoNetRepository<decimal, TodoList>
+    public class ANTodoListRepository : AdoNetRepository<TodoList>
     {
 
         public ANTodoListRepository(IUnitOfWork unitOfWork, Mapper mapper) : base(unitOfWork, mapper)

@@ -15,7 +15,7 @@ namespace malone.core.Sample.DI
             //BUSINESS VALIDATORS
             //container.RegisterType<IActividadBusinessValidator, ActividadBusinessValidator>();
             container.RegisterType<ITodoListBV, TodoListBV>();
-            container.RegisterType<IBusinessValidator<decimal, TaskItem>, BusinessValidator<decimal, TaskItem>>();
+            container.RegisterType<IBusinessValidator< TaskItem>, BusinessValidator< TaskItem>>();
 
 
             //BUSINESS COMPONENTS

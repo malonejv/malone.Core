@@ -1,7 +1,10 @@
-﻿namespace malone.Core.EL.Model
+﻿using System;
+
+namespace malone.Core.EL.Model
 {
 
     public interface IBaseEntity<TKey>
+        where TKey : IEquatable<TKey>
     {
         TKey Id { get; set; }
     }

@@ -2,12 +2,14 @@
 using malone.Core.CL.Exceptions.Handler.Interfaces;
 using malone.Core.CL.Exceptions.Manager.Interfaces;
 using malone.Core.EL.Model;
+using System;
 using System.Collections.Generic;
 
 namespace malone.Core.BL.Components.Implementations
 {
     //TODO: Estudiar dejarlo como abstract para oblicar a escribir las reglas de validacion aca
     public  class BusinessValidator<TKey, TEntity> : IBusinessValidator<TKey, TEntity>
+        where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
     {
 

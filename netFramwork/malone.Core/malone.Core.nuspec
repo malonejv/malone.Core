@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Javier López Malone</authors>
+    <owners>Javier López Malone</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>	
+    <description>$description$</description>
+    <releaseNotes>EF and AdoNet context.</releaseNotes>
+    <copyright>Copyright 2020</copyright>
+    <tags>Core Crud Validations EF AdoNet</tags>
+	<dependencies>
+		<group targetFramework=".NETFramework4.7.1">
+		</group>
+    </dependencies>
+  </metadata>
+</package>

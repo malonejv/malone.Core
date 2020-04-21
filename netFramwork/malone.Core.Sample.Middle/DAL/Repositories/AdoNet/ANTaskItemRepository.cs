@@ -10,7 +10,7 @@ using System.Text;
 
 namespace malone.Core.Sample.Middle.DAL.Repositories.AdoNet
 {
-    public class ANTaskItemRepository : AdoNetRepository<decimal, TaskItem>
+    public class ANTaskItemRepository : AdoNetRepository<TaskItem>
     {
 
         public ANTaskItemRepository(IUnitOfWork unitOfWork, Mapper mapper) : base(unitOfWork, mapper)

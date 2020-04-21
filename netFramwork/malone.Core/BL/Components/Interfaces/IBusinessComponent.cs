@@ -7,6 +7,7 @@ using System.Linq;
 namespace malone.Core.BL.Components.Interfaces
 {
     public interface IBusinessComponent<TKey, TEntity, TValidator>
+        where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
         where TValidator : IBusinessValidator<TKey, TEntity>
     {

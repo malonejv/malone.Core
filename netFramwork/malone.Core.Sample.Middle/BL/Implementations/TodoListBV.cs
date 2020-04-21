@@ -13,11 +13,11 @@ using System.Linq;
 
 namespace malone.Core.Sample.Middle.BL.Implementations
 {
-    public class TodoListBV : BusinessValidator<decimal, TodoList>, ITodoListBV
+    public class TodoListBV : BusinessValidator<TodoList>, ITodoListBV
     {
-        protected IRepository<decimal, TodoList> Repository { get; }
+        protected IRepository<TodoList> Repository { get; }
 
-        public TodoListBV(IRepository<decimal, TodoList> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
+        public TodoListBV(IRepository<TodoList> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
             : base(exManager, exHandler)
         {
             Repository = repository;

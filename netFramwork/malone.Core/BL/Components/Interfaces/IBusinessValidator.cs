@@ -1,4 +1,5 @@
 ﻿using malone.Core.EL.Model;
+using System;
 using System.Collections.Generic;
 
 namespace malone.Core.BL.Components.Interfaces
@@ -56,6 +57,7 @@ namespace malone.Core.BL.Components.Interfaces
     }
 
     public interface IBusinessValidator<TKey, TEntity>
+        where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
     {
 

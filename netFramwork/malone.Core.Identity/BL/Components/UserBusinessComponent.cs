@@ -14,14 +14,8 @@ using System.Threading.Tasks;
 namespace malone.Core.Identity.BL.Components
 {
 
-    public class UserBusinessComponent : UserBusinessComponent<CoreUser>
-    {
-        public UserBusinessComponent(IUserStore<CoreUser, int> store) : base(store)
-        {
-        }
-    }
-
-    public class UserBusinessComponent<TUserEntity> : UserManager<TUserEntity, int>
+    public class UserBusinessComponent<TKey, TUserEntity> : UserManager<TUserEntity, TKey>
+        where TKey : IEquatable<TKey>
         where TUserEntity : CoreUser
     {
         public UserBusinessComponent(IUserStore<TUserEntity, int> store) : base(store)
@@ -104,4 +98,12 @@ namespace malone.Core.Identity.BL.Components
             }
         }
     }
+
+    public class UserBusinessComponent : UserBusinessComponent<CoreUser>
+    {
+        public UserBusinessComponent(IUserStore<CoreUser, int> store) : base(store)
+        {
+        }
+    }
+
 }

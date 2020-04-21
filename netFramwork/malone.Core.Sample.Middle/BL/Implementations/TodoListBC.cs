@@ -15,9 +15,9 @@ using malone.Core.Sample.Middle.EL.Model;
 
 namespace malone.Core.Sample.Middle.BL.Implementations
 {
-    public class TodoListBC : BusinessComponent<decimal, TodoList, ITodoListBV>, ITodoListBC
+    public class TodoListBC : BusinessComponent< TodoList, ITodoListBV>, ITodoListBC
     {
-        public TodoListBC(IUnitOfWork unitOfWork, ITodoListBV businessValidator, IRepository<decimal, TodoList> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
+        public TodoListBC(IUnitOfWork unitOfWork, ITodoListBV businessValidator, IRepository<TodoList> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
             : base(unitOfWork, businessValidator, repository, exManager, exHandler)
         { }
 

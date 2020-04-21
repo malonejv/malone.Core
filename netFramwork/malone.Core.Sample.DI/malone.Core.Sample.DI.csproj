@@ -70,11 +70,11 @@
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
-      <HintPath>..\packages\Oracle.ManagedDataAccess.19.3.1\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.ManagedDataAccess.EntityFramework, Version=6.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
-      <HintPath>..\packages\Oracle.ManagedDataAccess.EntityFramework.19.3.0\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -155,6 +155,14 @@
     <ProjectReference Include="..\malone.Core.EF\malone.Core.EF.csproj">
       <Project>{B3A99961-88EB-4256-984A-01C346541183}</Project>
       <Name>malone.Core.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.Identity.EntityFramework\malone.Core.Identity.EntityFramework.csproj">
+      <Project>{ECA07D24-2FD5-42E8-A5F7-3FDF54B10DD4}</Project>
+      <Name>malone.Core.Identity.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.Identity\malone.Core.Identity.csproj">
+      <Project>{0992B1B6-BE12-4B9F-9B15-4D1B03ECD306}</Project>
+      <Name>malone.Core.Identity</Name>
     </ProjectReference>
     <ProjectReference Include="..\malone.Core.Sample.Middle\malone.Core.Sample.Middle.csproj">
       <Project>{13E35096-AC30-4D5E-8834-8B8D0CD53774}</Project>

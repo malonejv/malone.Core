@@ -17,6 +17,7 @@ using System.Linq;
 namespace malone.Core.AdoNet.DAL.Repositories
 {
     public abstract class AdoNetRepository<TKey, TEntity> : IRepository<TKey, TEntity>
+        where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
     {
         private AdoNetContext _context;

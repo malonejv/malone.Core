@@ -19,33 +19,16 @@ namespace malone.core.Sample.DI
     {
         public static IUnityContainer RegisterTypes(IUnityContainer container)
         {
-            if (FeatureSettings.IsEnabled(Features.EF))
-            {
-                #region EF
+            #region EF
 
-                //Context
-                container.RegisterType<IContext, SampleEFContext>(new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
+            //Context
+            container.RegisterType<IContext, SampleEFContext>(new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
 
-                //Repositories
-                container.RegisterType<IRepository<decimal, TodoList>, EFRepository<decimal, TodoList>>();
-                container.RegisterType<IRepository<decimal, TaskItem>, EFRepository<decimal, TaskItem>>();
+            //Repositories
+            container.RegisterType<IRepository<TodoList>, EFRepository<TodoList>>();
+            container.RegisterType<IRepository<TaskItem>, EFRepository<TaskItem>>();
 
-                #endregion
-            }
-            else if (FeatureSettings.IsEnabled(Features.AdoNet))
-            {
-                #region AdoNet
-
-                //Context
-                container.RegisterInstance(new DatabaseFactory());
-                container.RegisterType<IContext, SampleAdoNetContext>(new PerRequestLifetimeManager(), new InjectionConstructor(container.Resolve<DatabaseFactory>()));
-
-                //Repositories
-                container.RegisterType<IRepository<decimal, TodoList>, ANTodoListRepository>();
-                container.RegisterType<IRepository<decimal, TaskItem>, ANTaskItemRepository>();
-
-                #endregion
-            }
+            #endregion
 
             //General
             container.RegisterType<IUnitOfWork, UnitOfWork>(new PerRequestLifetimeManager());

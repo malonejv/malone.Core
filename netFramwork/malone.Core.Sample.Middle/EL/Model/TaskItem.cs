@@ -8,9 +8,9 @@ using malone.Core.EL.Model;
 
 namespace malone.Core.Sample.Middle.EL.Model
 {
-    public class TaskItem : IBaseEntity<decimal>, ISoftDelete
+    public class TaskItem : IBaseEntity, ISoftDelete
     {
-        public decimal Id { get; set; }
+        public int Id { get; set; }
         public string Description { get; set; }
         public bool IsDeleted { get; set; }
     }

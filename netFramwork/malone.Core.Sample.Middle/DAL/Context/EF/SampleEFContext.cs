@@ -1,4 +1,5 @@
 ﻿using malone.Core.DAL.EF.Context;
+using malone.Core.Identity.EntityFramework.DAL.EF.Context;
 using malone.Core.Sample.Middle.DAL.Context.EF.Mappings;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -6,7 +7,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace malone.Core.Sample.Middle.DAL.Context.EF
 {
-    public class SampleEFContext : EFDbContext
+    public class SampleEFContext : EFIdentityDbContext //EFDbContext
     {
         public SampleEFContext(string connectionStringName)
             : base(connectionStringName)
@@ -14,9 +15,13 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
 
-            //Habilita la clase SampleContextInitializer
+            //OPTION: Habilita la clase SampleContextInitializer 
+#if DEBUG
             //Database.SetInitializer<SampleEFContext>(new SampleContextInitializer());
+#else
             Database.SetInitializer<SampleEFContext>(null);
+#endif
+
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

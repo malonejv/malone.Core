@@ -7,6 +7,7 @@ using System.Linq;
 namespace malone.Core.DAL.Repositories
 {
     public interface IRepository<TKey, TEntity>
+        where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
     {
 

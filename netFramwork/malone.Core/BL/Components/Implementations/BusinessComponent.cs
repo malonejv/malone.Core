@@ -13,8 +13,9 @@ using System.Linq;
 namespace malone.Core.BL.Components.Implementations
 {
     public abstract class BusinessComponent<TKey, TEntity, TValidator> : IBusinessComponent<TKey, TEntity, TValidator>
-    where TEntity : class, IBaseEntity<TKey>
-    where TValidator : IBusinessValidator<TKey, TEntity>
+        where TKey : IEquatable<TKey>
+        where TEntity : class, IBaseEntity<TKey>
+        where TValidator : IBusinessValidator<TKey, TEntity>
     {
 
         #region Properties
@@ -31,7 +32,7 @@ namespace malone.Core.BL.Components.Implementations
 
         #endregion
 
-        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TKey,TEntity> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
+        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TKey, TEntity> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
         {
             UnitOfWork = unitOfWork;
             BusinessValidator = businessValidator;
