@@ -32,19 +32,11 @@ namespace malone.Core.Sample.Middle.BL.Implementations
             var todoList = args[0] as TodoList;
 
             bool existe = false;
-            if (FeatureSettings.IsEnabled(Features.EF))
+
+            existe = Repository.Get(new EFTodoListGetRequest()
             {
-                existe = Repository.Get(new EFTodoListGetRequest()
-                {
-                    Expression = f => f.Name == todoList.Name && f.Id != todoList.Id
-                }).Count() > 0;
-            }
-            else if (FeatureSettings.IsEnabled(Features.AdoNet))
-            {
-                //var filter = new ANTodoListGetRequest();
-                //filter.Name == todoList.Name
-                //TodoListBC.Get(filter);
-            }
+                Expression = f => f.Name == todoList.Name && f.Id != todoList.Id
+            }).Count() > 0;
 
             if (existe)
             {

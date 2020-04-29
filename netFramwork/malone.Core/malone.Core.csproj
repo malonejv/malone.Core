@@ -96,6 +96,7 @@
     <Compile Include="CL\Configurations\Sections\Feature\FeaturesElementCollection.cs" />
     <Compile Include="CL\Configurations\Sections\Feature\FeatureSettings.cs" />
     <Compile Include="CL\Configurations\Sections\Feature\FeatureSettingsSection.cs" />
+    <Compile Include="CL\DI\ServiceLocator\ServiceLocator.cs" />
     <Compile Include="CL\Exceptions\BaseException.cs" />
     <Compile Include="CL\Exceptions\BusinessException.cs" />
     <Compile Include="CL\Exceptions\BusinessValidationException.cs" />

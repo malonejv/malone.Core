@@ -93,6 +93,9 @@
     <Reference Include="Microsoft.Owin, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.4.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Owin.Security, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.4.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
     </Reference>
@@ -195,7 +198,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TodoListController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -333,6 +338,10 @@
     <ProjectReference Include="..\malone.Core.AdoNet\malone.Core.AdoNet.csproj">
       <Project>{492F80C1-E1F2-4CC9-8DBE-83BA63E7DE4C}</Project>
       <Name>malone.Core.AdoNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.DAL.EF\malone.Core.DAL.EF.csproj">
+      <Project>{BC436BFA-F343-43E9-A742-141B1598DF2E}</Project>
+      <Name>malone.Core.DAL.EF</Name>
     </ProjectReference>
     <ProjectReference Include="..\malone.Core.EF\malone.Core.EF.csproj">
       <Project>{B3A99961-88EB-4256-984A-01C346541183}</Project>

@@ -23,24 +23,13 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
         // GET: TodoList
         public ActionResult Index()
         {
-            if (FeatureSettings.IsEnabled(Features.EF))
+            var list = TodoListBC.GetAll(includeProperties: "Items");
+
+            var list2 = TodoListBC.Get(new EFTodoListGetRequest()
             {
-                var list = TodoListBC.GetAll(includeProperties: "Items");
+                Expression = (x => x.Name.Contains("List"))
+            });
 
-                var list2 = TodoListBC.Get(new EFTodoListGetRequest()
-                {
-                    Expression = (x => x.Name.Contains("List"))
-                });
-            }
-            else if (FeatureSettings.IsEnabled(Features.AdoNet))
-            {
-                var list = TodoListBC.GetAll(includeProperties: "Items");
-
-                var filter = new ANTodoListGetRequest();
-                filter.Name = "Test";
-
-                var list2 = TodoListBC.Get(filter);
-            }
             return View();
         }
 

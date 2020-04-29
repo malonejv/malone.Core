@@ -1,9 +1,18 @@
-﻿using malone.Core.DAL.EF.Context;
+﻿using malone.Core.CL.DI.ServiceLocator;
+using malone.Core.CL.Helpers.Extensions;
+using malone.Core.DAL.Context;
+using malone.Core.DAL.EF.Context;
 using malone.Core.Identity.EntityFramework.DAL.EF.Context;
+using malone.Core.Identity.EntityFramework.EL;
 using malone.Core.Sample.Middle.DAL.Context.EF.Mappings;
+using malone.Core.Sample.Middle.EL.Model;
+using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using Unity;
 
 namespace malone.Core.Sample.Middle.DAL.Context.EF
 {
@@ -12,15 +21,12 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF
         public SampleEFContext(string connectionStringName)
             : base(connectionStringName)
         {
+            //TODO: Habilitar configuración
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
 
             //OPTION: Habilita la clase SampleContextInitializer 
-#if DEBUG
-            //Database.SetInitializer<SampleEFContext>(new SampleContextInitializer());
-#else
-            Database.SetInitializer<SampleEFContext>(null);
-#endif
+            //Database.SetInitializer<SampleEFContext>(null);
 
         }
 
@@ -28,58 +34,15 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.HasDefaultSchema("SAMPLEUSER");
-
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
-            registerUserIdentityMapping(modelBuilder);
             modelBuilder.Configurations.Add(new TodoListMapping());
             modelBuilder.Configurations.Add(new TaskItemMapping());
         }
 
 
-
-        private void registerUserIdentityMapping(DbModelBuilder modelBuilder)
+        public static SampleEFContext Create()
         {
-            //EntityTypeConfiguration<Role> entityRoleConfiguration = modelBuilder.Entity<Role>();
-            //entityRoleConfiguration.ToTable("Roles");
-            //StringPropertyConfiguration indexRoleName = entityRoleConfiguration.Property((Role r) => r.Name).IsRequired().HasMaxLength(new int?(256));
-            //string roleNameIndexColumnName = "Index";
-            //IndexAttribute indexRolaNameAttribute = new IndexAttribute("RoleNameIndex");
-            //indexRolaNameAttribute.IsUnique = true;
-            //indexRoleName.HasColumnAnnotation(roleNameIndexColumnName, new IndexAnnotation(indexRolaNameAttribute));
-            //entityRoleConfiguration.HasMany<UserRole>((Role r) => (ICollection<UserRole>)r.Users).WithRequired().HasForeignKey<string>((UserRole ur) => ur.RoleId);
-
-            //EntityTypeConfiguration<User> entityUserConfiguration = modelBuilder.Entity<User>();
-            //entityUserConfiguration.ToTable("Users");
-            //entityUserConfiguration.Property(p => p.Id);
-            //entityUserConfiguration.HasMany<UserRole>((User u) => (ICollection<UserRole>)u.Roles).WithOptional().HasForeignKey<string>((UserRole ur) => ur.UserId);
-            //entityUserConfiguration.HasMany<UserClaim>((User u) => (ICollection<UserClaim>)u.Claims).WithOptional().HasForeignKey<string>((UserClaim uc) => uc.UserId);
-            //entityUserConfiguration.HasMany<UserLogin>((User u) => (ICollection<UserLogin>)u.Logins).WithRequired().HasForeignKey<string>((UserLogin ul) => ul.UserId);
-            //StringPropertyConfiguration indexUserName = entityUserConfiguration.Property((User u) => u.UserName).IsRequired().HasMaxLength(new int?(256));
-            //string userNameIndexColumnName = "Index";
-            //IndexAttribute indexUserNameAttribute = new IndexAttribute("UserNameIndex");
-            //indexUserNameAttribute.IsUnique = true;
-            //indexUserName.HasColumnAnnotation(userNameIndexColumnName, new IndexAnnotation(indexUserNameAttribute));
-            //entityUserConfiguration.Property((User u) => u.Email).HasMaxLength(new int?(256));
-
-            //modelBuilder.Entity<UserRole>().ToTable("UserRoles")
-            //    .HasKey((UserRole r) => new
-            //    {
-            //        r.UserId,
-            //        r.RoleId
-            //    });
-
-            //modelBuilder.Entity<UserLogin>().ToTable("UserLogins")
-            //    .HasKey((UserLogin l) => new
-            //    {
-            //        l.LoginProvider,
-            //        l.ProviderKey,
-            //        l.UserId
-            //    });
-
-            //modelBuilder.Entity<UserClaim>().ToTable("UserClaims");
-
+            var instance = ServiceLocator.Current.Get<IContext>() as SampleEFContext;
+            return instance;
         }
     }
 
@@ -94,58 +57,60 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF
 
     public class SampleContextInitializer : DropCreateDatabaseIfModelChanges<SampleEFContext>
     {
+        private PasswordHasher PasswordHasher { get; set; }
+
+        public SampleContextInitializer(PasswordHasher passwordHasher) : base()
+        {
+            PasswordHasher = passwordHasher;
+        }
+
         protected override void Seed(SampleEFContext dbContext)
         {
-            //// USUARIO Y ROL DE ADMINISTRADOR POR DEFECTO
-            //var roleStore = new RoleStore<Role, string, UserRole>(dbContext);
-            //var roleManager = new RoleManager<Role>(roleStore);
-            //// RoleTypes is a class containing constant string values for different roles
-            //List<Role> roles = new List<Role>();
-            //roles.Add(new Role() { Name = Rol.Administrador.GetStringValue() });
-            //roles.Add(new Role() { Name = Rol.Administrativo.GetStringValue() });
-            //roles.Add(new Role() { Name = Rol.Empleado.GetStringValue() });
-            //roles.Add(new Role() { Name = Rol.Usuario.GetStringValue() });
+            // USUARIO Y ROL DE ADMINISTRADOR POR DEFECTO
+            // RoleTypes is a class containing constant string values for different roles
+            List<CoreRole> roles = new List<CoreRole>();
+            roles.Add(new CoreRole() { Name = RoleType.Administrador.GetDescription() });
+            roles.Add(new CoreRole() { Name = RoleType.Administrativo.GetDescription() });
+            roles.Add(new CoreRole() { Name = RoleType.Empleado.GetDescription() });
+            roles.Add(new CoreRole() { Name = RoleType.Usuario.GetDescription() });
 
-            //foreach (Role role in roles)
-            //{
-            //    roleManager.Create(role);
-            //}
+            dbContext.Set<CoreRole>().AddOrUpdate(roles.ToArray());
 
-            //// Initialize default user
-            //var userStore = new UserStore<User, Role, string, UserLogin, UserRole, UserClaim>(dbContext);
-            //var userManager = new UserManager<User, string>(userStore);
-            //User admin = new User();
-            //admin.Email = "malonejv@gmail.com";
-            //admin.UserName = "admin";
+            // Initialize default user
+            CoreUser admin = new CoreUser();
+            admin.Email = "malonejv@gmail.com";
+            admin.UserName = "admin";
 
-            //userManager.Create(admin, "TLC2018!");
-            //userManager.AddToRole(admin.Id, Rol.Administrador.GetStringValue());
+            //TODO: Usar Secrets para obtener el password de admin
+            admin.PasswordHash = PasswordHasher.HashPassword("Adm1n.M4l0ne");
 
-            ////--------------------------------------------------------------------
+            dbContext.Set<CoreUser>().AddOrUpdate(admin);
 
-            ////SERVICIOS
-            //var uow = new UnitOfWork(dbContext, null);
-            //var servicioRepository = new ServicioRepository(uow);
+            //--------------------------------------------------------------------
+            //TEST LIST & ITEMS
 
-            //servicioRepository.Insert(new Servicio()
-            //{
-            //    Descripcion = "Aire Acondicionado",
-            //    NombreArchivo = "aa-icon.png"
-            //});
+            TodoList list = new TodoList()
+            {
+                Name = "Sample List",
+                Items = new List<TaskItem>()
+                {
+                    new TaskItem()
+                    {
+                        Description="Sample Item 1",
+                        IsDeleted = false
+                    },
 
-            //servicioRepository.Insert(new Servicio()
-            //{
-            //    Descripcion = "Gimnasio",
-            //    NombreArchivo = "dumbbell-icon.png"
-            //});
+                    new TaskItem()
+                    {
+                        Description="Sample Item 2",
+                        IsDeleted = false
+                    }
+                },
+                IsDeleted = false
+            };
+            dbContext.Set<TodoList>().AddOrUpdate(list);
 
-            //servicioRepository.Insert(new Servicio()
-            //{
-            //    Descripcion = "Wifi gratis",
-            //    NombreArchivo = "wifi-icon.png"
-            //});
-
-            //dbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
     }
 }

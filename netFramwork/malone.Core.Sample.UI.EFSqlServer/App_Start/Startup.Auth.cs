@@ -1,12 +1,20 @@
-﻿using malone.Core.Identity.EntityFramework;
+﻿using malone.Core.CL.DI.ServiceLocator;
+using malone.Core.DAL.Context;
+using malone.Core.Identity.BL.Components.MessageServices.Interfaces;
+using malone.Core.Identity.EntityFramework;
+using malone.Core.Identity.EntityFramework.BL;
 using malone.Core.Identity.EntityFramework.EL;
+using malone.Core.Sample.Middle.DAL.Context.EF;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.DataProtection;
 using Owin;
 using System;
+using System.Web;
+using System.Web.Mvc;
 
 namespace malone.Core.Sample.UI.EFSqlServer
 {
@@ -15,34 +23,15 @@ namespace malone.Core.Sample.UI.EFSqlServer
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
-            //// Configure the db context, user manager and signin manager to use a single instance per request
-            //app.CreatePerOwinContext(ApplicationDbContext.Create);
-            //app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-            //app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            app.CreatePerOwinContext(SampleEFContext.Create);
+            app.CreatePerOwinContext<UserBusinessComponent<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim>>
+                (UserBusinessComponent<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim>.Create);
+            app.CreatePerOwinContext<SignInBusinessComponent<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim, UserBusinessComponent>>(
+                SignInBusinessComponent<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim, UserBusinessComponent>.Create);
 
+            var userManagerConfiguration = new UserManagerConfiguration();
+            userManagerConfiguration.ConfigureUserManager();
 
-
-
-
-
-            // Enable the application to use a cookie to store information for the signed in user
-            // and to use a cookie to temporarily store information about a user logging in with a third party login provider
-            // Configure the sign in cookie
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login"),
-                Provider = new CookieAuthenticationProvider
-                {
-                    // Enables the application to validate the security stamp when the user logs in.
-                    // This is a security feature which is used when you change a password or add an external login to your account.  
-                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<UserBusinessComponent, CoreUser, int>(
-                        validateInterval: TimeSpan.FromMinutes(30),
-                        regenerateIdentityCallback: (manager, user) => manager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie),
-                        getUserIdCallback: claims => claims.GetUserId<int>()
-                    )
-                }
-            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -71,9 +60,44 @@ namespace malone.Core.Sample.UI.EFSqlServer
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+            // Enable the application to use a cookie to store information for the signed in user
+            // and to use a cookie to temporarily store information about a user logging in with a third party login provider
+            // Configure the sign in cookie
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                LoginPath = new PathString("/Account/Login"),
+                Provider = new CookieAuthenticationProvider
+                {
+                    // Enables the application to validate the security stamp when the user logs in.
+                    // This is a security feature which is used when you change a password or add an external login to your account.  
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<UserBusinessComponent, CoreUser, int>(
+                        validateInterval: TimeSpan.FromMinutes(30),
+                        regenerateIdentityCallback: (manager, user) => manager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie),
+                        getUserIdCallback: claims => claims.GetUserId<int>()
+                    )
+                }
+            });
         }
 
-        private void ConfigureUserManager()
+    }
+
+
+    public class UserManagerConfiguration : IUserManagerConfiguration
+    {
+        public UserBusinessComponent UserBC { get; set; }
+        public IEmailMessageService EmailService { get; set; }
+        public ISmsMessageService SmsService { get; set; }
+
+        public UserManagerConfiguration()
+        {
+            UserBC = ServiceLocator.Current.Get<UserManager<CoreUser, int>>() as UserBusinessComponent;
+            EmailService = ServiceLocator.Current.Get<IEmailMessageService>();
+            SmsService = ServiceLocator.Current.Get<ISmsMessageService>();
+        }
+
+        public void ConfigureUserManager()
         {
             //OPTION: Agregar todas estas configuraciones en el web.config
 

@@ -1,13 +1,17 @@
-﻿using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+﻿using malone.core.Sample.DI;
+using malone.Core.CL.DI.ServiceLocator;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Unity.AspNet.Mvc;
+using Unity.Injection;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(malone.Core.Sample.UI.EFSqlServer.App_Start.UnityMvcActivator), nameof(malone.Core.Sample.UI.EFSqlServer.App_Start.UnityMvcActivator.Start))]
 [assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(malone.Core.Sample.UI.EFSqlServer.App_Start.UnityMvcActivator), nameof(malone.Core.Sample.UI.EFSqlServer.App_Start.UnityMvcActivator.Shutdown))]
+//[assembly: PreApplicationStartMethod(typeof(malone.Core.Sample.UI.EFSqlServer.App_Start.UnityMvcActivator), nameof(malone.Core.Sample.UI.EFSqlServer.App_Start.UnityMvcActivator.Start))]
 
 namespace malone.Core.Sample.UI.EFSqlServer.App_Start
 {
@@ -23,11 +27,6 @@ namespace malone.Core.Sample.UI.EFSqlServer.App_Start
         {
             FilterProviders.Providers.Remove(FilterProviders.Providers.OfType<FilterAttributeFilterProvider>().First());
             FilterProviders.Providers.Add(new UnityFilterAttributeFilterProvider(UnityConfig.Container));
-
-            DependencyResolver.SetResolver(new UnityDependencyResolver(UnityConfig.Container));
-
-            //OPTION: Uncomment if you want to use PerRequestLifetimeManager
-             DynamicModuleUtility.RegisterModule(typeof(UnityPerRequestHttpModule));
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using log4net;
 using malone.Core.CL.Configurations;
 using malone.Core.CL.Configurations.CoreConfiguration;
+using malone.Core.CL.DI.ServiceLocator;
 using malone.Core.CL.Exceptions.Handler.Implementations;
 using malone.Core.CL.Exceptions.Handler.Interfaces;
 using malone.Core.CL.Exceptions.Manager.Implementations;

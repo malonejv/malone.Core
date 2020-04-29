@@ -13,7 +13,7 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF.Mappings
     {
         public TaskItemMapping()
         {
-            ToTable("TASKITEMS","SAMPLEUSER");
+            ToTable("TASKITEMS");
             //Comentar ToTable y habilitar la linea de abajo para filtrar "siempre" los campos eliminados.
             //Map(m => m.ToTable("TaskItems").Requires("IsDeleted").HasValue(false)).Ignore(m => m.IsDeleted);
 

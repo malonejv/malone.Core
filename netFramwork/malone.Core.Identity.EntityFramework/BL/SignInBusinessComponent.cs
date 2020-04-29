@@ -1,27 +1,40 @@
-﻿using malone.Core.Identity.EntityFramework.EL;
+﻿using malone.Core.CL.DI.ServiceLocator;
+using malone.Core.Identity.EntityFramework.EL;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using System;
 
 namespace malone.Core.Identity.EntityFramework
 {
     // Configure the application sign-in manager which is used in this application.
-    public class SignInBusinessComponent<TKey, TUserEntity, TUserLogin, TUserRole, TUserClaim> : SignInManager<TUserEntity, TKey>
+    public class SignInBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, TUserManager> : SignInManager<TUserEntity, TKey>
         where TKey : IEquatable<TKey>
-        where TUserLogin : CoreUserLogin<TKey>
-        where TUserRole : CoreUserRole<TKey>
-        where TUserClaim : CoreUserClaim<TKey>
-        where TUserEntity : CoreUser<TKey, TUserLogin, TUserRole, TUserClaim>
+        where TUserLogin : CoreUserLogin<TKey>, new()
+        where TUserRole : CoreUserRole<TKey>, new()
+        where TUserClaim : CoreUserClaim<TKey>, new()
+        where TRoleEntity : CoreRole<TKey, TUserRole>, new()
+        where TUserEntity : CoreUser<TKey, TUserLogin, TUserRole, TUserClaim>, new()
+        where TUserManager : UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>
     {
-        public SignInBusinessComponent(UserManager<TUserEntity, TKey> userManager, IAuthenticationManager authenticationManager) : base(userManager, authenticationManager)
+        public SignInBusinessComponent(TUserManager userManager, IAuthenticationManager authenticationManager) : base(userManager, authenticationManager)
         {
         }
+
+
+        public static SignInBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, TUserManager> Create(IdentityFactoryOptions<SignInBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, TUserManager>> options, IOwinContext context)
+        {
+            var instance = new SignInBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, TUserManager>(
+                context.GetUserManager<TUserManager>(), context.Authentication);
+            return instance;
+        }
+
     }
 
-    public class SignInBusinessComponent : SignInBusinessComponent<int, CoreUser, CoreUserLogin, CoreUserRole, CoreUserClaim>
+    public class SignInBusinessComponent : SignInBusinessComponent<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim, UserBusinessComponent>
     {
-        public SignInBusinessComponent(UserManager<CoreUser, int> userManager, IAuthenticationManager authenticationManager) : base(userManager, authenticationManager)
+        public SignInBusinessComponent(UserBusinessComponent userManager, IAuthenticationManager authenticationManager) : base(userManager, authenticationManager)
         {
         }
     }

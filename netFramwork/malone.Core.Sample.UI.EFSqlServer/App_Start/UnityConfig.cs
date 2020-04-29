@@ -1,11 +1,17 @@
 using System;
+using System.Web.Mvc;
 using AutoMapper;
 using malone.core.Sample.DI;
 using malone.Core.CL.Configurations;
 using malone.Core.CL.Configurations.CoreConfiguration;
 using malone.Core.CL.Configurations.Sections;
 using malone.Core.CL.Configurations.Sections.Feature;
+using malone.Core.CL.DI.ServiceLocator;
+using malone.Core.Identity.EntityFramework.BL;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Unity;
+using Unity.AspNet.Mvc;
+using Unity.Injection;
 
 namespace malone.Core.Sample.UI.EFSqlServer
 {
@@ -20,6 +26,16 @@ namespace malone.Core.Sample.UI.EFSqlServer
           {
               var container = new UnityContainer();
               RegisterTypes(container);
+
+              //TODO: Integrar en el framework
+              container.RegisterType<IServiceLocator, UnityServiceLocator>(new InjectionConstructor(container));
+              var unityServiceLocator = container.Resolve<IServiceLocator>();
+
+              ServiceLocator.SetResolver(unityServiceLocator);
+              DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+
+              //OPTION: Uncomment if you want to use PerRequestLifetimeManager
+              DynamicModuleUtility.RegisterModule(typeof(UnityPerRequestHttpModule));
               return container;
           });
 
@@ -50,6 +66,8 @@ namespace malone.Core.Sample.UI.EFSqlServer
             container.RegisterInstance(mapper);
 
             container.RegisterType<ICoreConfiguration, CoreConfiguration>();
+            container.RegisterType<FeatureSettings>();
+
             var featureSettings = container.Resolve<FeatureSettings>();
             container.RegisterInstance(featureSettings);
 

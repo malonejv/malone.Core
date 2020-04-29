@@ -1,11 +1,6 @@
-﻿using Unity;
-using malone.Core.Sample.Middle.EL;
+﻿using malone.Core.Identity.EntityFramework.EL;
 using malone.Core.Sample.Middle.EL.Model;
-using malone.Core.Identity.EntityFramework.EL;
-using Microsoft.AspNet.Identity;
-using malone.Core.Identity.BL.Components.MessageServices;
-using malone.Core.Identity.BL.Components.MessageServices.Interfaces;
-using malone.Core.Identity.BL.Components.MessageServices.Implementations;
+using Unity;
 
 namespace malone.core.Sample.DI
 {
@@ -20,8 +15,6 @@ namespace malone.core.Sample.DI
             container.RegisterType<CoreUserRole>();
             container.RegisterType<CoreUserClaim>();
             container.RegisterType<TodoList>();
-            container.RegisterType<IEmailMessageService, EmailService>();
-            container.RegisterType<ISmsMessageService, SmsService>();
 
             container.RegisterType<TodoList>();
             container.RegisterType<TaskItem>();

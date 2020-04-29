@@ -1,50 +1,40 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
+﻿using malone.Core.Identity.EntityFramework;
+using malone.Core.Identity.EntityFramework.EL;
+using malone.Core.Sample.UI.EFSqlServer.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using malone.Core.Sample.UI.EFSqlServer.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace malone.Core.Sample.UI.EFSqlServer.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private SignInBusinessComponent _signInManager;
+        private UserBusinessComponent _userManager;
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
-        public ApplicationSignInManager SignInManager
+        public SignInBusinessComponent SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                return _signInManager ?? HttpContext.GetOwinContext().Get<SignInBusinessComponent>();
             }
-            private set 
-            { 
-                _signInManager = value; 
-            }
+            private set { _signInManager = value; }
         }
 
-        public ApplicationUserManager UserManager
+        public UserBusinessComponent UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<UserBusinessComponent>();
             }
             private set
             {
@@ -120,7 +110,7 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -151,12 +141,12 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new CoreUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -175,7 +165,7 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        public async Task<ActionResult> ConfirmEmail(int userId, string code)
         {
             if (userId == null || code == null)
             {
@@ -288,7 +278,7 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
             var userId = await SignInManager.GetVerifiedUserIdAsync();
-            if (userId == null)
+            if (userId == default(int))
             {
                 return View("Error");
             }
@@ -367,7 +357,7 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new CoreUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -459,7 +449,7 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
             {
             }
 
-            public ChallengeResult(string provider, string redirectUri, string userId)
+            public ChallengeResult(string provider, string redirectUri, int? userId)
             {
                 LoginProvider = provider;
                 RedirectUri = redirectUri;
@@ -468,14 +458,14 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
 
             public string LoginProvider { get; set; }
             public string RedirectUri { get; set; }
-            public string UserId { get; set; }
+            public int? UserId { get; set; }
 
             public override void ExecuteResult(ControllerContext context)
             {
                 var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
                 if (UserId != null)
                 {
-                    properties.Dictionary[XsrfKey] = UserId;
+                    properties.Dictionary[XsrfKey] = UserId.Value.ToString();
                 }
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }

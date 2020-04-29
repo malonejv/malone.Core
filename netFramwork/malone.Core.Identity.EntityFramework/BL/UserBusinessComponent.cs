@@ -1,7 +1,11 @@
-﻿using malone.Core.CL.Exceptions;
+﻿using malone.Core.CL.DI.ServiceLocator;
+using malone.Core.CL.Exceptions;
 using malone.Core.CL.Exceptions.Manager.Implementations;
 using malone.Core.Identity.EntityFramework.EL;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
 using Microsoft.Owin.Security.DataProtection;
 using System;
 using System.Data.Entity.Validation;
@@ -11,38 +15,22 @@ using System.Threading.Tasks;
 namespace malone.Core.Identity.EntityFramework
 {
 
-    public class UserBusinessComponent<TKey, TUserEntity, TUserLogin, TUserRole, TUserClaim> : UserManager<TUserEntity, TKey>
+    public class UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim> : UserManager<TUserEntity, TKey>
         where TKey : IEquatable<TKey>
-        where TUserLogin : CoreUserLogin<TKey>
-        where TUserRole : CoreUserRole<TKey>
-        where TUserClaim : CoreUserClaim<TKey>
+        where TUserLogin : CoreUserLogin<TKey>, new()
+        where TUserRole : CoreUserRole<TKey>, new()
+        where TUserClaim : CoreUserClaim<TKey>, new()
+        where TRoleEntity : CoreRole<TKey, TUserRole>
         where TUserEntity : CoreUser<TKey, TUserLogin, TUserRole, TUserClaim>
     {
         public UserBusinessComponent(IUserStore<TUserEntity, TKey> store) : base(store)
         {
-            //// Configure validation logic for usernames
-            //this.UserValidator = new CoreUserValidator<TUserEntity>(this)
-            //{
-            //    AllowOnlyAlphanumericUserNames = false,
-            //    RequireUniqueEmail = true
-            //};
-            //this.PasswordValidator = new PasswordValidator
-            //{
-            //    RequiredLength = 8,
-            //    RequireNonLetterOrDigit = true,
-            //    RequireDigit = true,
-            //    RequireLowercase = true,
-            //    RequireUppercase = true
-            //};
+        }
 
-            //this.EmailService = new EmailService();
-
-            //var provider = new DpapiDataProtectionProvider("TLC");
-            //var entropy = "D4151DA419C4691E";
-            //this.UserTokenProvider = new CoreDataProtectorTokenProvider<TUserEntity>(provider.Create(entropy))
-            //{
-            //    TokenLifespan = TimeSpan.FromDays(1)
-            //};
+        public static UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim> Create(IdentityFactoryOptions<UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>> options, IOwinContext context)
+        {
+            var instance = ServiceLocator.Current.Get<UserManager<TUserEntity, TKey>>() as UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>;
+            return instance;
         }
 
         public async Task<TUserEntity> Login(string username, string password, bool rememberUser, string roleName)
@@ -99,7 +87,7 @@ namespace malone.Core.Identity.EntityFramework
         }
     }
 
-    public class UserBusinessComponent : UserBusinessComponent<int, CoreUser, CoreUserLogin, CoreUserRole, CoreUserClaim>
+    public class UserBusinessComponent : UserBusinessComponent<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim>
     {
         public UserBusinessComponent(IUserStore<CoreUser, int> store) : base(store)
         {

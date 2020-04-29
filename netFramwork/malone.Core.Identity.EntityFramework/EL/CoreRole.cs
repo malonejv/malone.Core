@@ -15,12 +15,8 @@ namespace malone.Core.Identity.EntityFramework.EL
 
     }
 
-    public class CoreRole<TUserRole> : CoreRole<int, TUserRole>, IBaseEntity
-        where TUserRole : CoreUserRole<int>
-    {
-    }
 
-    public class CoreRole: CoreRole<CoreUserRole>, IBaseEntity
+    public class CoreRole: CoreRole<int, CoreUserRole>, IBaseEntity
     {
         public CoreRole()
         {
