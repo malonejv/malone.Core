@@ -92,6 +92,13 @@ namespace malone.Core.Identity.EntityFramework
         public UserBusinessComponent(IUserStore<CoreUser, int> store) : base(store)
         {
         }
+
+        public static UserBusinessComponent Create(IdentityFactoryOptions<UserBusinessComponent> options, IOwinContext context)
+        {
+            var instance = ServiceLocator.Current.Get<UserManager<CoreUser, int>>() as UserBusinessComponent;
+            return instance;
+        }
+
     }
 
 }

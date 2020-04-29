@@ -29,7 +29,7 @@ namespace malone.core.Sample.DI
 
             //Context
             container.RegisterType<IContext, SampleEFContext>(new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
-            container.RegisterType<EFIdentityDbContext<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim>, SampleEFContext>(new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
+            container.RegisterType<EFIdentityDbContext, SampleEFContext>(new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
             container.RegisterType<IDatabaseInitializer<SampleEFContext>, SampleContextInitializer>();
 
             IDatabaseInitializer<SampleEFContext> initializer = null;
@@ -44,8 +44,8 @@ namespace malone.core.Sample.DI
             container.RegisterType<IRepository<TodoList>, EFRepository<TodoList>>();
             container.RegisterType<IRepository<TaskItem>, EFRepository<TaskItem>>();
 
-            container.RegisterType<IRoleStore<CoreRole, int>, RoleRepository<EFIdentityDbContext<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim>>>();
-            container.RegisterType<IUserStore<CoreUser, int>, UserRepository<EFIdentityDbContext<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim>>>();
+            container.RegisterType<IRoleStore<CoreRole, int>, RoleRepository<EFIdentityDbContext>>();
+            container.RegisterType<IUserStore<CoreUser, int>, UserRepository<EFIdentityDbContext>>();
 
             #endregion
 

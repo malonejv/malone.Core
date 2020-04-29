@@ -37,6 +37,13 @@ namespace malone.Core.Identity.EntityFramework
         public SignInBusinessComponent(UserBusinessComponent userManager, IAuthenticationManager authenticationManager) : base(userManager, authenticationManager)
         {
         }
+
+        public static SignInBusinessComponent Create(IdentityFactoryOptions<SignInBusinessComponent> options, IOwinContext context)
+        {
+            var instance = new SignInBusinessComponent(
+                context.GetUserManager<UserBusinessComponent>(), context.Authentication);
+            return instance;
+        }
     }
 
 }

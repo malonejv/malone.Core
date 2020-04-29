@@ -20,7 +20,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
         where TEntity : class, IBaseEntity<TKey>
     {
         protected DbSet<TEntity> _dbSet;
-        protected EFDbContext _context;
+        protected DbContext _context;
 
         protected IUnitOfWork UnitOfWork { get; }
 
@@ -33,7 +33,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
 
             UnitOfWork = unitOfWork;
-            _context = (EFDbContext)UnitOfWork.Context;
+            _context = UnitOfWork.Context as DbContext;
             _dbSet = _context.Set<TEntity>();
         }
 
@@ -42,7 +42,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
 
             UnitOfWork = unitOfWork;
-            _context = (EFDbContext)UnitOfWork.Context;
+            _context = UnitOfWork.Context as DbContext;
             _dbSet = _context.Set<TEntity>();
 
             MessageManager = exManager;

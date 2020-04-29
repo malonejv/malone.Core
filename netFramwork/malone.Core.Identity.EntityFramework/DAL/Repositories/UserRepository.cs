@@ -26,7 +26,7 @@ namespace malone.Core.DAL.EF.Repositories.Identity
     }
 
     public class UserRepository<TContext> : UserRepository<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim,TContext>
-        where TContext : EFIdentityDbContext<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim>, IContext
+        where TContext : EFIdentityDbContext, IContext
     {
         public UserRepository(TContext context) : base(context)
         {

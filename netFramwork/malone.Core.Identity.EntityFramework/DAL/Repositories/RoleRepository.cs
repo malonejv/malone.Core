@@ -26,8 +26,8 @@ namespace malone.Core.DAL.EF.Repositories.Identity
         }
     }
 
-    public class RoleRepository<TContext> : RoleRepository<int, CoreUser, CoreRole, CoreUserLogin,CoreUserRole,CoreUserClaim, TContext>
-        where TContext : EFIdentityDbContext<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim>, IContext
+    public class RoleRepository<TContext> : RoleRepository<int, CoreUser, CoreRole, CoreUserLogin,CoreUserRole,CoreUserClaim, EFIdentityDbContext>
+        where TContext : EFIdentityDbContext, IContext
     {
 
         public RoleRepository(TContext context) : base(context)

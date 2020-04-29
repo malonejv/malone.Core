@@ -24,10 +24,10 @@ namespace malone.Core.Sample.UI.EFSqlServer
         public void ConfigureAuth(IAppBuilder app)
         {
             app.CreatePerOwinContext(SampleEFContext.Create);
-            app.CreatePerOwinContext<UserBusinessComponent<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim>>
-                (UserBusinessComponent<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim>.Create);
-            app.CreatePerOwinContext<SignInBusinessComponent<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim, UserBusinessComponent>>(
-                SignInBusinessComponent<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim, UserBusinessComponent>.Create);
+            app.CreatePerOwinContext<UserBusinessComponent>
+                (UserBusinessComponent.Create);
+            app.CreatePerOwinContext<SignInBusinessComponent>(
+                SignInBusinessComponent.Create);
 
             var userManagerConfiguration = new UserManagerConfiguration();
             userManagerConfiguration.ConfigureUserManager();
