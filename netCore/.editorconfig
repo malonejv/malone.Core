@@ -1,7 +1,0 @@
-﻿[*.cs]
-
-# CA1716: Identifiers should not match keywords
-dotnet_diagnostic.CA1716.severity = warning
-
-# CA1031: Do not catch general exception types
-dotnet_diagnostic.CA1031.severity = silent
