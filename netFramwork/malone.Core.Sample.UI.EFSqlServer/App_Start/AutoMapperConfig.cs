@@ -6,13 +6,13 @@ using System.Web;
 
 namespace malone.Core.Sample.UI.EFSqlServer
 {
-    public class AutoMapperConfig
-    {
-        public static MapperConfiguration RegisterProfiles()
-        {
-            var configuration = new MapperConfiguration(cfg => cfg.AddMaps(new[] { "malone.Core.Sample.Middle" }));
+    //public class AutoMapperConfig
+    //{
+    //    public static MapperConfiguration RegisterProfiles()
+    //    {
+    //        var configuration = new MapperConfiguration(cfg => cfg.AddMaps(new[] { "malone.Core.Sample.Middle" }));
 
-            return configuration;
-        }
-    }
+    //        return configuration;
+    //    }
+    //}
 }

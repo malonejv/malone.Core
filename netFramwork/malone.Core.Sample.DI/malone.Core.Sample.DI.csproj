@@ -60,6 +60,9 @@
     <OutputPath>bin\x64\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -153,12 +156,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegisterBusinessLayerTypes.cs" />
-    <Compile Include="RegisterCommonTypes.cs" />
-    <Compile Include="RegisterDataAccessLayerTypes.cs" />
-    <Compile Include="RegisterEntitesLayer.cs" />
-    <Compile Include="RegisterViewLayerTypes.cs" />
-    <Compile Include="UnityServiceLocator.cs" />
+    <Compile Include="BusinessLayerBootstrapper.cs" />
+    <Compile Include="CommonLayerBootstrapper.cs" />
+    <Compile Include="DataAccessLayerBootstrapper.cs" />
+    <Compile Include="EntitiesLayerBootstrapper.cs" />
+    <Compile Include="SampleBootstrapper.cs" />
+    <Compile Include="UILayerBootstrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -168,6 +171,10 @@
     <ProjectReference Include="..\malone.Core.AdoNet\malone.Core.AdoNet.csproj">
       <Project>{492F80C1-E1F2-4CC9-8DBE-83BA63E7DE4C}</Project>
       <Name>malone.Core.AdoNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.CL.DI.Unity\malone.Core.CL.DI.Unity.csproj">
+      <Project>{0485478E-B02B-407A-9BB6-81BEE44949D2}</Project>
+      <Name>malone.Core.CL.DI.Unity</Name>
     </ProjectReference>
     <ProjectReference Include="..\malone.Core.CL.Logging.Log4Net\malone.Core.CL.Logging.Log4Net.csproj">
       <Project>{6DFC2083-92EF-4D48-AC33-77542EEC33F8}</Project>
@@ -188,6 +195,10 @@
     <ProjectReference Include="..\malone.Core.Identity\malone.Core.Identity.csproj">
       <Project>{0992B1B6-BE12-4B9F-9B15-4D1B03ECD306}</Project>
       <Name>malone.Core.Identity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.Patterns\malone.Core.Patterns.csproj">
+      <Project>{041AF239-40F7-4D36-8CAA-1B5DE002FE4C}</Project>
+      <Name>malone.Core.Patterns</Name>
     </ProjectReference>
     <ProjectReference Include="..\malone.Core.Sample.Middle\malone.Core.Sample.Middle.csproj">
       <Project>{13E35096-AC30-4D5E-8834-8B8D0CD53774}</Project>

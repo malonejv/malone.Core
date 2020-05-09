@@ -61,6 +61,10 @@ namespace malone.Core.Sample.UI.EFSqlServer
             // Make sure to add a Unity.Configuration to the using statements.
             // container.LoadConfiguration();
 
+            #region View Layer Configuration
+
+            container.RegisterType<IUserManagerConfiguration, UserManagerConfiguration>();
+
             var mapperConfiguration = AutoMapperConfig.RegisterProfiles();
             var mapper = new Mapper(mapperConfiguration);
             container.RegisterInstance(mapper);
@@ -70,12 +74,12 @@ namespace malone.Core.Sample.UI.EFSqlServer
 
             var featureSettings = container.Resolve<FeatureSettings>();
             container.RegisterInstance(featureSettings);
+            #endregion
 
             RegisterEntitesLayer.RegisterTypes(container);
             RegisterCommonTypes.RegisterTypes(container);
             RegisterDataAccessLayerTypes.RegisterTypes(container);
             RegisterBusinessLayerTypes.RegisterTypes(container);
-            RegisterViewLayerTypes.RegisterTypes(container);
         }
     }
 }

@@ -96,6 +96,7 @@
     <Compile Include="EL\CoreUserLogin.cs" />
     <Compile Include="EL\CoreUserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BL\UserManagerConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

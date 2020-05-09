@@ -1,12 +1,10 @@
-﻿using malone.Core.CL.DI.ServiceLocator;
+﻿using malone.Core.CL.DI;
 using malone.Core.CL.Exceptions;
 using malone.Core.CL.Exceptions.Manager.Implementations;
 using malone.Core.Identity.EntityFramework.EL;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using Microsoft.Owin.Security.DataProtection;
 using System;
 using System.Data.Entity.Validation;
 using System.Diagnostics;

@@ -85,10 +85,10 @@
     <Compile Include="CL\Configurations\Attributes\FeatureDescriptionAttribute.cs" />
     <Compile Include="CL\Configurations\ConnectionString\ConnectionStringSettings.cs" />
     <Compile Include="CL\Configurations\ConnectionString\ConnectionStringSettingsDictionary.cs" />
-    <Compile Include="CL\Configurations\CoreConfiguration\CoreConfiguration.cs" />
+    <Compile Include="CL\Configurations\CoreConfiguration\CoreSettingConfiguration.cs" />
     <Compile Include="CL\Configurations\Extensions\FeatureExtensions.cs" />
     <Compile Include="CL\Configurations\Extensions\IConfigurationExtensions.cs" />
-    <Compile Include="CL\Configurations\ICoreConfiguration.cs" />
+    <Compile Include="CL\Configurations\ICoreSettingConfiguration.cs" />
     <Compile Include="CL\Configurations\Sections\Feature\BehaviorElement.cs" />
     <Compile Include="CL\Configurations\Sections\Feature\BehaviorElementCollection.cs" />
     <Compile Include="CL\Configurations\Sections\DbFactory\DatabasFactorySection.cs" />
@@ -96,7 +96,7 @@
     <Compile Include="CL\Configurations\Sections\Feature\FeaturesElementCollection.cs" />
     <Compile Include="CL\Configurations\Sections\Feature\FeatureSettings.cs" />
     <Compile Include="CL\Configurations\Sections\Feature\FeatureSettingsSection.cs" />
-    <Compile Include="CL\DI\ServiceLocator\ServiceLocator.cs" />
+    <Compile Include="CL\DI\ServiceLocator.cs" />
     <Compile Include="CL\Exceptions\BaseException.cs" />
     <Compile Include="CL\Exceptions\BusinessException.cs" />
     <Compile Include="CL\Exceptions\BusinessValidationException.cs" />
@@ -117,6 +117,8 @@
     <Compile Include="CL\Helpers\Extensions\CharExtensions.cs" />
     <Compile Include="CL\Helpers\Extensions\EnumExtensions.cs" />
     <Compile Include="CL\Helpers\Extensions\StringExtensions.cs" />
+    <Compile Include="CL\Helpers\Threading\AsyncHelper.cs" />
+    <Compile Include="CL\Helpers\Threading\TaskExtensions.cs" />
     <Compile Include="CL\Log\IFactoryResolver.cs" />
     <Compile Include="CL\Log\ILogger.cs" />
     <Compile Include="CL\Log\LoggerBase.cs" />
@@ -124,6 +126,8 @@
     <Compile Include="CL\Log\LogItem.cs" />
     <Compile Include="CL\Log\LogLevel.cs" />
     <Compile Include="CL\Security\Encryption.cs" />
+    <Compile Include="CL\DI\CoreBootstrapper.cs" />
+    <Compile Include="CL\DI\ILayerBootstrapper.cs" />
     <Compile Include="DAL\Context\IContext.cs" />
     <Compile Include="DAL\Repositories\IRepository.cs" />
     <Compile Include="DAL\UnitOfWork\IUnitOfWork.cs" />
@@ -154,6 +158,12 @@
       <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Exceptions.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\malone.Core.Patterns\malone.Core.Patterns.csproj">
+      <Project>{041AF239-40F7-4D36-8CAA-1B5DE002FE4C}</Project>
+      <Name>malone.Core.Patterns</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

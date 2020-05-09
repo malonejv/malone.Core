@@ -1,6 +1,4 @@
-﻿using malone.Core.CL.DI.ServiceLocator;
-using malone.Core.Identity.EntityFramework.EL;
-using Microsoft.AspNet.Identity;
+﻿using malone.Core.Identity.EntityFramework.EL;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;

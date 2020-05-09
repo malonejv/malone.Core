@@ -1,6 +1,4 @@
-﻿using malone.Core.CL.DI.ServiceLocator;
-using malone.Core.DAL.Context;
-using malone.Core.Identity.BL.Components.MessageServices.Interfaces;
+﻿using malone.Core.CL.DI;
 using malone.Core.Identity.EntityFramework;
 using malone.Core.Identity.EntityFramework.BL;
 using malone.Core.Identity.EntityFramework.EL;
@@ -8,29 +6,29 @@ using malone.Core.Sample.Middle.DAL.Context.EF;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.DataProtection;
+using Microsoft.Owin.Security.Google;
 using Owin;
 using System;
-using System.Web;
-using System.Web.Mvc;
+using Unity;
 
 namespace malone.Core.Sample.UI.EFSqlServer
 {
     public partial class Startup
     {
+
+
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
+            //OPTION: Configuracion
             app.CreatePerOwinContext(SampleEFContext.Create);
-            app.CreatePerOwinContext<UserBusinessComponent>
-                (UserBusinessComponent.Create);
-            app.CreatePerOwinContext<SignInBusinessComponent>(
-                SignInBusinessComponent.Create);
+            app.CreatePerOwinContext<UserBusinessComponent>(UserBusinessComponent.Create);
+            app.CreatePerOwinContext<SignInBusinessComponent>(SignInBusinessComponent.Create);
 
-            var userManagerConfiguration = new UserManagerConfiguration();
+            var userManagerConfiguration = ServiceLocator.Current.Get<IUserManagerConfiguration>();
             userManagerConfiguration.ConfigureUserManager();
+
 
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
@@ -55,11 +53,11 @@ namespace malone.Core.Sample.UI.EFSqlServer
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "496153604649-th4n8cedqb89qt506elg7har6e3nb7sd.apps.googleusercontent.com",
+                ClientSecret = "mZMkvcSbkBUbGEylO2K1SEog"
+            });
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
@@ -83,70 +81,73 @@ namespace malone.Core.Sample.UI.EFSqlServer
 
     }
 
+    //public class UserManagerConfiguration : IUserManagerConfiguration
+    //{
+    //    public UserBusinessComponent UserBC { get; set; }
+    //    public IEmailMessageService EmailService { get; set; }
+    //    public ISmsMessageService SmsService { get; set; }
 
-    public class UserManagerConfiguration : IUserManagerConfiguration
-    {
-        public UserBusinessComponent UserBC { get; set; }
-        public IEmailMessageService EmailService { get; set; }
-        public ISmsMessageService SmsService { get; set; }
+    //    public UserManagerConfiguration(UserBusinessComponent userBusinessComponent, IEmailMessageService emailMessageService, ISmsMessageService smsMessageService)
+    //    {
+    //        UserBC = userBusinessComponent;
+    //        EmailService = emailMessageService;
+    //        SmsService = smsMessageService;
 
-        public UserManagerConfiguration()
-        {
-            UserBC = ServiceLocator.Current.Get<UserManager<CoreUser, int>>() as UserBusinessComponent;
-            EmailService = ServiceLocator.Current.Get<IEmailMessageService>();
-            SmsService = ServiceLocator.Current.Get<ISmsMessageService>();
-        }
+    //        //UserBC = ServiceLocator.Current.Get<UserManager<CoreUser, int>>() as UserBusinessComponent;
+    //        //EmailService = ServiceLocator.Current.Get<IEmailMessageService>();
+    //        //SmsService = ServiceLocator.Current.Get<ISmsMessageService>();
+    //    }
 
-        public void ConfigureUserManager()
-        {
-            //OPTION: Agregar todas estas configuraciones en el web.config
+    //    public void ConfigureUserManager()
+    //    {
+    //        //OPTION: Agregar todas estas configuraciones en el web.config
 
-            // Configure validation logic for usernames
-            UserBC.UserValidator = new UserValidator<CoreUser, int>(UserBC)
-            {
-                AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = true
-            };
+    //        // Configure validation logic for usernames
+    //        UserBC.UserValidator = new UserValidator<CoreUser, int>(UserBC)
+    //        {
+    //            AllowOnlyAlphanumericUserNames = false,
+    //            RequireUniqueEmail = true
+    //        };
 
-            // Configure validation logic for passwords
-            UserBC.PasswordValidator = new PasswordValidator
-            {
-                RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
-            };
+    //        // Configure validation logic for passwords
+    //        UserBC.PasswordValidator = new PasswordValidator
+    //        {
+    //            RequiredLength = 6,
+    //            RequireNonLetterOrDigit = true,
+    //            RequireDigit = true,
+    //            RequireLowercase = true,
+    //            RequireUppercase = true,
+    //        };
 
-            // Configure user lockout defaults
-            UserBC.UserLockoutEnabledByDefault = true;
-            UserBC.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            UserBC.MaxFailedAccessAttemptsBeforeLockout = 5;
+    //        // Configure user lockout defaults
+    //        UserBC.UserLockoutEnabledByDefault = true;
+    //        UserBC.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    //        UserBC.MaxFailedAccessAttemptsBeforeLockout = 5;
 
-            // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
-            // You can write your own provider and plug it in here.
-            UserBC.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<CoreUser, int>
-            {
-                MessageFormat = "Your security code is {0}"
-            });
+    //        // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
+    //        // You can write your own provider and plug it in here.
+    //        UserBC.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<CoreUser, int>
+    //        {
+    //            MessageFormat = "Your security code is {0}"
+    //        });
 
-            UserBC.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<CoreUser, int>
-            {
-                Subject = "Security Code",
-                BodyFormat = "Your security code is {0}"
-            });
+    //        UserBC.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<CoreUser, int>
+    //        {
+    //            Subject = "Security Code",
+    //            BodyFormat = "Your security code is {0}"
+    //        });
 
-            UserBC.EmailService = EmailService;
+    //        UserBC.EmailService = EmailService;
 
-            UserBC.SmsService = SmsService;
+    //        UserBC.SmsService = SmsService;
 
 
-            var provider = new DpapiDataProtectionProvider("Sample");
-            var entropy = "D4151DA419C4691E";
-            UserBC.UserTokenProvider = new DataProtectorTokenProvider<CoreUser, int>(provider.Create(entropy))
-            {
-                TokenLifespan = TimeSpan.FromDays(1)
-            };
-        }
-    }
+    //        var provider = new DpapiDataProtectionProvider("Sample");
+    //        var entropy = "D4151DA419C4691E";
+    //        UserBC.UserTokenProvider = new DataProtectorTokenProvider<CoreUser, int>(provider.Create(entropy))
+    //        {
+    //            TokenLifespan = TimeSpan.FromDays(1)
+    //        };
+    //    }
+    //}
 }

@@ -1,7 +1,6 @@
-﻿using malone.Core.CL.DI.ServiceLocator;
+﻿using malone.Core.CL.DI;
 using malone.Core.CL.Helpers.Extensions;
 using malone.Core.DAL.Context;
-using malone.Core.DAL.EF.Context;
 using malone.Core.Identity.EntityFramework.DAL.EF.Context;
 using malone.Core.Identity.EntityFramework.EL;
 using malone.Core.Sample.Middle.DAL.Context.EF.Mappings;
@@ -11,8 +10,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using Unity;
 
 namespace malone.Core.Sample.Middle.DAL.Context.EF
 {
@@ -57,11 +54,8 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF
 
     public class SampleContextInitializer : DropCreateDatabaseIfModelChanges<SampleEFContext>
     {
-        private PasswordHasher PasswordHasher { get; set; }
-
-        public SampleContextInitializer(PasswordHasher passwordHasher) : base()
+        public SampleContextInitializer() : base()
         {
-            PasswordHasher = passwordHasher;
         }
 
         protected override void Seed(SampleEFContext dbContext)
@@ -82,7 +76,8 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF
             admin.UserName = "admin";
 
             //TODO: Usar Secrets para obtener el password de admin
-            admin.PasswordHash = PasswordHasher.HashPassword("Adm1n.M4l0ne");
+            PasswordHasher hasher = new PasswordHasher();
+            admin.PasswordHash = hasher.HashPassword("Adm1n.M4l0ne");
 
             dbContext.Set<CoreUser>().AddOrUpdate(admin);
 

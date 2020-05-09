@@ -1,4 +1,6 @@
 ﻿using malone.Core.Identity.BL.Components.MessageServices.Interfaces;
+using malone.Core.Identity.EntityFramework.EL;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

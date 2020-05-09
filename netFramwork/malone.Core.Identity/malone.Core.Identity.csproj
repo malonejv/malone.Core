@@ -82,6 +82,7 @@
     <Compile Include="BL\Components\MessageServices\Implementations\SmsMessageService.cs" />
     <Compile Include="BL\Components\MessageServices\Interfaces\IEmailMessageService.cs" />
     <Compile Include="BL\Components\MessageServices\Interfaces\ISmsMessageService.cs" />
+    <Compile Include="BL\Extensions\AuthenticationManagerExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -65,7 +65,7 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -141,13 +141,13 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new CoreUser { UserName = model.Email, Email = model.Email };
+                var user = new CoreUser { UserName = model.UserName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
@@ -199,7 +199,7 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
                     return View("ForgotPasswordConfirmation");
                 }
 
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
@@ -278,7 +278,7 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
             var userId = await SignInManager.GetVerifiedUserIdAsync();
-            if (userId == default(int))
+            if (userId == null)
             {
                 return View("Error");
             }
@@ -449,7 +449,7 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
             {
             }
 
-            public ChallengeResult(string provider, string redirectUri, int? userId)
+            public ChallengeResult(string provider, string redirectUri, string userId)
             {
                 LoginProvider = provider;
                 RedirectUri = redirectUri;
@@ -458,14 +458,14 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
 
             public string LoginProvider { get; set; }
             public string RedirectUri { get; set; }
-            public int? UserId { get; set; }
+            public string UserId { get; set; }
 
             public override void ExecuteResult(ControllerContext context)
             {
                 var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
                 if (UserId != null)
                 {
-                    properties.Dictionary[XsrfKey] = UserId.Value.ToString();
+                    properties.Dictionary[XsrfKey] = UserId;
                 }
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }

@@ -11,13 +11,13 @@ namespace malone.Core.CL.Configurations.Sections.Feature
     {
         private static FeatureSettings Instance { get; set; }
 
-        private ICoreConfiguration Configuration;
+        private ICoreSettingConfiguration Configuration;
         private FeatureSettingsSection FeatureSettingsSection;
 
         public IEnumerable<FeatureElement> Features { get { return FeatureSettingsSection.Features.Cast<FeatureElement>(); } }
 
 
-        public FeatureSettings(ICoreConfiguration configuration)
+        public FeatureSettings(ICoreSettingConfiguration configuration)
         {
             if (configuration == null) throw new ArgumentNullException(nameof(configuration));
 

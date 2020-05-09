@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using malone.Core.Sample.UI.EFSqlServer.Models;
 using malone.Core.Identity.EntityFramework;
+using malone.Core.Identity.BL.Extensions;
 
 namespace malone.Core.Sample.UI.EFSqlServer.Controllers
 {
@@ -62,7 +63,7 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId.ToString())
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
             return View(model);
         }
@@ -298,7 +299,7 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
         public ActionResult LinkLogin(string provider)
         {
             // Request a redirect to the external login provider to link a login for the current user
-            return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId<int>());
+            return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId<int>().ToString());
         }
 
         //
