@@ -79,11 +79,11 @@
     <PostBuildEvent>
       if $(ConfigurationName) == Release (
       nuget pack "$(ProjectPath)" -Properties Configuration=Release -IncludeReferencedProjects
-      nuget list $(ProjectName) -allversions -source http://localhost:8081/repository/nuget-hosted-v3 | find /c " @(VersionNumber)"
+      nuget list $(ProjectName) -allversions -source http://localhost:8081/repository/nuget-hosted-v3 | find /c "$(ProjectName) @(VersionNumber)"
       if errorlevel 1 (
       nuget push "$(ProjectName).@(VersionNumber).nupkg" 5eded2a8-d471-3e41-8fe3-f0cf84c03b2c -src http://localhost:8081/repository/nuget-hosted-v3
       )
       )
-    </PostBuildEvent>
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
