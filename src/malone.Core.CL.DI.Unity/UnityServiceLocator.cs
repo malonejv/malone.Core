@@ -5,7 +5,7 @@ namespace malone.Core.CL.DI.Unity
 {
     public class UnityServiceLocator : IServiceLocator
     {
-        private readonly IUnityContainer _container;  // Ninject kernel
+        private readonly IUnityContainer _container;  
 
         public UnityServiceLocator(IUnityContainer container)
         {
