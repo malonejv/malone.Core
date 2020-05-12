@@ -113,10 +113,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\malone.Core.DAL.EF\malone.Core.DAL.EF.csproj">
-      <Project>{BC436BFA-F343-43E9-A742-141B1598DF2E}</Project>
-      <Name>malone.Core.DAL.EF</Name>
-    </ProjectReference>
     <ProjectReference Include="..\malone.Core.EF\malone.Core.EF.csproj">
       <Project>{b3a99961-88eb-4256-984a-01c346541183}</Project>
       <Name>malone.Core.EF</Name>
@@ -155,7 +151,7 @@
     </PostBuildEventDependsOn>
     <PostBuildEvent>
       if $(ConfigurationName) == ReleaseNuget (
-      nuget pack "$(ProjectPath)" -Properties Configuration=Release -IncludeReferencedProjects
+      nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects
       nuget list $(ProjectName) -allversions -source http://localhost:8081/repository/nuget-hosted-v3 | find /c "$(ProjectName) @(VersionNumber)"
       if errorlevel 1 (
       nuget push "$(ProjectName).@(VersionNumber).nupkg" 5eded2a8-d471-3e41-8fe3-f0cf84c03b2c -src http://localhost:8081/repository/nuget-hosted-v3

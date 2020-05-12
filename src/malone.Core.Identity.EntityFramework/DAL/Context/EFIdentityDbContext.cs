@@ -1,16 +1,9 @@
-﻿using malone.Core.DAL.Context;
-using malone.Core.DAL.EF.Context;
+﻿using malone.Core.EF.DAL.Context;
 using malone.Core.Identity.EntityFramework.DAL.Mappings;
 using malone.Core.Identity.EntityFramework.EL;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Infrastructure.Annotations;
-using System.Data.Entity.ModelConfiguration;
-using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace malone.Core.Identity.EntityFramework.DAL.EF.Context

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace malone.Core.DAL.EF.Context
+namespace malone.Core.EF.DAL.Context
 {
 
     public interface IEFContext : IContext
