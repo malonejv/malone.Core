@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props" Condition="Exists('..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" />
+  <Import Project="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props" Condition="Exists('..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props')" />
+  <Import Project="..\packages\Microsoft.NetCore.Analyzers.2.9.8\build\Microsoft.NetCore.Analyzers.props" Condition="Exists('..\packages\Microsoft.NetCore.Analyzers.2.9.8\build\Microsoft.NetCore.Analyzers.props')" />
+  <Import Project="..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props" Condition="Exists('..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props')" />
+  <Import Project="..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props" Condition="Exists('..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>malone.Core</RootNamespace>
+    <AssemblyName>malone.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseNuget|AnyCPU'">
+    <OutputPath>bin\ReleaseNuget\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseNuget|x86'">
+    <OutputPath>bin\x86\ReleaseNuget\</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseNuget|x64'">
+    <OutputPath>bin\x64\ReleaseNuget\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BL\Components\Implementations\BusinessComponent.cs" />
+    <Compile Include="BL\Components\Implementations\BusinessValidator.cs" />
+    <Compile Include="BL\Components\Interfaces\IBusinessComponent.cs" />
+    <Compile Include="BL\Components\Interfaces\IBusinessValidator.cs" />
+    <Compile Include="CL\Configurations\Attributes\FeatureDescriptionAttribute.cs" />
+    <Compile Include="CL\Configurations\ConnectionString\ConnectionStringSettings.cs" />
+    <Compile Include="CL\Configurations\ConnectionString\ConnectionStringSettingsDictionary.cs" />
+    <Compile Include="CL\Configurations\CoreConfiguration\CoreSettingConfiguration.cs" />
+    <Compile Include="CL\Configurations\Extensions\FeatureExtensions.cs" />
+    <Compile Include="CL\Configurations\Extensions\IConfigurationExtensions.cs" />
+    <Compile Include="CL\Configurations\ICoreSettingConfiguration.cs" />
+    <Compile Include="CL\Configurations\Sections\Feature\BehaviorElement.cs" />
+    <Compile Include="CL\Configurations\Sections\Feature\BehaviorElementCollection.cs" />
+    <Compile Include="CL\Configurations\Sections\DbFactory\DatabasFactorySection.cs" />
+    <Compile Include="CL\Configurations\Sections\Feature\FeatureElement.cs" />
+    <Compile Include="CL\Configurations\Sections\Feature\FeaturesElementCollection.cs" />
+    <Compile Include="CL\Configurations\Sections\Feature\FeatureSettings.cs" />
+    <Compile Include="CL\Configurations\Sections\Feature\FeatureSettingsSection.cs" />
+    <Compile Include="CL\DI\ServiceLocator.cs" />
+    <Compile Include="CL\Exceptions\BaseException.cs" />
+    <Compile Include="CL\Exceptions\BusinessException.cs" />
+    <Compile Include="CL\Exceptions\BusinessValidationException.cs" />
+    <Compile Include="CL\Exceptions\CoreErrors.cs" />
+    <Compile Include="CL\Exceptions\DataAccessException.cs" />
+    <Compile Include="CL\Exceptions\Handler\Implementations\ExceptionHandler.cs" />
+    <Compile Include="CL\Exceptions\Handler\Interfaces\IExceptionHandler.cs" />
+    <Compile Include="CL\Exceptions\Manager\Implementations\ExceptionMessageManager.cs" />
+    <Compile Include="CL\Exceptions\Manager\Interfaces\IExceptionMessageManager.cs" />
+    <Compile Include="CL\Exceptions\Resources\Exceptions.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.resx</DependentUpon>
+    </Compile>
+    <Compile Include="CL\Exceptions\ServiceAgentException.cs" />
+    <Compile Include="CL\Exceptions\ViewException.cs" />
+    <Compile Include="CL\Helpers\Extensions\ByteArrayExtensions.cs" />
+    <Compile Include="CL\Helpers\Extensions\CharExtensions.cs" />
+    <Compile Include="CL\Helpers\Extensions\EnumExtensions.cs" />
+    <Compile Include="CL\Helpers\Extensions\StringExtensions.cs" />
+    <Compile Include="CL\Helpers\Threading\AsyncHelper.cs" />
+    <Compile Include="CL\Helpers\Threading\TaskExtensions.cs" />
+    <Compile Include="CL\Log\IFactoryResolver.cs" />
+    <Compile Include="CL\Log\ILogger.cs" />
+    <Compile Include="CL\Log\LoggerBase.cs" />
+    <Compile Include="CL\Log\LoggerFactory.cs" />
+    <Compile Include="CL\Log\LogItem.cs" />
+    <Compile Include="CL\Log\LogLevel.cs" />
+    <Compile Include="CL\Security\Encryption.cs" />
+    <Compile Include="CL\DI\CoreBootstrapper.cs" />
+    <Compile Include="CL\DI\ILayerBootstrapper.cs" />
+    <Compile Include="DAL\Context\IContext.cs" />
+    <Compile Include="DAL\Repositories\IRepository.cs" />
+    <Compile Include="DAL\UnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="DAL\UnitOfWork\UnitOfWork.cs" />
+    <Compile Include="DAL\ServiceAgents\IServiceAgent.cs" />
+    <Compile Include="DAL\ServiceAgents\ServiceAgent.cs" />
+    <Compile Include="EL\Filters\IFilterExpression.cs" />
+    <Compile Include="EL\Model\IAuditable.cs" />
+    <Compile Include="EL\Model\IBaseEntity.cs" />
+    <Compile Include="EL\Model\ISoftDelete.cs" />
+    <Compile Include="EL\Model\IVersionable.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Admin\IResourceAdmin.cs" />
+    <Compile Include="Resources\Exceptions.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CL\Helpers\Attributes\" />
+    <Folder Include="SL\" />
+    <Folder Include="UI\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CL\Exceptions\Resources\Exceptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Exceptions.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\malone.Core.Patterns\malone.Core.Patterns.csproj">
+      <Project>{041AF239-40F7-4D36-8CAA-1B5DE002FE4C}</Project>
+      <Name>malone.Core.Patterns</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.NetCore.Analyzers.2.9.8\build\Microsoft.NetCore.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NetCore.Analyzers.2.9.8\build\Microsoft.NetCore.Analyzers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props'))" />
+  </Target>
+  <Target Name="PostBuildMacros">
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="Targets" />
+    </GetAssemblyIdentity>
+    <ItemGroup>
+      <VersionNumber Include="@(Targets->'%(Version)')" />
+    </ItemGroup>
+  </Target>
+  <PropertyGroup>
+    <PostBuildEventDependsOn>
+      $(PostBuildEventDependsOn);
+      PostBuildMacros;
+    </PostBuildEventDependsOn>
+    <PostBuildEvent>
+      if $(ConfigurationName) == ReleaseNuget (
+      nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects
+      nuget list $(ProjectName) -allversions -source http://localhost:8081/repository/nuget-hosted-v3 | find /c "$(ProjectName) @(VersionNumber)"
+      if errorlevel 1 (
+      nuget push "$(ProjectName).@(VersionNumber).nupkg" 5eded2a8-d471-3e41-8fe3-f0cf84c03b2c -src http://localhost:8081/repository/nuget-hosted-v3
+      )
+      )
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
