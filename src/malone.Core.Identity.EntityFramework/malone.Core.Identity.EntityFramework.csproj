@@ -92,6 +92,7 @@
     <Compile Include="BL\RoleBusinessComponent.cs" />
     <Compile Include="BL\SignInBusinessComponent.cs" />
     <Compile Include="BL\UserBusinessComponent.cs" />
+    <Compile Include="BL\UserBussinessValidator.cs" />
     <Compile Include="DAL\Context\EFIdentityDbContext.cs" />
     <Compile Include="DAL\Mappings\CoreRoleMapping.cs" />
     <Compile Include="DAL\Mappings\CoreUserClaimMapping.cs" />
@@ -152,10 +153,10 @@
     <PostBuildEvent>
       if $(ConfigurationName) == ReleaseNuget (
       nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects
-      nuget list $(ProjectName) -allversions -source http://localhost:8081/repository/nuget-hosted-v3 | find /c "$(ProjectName) @(VersionNumber)"
+      nuget list $(ProjectName) -allversions --source "github" | find /c "$(ProjectName) @(VersionNumber)"
       if errorlevel 1 (
-      nuget push "$(ProjectName).@(VersionNumber).nupkg" 5eded2a8-d471-3e41-8fe3-f0cf84c03b2c -src http://localhost:8081/repository/nuget-hosted-v3
-      )
+      nuget push "$(ProjectName).@(VersionNumber).nupkg"-src "github"
+	  )
       )
 </PostBuildEvent>
   </PropertyGroup>

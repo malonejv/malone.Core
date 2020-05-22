@@ -1,6 +1,6 @@
 ﻿using malone.Core.BL.Components.Interfaces;
 using malone.Core.CL.Exceptions;
-using malone.Core.CL.Exceptions.Handler.Interfaces;
+using malone.Core.CL.Exceptions.Handler;
 using malone.Core.CL.Exceptions.Manager.Interfaces;
 using malone.Core.DAL.Repositories;
 using malone.Core.DAL.UnitOfWork;
@@ -15,7 +15,7 @@ namespace malone.Core.BL.Components.Implementations
     public abstract class BusinessComponent<TKey, TEntity, TValidator> : IBusinessComponent<TKey, TEntity, TValidator>
         where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
-        where TValidator : IBusinessValidator<TKey, TEntity>
+        where TValidator : IBusinessValidator<TKey, TEntity> 
     {
 
         #region Properties
@@ -26,54 +26,48 @@ namespace malone.Core.BL.Components.Implementations
 
         public TValidator BusinessValidator { get; set; }
 
-        protected IExceptionMessageManager MessageManager { get; }
-
-        protected IExceptionHandler ExceptionHandler { get; }
+        protected IExceptionHandler<CoreErrors> ExceptionHandler { get; }
 
         #endregion
 
-        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TKey, TEntity> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
+        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TKey, TEntity> repository, IExceptionHandler<CoreErrors> exceptionHandler)
         {
             UnitOfWork = unitOfWork;
             BusinessValidator = businessValidator;
             Repository = repository;
 
-            MessageManager = exManager;
-            ExceptionHandler = exHandler;
+            ExceptionHandler = exceptionHandler;
         }
 
         #region Validations
 
-        protected virtual bool IsBusinessValid(List<ValidationRule> validationMethods)
-        {
-            ValidationResult result = BusinessValidator.Validate(validationMethods);
+        //protected virtual bool IsBusinessValid(List<ValidationRule> validationMethods)
+        //{
+        //    ValidationResult result = BusinessValidator.Validate(validationMethods);
 
-            return result.IsValid;
-        }
+        //    return result.IsValid;
+        //}
 
-        protected ValidationResult ValidateBusiness(List<ValidationRule> validationMethods)
-        {
-            ValidationResult validationResults = BusinessValidator.Validate(validationMethods);
-            if (!validationResults.IsValid)
-            {
-                List<string> errors = new List<string>();
-                string message = string.Empty;
-                foreach (var validationFailure in validationResults.Errors)
-                {
-                    //if (validationFailure.ErrorCode.HasValue)
-                    //    //message = string.Format("Error {0}: {1}", validationFailure.ErrorCode.Value, validationFailure.Message);
-                    //else
-                    message = validationFailure.Message;
+        //protected ValidationResult ValidateBusiness(List<ValidationRule> validationMethods)
+        //{
+        //    ValidationResult validationResults = BusinessValidator.Validate(validationMethods);
+        //    if (!validationResults.IsValid)
+        //    {
+        //        List<string> errors = new List<string>();
+        //        string message = string.Empty;
+        //        foreach (var validationFailure in validationResults.Errors)
+        //        {
+        //            message = validationFailure.Message;
 
-                    errors.Add(message);
-                    message = string.Empty;
-                }
+        //            errors.Add(message);
+        //            message = string.Empty;
+        //        }
 
-                BusinessValidationException valEx = new BusinessValidationException(errors);
-                throw valEx;
-            }
-            return validationResults;
-        }
+        //        BusinessValidationException valEx = new BusinessValidationException(errors);
+        //        throw valEx;
+        //    }
+        //    return validationResults;
+        //}
 
         #endregion
 
@@ -90,6 +84,7 @@ namespace malone.Core.BL.Components.Implementations
             {
                 var result = Repository.Get(filter, orderBy, includeDeleted, includeProperties);
 
+                //TODO: Agregar configuración. Evaluar opcion de configurar por entidad o genérico.
                 //if (result.Count() == 0)
                 //{
                 //    var message = string.Format(messageManager.GetDescription((int)CoreErrors.E304), typeof(TEntity));
@@ -97,27 +92,9 @@ namespace malone.Core.BL.Components.Implementations
                 //}
                 return result;
             }
-            catch (DataAccessException dex)
-            {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E300), typeof(TEntity));
-                var bex = new BusinessException((int)CoreErrors.E300, message, dex);
-                ExceptionHandler.HandleException(bex);
-            }
             catch (Exception ex)
             {
-                var isBaseException = typeof(BaseException).IsAssignableFrom(ex.GetType());
-                if (!isBaseException)
-                {
-                    var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E300), typeof(TEntity));
-                    var bex = new BusinessException((int)CoreErrors.E300, message, ex, true);
-                    ExceptionHandler.HandleException(bex);
-                }
-                else
-                {
-                    var bex = (BaseException)ex;
-                    if (bex.Rethrow)
-                        throw bex;
-                }
+                ExceptionHandler.HandleException<BusinessException>(ex, CoreErrors.E300, typeof(TEntity));
             }
             return null;
         }
@@ -126,12 +103,13 @@ namespace malone.Core.BL.Components.Implementations
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             bool includeDeleted = false,
             string includeProperties = ""
-       )
+        )
         {
             try
             {
                 var result = Repository.GetAll(orderBy, includeDeleted, includeProperties);
 
+                //TODO: Agregar configuración. Evaluar opcion de configurar por entidad o genérico.
                 //if (result.Count() == 0)
                 //{
                 //    var message = string.Format(messageManager.GetDescription((int)CoreErrors.E304), typeof(TEntity));
@@ -139,27 +117,9 @@ namespace malone.Core.BL.Components.Implementations
                 //}
                 return result;
             }
-            catch (DataAccessException dex)
-            {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E300), typeof(TEntity));
-                var bex = new BusinessException((int)CoreErrors.E300, message, dex);
-                ExceptionHandler.HandleException(bex);
-            }
             catch (Exception ex)
             {
-                var isBaseException = typeof(BaseException).IsAssignableFrom(ex.GetType());
-                if (!isBaseException)
-                {
-                    var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E300), typeof(TEntity));
-                    var bex = new BusinessException((int)CoreErrors.E300, message, ex, true);
-                    ExceptionHandler.HandleException(bex);
-                }
-                else
-                {
-                    var bex = (BaseException)ex;
-                    if (bex.Rethrow)
-                        throw bex;
-                }
+                ExceptionHandler.HandleException<BusinessException>(ex, CoreErrors.E300, typeof(TEntity));
             }
             return null;
         }
@@ -175,32 +135,13 @@ namespace malone.Core.BL.Components.Implementations
 
                 if (result == null)
                 {
-                    var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E304), typeof(TEntity));
-                    throw new BusinessException((int)CoreErrors.E304, message);
+                    ExceptionHandler.HandleException<BusinessException>( CoreErrors.E304, typeof(TEntity));
                 }
                 return result;
             }
-            catch (DataAccessException dex)
-            {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E300), typeof(TEntity));
-                var bex = new BusinessException((int)CoreErrors.E300, message, dex);
-                ExceptionHandler.HandleException(bex);
-            }
             catch (Exception ex)
             {
-                var isBaseException = typeof(BaseException).IsAssignableFrom(ex.GetType());
-                if (!isBaseException)
-                {
-                    var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E300), typeof(TEntity));
-                    var bex = new BusinessException((int)CoreErrors.E300, message, ex, true);
-                    ExceptionHandler.HandleException(bex);
-                }
-                else
-                {
-                    var bex = (BaseException)ex;
-                    if (bex.Rethrow)
-                        throw bex;
-                }
+                ExceptionHandler.HandleException<BusinessException>(ex, CoreErrors.E300, typeof(TEntity));
             }
             return null;
         }
@@ -218,32 +159,13 @@ namespace malone.Core.BL.Components.Implementations
 
                 if (result == null)
                 {
-                    var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E304), typeof(TEntity));
-                    throw new BusinessException((int)CoreErrors.E304, message);
+                    ExceptionHandler.HandleException<BusinessException>(CoreErrors.E304, typeof(TEntity));
                 }
                 return result;
             }
-            catch (DataAccessException dex)
-            {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E300), typeof(TEntity));
-                var bex = new BusinessException((int)CoreErrors.E300, message, dex);
-                ExceptionHandler.HandleException(bex);
-            }
             catch (Exception ex)
             {
-                var isBaseException = typeof(BaseException).IsAssignableFrom(ex.GetType());
-                if (!isBaseException)
-                {
-                    var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E300), typeof(TEntity));
-                    var bex = new BusinessException((int)CoreErrors.E300, message, ex, true);
-                    ExceptionHandler.HandleException(bex);
-                }
-                else
-                {
-                    var bex = (BaseException)ex;
-                    if (bex.Rethrow)
-                        throw bex;
-                }
+                ExceptionHandler.HandleException<BusinessException>(ex, CoreErrors.E300, typeof(TEntity));
             }
             return null;
         }
@@ -252,35 +174,16 @@ namespace malone.Core.BL.Components.Implementations
         {
             try
             {
-                ValidateBusiness(BusinessValidator.AddValidationRules);
+                var validationResult =  BusinessValidator.Validate(BusinessValidator.ExecuteAddValidationRules, BusinessValidator.AddValidationRules);
+                if(!validationResult.IsValid)
+                    ExceptionHandler.HandleException<BusinessValidationException>(validationResult);
+
                 Repository.Insert(entity);
                 UnitOfWork.SaveChanges();
             }
-            catch (BusinessValidationException valEx)
-            {
-                ExceptionHandler.HandleException(valEx);
-            }
-            catch (DataAccessException dex)
-            {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E301), typeof(TEntity));
-                var bex = new BusinessException((int)CoreErrors.E301, message, dex);
-                ExceptionHandler.HandleException(bex);
-            }
             catch (Exception ex)
             {
-                var isBaseException = typeof(BaseException).IsAssignableFrom(ex.GetType());
-                if (!isBaseException)
-                {
-                    var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E301), typeof(TEntity));
-                    var bex = new BusinessException((int)CoreErrors.E301, message, ex, true);
-                    ExceptionHandler.HandleException(bex);
-                }
-                else
-                {
-                    var bex = (BaseException)ex;
-                    if (bex.Rethrow)
-                        throw bex;
-                }
+                ExceptionHandler.HandleException<BusinessException>(ex, CoreErrors.E301, typeof(TEntity));
             }
         }
 
@@ -288,31 +191,15 @@ namespace malone.Core.BL.Components.Implementations
         {
             try
             {
-                ValidateBusiness(BusinessValidator.UpdateValidationRules);
+                var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteUpdateValidationRules,BusinessValidator.UpdateValidationRules);
+                if (!validationResult.IsValid)
+                    ExceptionHandler.HandleException<BusinessValidationException>(validationResult);
                 Repository.Update(entity);
                 UnitOfWork.SaveChanges();
             }
-            catch (DataAccessException dex)
-            {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E303), typeof(TEntity));
-                var bex = new BusinessException((int)CoreErrors.E303, message, dex);
-                ExceptionHandler.HandleException(bex);
-            }
             catch (Exception ex)
             {
-                var isBaseException = typeof(BaseException).IsAssignableFrom(ex.GetType());
-                if (!isBaseException)
-                {
-                    var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E303), typeof(TEntity));
-                    var bex = new BusinessException((int)CoreErrors.E303, message, ex, true);
-                    ExceptionHandler.HandleException(bex);
-                }
-                else
-                {
-                    var bex = (BaseException)ex;
-                    if (bex.Rethrow)
-                        throw bex;
-                }
+                ExceptionHandler.HandleException<BusinessException>(ex, CoreErrors.E303, typeof(TEntity));
             }
         }
 
@@ -320,7 +207,9 @@ namespace malone.Core.BL.Components.Implementations
         {
             try
             {
-                ValidateBusiness(BusinessValidator.DeleteValidationRules);
+                var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteDeleteValidationRules,BusinessValidator.DeleteValidationRules);
+                if (!validationResult.IsValid)
+                    ExceptionHandler.HandleException<BusinessValidationException>(validationResult);
                 if (entity is ISoftDelete)
                 {
                     ISoftDelete noDeletableEntity = entity as ISoftDelete;
@@ -333,27 +222,9 @@ namespace malone.Core.BL.Components.Implementations
                 }
                 UnitOfWork.SaveChanges();
             }
-            catch (DataAccessException dex)
-            {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E302), typeof(TEntity));
-                var bex = new BusinessException((int)CoreErrors.E302, message, dex);
-                ExceptionHandler.HandleException(bex);
-            }
             catch (Exception ex)
             {
-                var isBaseException = typeof(BaseException).IsAssignableFrom(ex.GetType());
-                if (!isBaseException)
-                {
-                    var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E302), typeof(TEntity));
-                    var bex = new BusinessException((int)CoreErrors.E302, message, ex, true);
-                    ExceptionHandler.HandleException(bex);
-                }
-                else
-                {
-                    var bex = (BaseException)ex;
-                    if (bex.Rethrow)
-                        throw bex;
-                }
+                ExceptionHandler.HandleException<BusinessException>(ex, CoreErrors.E302, typeof(TEntity));
             }
         }
 
@@ -366,8 +237,8 @@ namespace malone.Core.BL.Components.Implementations
    where TValidator : IBusinessValidator<TEntity>
     {
 
-        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TEntity> repository, IExceptionMessageManager exManager, IExceptionHandler exHandler)
-            : base(unitOfWork, businessValidator, repository, exManager, exHandler)
+        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TEntity> repository, IExceptionHandler<CoreErrors> exceptionHandler)
+            : base(unitOfWork, businessValidator, repository, exceptionHandler)
         {
         }
     }

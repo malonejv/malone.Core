@@ -104,36 +104,37 @@
     <Compile Include="BL\Components\Implementations\BusinessValidator.cs" />
     <Compile Include="BL\Components\Interfaces\IBusinessComponent.cs" />
     <Compile Include="BL\Components\Interfaces\IBusinessValidator.cs" />
-    <Compile Include="CL\Configurations\Attributes\FeatureDescriptionAttribute.cs" />
-    <Compile Include="CL\Configurations\ConnectionString\ConnectionStringSettings.cs" />
-    <Compile Include="CL\Configurations\ConnectionString\ConnectionStringSettingsDictionary.cs" />
-    <Compile Include="CL\Configurations\CoreConfiguration\CoreSettingConfiguration.cs" />
-    <Compile Include="CL\Configurations\Extensions\FeatureExtensions.cs" />
-    <Compile Include="CL\Configurations\Extensions\IConfigurationExtensions.cs" />
-    <Compile Include="CL\Configurations\ICoreSettingConfiguration.cs" />
-    <Compile Include="CL\Configurations\Sections\Feature\BehaviorElement.cs" />
-    <Compile Include="CL\Configurations\Sections\Feature\BehaviorElementCollection.cs" />
-    <Compile Include="CL\Configurations\Sections\DbFactory\DatabasFactorySection.cs" />
-    <Compile Include="CL\Configurations\Sections\Feature\FeatureElement.cs" />
-    <Compile Include="CL\Configurations\Sections\Feature\FeaturesElementCollection.cs" />
-    <Compile Include="CL\Configurations\Sections\Feature\FeatureSettings.cs" />
-    <Compile Include="CL\Configurations\Sections\Feature\FeatureSettingsSection.cs" />
+    <Compile Include="BL\Components\Interfaces\Validations.cs" />
+    <Compile Include="CL\Configurations\Attributes\SectionNameAttribute.cs" />
+    <Compile Include="CL\Configurations\DbFactory\DatabaseConfigurationExtensions.cs" />
+    <Compile Include="CL\Configurations\Features\FeatureDescriptionAttribute.cs" />
+    <Compile Include="CL\Configurations\CoreConfiguration.cs" />
+    <Compile Include="CL\Configurations\Features\FeatureExtensions.cs" />
+    <Compile Include="CL\Configurations\ICoreConfiguration.cs" />
+    <Compile Include="CL\Configurations\Features\BehaviorElement.cs" />
+    <Compile Include="CL\Configurations\Features\BehaviorElementCollection.cs" />
+    <Compile Include="CL\Configurations\DbFactory\DatabaseConfiguration.cs" />
+    <Compile Include="CL\Configurations\Features\FeatureElement.cs" />
+    <Compile Include="CL\Configurations\Features\FeaturesElementCollection.cs" />
+    <Compile Include="CL\Configurations\Features\FeatureSettings.cs" />
+    <Compile Include="CL\Configurations\Features\FeatureSettingsSection.cs" />
     <Compile Include="CL\DI\ServiceLocator.cs" />
     <Compile Include="CL\Exceptions\BaseException.cs" />
     <Compile Include="CL\Exceptions\BusinessException.cs" />
     <Compile Include="CL\Exceptions\BusinessValidationException.cs" />
     <Compile Include="CL\Exceptions\CoreErrors.cs" />
     <Compile Include="CL\Exceptions\DataAccessException.cs" />
-    <Compile Include="CL\Exceptions\Handler\Implementations\ExceptionHandler.cs" />
-    <Compile Include="CL\Exceptions\Handler\Interfaces\IExceptionHandler.cs" />
-    <Compile Include="CL\Exceptions\Manager\Implementations\ExceptionMessageManager.cs" />
-    <Compile Include="CL\Exceptions\Manager\Interfaces\IExceptionMessageManager.cs" />
+    <Compile Include="CL\Exceptions\Handler\ExceptionHandler.cs" />
+    <Compile Include="CL\Exceptions\Handler\IExceptionHandler.cs" />
+    <Compile Include="CL\Exceptions\Manager\Implementations\MessageHandler.cs" />
+    <Compile Include="CL\Exceptions\Manager\Interfaces\IMessageHandler.cs" />
     <Compile Include="CL\Exceptions\Resources\Exceptions.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.resx</DependentUpon>
     </Compile>
     <Compile Include="CL\Exceptions\ServiceAgentException.cs" />
+    <Compile Include="CL\Exceptions\TechnicalException.cs" />
     <Compile Include="CL\Exceptions\ViewException.cs" />
     <Compile Include="CL\Helpers\Extensions\ByteArrayExtensions.cs" />
     <Compile Include="CL\Helpers\Extensions\CharExtensions.cs" />
@@ -204,7 +205,7 @@
     </GetAssemblyIdentity>
     <ItemGroup>
       <VersionNumber Include="@(Targets->'%(Version)')" />
-    </ItemGroup>
+  </ItemGroup>
   </Target>
   <PropertyGroup>
     <PostBuildEventDependsOn>
@@ -214,10 +215,10 @@
     <PostBuildEvent>
       if $(ConfigurationName) == ReleaseNuget (
       nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects
-      nuget list $(ProjectName) -allversions -source http://localhost:8081/repository/nuget-hosted-v3 | find /c "$(ProjectName) @(VersionNumber)"
+      nuget list $(ProjectName) -allversions --source "github" | find /c "$(ProjectName) @(VersionNumber)"
       if errorlevel 1 (
-      nuget push "$(ProjectName).@(VersionNumber).nupkg" 5eded2a8-d471-3e41-8fe3-f0cf84c03b2c -src http://localhost:8081/repository/nuget-hosted-v3
-      )
+      nuget push "$(ProjectName).@(VersionNumber).nupkg"-src "github"
+	  )
       )
 </PostBuildEvent>
   </PropertyGroup>

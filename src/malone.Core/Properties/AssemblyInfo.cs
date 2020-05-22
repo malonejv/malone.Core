@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("malone.Core")]
-[assembly: AssemblyDescription("Esta librería provee una estructura de clases base para administrar operaciones CRUD e intagrar con un repositorio de datos.")]
+[assembly: AssemblyDescription("Esta librería provee una estructura de clases base para administrar operaciones CRUD e integrar con un repositorio de datos.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Javier López Malone")]
 [assembly: AssemblyProduct("malone.Core")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.1")]
-[assembly: AssemblyFileVersion("1.0.0.1")]
+[assembly: AssemblyVersion("1.0.1.1")]
+[assembly: AssemblyFileVersion("1.0.1.1")]

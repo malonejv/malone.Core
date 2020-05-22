@@ -3,7 +3,7 @@ using malone.Core.AdoNet.DAL.Context;
 using malone.Core.AdoNet.EL.Filters;
 using malone.Core.AdoNet.EL.Filters.Extensions;
 using malone.Core.CL.Exceptions;
-using malone.Core.CL.Exceptions.Handler.Implementations;
+using malone.Core.CL.Exceptions.Handler;
 using malone.Core.CL.Exceptions.Manager.Implementations;
 using malone.Core.DAL.Repositories;
 using malone.Core.DAL.UnitOfWork;
@@ -24,21 +24,22 @@ namespace malone.Core.AdoNet.DAL.Repositories
 
         protected AdoNetContext Context => _context;
 
-        //protected IDbCommand _command;
-
         protected IUnitOfWork UnitOfWork { get; private set; }
         protected Mapper Mapper { get; private set; }
+        protected IExceptionHandler<CoreErrors> ExceptionHandler { get; }
 
 
-        public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper)
+        public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper, IExceptionHandler<CoreErrors> exceptionHandler)
         {
             if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
             if (mapper == null) throw new ArgumentNullException(nameof(mapper));
+            if (exceptionHandler == null) throw new ArgumentNullException(nameof(exceptionHandler));
 
             UnitOfWork = unitOfWork;
             _context = (AdoNetContext)UnitOfWork.Context;
 
             Mapper = mapper;
+            ExceptionHandler = exceptionHandler;
         }
 
         protected IQueryable<TEntity> GetQueryable(
@@ -86,14 +87,7 @@ namespace malone.Core.AdoNet.DAL.Repositories
             }
             catch (Exception ex)
             {
-                //TODO: Mejorar manejo de excepciones
-
-                var messageManager = new ExceptionMessageManager();
-                var message = string.Format(messageManager.GetDescription((int)CoreErrors.E400), typeof(TEntity));
-                var dex = new DataAccessException((int)CoreErrors.E400, message, ex);
-
-                var exceptionHandler = new ExceptionHandler(null);
-                exceptionHandler.HandleException(dex);
+                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E400, typeof(TEntity));
             }
             return null;
         }
@@ -160,14 +154,7 @@ namespace malone.Core.AdoNet.DAL.Repositories
             }
             catch (Exception ex)
             {
-                //TODO: Mejorar manejo de excepciones
-
-                var messageManager = new ExceptionMessageManager();
-                var message = string.Format(messageManager.GetDescription((int)CoreErrors.E400), typeof(TEntity));
-                var dex = new DataAccessException((int)CoreErrors.E400, message, ex);
-
-                var exceptionHandler = new ExceptionHandler(null);
-                exceptionHandler.HandleException(dex);
+                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E400, typeof(TEntity));
             }
             return null;
         }
@@ -202,14 +189,7 @@ namespace malone.Core.AdoNet.DAL.Repositories
             }
             catch (Exception ex)
             {
-                //TODO: Mejorar manejo de excepciones
-
-                var messageManager = new ExceptionMessageManager();
-                var message = string.Format(messageManager.GetDescription((int)CoreErrors.E400), typeof(TEntity));
-                var dex = new DataAccessException((int)CoreErrors.E400, message, ex);
-
-                var exceptionHandler = new ExceptionHandler(null);
-                exceptionHandler.HandleException(dex);
+                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E400, typeof(TEntity));
             }
             return null;
         }
@@ -246,14 +226,7 @@ namespace malone.Core.AdoNet.DAL.Repositories
             }
             catch (Exception ex)
             {
-                //TODO: Mejorar manejo de excepciones
-
-                var messageManager = new ExceptionMessageManager();
-                var message = string.Format(messageManager.GetDescription((int)CoreErrors.E400), typeof(TEntity));
-                var dex = new DataAccessException((int)CoreErrors.E400, message, ex);
-
-                var exceptionHandler = new ExceptionHandler(null);
-                exceptionHandler.HandleException(dex);
+                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E400, typeof(TEntity));
             }
             return null;
         }
@@ -290,7 +263,7 @@ namespace malone.Core.AdoNet.DAL.Repositories
     public abstract class AdoNetRepository<TEntity> : AdoNetRepository<int, TEntity>, IRepository<TEntity>
         where TEntity : class, IBaseEntity
     {
-        public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper) : base(unitOfWork, mapper)
+        public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper, IExceptionHandler<CoreErrors> exceptionHandler) : base(unitOfWork, mapper,exceptionHandler)
         {
         }
     }

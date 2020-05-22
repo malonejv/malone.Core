@@ -76,26 +76,26 @@
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="malone.Core, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\malone.Core.1.0.0.1\lib\net471\malone.Core.dll</HintPath>
+    <Reference Include="malone.Core, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\malone.Core.1.0.1.1\lib\net471\malone.Core.dll</HintPath>
     </Reference>
-    <Reference Include="malone.Core.CL.DI.Unity, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\malone.Core.CL.DI.Unity.1.0.0.1\lib\net471\malone.Core.CL.DI.Unity.dll</HintPath>
+    <Reference Include="malone.Core.CL.DI.Unity, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\malone.Core.CL.DI.Unity.1.0.1.1\lib\net471\malone.Core.CL.DI.Unity.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.DAL.EF, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\malone.Core.DAL.EF.1.0.0.1\lib\net471\malone.Core.DAL.EF.dll</HintPath>
     </Reference>
-    <Reference Include="malone.Core.EF, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\malone.Core.EF.1.0.0.1\lib\net471\malone.Core.EF.dll</HintPath>
+    <Reference Include="malone.Core.EF, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\malone.Core.EF.1.0.1.1\lib\net471\malone.Core.EF.dll</HintPath>
     </Reference>
-    <Reference Include="malone.Core.Identity, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\malone.Core.Identity.1.0.0.1\lib\net471\malone.Core.Identity.dll</HintPath>
+    <Reference Include="malone.Core.Identity, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\malone.Core.Identity.1.0.1.1\lib\net471\malone.Core.Identity.dll</HintPath>
     </Reference>
-    <Reference Include="malone.Core.Identity.EntityFramework, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\malone.Core.Identity.EntityFramework.1.0.0.1\lib\net471\malone.Core.Identity.EntityFramework.dll</HintPath>
+    <Reference Include="malone.Core.Identity.EntityFramework, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\malone.Core.Identity.EntityFramework.1.0.1.1\lib\net471\malone.Core.Identity.EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="malone.Core.Patterns, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\malone.Core.Patterns.1.0.0.1\lib\net471\malone.Core.Patterns.dll</HintPath>
+    <Reference Include="malone.Core.Patterns, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\malone.Core.Patterns.1.0.1.1\lib\net471\malone.Core.Patterns.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>

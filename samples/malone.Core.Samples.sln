@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Sample.Middle",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Sample.UI.EFSqlServer", "malone.Core.Sample.UI.EFSqlServer\malone.Core.Sample.UI.EFSqlServer.csproj", "{76DD59C6-80F0-4DCB-B417-9A04A5B916C6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mvc.EF.SqlServer.Tests", "mvc.EF.SqlServer.Tests", "{2B0D8564-E4AA-4696-BB3C-AA15082A9445}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Sample.UI.EFSqlServer.Test", "malone.Core.Sample.UI.EFSqlServer.Test\malone.Core.Sample.UI.EFSqlServer.Test.csproj", "{6D459142-A807-4816-9FB0-C85910354A09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +61,18 @@ Global
 		{76DD59C6-80F0-4DCB-B417-9A04A5B916C6}.Release|x64.Build.0 = Release|x64
 		{76DD59C6-80F0-4DCB-B417-9A04A5B916C6}.Release|x86.ActiveCfg = Release|x86
 		{76DD59C6-80F0-4DCB-B417-9A04A5B916C6}.Release|x86.Build.0 = Release|x86
+		{6D459142-A807-4816-9FB0-C85910354A09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D459142-A807-4816-9FB0-C85910354A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D459142-A807-4816-9FB0-C85910354A09}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6D459142-A807-4816-9FB0-C85910354A09}.Debug|x64.Build.0 = Debug|Any CPU
+		{6D459142-A807-4816-9FB0-C85910354A09}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6D459142-A807-4816-9FB0-C85910354A09}.Debug|x86.Build.0 = Debug|Any CPU
+		{6D459142-A807-4816-9FB0-C85910354A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D459142-A807-4816-9FB0-C85910354A09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D459142-A807-4816-9FB0-C85910354A09}.Release|x64.ActiveCfg = Release|Any CPU
+		{6D459142-A807-4816-9FB0-C85910354A09}.Release|x64.Build.0 = Release|Any CPU
+		{6D459142-A807-4816-9FB0-C85910354A09}.Release|x86.ActiveCfg = Release|Any CPU
+		{6D459142-A807-4816-9FB0-C85910354A09}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +81,7 @@ Global
 		{4BABEC4C-780B-4393-AF09-656EBEA4A62E} = {1EA08FC9-47E4-4D7E-8EE1-3F1D227D4B59}
 		{13E35096-AC30-4D5E-8834-8B8D0CD53774} = {1EA08FC9-47E4-4D7E-8EE1-3F1D227D4B59}
 		{76DD59C6-80F0-4DCB-B417-9A04A5B916C6} = {1EA08FC9-47E4-4D7E-8EE1-3F1D227D4B59}
+		{6D459142-A807-4816-9FB0-C85910354A09} = {2B0D8564-E4AA-4696-BB3C-AA15082A9445}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E707CE06-B711-44D1-9CBD-415FBE051B91}

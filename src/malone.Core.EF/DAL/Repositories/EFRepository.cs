@@ -1,9 +1,8 @@
 ﻿using malone.Core.CL.Exceptions;
-using malone.Core.CL.Exceptions.Handler.Interfaces;
+using malone.Core.CL.Exceptions.Handler;
 using malone.Core.CL.Exceptions.Manager.Interfaces;
 using malone.Core.DAL.Repositories;
 using malone.Core.DAL.UnitOfWork;
-using malone.Core.EF.DAL.Context;
 using malone.Core.EF.EL.Filters;
 using malone.Core.EL.Filters;
 using malone.Core.EL.Model;
@@ -24,29 +23,27 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
 
         protected IUnitOfWork UnitOfWork { get; }
 
-        protected IExceptionMessageManager MessageManager { get; }
+        protected IExceptionHandler<CoreErrors> ExceptionHandler { get; }
 
-        protected IExceptionHandler ExceptionHandler { get; }
+        //public EFRepository(IUnitOfWork unitOfWork)
+        //{
+        //    if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
 
-        public EFRepository(IUnitOfWork unitOfWork)
+        //    UnitOfWork = unitOfWork;
+        //    _context = UnitOfWork.Context as DbContext;
+        //    _dbSet = _context.Set<TEntity>();
+        //}
+
+        public EFRepository(IUnitOfWork unitOfWork, IExceptionHandler<CoreErrors> exceptionHandler)
         {
-            if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
+            if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
+            if (exceptionHandler == null) throw new ArgumentNullException(nameof(exceptionHandler));
 
             UnitOfWork = unitOfWork;
             _context = UnitOfWork.Context as DbContext;
             _dbSet = _context.Set<TEntity>();
-        }
 
-        public EFRepository(IUnitOfWork unitOfWork, IExceptionMessageManager exManager, IExceptionHandler exHandler)
-        {
-            if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
-
-            UnitOfWork = unitOfWork;
-            _context = UnitOfWork.Context as DbContext;
-            _dbSet = _context.Set<TEntity>();
-
-            MessageManager = exManager;
-            ExceptionHandler = exHandler;
+            ExceptionHandler = exceptionHandler;
         }
 
         protected IQueryable<TEntity> Get(
@@ -86,9 +83,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E400), typeof(TEntity));
-                var dex = new DataAccessException((int)CoreErrors.E400, message, ex);
-                ExceptionHandler.HandleException(dex);
+                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E400, typeof(TEntity));
             }
             return null;
         }
@@ -121,9 +116,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E400), typeof(TEntity));
-                var dex = new DataAccessException((int)CoreErrors.E400, message, ex);
-                ExceptionHandler.HandleException(dex);
+                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E400, typeof(TEntity));
             }
             return null;
         }
@@ -144,9 +137,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E400), typeof(TEntity));
-                var dex = new DataAccessException((int)CoreErrors.E400, message, ex);
-                ExceptionHandler.HandleException(dex);
+                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E400, typeof(TEntity));
             }
             return null;
         }
@@ -166,9 +157,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E401), typeof(TEntity));
-                var dex = new DataAccessException((int)CoreErrors.E401, message, ex);
-                ExceptionHandler.HandleException(dex);
+                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E401, typeof(TEntity));
             }
             return null;
         }
@@ -201,9 +190,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E401), typeof(TEntity));
-                var dex = new DataAccessException((int)CoreErrors.E401, message, ex);
-                ExceptionHandler.HandleException(dex);
+                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E401, typeof(TEntity));
             }
             return null;
         }
@@ -216,9 +203,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E402), typeof(TEntity));
-                var dex = new DataAccessException((int)CoreErrors.E402, message, ex);
-                ExceptionHandler.HandleException(dex);
+                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E402, typeof(TEntity));
             }
         }
 
@@ -231,9 +216,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E404), typeof(TEntity));
-                var dex = new DataAccessException((int)CoreErrors.E404, message, ex);
-                ExceptionHandler.HandleException(dex);
+                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E404, typeof(TEntity));
             }
         }
 
@@ -246,9 +229,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E403), typeof(TEntity));
-                var dex = new DataAccessException((int)CoreErrors.E403, message, ex);
-                ExceptionHandler.HandleException(dex);
+                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E403, typeof(TEntity));
             }
         }
 
@@ -264,9 +245,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                var message = string.Format(MessageManager.GetDescription((int)CoreErrors.E403), typeof(TEntity));
-                var dex = new DataAccessException((int)CoreErrors.E403, message, ex);
-                ExceptionHandler.HandleException(dex);
+                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E403, typeof(TEntity));
             }
         }
 
@@ -277,11 +256,11 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
         where TEntity : class, IBaseEntity
     {
 
-        public EFRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
-        }
+        //public EFRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
+        //{
+        //}
 
-        public EFRepository(IUnitOfWork unitOfWork, IExceptionMessageManager exManager, IExceptionHandler exHandler) : base(unitOfWork, exManager, exHandler)
+        public EFRepository(IUnitOfWork unitOfWork, IExceptionHandler<CoreErrors> exceptionHandler) : base(unitOfWork, exceptionHandler)
         {
         }
 

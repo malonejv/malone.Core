@@ -790,9 +790,13 @@ namespace malone.Core.CL.Log
         /// <typeparam name="TException">Tipo de Excepcion producida</typeparam>
         public virtual void Log<TException>(LogLevel level, TException exception, string message) where TException : Exception
         {
-            var bex = exception as BaseException;
-            if (bex != null && string.IsNullOrEmpty(message))
-                message = "Code:" + bex.Error.ToString() + " - " + bex.Message;
+            Type exceptionType = typeof(TException);
+            var codeMessagePropertyInfo = exceptionType.GetProperty("CodeMessage");
+            if (codeMessagePropertyInfo != null)
+            {
+                message = codeMessagePropertyInfo.GetValue(exception).ToString();
+            }
+
 
             LogItem<TException> item = new LogItem<TException> { LogLevel = level, Message = message, LoggerName = this.Name };
             item.Exception = exception;

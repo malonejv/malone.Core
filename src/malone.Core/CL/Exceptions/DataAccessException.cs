@@ -7,7 +7,11 @@ using malone.Core.CL.Exceptions;
 
 namespace malone.Core.CL.Exceptions
 {
-    public class DataAccessException : BaseException
+    /// <summary>
+    /// Encapsulates general exceptions in Data Access Layer
+    /// </summary>
+    public class DataAccessException<TCode> : BaseException<TCode>
+                where TCode : Enum
     {
         public DataAccessException()
             : base()
@@ -15,54 +19,58 @@ namespace malone.Core.CL.Exceptions
             Rethrow = false;
         }
 
-        public DataAccessException(string message)
-            : base(message)
-        {
-            Rethrow = false;
-        }
-
-
-        public DataAccessException(string message, bool rethrow)
-            : base(message, rethrow)
-        {
-            Rethrow = false;
-        }
-
-        public DataAccessException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-            Rethrow = false;
-        }
-
-        public DataAccessException(string message, Exception innerException, bool rethrow)
-            : base(message, innerException, rethrow)
-        {
-            Rethrow = false;
-        }
-
-        public DataAccessException(int code, string message)
+        public DataAccessException(TCode code, string message)
             : base(code, message)
         {
             Rethrow = false;
         }
 
-        public DataAccessException(int code, string message, bool rethrow)
+        public DataAccessException(TCode code, string message, bool rethrow)
             : base(code, message, rethrow)
         {
             Rethrow = false;
         }
 
-        public DataAccessException(int code, string message, Exception innerException)
+        public DataAccessException(TCode code, string message, Exception innerException)
             : base(code, message, innerException)
         {
             Rethrow = false;
         }
 
-        public DataAccessException(int code, string message, Exception innerException, bool rethrow)
+        public DataAccessException(TCode code, string message, Exception innerException, bool rethrow)
             : base(code, message, innerException, rethrow)
         {
             Rethrow = false;
         }
 
+    }
+
+    public class DataAccessException: DataAccessException<CoreErrors>
+    {
+
+        public DataAccessException()
+            : base()
+        {
+        }
+
+        public DataAccessException(CoreErrors code, string message)
+            : base(code, message)
+        {
+        }
+
+        public DataAccessException(CoreErrors code, string message, bool rethrow)
+            : base(code, message, rethrow)
+        {
+        }
+
+        public DataAccessException(CoreErrors code, string message, Exception innerException)
+            : base(code, message, innerException)
+        {
+        }
+
+        public DataAccessException(CoreErrors code, string message, Exception innerException, bool rethrow)
+            : base(code, message, innerException, rethrow)
+        {
+        }
     }
 }

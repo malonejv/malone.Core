@@ -6,50 +6,64 @@ using System.Threading.Tasks;
 
 namespace malone.Core.CL.Exceptions
 {
-    public class ViewException : BaseException
+    /// <summary>
+    /// Encapsulates general exceptions in View Layer
+    /// </summary>
+    public class ViewException<TCode> : BaseException<TCode>
+    where TCode : Enum
     {
+
         public ViewException()
             : base()
         {
         }
 
-        public ViewException(string message)
-            : base(message)
-        {
-        }
-
-
-        public ViewException(string message, bool rethrow)
-            : base(message, rethrow)
-        {
-        }
-
-        public ViewException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
-
-        public ViewException(string message, Exception innerException, bool rethrow)
-            : base(message, innerException, rethrow)
-        {
-        }
-
-        public ViewException(int code, string message)
+        public ViewException(TCode code, string message)
             : base(code, message)
         {
         }
 
-        public ViewException(int code, string message, bool rethrow)
+        public ViewException(TCode code, string message, bool rethrow)
             : base(code, message, rethrow)
         {
         }
 
-        public ViewException(int code, string message, Exception innerException)
+        public ViewException(TCode code, string message, Exception innerException)
             : base(code, message, innerException)
         {
         }
 
-        public ViewException(int code, string message, Exception innerException, bool rethrow)
+        public ViewException(TCode code, string message, Exception innerException, bool rethrow)
+            : base(code, message, innerException, rethrow)
+        {
+        }
+    }
+
+
+    public class ViewException : BaseException<CoreErrors>
+    {
+
+        public ViewException()
+            : base()
+        {
+        }
+
+        public ViewException(CoreErrors code, string message)
+            : base(code, message)
+        {
+        }
+
+        public ViewException(CoreErrors code, string message, bool rethrow)
+            : base(code, message, rethrow)
+        {
+        }
+
+        public ViewException(CoreErrors code, string message, Exception innerException)
+            : base(code, message, innerException)
+        {
+        }
+
+        public ViewException(CoreErrors code, string message, Exception innerException, bool rethrow)
             : base(code, message, innerException, rethrow)
         {
         }

@@ -1,0 +1,1 @@
+- Evaluar sacar TValidator de las clases business y dejarlo solo en el constructor como interfaz

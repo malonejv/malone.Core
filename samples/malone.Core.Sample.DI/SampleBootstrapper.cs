@@ -20,8 +20,8 @@ namespace malone.Core.Sample.DI
               {
                     new CommonLayerBootstrapper(),
                     new EntitiesLayerBootstrapper(),
-                    new BusinessLayerBootstrapper(),
                     new DataAccessLayerBootstrapper(),
+                    new BusinessLayerBootstrapper()
               };
             }
         }

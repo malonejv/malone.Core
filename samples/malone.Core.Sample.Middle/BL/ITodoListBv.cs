@@ -5,6 +5,6 @@ namespace malone.Core.Sample.Middle.BL
 {
     public interface ITodoListBV : IBusinessValidator<TodoList>
     {
-        ValidationFailure ValidarNombreRepetido(params object[] args);
+        ValidationResult ValidarNombreRepetido(params object[] args);
     }
 }

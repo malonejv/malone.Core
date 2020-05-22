@@ -1,13 +1,10 @@
-﻿using malone.Core.CL.Configurations.ConnectionString;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace malone.Core.CL.Configurations.Extensions
 {
     public static class IConfigurationExtensions
     {
-        public static ConnectionStringSettingsDictionary GetConnectionStrings(this ICoreSettingConfiguration configuration, String section = "ConnectionStrings")
+        public static ConnectionStringSettingsDictionary GetConnectionStrings(this ICoreConfiguration configuration, String section = "ConnectionStrings")
         {
             if (configuration == null) throw new ArgumentNullException(nameof(configuration));
 
@@ -20,7 +17,7 @@ namespace malone.Core.CL.Configurations.Extensions
             return connectionStringCollection;
         }
 
-        public static ConnectionStringSettings GetConnectionStringSettings(this ICoreSettingConfiguration configuration, String name, String section = "ConnectionStrings")
+        public static ConnectionStringSettings GetConnectionStringSettings(this ICoreConfiguration configuration, String name, String section = "ConnectionStrings")
         {
             if (configuration == null) throw new ArgumentNullException(nameof(configuration));
 
