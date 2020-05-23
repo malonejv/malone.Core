@@ -55,6 +55,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Patterns.Test",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2AFC5CCC-A9FC-4232-9A11-B58385408C56}"
 	ProjectSection(SolutionItems) = preProject
+		NuGet.Config = NuGet.Config
 		Pendientes.txt = Pendientes.txt
 	EndProjectSection
 EndProject
@@ -356,7 +357,7 @@ Global
 		{09FC23A5-72A7-4624-AB38-0C755C915DAC} = {C36AE08A-5202-43C9-8D1B-95ABF1FCD145}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 		SolutionGuid = {BF840011-B60A-44FF-9D38-4CB15C4C9C8A}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal

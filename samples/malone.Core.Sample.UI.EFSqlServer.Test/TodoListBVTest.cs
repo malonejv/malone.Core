@@ -9,13 +9,15 @@ namespace malone.Core.Sample.UI.EFSqlServer.Test
 {
     public class TodoListBVTest
     {
-        //public void ValidarNombreRepetido_NombreValido_DevuelveTrue() {
-        //    bool expected = true;
+        public void ValidarNombreRepetido_NombreValido_DevuelveTrue()
+        {
+            bool expected = true;
 
-        //    var todoBV = new TodoListBV(null,null,null);
-        //    todoBV.ValidarNombreRepetido()
+            var todoBV = new TodoListBV(null, null, null);
+            todoBV.ValidarNombreRepetido();
 
-        //}
+            
+        }
         //public void ValidarNombreRepetido_NombreInvalido_DevuelveFalses() { }
 
     }
