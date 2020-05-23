@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6DFC2083-92EF-4D48-AC33-77542EEC33F8}</ProjectGuid>
+    <ProjectGuid>{CAA30529-18D1-4B3E-BB31-26346F6B7E6C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>malone.Core.CL.Logging.Log4Net</RootNamespace>
-    <AssemblyName>malone.Core.CL.Logging.Log4Net</AssemblyName>
+    <RootNamespace>malone.Core.DAL.AdoNet.Oracle</RootNamespace>
+    <AssemblyName>malone.Core.DAL.AdoNet.Oracle</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,8 +41,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.19.3.1\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,19 +54,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Log4NetLogger.cs" />
-    <Compile Include="Log4NetLoggerFactory.cs" />
+    <Compile Include="Attributes\OracleResultSetAttribute.cs" />
+    <Compile Include="OracleDatabase.cs" />
+    <Compile Include="Parameters\OracleDecimalToIntParameterConverter.cs" />
+    <Compile Include="Parameters\OracleNumberToDecimalConverter.cs" />
+    <Compile Include="Parameters\OracleNumberToFloatConverter.cs" />
+    <Compile Include="Parameters\OracleStringToStringParameterConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\malone.Core.AdoNet\malone.Core.AdoNet.csproj">
+      <Project>{492F80C1-E1F2-4CC9-8DBE-83BA63E7DE4C}</Project>
+      <Name>malone.Core.AdoNet</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\malone.Core\malone.Core.csproj">
-      <Project>{b59a92f9-abdc-4200-a80d-58a5ab936591}</Project>
-      <Name>malone.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="PostBuildMacros">

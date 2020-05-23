@@ -11,5 +11,6 @@
     <projectUrl>https://github.com/malonejv/malone.Core</projectUrl>
     <description>$description$</description>
     <copyright>Copyright 2020</copyright>
+	<repository type="git" url="https://github.com/malonejv/malone.Core" branch="development" />
   </metadata>
 </package>

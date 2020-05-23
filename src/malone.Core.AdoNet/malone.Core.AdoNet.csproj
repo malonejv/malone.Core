@@ -95,10 +95,9 @@
     <PostBuildEvent>
       if $(ConfigurationName) == ReleaseNuget (
       nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects
-      nuget list $(ProjectName) -allversions --source "github" | find /c "$(ProjectName) @(VersionNumber)"
-      if errorlevel 1 (
-      nuget push "$(ProjectName).@(VersionNumber).nupkg"-src "github"
-	  )
+      rem nuget list $(ProjectName) -allversions -SkipDuplicate -source "github" | find /c "$(ProjectName) @(VersionNumber)"
+      rem if errorlevel 1 ( nuget push "$(ProjectName).@(VersionNumber).nupkg" -SkipDuplicate -source "github" )
+	  nuget push "$(ProjectName).@(VersionNumber).nupkg" -SkipDuplicate -source "github"
       )
 </PostBuildEvent>
   </PropertyGroup>
