@@ -78,9 +78,6 @@
     <Reference Include="malone.Core, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\malone.Core.1.0.1.2\lib\net471\malone.Core.dll</HintPath>
     </Reference>
-    <Reference Include="malone.Core.DAL.EF, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\malone.Core.DAL.EF.1.0.0.1\lib\net471\malone.Core.DAL.EF.dll</HintPath>
-    </Reference>
     <Reference Include="malone.Core.EF, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\malone.Core.EF.1.0.1.2\lib\net471\malone.Core.EF.dll</HintPath>
     </Reference>
