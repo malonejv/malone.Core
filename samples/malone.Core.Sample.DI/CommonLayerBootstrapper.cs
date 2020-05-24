@@ -12,6 +12,7 @@ using malone.Core.CL.Logging.Log4Net;
 using malone.Core.Sample.Middle.CL.Exceptions;
 using Unity;
 using Unity.Injection;
+using System.Configuration;
 
 namespace malone.Core.Sample.DI
 {
@@ -22,6 +23,7 @@ namespace malone.Core.Sample.DI
 
             container.RegisterType<ICoreConfiguration, CoreConfiguration>();
             container.RegisterType<FeatureSettings>();
+            container.RegisterType<FeatureSettingsSection>();
             var featureSettings = container.Resolve<FeatureSettings>();
             container.RegisterInstance(featureSettings);
 
