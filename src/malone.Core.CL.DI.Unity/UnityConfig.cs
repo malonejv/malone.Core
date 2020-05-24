@@ -17,7 +17,13 @@ namespace malone.Core.CL.DI.Unity
         private static Lazy<IUnityContainer> container =
           new Lazy<IUnityContainer>(() =>
           {
-              var container = new UnityContainer();
+              UnityContainer container = null;
+#if DEBUG
+              container = new UnityContainer().AddExtension(new Diagnostic());
+#else
+              container = new UnityContainer();
+#endif
+
               RegisterTypes(container);
 
               //TODO: Integrar en el framework
@@ -38,7 +44,7 @@ namespace malone.Core.CL.DI.Unity
         /// </summary>
         public static IUnityContainer Container => container.Value;
 
-        #endregion
+#endregion
 
         public UnityConfig()
         {

@@ -15,6 +15,8 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF
 {
     public class SampleEFContext : EFIdentityDbContext //EFDbContext
     {
+        public static SampleEFContext Instance { get; private set; }
+
         public SampleEFContext(string connectionStringName)
             : base(connectionStringName)
         {
@@ -23,8 +25,9 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF
             Configuration.ProxyCreationEnabled = false;
 
             //OPTION: Habilita la clase SampleContextInitializer 
-            //Database.SetInitializer<SampleEFContext>(null);
+            Database.SetInitializer<SampleEFContext>(null);
 
+            Instance = this;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -38,8 +41,10 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF
 
         public static SampleEFContext Create()
         {
-            var instance = ServiceLocator.Current.Get<IContext>() as SampleEFContext;
-            return instance;
+            if (Instance == null)
+                Instance = ServiceLocator.Current.Get<IContext>() as SampleEFContext;
+
+            return Instance;
         }
     }
 

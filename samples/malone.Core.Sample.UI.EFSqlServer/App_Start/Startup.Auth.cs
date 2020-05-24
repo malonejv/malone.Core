@@ -22,7 +22,7 @@ namespace malone.Core.Sample.UI.EFSqlServer
         public void ConfigureAuth(IAppBuilder app)
         {
             //OPTION: Configuracion
-            app.CreatePerOwinContext(SampleEFContext.Create);
+            //app.CreatePerOwinContext(SampleEFContext.Create);
             app.CreatePerOwinContext<UserBusinessComponent>(UserBusinessComponent.Create);
             app.CreatePerOwinContext<SignInBusinessComponent>(SignInBusinessComponent.Create);
 

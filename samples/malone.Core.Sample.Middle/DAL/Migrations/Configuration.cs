@@ -8,6 +8,7 @@ namespace malone.Core.Sample.Middle.DAL.Migrations
     using System;
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
+    using System.Linq;
 
     /// <summary>
     /// Se ejecuta cuando se ejecuta el comando update-database
@@ -24,32 +25,41 @@ namespace malone.Core.Sample.Middle.DAL.Migrations
         {
             try
             {
-                // USUARIO Y ROL DE ADMINISTRADOR POR DEFECTO
-                // RoleTypes is a class containing constant string values for different roles
-                List<CoreRole> roles = new List<CoreRole>();
-                roles.Add(new CoreRole() { Name = RoleType.Administrador.GetDescription() });
-                roles.Add(new CoreRole() { Name = RoleType.Administrativo.GetDescription() });
-                roles.Add(new CoreRole() { Name = RoleType.Empleado.GetDescription() });
-                roles.Add(new CoreRole() { Name = RoleType.Usuario.GetDescription() });
+                var existeRol = context.Set<CoreRole>().Where(r => r.Name == RoleType.Administrador.GetDescription()).Any();
+                if (!existeRol)
+                {
+                    // USUARIO Y ROL DE ADMINISTRADOR POR DEFECTO
+                    // RoleTypes is a class containing constant string values for different roles
+                    List<CoreRole> roles = new List<CoreRole>();
+                    roles.Add(new CoreRole() { Name = RoleType.Administrador.GetDescription() });
+                    roles.Add(new CoreRole() { Name = RoleType.Administrativo.GetDescription() });
+                    roles.Add(new CoreRole() { Name = RoleType.Empleado.GetDescription() });
+                    roles.Add(new CoreRole() { Name = RoleType.Usuario.GetDescription() });
 
-                context.Set<CoreRole>().AddOrUpdate(roles.ToArray());
-                context.SaveChanges();
+                    context.Set<CoreRole>().AddOrUpdate(roles.ToArray());
+                    context.SaveChanges();
+                }
             }
             catch (Exception) { }
 
             try
             {
-                // Initialize default user
-                CoreUser admin = new CoreUser();
-                admin.Email = "malonejv@gmail.com";
-                admin.UserName = "admin";
+                var existeAdmin = context.Set<CoreUser>().Where(u => u.UserName == "admin").Any();
 
-                //TODO: Usar Secrets para obtener el password de admin
-                PasswordHasher hasher = new PasswordHasher();
-                admin.PasswordHash = hasher.HashPassword("Adm1n.M4l0ne");
+                if (!existeAdmin)
+                {
+                    // Initialize default user
+                    CoreUser admin = new CoreUser();
+                    admin.Email = "malonejv@gmail.com";
+                    admin.UserName = "admin";
 
-                context.Set<CoreUser>().AddOrUpdate(admin);
-                context.SaveChanges();
+                    //TODO: Usar Secrets para obtener el password de admin
+                    PasswordHasher hasher = new PasswordHasher();
+                    admin.PasswordHash = hasher.HashPassword("Adm1n.M4l0ne");
+
+                    context.Set<CoreUser>().AddOrUpdate(admin);
+                    context.SaveChanges();
+                }
             }
             catch (Exception) { }
 
@@ -58,10 +68,14 @@ namespace malone.Core.Sample.Middle.DAL.Migrations
             //TEST LIST & ITEMS
             try
             {
-                TodoList list = new TodoList()
+                var existeListaEjemplo = context.Set<TodoList>().Where(r => r.Name == "Sample List").Any();
+
+                if (!existeListaEjemplo)
                 {
-                    Name = "Sample List",
-                    Items = new List<TaskItem>()
+                    TodoList list = new TodoList()
+                    {
+                        Name = "Sample List",
+                        Items = new List<TaskItem>()
                 {
                     new TaskItem()
                     {
@@ -75,10 +89,11 @@ namespace malone.Core.Sample.Middle.DAL.Migrations
                         IsDeleted = false
                     }
                 },
-                    IsDeleted = false
-                };
-                context.Set<TodoList>().AddOrUpdate(list);
-                context.SaveChanges();
+                        IsDeleted = false
+                    };
+                    context.Set<TodoList>().AddOrUpdate(list);
+                    context.SaveChanges();
+                }
             }
             catch (Exception) { }
 

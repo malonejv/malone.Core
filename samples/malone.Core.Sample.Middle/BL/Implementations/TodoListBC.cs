@@ -16,6 +16,7 @@ namespace malone.Core.Sample.Middle.BL.Implementations
             : base(unitOfWork, businessValidator, repository, exHandler)
         { }
 
+
         public override void Add(TodoList entity)
         {
             try

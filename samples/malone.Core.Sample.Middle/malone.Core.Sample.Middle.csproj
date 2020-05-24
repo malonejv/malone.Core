@@ -163,6 +163,10 @@
     <Compile Include="DAL\Migrations\202004270535262_Change1.designer.cs">
       <DependentUpon>202004270535262_Change1.cs</DependentUpon>
     </Compile>
+    <Compile Include="DAL\Migrations\202005240038453_Change2.cs" />
+    <Compile Include="DAL\Migrations\202005240038453_Change2.designer.cs">
+      <DependentUpon>202005240038453_Change2.cs</DependentUpon>
+    </Compile>
     <Compile Include="DAL\Migrations\Configuration.cs" />
     <Compile Include="EL\Filters\EF\TodoListEntity\EFTodoListGetRequest.cs" />
     <Compile Include="EL\Model\RoleTypeEnum.cs" />
@@ -180,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DAL\Migrations\202004270535262_Change1.resx">
       <DependentUpon>202004270535262_Change1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DAL\Migrations\202005240038453_Change2.resx">
+      <DependentUpon>202005240038453_Change2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
