@@ -9,30 +9,41 @@ on:
     branches:
       - development
       - master
+      - release/*
+      
 #  pull_request:
 #    branches: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
-    runs-on: windows-latest
+      # The type of runner that the job will run on
+      runs-on: windows-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+      # Steps represent a sequence of tasks that will be executed as part of the job
+      steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Steps represent a sequence of tasks that will be executed as part of the job
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.0.2
+
+      - name: Add GitHub Source
+        run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ secrets.GITHUB_TOKEN }}
+    
+      - name: Nuget Restore Core Packages
+        run:  nuget restore src/malone.Core.sln
+        
+      - name: Build malone.Core
+        run:  msbuild src/malone.Core.sln
       
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1
+      - name: Nuget Restore Sample Packages
+        run:  nuget restore samples/malone.Core.Samples.sln
     
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.2
-    
-    - name: Nuget Restore Packages
-      run:  nuget restore src/malone.Core.sln
-    
-    - name: Build the solution
-      run:  msbuild src/malone.Core.sln
+      - name: Build malone.Core.Samples
+        run:  msbuild samples/malone.Core.Samples.sln
+
