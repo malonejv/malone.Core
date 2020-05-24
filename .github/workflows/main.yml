@@ -32,8 +32,18 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.2
 
-      - name: Nuget Restore Packages
+      - name: Add GitHub Source
+        run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ secrets.GITHUB_TOKEN }}
+    
+      - name: Nuget Restore Core Packages
         run:  nuget restore src/malone.Core.sln
         
-      - name: Build the solution
+      - name: Build malone.Core
         run:  msbuild src/malone.Core.sln
+      
+      - name: Nuget Restore Sample Packages
+        run:  nuget restore samples/malone.Core.Samples.sln
+    
+      - name: Build malone.Core.Samples
+        run:  msbuild samples/malone.Core.Samples.sln
+
