@@ -12,72 +12,16 @@ namespace malone.Core.CL.Exceptions
     public class ServiceAgentException<TCode> : DataAccessException<TCode>
     where TCode : Enum
     {
+        public ServiceAgentException(TCode code)
+            : base(code) { }
 
-        public ServiceAgentException()
-            : base()
-        {
-            Rethrow = false;
-        }
+        public ServiceAgentException(TCode code, bool rethrow = false, bool shouldLog = true)
+            : base(code, rethrow, shouldLog) { }
 
-        public ServiceAgentException(TCode code, string message)
-            : base(code, message)
-        {
-            Rethrow = false;
-        }
+        public ServiceAgentException(TCode code, string message, bool rethrow = false, bool shouldLog = true)
+            : base(code, message, rethrow, shouldLog) { }
 
-        public ServiceAgentException(TCode code, string message, bool rethrow)
-            : base(code, message, rethrow)
-        {
-            Rethrow = false;
-        }
-
-        public ServiceAgentException(TCode code, string message, Exception innerException)
-            : base(code, message, innerException)
-        {
-            Rethrow = false;
-        }
-
-        public ServiceAgentException(TCode code, string message, Exception innerException, bool rethrow)
-            : base(code, message, innerException, rethrow)
-        {
-            Rethrow = false;
-        }
-
-    }
-
-
-    public class ServiceAgentException : DataAccessException<CoreErrors>
-    {
-
-        public ServiceAgentException()
-            : base()
-        {
-            Rethrow = false;
-        }
-
-        public ServiceAgentException(CoreErrors code, string message)
-            : base(code, message)
-        {
-            Rethrow = false;
-        }
-
-        public ServiceAgentException(CoreErrors code, string message, bool rethrow)
-            : base(code, message, rethrow)
-        {
-            Rethrow = false;
-        }
-
-        public ServiceAgentException(CoreErrors code, string message, Exception innerException)
-            : base(code, message, innerException)
-        {
-            Rethrow = false;
-        }
-
-        public ServiceAgentException(CoreErrors code, string message, Exception innerException, bool rethrow)
-            : base(code, message, innerException, rethrow)
-        {
-            Rethrow = false;
-        }
-
+        public ServiceAgentException(TCode code, string message, Exception innerException, bool rethrow = false, bool shouldLog = true)
+            : base(code, message, innerException, rethrow, shouldLog) { }
     }
 }

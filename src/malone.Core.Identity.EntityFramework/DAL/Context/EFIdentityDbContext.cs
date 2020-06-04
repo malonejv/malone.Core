@@ -16,6 +16,7 @@ namespace malone.Core.Identity.EntityFramework.DAL.EF.Context
         where TRoleEntity : CoreRole<TKey, TUserRole>
         where TUserEntity : CoreUser<TKey, TUserLogin, TUserRole, TUserClaim>
     {
+        public EFIdentityDbContext() : base() { }
         public EFIdentityDbContext(string nameOrConnectionStringName) : base(nameOrConnectionStringName)
         {
         }
@@ -40,6 +41,8 @@ namespace malone.Core.Identity.EntityFramework.DAL.EF.Context
 
     public class EFIdentityDbContext : EFIdentityDbContext<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim>
     {
+        public EFIdentityDbContext() : base() { }
+
         public EFIdentityDbContext(string nameOrConnectionStringName)
             : base(nameOrConnectionStringName)
         {

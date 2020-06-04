@@ -2,7 +2,9 @@
 using malone.Core.BL.Components.Interfaces;
 using malone.Core.CL.Exceptions;
 using malone.Core.CL.Exceptions.Handler;
+using malone.Core.CL.Exceptions.Manager;
 using malone.Core.DAL.Repositories;
+using malone.Core.Sample.Middle.CL.Exceptions;
 using malone.Core.Sample.Middle.EL.Filters.EF.TodoListEntity;
 using malone.Core.Sample.Middle.EL.Model;
 using System;
@@ -10,12 +12,12 @@ using System.Linq;
 
 namespace malone.Core.Sample.Middle.BL.Implementations
 {
-    public class TodoListBV : BusinessValidator<TodoList>, ITodoListBV
+    public class TodoListBV : BusinessValidator<TodoList, ErrorCodes>, ITodoListBV
     {
-        protected IRepository<TodoList> Repository { get; }
+        protected ICoreRepository<TodoList, ErrorCodes> Repository { get; }
 
-        public TodoListBV(IRepository<TodoList> repository, IExceptionHandler<CoreErrors> exHandler)
-            : base( exHandler)
+        public TodoListBV(ICoreRepository<TodoList, ErrorCodes> repository, IMessageHandler<ErrorCodes> messageHandler, IExceptionHandler<ErrorCodes> exceptionHandler)
+            : base(messageHandler, exceptionHandler)
         {
             Repository = repository;
         }
@@ -32,7 +34,7 @@ namespace malone.Core.Sample.Middle.BL.Implementations
             existe = Repository.Get(new EFTodoListGetRequest()
             {
                 Expression = f => f.Name == todoList.Name && f.Id != todoList.Id
-            }).Count() > 0;
+            }).Any();
 
             if (existe)
             {

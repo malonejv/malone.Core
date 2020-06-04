@@ -1,9 +1,10 @@
 ﻿using malone.Core.BL.Components.Interfaces;
+using malone.Core.Sample.Middle.CL.Exceptions;
 using malone.Core.Sample.Middle.EL.Model;
 
 namespace malone.Core.Sample.Middle.BL
 {
-    public interface ITodoListBV : IBusinessValidator<TodoList>
+    public interface ITodoListBV : IBusinessValidator<TodoList, ErrorCodes>
     {
         ValidationResult ValidarNombreRepetido(params object[] args);
     }

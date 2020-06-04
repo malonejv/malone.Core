@@ -1,11 +1,6 @@
-﻿using malone.Core.Identity.BL.Components.MessageServices.Interfaces;
+﻿using malone.Core.Identity.BL.Components.MessageServices;
 using malone.Core.Identity.EntityFramework.EL;
-using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace malone.Core.Identity.EntityFramework.BL
 {

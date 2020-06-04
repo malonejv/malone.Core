@@ -11,13 +11,10 @@ namespace malone.Core.CL.Exceptions
     /// <summary>
     /// Encapsulates funcional validation exceptions in Business Layer
     /// </summary>
-    public class BusinessValidationException<TCode> : BaseException<TCode>
-        where TCode : Enum
+    public class BusinessValidationException : BaseException
     {
-        [DefaultValue(null)]
-        public ValidationResultList Reuslts { get; private set; }
+        public ValidationResultList Results { get; private set; }
 
-        [DefaultValue(false)]
         public bool HideErrorCodes { get; protected set; }
 
         public new string Message
@@ -25,50 +22,9 @@ namespace malone.Core.CL.Exceptions
             get
             {
                 StringBuilder msg = new StringBuilder();
-                if (Reuslts != null)
+                if (Results != null)
                 {
-                    foreach (var e in Reuslts)
-                    {
-                        msg.AppendLine(string.Format("[{0}] - {1}",e.ErrorCode.ToUpper(), e.Message));
-                    }
-                }
-                return msg.ToString();
-            }
-        }
-
-        public BusinessValidationException()
-            : base()
-        {
-            Rethrow = true;
-        }
-
-        public BusinessValidationException(ValidationResultList results,bool hideErrorCode = false)
-        {
-            Rethrow = true;
-            Reuslts = results;
-            HideErrorCodes = hideErrorCode;
-        }
-        public BusinessValidationException(ValidationResultList errors, bool rethrow, bool hideErrorCode = false)
-            : this(errors,hideErrorCode)
-        {
-            Rethrow = rethrow;
-        }
-
-    }
-
-    public class BusinessValidationException : BusinessValidationException<CoreErrors>
-    {
-        [DefaultValue(null)]
-        public List<ValidationResult> Errors { get; private set; }
-
-        public new string Message
-        {
-            get
-            {
-                StringBuilder msg = new StringBuilder();
-                if (Errors != null)
-                {
-                    foreach (var e in Errors)
+                    foreach (var e in Results)
                     {
                         msg.AppendLine(string.Format("[{0}] - {1}", e.ErrorCode.ToUpper(), e.Message));
                     }
@@ -77,23 +33,23 @@ namespace malone.Core.CL.Exceptions
             }
         }
 
+
         public BusinessValidationException()
-            : base()
-        {
-            Rethrow = true;
-        }
+            : base() { }
 
-        public BusinessValidationException(List<ValidationResult> errors)
-        {
-            Rethrow = true;
-            Errors = errors;
-        }
-        public BusinessValidationException(List<ValidationResult> errors, bool rethrow)
-            : this(errors)
-        {
-            Errors = errors;
-            Rethrow = rethrow;
-        }
+        public BusinessValidationException(string message, bool rethrow = false, bool shouldLog = true)
+            : base(message, rethrow, shouldLog) { }
 
+        public BusinessValidationException(string message, Exception innerException, bool rethrow = false, bool shouldLog = true)
+            : base(message, innerException, rethrow, shouldLog) { }
+
+
+        public BusinessValidationException(ValidationResultList results, bool rethrow = false, bool shouldLog = true, bool hideErrorCode = false)
+            :base(rethrow,shouldLog)
+        {
+            Results = results;
+            HideErrorCodes = hideErrorCode;
+        }
     }
+
 }

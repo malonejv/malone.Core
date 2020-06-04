@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using malone.Core.AdoNet.DAL.Context;
+using malone.Core.AdoNet.DAL.Exceptions;
 using malone.Core.AdoNet.EL.Filters;
 using malone.Core.AdoNet.EL.Filters.Extensions;
+using malone.Core.CL.DI;
 using malone.Core.CL.Exceptions;
 using malone.Core.CL.Exceptions.Handler;
-using malone.Core.CL.Exceptions.Manager.Implementations;
 using malone.Core.DAL.Repositories;
 using malone.Core.DAL.UnitOfWork;
 using malone.Core.EL.Filters;
@@ -16,9 +17,10 @@ using System.Linq;
 
 namespace malone.Core.AdoNet.DAL.Repositories
 {
-    public abstract class AdoNetRepository<TKey, TEntity> : IRepository<TKey, TEntity>
+    public abstract class AdoNetRepository<TKey, TEntity, TErrorCoder> : ICoreRepository<TKey, TEntity, TErrorCoder>
         where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
+        where TErrorCoder : Enum
     {
         private AdoNetContext _context;
 
@@ -26,10 +28,11 @@ namespace malone.Core.AdoNet.DAL.Repositories
 
         protected IUnitOfWork UnitOfWork { get; private set; }
         protected Mapper Mapper { get; private set; }
-        protected IExceptionHandler<CoreErrors> ExceptionHandler { get; }
+        protected IExceptionHandler<TErrorCoder> ExceptionHandler { get; }
+        internal IAdoNetExceptionHandler AdoNetExceptionHandler { get; }
 
 
-        public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper, IExceptionHandler<CoreErrors> exceptionHandler)
+        public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper, IExceptionHandler<TErrorCoder> exceptionHandler)
         {
             if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
             if (mapper == null) throw new ArgumentNullException(nameof(mapper));
@@ -40,6 +43,7 @@ namespace malone.Core.AdoNet.DAL.Repositories
 
             Mapper = mapper;
             ExceptionHandler = exceptionHandler;
+            AdoNetExceptionHandler = ServiceLocator.Current.Get<IAdoNetExceptionHandler>();
         }
 
         protected IQueryable<TEntity> GetQueryable(
@@ -87,7 +91,7 @@ namespace malone.Core.AdoNet.DAL.Repositories
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E400, typeof(TEntity));
+                AdoNetExceptionHandler.HandleException<DataAccessException<AdoNetErrors>>(ex, AdoNetErrors.E600, typeof(TEntity));
             }
             return null;
         }
@@ -154,7 +158,7 @@ namespace malone.Core.AdoNet.DAL.Repositories
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E400, typeof(TEntity));
+                AdoNetExceptionHandler.HandleException<DataAccessException<AdoNetErrors>>(ex, AdoNetErrors.E600, typeof(TEntity));
             }
             return null;
         }
@@ -189,7 +193,7 @@ namespace malone.Core.AdoNet.DAL.Repositories
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E400, typeof(TEntity));
+                AdoNetExceptionHandler.HandleException<DataAccessException<AdoNetErrors>>(ex, AdoNetErrors.E600, typeof(TEntity));
             }
             return null;
         }
@@ -197,7 +201,7 @@ namespace malone.Core.AdoNet.DAL.Repositories
         protected abstract KeyValuePair<CommandType, string> ConfigureGetByIdCommandText(bool includeDeleted, string includeProperties);
 
         public virtual TEntity GetById(
-            object id,
+            TKey id,
             bool includeDeleted = false,
             string includeProperties = "")
         {
@@ -226,7 +230,7 @@ namespace malone.Core.AdoNet.DAL.Repositories
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E400, typeof(TEntity));
+                AdoNetExceptionHandler.HandleException<DataAccessException<AdoNetErrors>>(ex, AdoNetErrors.E600, typeof(TEntity));
             }
             return null;
         }
@@ -253,17 +257,18 @@ namespace malone.Core.AdoNet.DAL.Repositories
 
         protected abstract KeyValuePair<CommandType, string> ConfigureDeleteCommandText();
 
-        public virtual void Delete(object id) { }
+        public virtual void Delete(TKey id) { }
 
         public virtual void Delete(TEntity entityToDelete) { }
 
     }
 
 
-    public abstract class AdoNetRepository<TEntity> : AdoNetRepository<int, TEntity>, IRepository<TEntity>
+    public abstract class AdoNetRepository<TEntity, TErrorCoder> : AdoNetRepository<int, TEntity, TErrorCoder>, ICoreRepository<TEntity, TErrorCoder>
         where TEntity : class, IBaseEntity
+        where TErrorCoder : Enum
     {
-        public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper, IExceptionHandler<CoreErrors> exceptionHandler) : base(unitOfWork, mapper,exceptionHandler)
+        public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper, IExceptionHandler<TErrorCoder> exceptionHandler) : base(unitOfWork, mapper, exceptionHandler)
         {
         }
     }

@@ -22,5 +22,6 @@ namespace malone.Core.Identity.EntityFramework.EL
         {
             Id = this.GetHashCode();
         }
+
     }
 }

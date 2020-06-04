@@ -64,5 +64,6 @@ namespace malone.Core.Identity.BL.Extensions
             rememberBrowserIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId.ToString()));
             return rememberBrowserIdentity;
         }
+
     }
 }

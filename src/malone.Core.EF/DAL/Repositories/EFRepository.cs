@@ -1,8 +1,9 @@
-﻿using malone.Core.CL.Exceptions;
+﻿using malone.Core.CL.DI;
+using malone.Core.CL.Exceptions;
 using malone.Core.CL.Exceptions.Handler;
-using malone.Core.CL.Exceptions.Manager.Interfaces;
 using malone.Core.DAL.Repositories;
 using malone.Core.DAL.UnitOfWork;
+using malone.Core.EF.DAL.Exceptions;
 using malone.Core.EF.EL.Filters;
 using malone.Core.EL.Filters;
 using malone.Core.EL.Model;
@@ -14,27 +15,21 @@ using System.Linq.Expressions;
 
 namespace malone.Core.EF.DAL.Repositories.Implementations
 {
-    public class EFRepository<TKey, TEntity> : IRepository<TKey, TEntity>
+    public class EFRepository<TKey, TEntity, TErrorCoder> : ICoreRepository<TKey, TEntity, TErrorCoder>
         where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
+        where TErrorCoder : Enum
     {
         protected DbSet<TEntity> _dbSet;
         protected DbContext _context;
 
         protected IUnitOfWork UnitOfWork { get; }
 
-        protected IExceptionHandler<CoreErrors> ExceptionHandler { get; }
+        protected IExceptionHandler<TErrorCoder> ExceptionHandler { get; }
 
-        //public EFRepository(IUnitOfWork unitOfWork)
-        //{
-        //    if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
+        internal IEFExceptionHandler EFExceptionHandler { get; }
 
-        //    UnitOfWork = unitOfWork;
-        //    _context = UnitOfWork.Context as DbContext;
-        //    _dbSet = _context.Set<TEntity>();
-        //}
-
-        public EFRepository(IUnitOfWork unitOfWork, IExceptionHandler<CoreErrors> exceptionHandler)
+        public EFRepository(IUnitOfWork unitOfWork, IExceptionHandler<TErrorCoder> exceptionHandler)
         {
             if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
             if (exceptionHandler == null) throw new ArgumentNullException(nameof(exceptionHandler));
@@ -44,6 +39,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             _dbSet = _context.Set<TEntity>();
 
             ExceptionHandler = exceptionHandler;
+            EFExceptionHandler = ServiceLocator.Current.Get<IEFExceptionHandler>();
         }
 
         protected IQueryable<TEntity> Get(
@@ -83,7 +79,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E400, typeof(TEntity));
+                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E600, typeof(TEntity));
             }
             return null;
         }
@@ -116,7 +112,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E400, typeof(TEntity));
+                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E600, typeof(TEntity));
             }
             return null;
         }
@@ -137,13 +133,13 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E400, typeof(TEntity));
+                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E600, typeof(TEntity));
             }
             return null;
         }
 
         public virtual TEntity GetById(
-            object id,
+            TKey id,
             bool includeDeleted = false,
             string includeProperties = "")
         {
@@ -153,11 +149,11 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
 
                 query = Get(query, null, includeDeleted, includeProperties);
 
-                return query.Where<TEntity>(e => e.Id.Equals((TKey)id)).FirstOrDefault();
+                return query.Where<TEntity>(e => e.Id.Equals(id)).FirstOrDefault();
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E401, typeof(TEntity));
+                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E601, typeof(TEntity));
             }
             return null;
         }
@@ -190,7 +186,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E401, typeof(TEntity));
+                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E601, typeof(TEntity));
             }
             return null;
         }
@@ -203,7 +199,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E402, typeof(TEntity));
+                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E602, typeof(TEntity));
             }
         }
 
@@ -211,16 +207,18 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
         {
             try
             {
-                _dbSet.Attach(entityToUpdate);
+                var old = GetById(entityToUpdate.Id);
+                _context.Entry(old).State = EntityState.Detached;
+
                 _context.Entry(entityToUpdate).State = EntityState.Modified;
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E404, typeof(TEntity));
+                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E604, typeof(TEntity));
             }
         }
 
-        public virtual void Delete(object id)
+        public virtual void Delete(TKey id)
         {
             try
             {
@@ -229,7 +227,7 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E403, typeof(TEntity));
+                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E603, typeof(TEntity));
             }
         }
 
@@ -245,22 +243,25 @@ namespace malone.Core.EF.DAL.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<DataAccessException>(ex, CoreErrors.E403, typeof(TEntity));
+                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E603, typeof(TEntity));
             }
         }
 
     }
 
 
-    public class EFRepository<TEntity> : EFRepository<int, TEntity>, IRepository<TEntity>
+    public class EFRepository<TEntity, TErrorCoder> : 
+        EFRepository<int, TEntity, TErrorCoder>, 
+        ICoreRepository<TEntity, TErrorCoder>
         where TEntity : class, IBaseEntity
+        where TErrorCoder : Enum
     {
 
         //public EFRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         //{
         //}
 
-        public EFRepository(IUnitOfWork unitOfWork, IExceptionHandler<CoreErrors> exceptionHandler) : base(unitOfWork, exceptionHandler)
+        public EFRepository(IUnitOfWork unitOfWork, IExceptionHandler<TErrorCoder> exceptionHandler) : base(unitOfWork, exceptionHandler)
         {
         }
 

@@ -7,44 +7,75 @@ using System.Threading.Tasks;
 
 namespace malone.Core.CL.Exceptions
 {
-    public abstract class BaseException<TCode> : Exception
-        where TCode : Enum
+    public abstract class BaseException : Exception
     {
-        [DefaultValue(true)]
         public bool Rethrow { get; protected set; }
 
-        [DefaultValue(true)]
         public bool ShouldLog { get; protected set; }
 
-        public TCode Error { get; private set; }
-
-        public string CodeMessage { get { return Error.ToString() + " - " + Message; } }
-
-        public BaseException()
-            : base()
+        public BaseException() : base()
         {
+            Rethrow = false;
+            ShouldLog = true;
         }
 
-        public BaseException(TCode code, string message)
-            : base(message)
+        public BaseException(bool rethrow = false, bool shouldLog = true) : base()
         {
-            Error = code;
+            Rethrow = rethrow;
+            ShouldLog = shouldLog;
         }
 
-        public BaseException(TCode code, string message, bool rethrow)
+        public BaseException(string message, bool rethrow = false, bool shouldLog = true) : base(message)
         {
-            Error = code;
+            Rethrow = rethrow;
+            ShouldLog = shouldLog;
         }
 
-        public BaseException(TCode code, string message, Exception innerException)
+        public BaseException(string message, Exception innerException, bool rethrow = false, bool shouldLog = true) : base(message, innerException)
         {
-            Error = code;
+            Rethrow = rethrow;
+            ShouldLog = shouldLog;
         }
 
-        public BaseException(TCode code, string message, Exception innerException, bool rethrow)
+    }
+
+    public abstract class BaseException<TCode> : BaseException
+        where TCode : Enum
+    {
+        public TCode ErrorCode { get; private set; }
+
+        public string ErrorMessage { get { return ErrorCode.ToString() + " - " + Message; } }
+
+        public BaseException(TCode code) : base()
         {
-            Error = code;
+            if (code.Equals(default(TCode))) throw new ArgumentException(nameof(code));
+
+            ErrorCode = code;
         }
 
+        public BaseException(TCode code, bool rethrow = false, bool shouldLog = true) : base()
+        {
+            if (code.Equals(default(TCode))) throw new ArgumentException(nameof(code));
+
+            ErrorCode = code;
+            Rethrow = rethrow;
+            ShouldLog = shouldLog;
+        }
+
+        public BaseException(TCode code, string message, bool rethrow = false, bool shouldLog = true)
+            : base(message, rethrow, shouldLog)
+        {
+            if (code.Equals(default(TCode))) throw new ArgumentException(nameof(code));
+
+            ErrorCode = code;
+        }
+
+        public BaseException(TCode code, string message, Exception innerException, bool rethrow = false, bool shouldLog = true)
+            : base(message, innerException, rethrow, shouldLog)
+        {
+            if (code.Equals(default(TCode))) throw new ArgumentException(nameof(code));
+
+            ErrorCode = code;
+        }
     }
 }

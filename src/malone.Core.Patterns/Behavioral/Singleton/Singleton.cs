@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace malone.Core.Patterns.Behavioral.Singleton
 {
-    public abstract class Singleton<T> where T : class
+    public class Singleton<T> where T : class
     {
         private static readonly Lazy<T> instance = new Lazy<T>(() =>
         {

@@ -1,7 +1,7 @@
 ﻿using malone.Core.BL.Components.Interfaces;
+using malone.Core.CL.DI;
 using malone.Core.CL.Exceptions;
 using malone.Core.CL.Exceptions.Handler;
-using malone.Core.CL.Exceptions.Manager.Interfaces;
 using malone.Core.DAL.Repositories;
 using malone.Core.DAL.UnitOfWork;
 using malone.Core.EL.Filters;
@@ -12,31 +12,35 @@ using System.Linq;
 
 namespace malone.Core.BL.Components.Implementations
 {
-    public abstract class BusinessComponent<TKey, TEntity, TValidator> : IBusinessComponent<TKey, TEntity, TValidator>
+    public abstract class BusinessComponent<TKey, TEntity, TValidator, TErrorCoder> : IBusinessComponent<TKey, TEntity, TValidator, TErrorCoder>
         where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
-        where TValidator : IBusinessValidator<TKey, TEntity> 
+        where TValidator : IBusinessValidator<TKey, TEntity, TErrorCoder>
+        where TErrorCoder : Enum
     {
 
         #region Properties
 
-        protected IRepository<TKey, TEntity> Repository { get; private set; }
+        protected ICoreRepository<TKey, TEntity, TErrorCoder> Repository { get; private set; }
 
         protected IUnitOfWork UnitOfWork { get; set; }
 
         public TValidator BusinessValidator { get; set; }
 
-        protected IExceptionHandler<CoreErrors> ExceptionHandler { get; }
+        protected IExceptionHandler<TErrorCoder> ExceptionHandler { get; }
+
+        internal ICoreExceptionHandler CoreExceptionHandler { get; }
 
         #endregion
 
-        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TKey, TEntity> repository, IExceptionHandler<CoreErrors> exceptionHandler)
+        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, ICoreRepository<TKey, TEntity,TErrorCoder> repository, IExceptionHandler<TErrorCoder> exceptionHandler)
         {
             UnitOfWork = unitOfWork;
             BusinessValidator = businessValidator;
             Repository = repository;
 
             ExceptionHandler = exceptionHandler;
+            CoreExceptionHandler = ServiceLocator.Current.Get<ICoreExceptionHandler>();
         }
 
         #region Validations
@@ -87,14 +91,14 @@ namespace malone.Core.BL.Components.Implementations
                 //TODO: Agregar configuración. Evaluar opcion de configurar por entidad o genérico.
                 //if (result.Count() == 0)
                 //{
-                //    var message = string.Format(messageManager.GetDescription((int)CoreErrors.E304), typeof(TEntity));
-                //    throw new BusinessException((int)CoreErrors.E304, message);
+                //    var message = string.Format(messageManager.GetDescription((int)CoreErrors.E404), typeof(TEntity));
+                //    throw new BusinessException((int)CoreErrors.E404, message);
                 //}
                 return result;
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<BusinessException>(ex, CoreErrors.E300, typeof(TEntity));
+                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.E400, typeof(TEntity));
             }
             return null;
         }
@@ -112,36 +116,38 @@ namespace malone.Core.BL.Components.Implementations
                 //TODO: Agregar configuración. Evaluar opcion de configurar por entidad o genérico.
                 //if (result.Count() == 0)
                 //{
-                //    var message = string.Format(messageManager.GetDescription((int)CoreErrors.E304), typeof(TEntity));
-                //    throw new BusinessException((int)CoreErrors.E304, message);
+                //    var message = string.Format(messageManager.GetDescription((int)CoreErrors.E404), typeof(TEntity));
+                //    throw new BusinessException((int)CoreErrors.E404, message);
                 //}
                 return result;
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<BusinessException>(ex, CoreErrors.E300, typeof(TEntity));
+                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.E400, typeof(TEntity));
             }
             return null;
         }
 
         public virtual TEntity GetById(
-            object id,
+            TKey id,
             bool includeDeleted = false,
             string includeProperties = "")
         {
             try
             {
+                CheckId(id);
+
                 var result = Repository.GetById(id, includeDeleted, includeProperties);
 
                 if (result == null)
                 {
-                    ExceptionHandler.HandleException<BusinessException>( CoreErrors.E304, typeof(TEntity));
+                    CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(CoreErrors.E404, typeof(TEntity));
                 }
                 return result;
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<BusinessException>(ex, CoreErrors.E300, typeof(TEntity));
+                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.E400, typeof(TEntity));
             }
             return null;
         }
@@ -159,13 +165,13 @@ namespace malone.Core.BL.Components.Implementations
 
                 if (result == null)
                 {
-                    ExceptionHandler.HandleException<BusinessException>(CoreErrors.E304, typeof(TEntity));
+                    CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(CoreErrors.E404, typeof(TEntity));
                 }
                 return result;
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<BusinessException>(ex, CoreErrors.E300, typeof(TEntity));
+                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.E400, typeof(TEntity));
             }
             return null;
         }
@@ -174,32 +180,47 @@ namespace malone.Core.BL.Components.Implementations
         {
             try
             {
-                var validationResult =  BusinessValidator.Validate(BusinessValidator.ExecuteAddValidationRules, BusinessValidator.AddValidationRules);
-                if(!validationResult.IsValid)
-                    ExceptionHandler.HandleException<BusinessValidationException>(validationResult);
+                CheckEntity(entity);
+
+                var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteAddValidationRules, BusinessValidator.AddValidationRules);
+                if (!validationResult.IsValid)
+                    CoreExceptionHandler.HandleException<BusinessValidationException>(validationResult);
 
                 Repository.Insert(entity);
                 UnitOfWork.SaveChanges();
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<BusinessException>(ex, CoreErrors.E301, typeof(TEntity));
+                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.E401, typeof(TEntity));
             }
         }
 
         public virtual void Update(TEntity entity)
         {
+            CheckEntity(entity);
+            CheckEntityId(entity);
+
+            Update(entity.Id, entity);
+        }
+
+        public virtual void Update(TKey id, TEntity entity)
+        {
             try
             {
-                var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteUpdateValidationRules,BusinessValidator.UpdateValidationRules);
+                CheckEntity(entity);
+                CheckId(id);
+
+                var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteUpdateValidationRules, BusinessValidator.UpdateValidationRules);
                 if (!validationResult.IsValid)
                     ExceptionHandler.HandleException<BusinessValidationException>(validationResult);
+
+                entity.Id = id;
                 Repository.Update(entity);
                 UnitOfWork.SaveChanges();
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<BusinessException>(ex, CoreErrors.E303, typeof(TEntity));
+                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.E403, typeof(TEntity));
             }
         }
 
@@ -207,9 +228,13 @@ namespace malone.Core.BL.Components.Implementations
         {
             try
             {
-                var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteDeleteValidationRules,BusinessValidator.DeleteValidationRules);
+                CheckEntity(entity);
+                CheckEntityId(entity);
+
+                var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteDeleteValidationRules, BusinessValidator.DeleteValidationRules);
                 if (!validationResult.IsValid)
                     ExceptionHandler.HandleException<BusinessValidationException>(validationResult);
+
                 if (entity is ISoftDelete)
                 {
                     ISoftDelete noDeletableEntity = entity as ISoftDelete;
@@ -224,20 +249,36 @@ namespace malone.Core.BL.Components.Implementations
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException<BusinessException>(ex, CoreErrors.E302, typeof(TEntity));
+                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.E402, typeof(TEntity));
             }
         }
 
         #endregion
+
+        protected void CheckEntity(TEntity entity)
+        {
+            if (entity == default(TEntity)) throw new ArgumentException(nameof(entity));
+        }
+        protected void CheckEntityId(TEntity entity)
+        {
+            if (entity.Id.Equals(default(TKey))) throw new ArgumentException(nameof(entity.Id));
+        }
+        protected void CheckId(TKey id)
+        {
+            if (id.Equals(default(TKey))) throw new ArgumentException(nameof(id));
+        }
     }
 
 
-    public abstract class BusinessComponent<TEntity, TValidator> : BusinessComponent<int, TEntity, TValidator>, IBusinessComponent<TEntity, TValidator>
-   where TEntity : class, IBaseEntity
-   where TValidator : IBusinessValidator<TEntity>
+    public abstract class BusinessComponent<TEntity, TValidator, TErrorCoder> :
+        BusinessComponent<int, TEntity, TValidator, TErrorCoder>,
+        IBusinessComponent<TEntity, TValidator, TErrorCoder>
+        where TEntity : class, IBaseEntity
+        where TValidator : IBusinessValidator<TEntity, TErrorCoder>
+        where TErrorCoder : Enum
     {
 
-        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TEntity> repository, IExceptionHandler<CoreErrors> exceptionHandler)
+        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, ICoreRepository<TEntity, TErrorCoder> repository, IExceptionHandler<TErrorCoder> exceptionHandler)
             : base(unitOfWork, businessValidator, repository, exceptionHandler)
         {
         }

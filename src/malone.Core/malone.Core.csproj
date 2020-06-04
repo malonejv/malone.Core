@@ -106,18 +106,27 @@
     <Compile Include="BL\Components\Interfaces\IBusinessValidator.cs" />
     <Compile Include="BL\Components\Interfaces\Validations.cs" />
     <Compile Include="CL\Configurations\Attributes\SectionNameAttribute.cs" />
-    <Compile Include="CL\Configurations\DbFactory\DatabaseConfigurationExtensions.cs" />
+    <Compile Include="CL\Configurations\DbFactory\DatabaseConfigurationSectionExtensions.cs" />
+    <Compile Include="CL\Configurations\DbFactory\DatabaseProviderElementCollection.cs" />
+    <Compile Include="CL\Configurations\DbFactory\DatabaseProviderElement.cs" />
     <Compile Include="CL\Configurations\Features\FeatureDescriptionAttribute.cs" />
     <Compile Include="CL\Configurations\CoreConfiguration.cs" />
     <Compile Include="CL\Configurations\Features\FeatureExtensions.cs" />
     <Compile Include="CL\Configurations\ICoreConfiguration.cs" />
     <Compile Include="CL\Configurations\Features\BehaviorElement.cs" />
     <Compile Include="CL\Configurations\Features\BehaviorElementCollection.cs" />
-    <Compile Include="CL\Configurations\DbFactory\DatabaseConfiguration.cs" />
+    <Compile Include="CL\Configurations\DbFactory\DatabaseConfigurationSection.cs" />
     <Compile Include="CL\Configurations\Features\FeatureElement.cs" />
     <Compile Include="CL\Configurations\Features\FeaturesElementCollection.cs" />
     <Compile Include="CL\Configurations\Features\FeatureSettings.cs" />
     <Compile Include="CL\Configurations\Features\FeatureSettingsSection.cs" />
+    <Compile Include="CL\Exceptions\Handler\CoreExceptionHandler.cs" />
+    <Compile Include="CL\Exceptions\Handler\ICoreExceptionHandler.cs" />
+    <Compile Include="CL\Exceptions\Manager\CoreMessageHandler.cs" />
+    <Compile Include="CL\Exceptions\Manager\ICoreMessageHandler.cs" />
+    <Compile Include="CL\Initializers\AppInitializer.cs" />
+    <Compile Include="CL\Initializers\ILayer.cs" />
+    <Compile Include="CL\Initializers\IInjectorInitializer.cs" />
     <Compile Include="CL\DI\ServiceLocator.cs" />
     <Compile Include="CL\Exceptions\BaseException.cs" />
     <Compile Include="CL\Exceptions\BusinessException.cs" />
@@ -126,8 +135,8 @@
     <Compile Include="CL\Exceptions\DataAccessException.cs" />
     <Compile Include="CL\Exceptions\Handler\ExceptionHandler.cs" />
     <Compile Include="CL\Exceptions\Handler\IExceptionHandler.cs" />
-    <Compile Include="CL\Exceptions\Manager\Implementations\MessageHandler.cs" />
-    <Compile Include="CL\Exceptions\Manager\Interfaces\IMessageHandler.cs" />
+    <Compile Include="CL\Exceptions\Manager\MessageHandler.cs" />
+    <Compile Include="CL\Exceptions\Manager\IMessageHandler.cs" />
     <Compile Include="CL\Exceptions\Resources\Exceptions.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -135,7 +144,6 @@
     </Compile>
     <Compile Include="CL\Exceptions\ServiceAgentException.cs" />
     <Compile Include="CL\Exceptions\TechnicalException.cs" />
-    <Compile Include="CL\Exceptions\ViewException.cs" />
     <Compile Include="CL\Helpers\Extensions\ByteArrayExtensions.cs" />
     <Compile Include="CL\Helpers\Extensions\CharExtensions.cs" />
     <Compile Include="CL\Helpers\Extensions\EnumExtensions.cs" />
@@ -149,10 +157,10 @@
     <Compile Include="CL\Log\LogItem.cs" />
     <Compile Include="CL\Log\LogLevel.cs" />
     <Compile Include="CL\Security\Encryption.cs" />
-    <Compile Include="CL\DI\CoreBootstrapper.cs" />
-    <Compile Include="CL\DI\ILayerBootstrapper.cs" />
+    <Compile Include="CL\Initializers\LayersInitializer.cs" />
+    <Compile Include="CL\Initializers\ILayerInitializer.cs" />
     <Compile Include="DAL\Context\IContext.cs" />
-    <Compile Include="DAL\Repositories\IRepository.cs" />
+    <Compile Include="DAL\Repositories\ICoreRepository.cs" />
     <Compile Include="DAL\UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="DAL\UnitOfWork\UnitOfWork.cs" />
     <Compile Include="DAL\ServiceAgents\IServiceAgent.cs" />
@@ -160,6 +168,7 @@
     <Compile Include="EL\Filters\IFilterExpression.cs" />
     <Compile Include="EL\Model\IAuditable.cs" />
     <Compile Include="EL\Model\IBaseEntity.cs" />
+    <Compile Include="EL\Model\IBaseEntityExtensions.cs" />
     <Compile Include="EL\Model\ISoftDelete.cs" />
     <Compile Include="EL\Model\IVersionable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -168,7 +177,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CL\Helpers\Attributes\" />
-    <Folder Include="SL\" />
     <Folder Include="UI\" />
   </ItemGroup>
   <ItemGroup>
@@ -181,12 +189,6 @@
       <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Exceptions.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\malone.Core.Patterns\malone.Core.Patterns.csproj">
-      <Project>{041AF239-40F7-4D36-8CAA-1B5DE002FE4C}</Project>
-      <Name>malone.Core.Patterns</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -205,7 +207,7 @@
     </GetAssemblyIdentity>
     <ItemGroup>
       <VersionNumber Include="@(Targets->'%(Version)')" />
-  </ItemGroup>
+    </ItemGroup>
   </Target>
   <PropertyGroup>
     <PostBuildEventDependsOn>

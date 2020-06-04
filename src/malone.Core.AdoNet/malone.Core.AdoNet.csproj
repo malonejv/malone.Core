@@ -61,7 +61,17 @@
     <Compile Include="DAL\Database\DatabaseFactory.cs" />
     <Compile Include="DAL\Database\DatabaseProviderEnum.cs" />
     <Compile Include="DAL\Database\IDatabase.cs" />
+    <Compile Include="DAL\Exceptions\AdoNetExceptionHandler.cs" />
+    <Compile Include="DAL\Exceptions\AdoNetMessageHandler.cs" />
+    <Compile Include="DAL\Exceptions\Exceptions.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.resx</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Exceptions\IAdoNetExceptionHandler.cs" />
+    <Compile Include="DAL\Exceptions\IAdoNetMessageHandler.cs" />
     <Compile Include="DAL\Extensions\DbParameterAttributeExtensions.cs" />
+    <Compile Include="DAL\Exceptions\AdoNetErrors.cs" />
     <Compile Include="DAL\Parameters\IParameterConverter.cs" />
     <Compile Include="DAL\Repositories\AdoNetRepository.cs" />
     <Compile Include="EL\Filters\IFilterExpressionAdoNet.cs" />
@@ -77,6 +87,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DAL\Exceptions\Exceptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="PostBuildMacros">

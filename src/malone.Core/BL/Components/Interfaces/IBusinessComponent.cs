@@ -6,10 +6,11 @@ using System.Linq;
 
 namespace malone.Core.BL.Components.Interfaces
 {
-    public interface IBusinessComponent<TKey, TEntity, TValidator>
+    public interface IBusinessComponent<TKey, TEntity, TValidator, TErrorCoder>
         where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
-        where TValidator : IBusinessValidator<TKey, TEntity>
+        where TValidator : IBusinessValidator<TKey, TEntity, TErrorCoder>
+        where TErrorCoder : Enum
     {
 
         #region Properties
@@ -32,7 +33,7 @@ namespace malone.Core.BL.Components.Interfaces
            );
 
         TEntity GetById(
-            object id,
+            TKey id,
             bool includeDeleted = false,
             string includeProperties = "");
 
@@ -49,13 +50,16 @@ namespace malone.Core.BL.Components.Interfaces
 
         void Update(TEntity entity);
 
+        void Update(TKey id, TEntity entity);
+
         #endregion
 
     }
 
-    public interface IBusinessComponent<TEntity, TValidator> : IBusinessComponent<int, TEntity, TValidator>
-       where TEntity : class, IBaseEntity
-       where TValidator : IBusinessValidator<TEntity>
+    public interface IBusinessComponent<TEntity, TValidator, TErrorCoder> : IBusinessComponent<int, TEntity, TValidator, TErrorCoder>
+        where TEntity : class, IBaseEntity
+        where TValidator : IBusinessValidator<TEntity, TErrorCoder>
+        where TErrorCoder : Enum
     { }
 
 }

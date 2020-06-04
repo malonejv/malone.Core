@@ -6,9 +6,10 @@ namespace malone.Core.BL.Components.Interfaces
 {
     public delegate ValidationResultList ExecuteValidationRulesDelegate(List<ValidationRule> validationRules);
 
-    public interface IBusinessValidator<TKey, TEntity>
+    public interface IBusinessValidator<TKey, TEntity, TErrorCoder>
         where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
+        where TErrorCoder : Enum
     {
 
         List<ValidationRule> AddValidationRules { get; set; }
@@ -23,7 +24,8 @@ namespace malone.Core.BL.Components.Interfaces
         ValidationResultList Validate(ExecuteValidationRulesDelegate validationTriggerMethod, List<ValidationRule> validationRules);
     }
 
-    public interface IBusinessValidator<TEntity> : IBusinessValidator<int, TEntity>
+    public interface IBusinessValidator<TEntity, TErrorCoder> : IBusinessValidator<int, TEntity, TErrorCoder>
         where TEntity : class, IBaseEntity
+        where TErrorCoder : Enum
     { }
 }

@@ -1,4 +1,5 @@
 ﻿using malone.Core.CL.DI.Unity;
+using malone.Core.CL.Initializers;
 using malone.Core.Sample.DI;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(UnityMvcActivator<SampleBootstrapper>), nameof(UnityMvcActivator<SampleBootstrapper>.Start))]
-[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(UnityMvcActivator<SampleBootstrapper>), nameof(UnityMvcActivator<SampleBootstrapper>.Shutdown))]
+using Unity;
 
 namespace malone.Core.Sample.UI.EFSqlServer
 {
@@ -21,6 +20,8 @@ namespace malone.Core.Sample.UI.EFSqlServer
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            AppInitializer<UnityMvcActivator, IUnityContainer, SampleInitializer>.Initialize();
+
         }
     }
 }

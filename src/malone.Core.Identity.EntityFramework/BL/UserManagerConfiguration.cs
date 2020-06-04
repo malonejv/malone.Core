@@ -1,4 +1,4 @@
-﻿using malone.Core.Identity.BL.Components.MessageServices.Interfaces;
+﻿using malone.Core.Identity.BL.Components.MessageServices;
 using malone.Core.Identity.EntityFramework.EL;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -16,42 +16,46 @@ namespace malone.Core.Identity.EntityFramework.BL
         where TUserEntity : CoreUser<TKey, TUserLogin, TUserRole, TUserClaim>
         where TUserBC : UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>
     {
-        public UserManagerConfiguration(TUserBC userBusinessComponent, IEmailMessageService emailMessageService, ISmsMessageService smsMessageService)
+        public UserManagerConfiguration(
+            TUserBC userBusinessComponent,
+            IEmailMessageService emailMessageService,
+            ISmsMessageService smsMessageService,
+            IIdentityValidator<TUserEntity> userValidator,
+            IIdentityValidator<string> passwordValidator
+            )
             : base()
         {
             UserBC = userBusinessComponent;
             EmailService = emailMessageService;
             SmsService = smsMessageService;
+            UserValidator = userValidator;
+            PasswordValidator = passwordValidator;
         }
 
         public TUserBC UserBC { get; set; }
         public IEmailMessageService EmailService { get; set; }
         public ISmsMessageService SmsService { get; set; }
+        public IIdentityValidator<TUserEntity> UserValidator { get; set; }
+        public IIdentityValidator<string> PasswordValidator { get; set; }
 
-        public void ConfigureUserManager()
+        public virtual void ConfigureUserManager()
         {
+
+            UserBC.EmailService = EmailService;
+
+            UserBC.SmsService = SmsService;
+
             //OPTION: Agregar todas estas configuraciones en el web.config
 
             // Configure validation logic for usernames
-            UserBC.UserValidator = new UserValidator<TUserEntity, TKey>(UserBC)
-            {
-                AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = true
-            };
+            UserBC.UserValidator = UserValidator;
 
             // Configure validation logic for passwords
-            UserBC.PasswordValidator = new PasswordValidator
-            {
-                RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
-            };
+            UserBC.PasswordValidator = PasswordValidator;
 
             // Configure user lockout defaults
             UserBC.UserLockoutEnabledByDefault = true;
-            UserBC.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            UserBC.DefaultAccountLockoutTimeSpan = TimeSpan.FromDays(365 * 100); //Tiempo que queda bloqueado 
             UserBC.MaxFailedAccessAttemptsBeforeLockout = 5;
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
@@ -67,10 +71,7 @@ namespace malone.Core.Identity.EntityFramework.BL
                 BodyFormat = "Your security code is {0}"
             });
 
-            UserBC.EmailService = EmailService;
-
-            UserBC.SmsService = SmsService;
-
+            //TODO: Revisar
 
             var provider = new DpapiDataProtectionProvider("Sample");
             var entropy = "D4151DA419C4691E";
@@ -82,8 +83,13 @@ namespace malone.Core.Identity.EntityFramework.BL
     }
     public class UserManagerConfiguration : UserManagerConfiguration<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim, UserBusinessComponent>, IUserManagerConfiguration
     {
-        public UserManagerConfiguration(UserBusinessComponent userBusinessComponent, IEmailMessageService emailMessageService, ISmsMessageService smsMessageService)
-            : base(userBusinessComponent, emailMessageService, smsMessageService)
+        public UserManagerConfiguration(
+            UserBusinessComponent userBusinessComponent, 
+            IEmailMessageService emailMessageService, 
+            ISmsMessageService smsMessageService,
+            IIdentityValidator<CoreUser> userValidator,
+            IIdentityValidator<string> passwordValidator)
+            : base(userBusinessComponent, emailMessageService, smsMessageService,userValidator,passwordValidator)
         {
         }
     }

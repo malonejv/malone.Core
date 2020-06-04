@@ -63,78 +63,6 @@ namespace malone.Core.CL.Exceptions.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Se produjo un error al intentar obtener los datos solicitados..
         /// </summary>
-        internal static string E300 {
-            get {
-                return ResourceManager.GetString("E300", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Se produjo un error al intentar guardar los datos solicitados..
-        /// </summary>
-        internal static string E301 {
-            get {
-                return ResourceManager.GetString("E301", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Se produjo un error al intentar eliminar el dato solicitado..
-        /// </summary>
-        internal static string E302 {
-            get {
-                return ResourceManager.GetString("E302", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Se produjo un error al intentar actualizar los datos solicitados..
-        /// </summary>
-        internal static string E303 {
-            get {
-                return ResourceManager.GetString("E303", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No se encontraron resultados para la consulta realizada..
-        /// </summary>
-        internal static string E304 {
-            get {
-                return ResourceManager.GetString("E304", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Nombre de usuario o contraseña invalido..
-        /// </summary>
-        internal static string E305 {
-            get {
-                return ResourceManager.GetString("E305", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Debes confirmar el email primero..
-        /// </summary>
-        internal static string E306 {
-            get {
-                return ResourceManager.GetString("E306", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Usuario no autorizado..
-        /// </summary>
-        internal static string E307 {
-            get {
-                return ResourceManager.GetString("E307", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error al obtener una lista ordenada de tipo {0}..
-        /// </summary>
         internal static string E400 {
             get {
                 return ResourceManager.GetString("E400", resourceCulture);
@@ -142,7 +70,7 @@ namespace malone.Core.CL.Exceptions.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error al obtener una entidad de tipo {0}..
+        ///   Looks up a localized string similar to Se produjo un error al intentar guardar los datos solicitados..
         /// </summary>
         internal static string E401 {
             get {
@@ -151,7 +79,7 @@ namespace malone.Core.CL.Exceptions.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error al insertar una entidad de tipo {0}..
+        ///   Looks up a localized string similar to Se produjo un error al intentar eliminar el dato solicitado..
         /// </summary>
         internal static string E402 {
             get {
@@ -160,7 +88,7 @@ namespace malone.Core.CL.Exceptions.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error al eliminar una entidad de tipo {0}..
+        ///   Looks up a localized string similar to Se produjo un error al intentar actualizar los datos solicitados..
         /// </summary>
         internal static string E403 {
             get {
@@ -169,7 +97,7 @@ namespace malone.Core.CL.Exceptions.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error al actualizar una entidad de tipo {0}..
+        ///   Looks up a localized string similar to No se encontraron resultados para la consulta realizada..
         /// </summary>
         internal static string E404 {
             get {
@@ -178,11 +106,38 @@ namespace malone.Core.CL.Exceptions.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nombre de usuario o contraseña invalido..
+        /// </summary>
+        internal static string E405 {
+            get {
+                return ResourceManager.GetString("E405", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debes confirmar el email primero..
+        /// </summary>
+        internal static string E406 {
+            get {
+                return ResourceManager.GetString("E406", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuario no autorizado..
+        /// </summary>
+        internal static string E407 {
+            get {
+                return ResourceManager.GetString("E407", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Se produjo un error en la llamada al servicio {0}..
         /// </summary>
-        internal static string E480 {
+        internal static string E700 {
             get {
-                return ResourceManager.GetString("E480", resourceCulture);
+                return ResourceManager.GetString("E700", resourceCulture);
             }
         }
     }

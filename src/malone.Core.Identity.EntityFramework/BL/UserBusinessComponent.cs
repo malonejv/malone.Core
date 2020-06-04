@@ -1,18 +1,11 @@
-﻿using malone.Core.BL.Components.Interfaces;
-using malone.Core.CL.DI;
+﻿using malone.Core.CL.DI;
 using malone.Core.CL.Exceptions;
 using malone.Core.CL.Exceptions.Handler;
-using malone.Core.CL.Exceptions.Manager.Implementations;
-using malone.Core.Identity.EntityFramework.BL;
 using malone.Core.Identity.EntityFramework.EL;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace malone.Core.Identity.EntityFramework
 {

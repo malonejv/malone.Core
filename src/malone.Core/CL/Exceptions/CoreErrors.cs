@@ -8,89 +8,65 @@ namespace malone.Core.CL.Exceptions
 {
     public enum CoreErrors
     {
-        #region GeneralErrors 0 - 99
+        #region General Errors 0 - 199
         E0 = 0,
         #endregion
 
-        #region Presentation Errors 100 - 199
-        E100 = 100,
-        #endregion
-
-        #region ServiceErrors 200 - 299
+        #region Presentation Errors 200 - 299
         E200 = 200,
         #endregion
 
-        #region BusinessErrors 300 - 399
+        #region Services Errors 300 - 399
+        E300 = 300,
+        #endregion
+
+        #region Business Errors 400 - 499
         /// <summary>
         /// Se produjo un error al intentar obtener los datos solicitados.
         /// </summary>
-        E300 = 300,
+        E400 = 400,
         /// <summary>
         /// Se produjo un error al intentar guardar los datos solicitados.
         /// </summary>
-        E301 = 301,
+        E401 = 401,
         /// <summary>
         /// Se produjo un error al intentar eliminar el dato solicitado.
         /// </summary>
-        E302 = 302,
+        E402 = 402,
         /// <summary>
         /// Se produjo un error al intentar actualizar los datos solicitados.
         /// </summary>
-        E303 = 303,
+        E403 = 403,
         /// <summary>
         /// No se encontraron resultados para la consulta realizada.
         /// </summary>
-        E304 = 304,
+        E404 = 404,
         /// <summary>
         /// Nombre de usuario o contraseña invalido.
         /// </summary>
-        E305 = 305,
+        E405 = 405,
         /// <summary>
         /// Debes confirmar el email primero.
         /// </summary>
-        E306 = 306,
+        E406 = 406,
         /// <summary>
         /// Usuario no autorizado.
         /// </summary>
-        E307 = 307,
+        E407 = 407,
         #endregion
 
-        #region DataAccessErrors 400 - 479
-        /// <summary>
-        /// Error al obtener una lista ordenada de tipo {0}.
-        /// </summary>
-        E400 = 400, 
-        /// <summary>
-        /// Error al obtener una entidad de tipo {0}.
-        /// </summary>
-        E401 = 401, 
-        /// <summary>
-        /// Error al insertar una entidad de tipo {0}.
-        /// </summary>
-        E402 = 402, 
-        /// <summary>
-        /// Error al eliminar una entidad de tipo {0}.
-        /// </summary>
-        E403 = 403,
-        /// <summary>
-        /// Error al actualizar una entidad de tipo {0}.
-        /// </summary>
-        E404 = 404,
+        #region Business Validations Errors 500 - 599
         #endregion
 
-        #region ServiceAgentErrors 480 - 499
+        #region Service Agent Errors 700 - 799
         /// <summary>
         /// Se produjo un error en la llamada al servicio {0}.
         /// </summary>
-        E480 = 480, 
+        E700 = 700, 
         #endregion
 
-        #region EntitiesErrors 500 - 599
-        E500 = 500,
-        #endregion
-
-        #region CommonErrors 600 - 699
-        E600 = 600
+        #region Technical Errors 800 - 899
+        E800 = 800
         #endregion
     }
 }

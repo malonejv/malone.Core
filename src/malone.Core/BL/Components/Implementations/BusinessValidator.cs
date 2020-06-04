@@ -1,7 +1,7 @@
 ﻿using malone.Core.BL.Components.Interfaces;
 using malone.Core.CL.Exceptions;
 using malone.Core.CL.Exceptions.Handler;
-using malone.Core.CL.Exceptions.Manager.Interfaces;
+using malone.Core.CL.Exceptions.Manager;
 using malone.Core.EL.Model;
 using System;
 using System.Collections.Generic;
@@ -9,15 +9,21 @@ using System.Collections.Generic;
 namespace malone.Core.BL.Components.Implementations
 {
     //TODO: Estudiar dejarlo como abstract para oblicar a escribir las reglas de validacion aca
-    public class BusinessValidator<TKey, TEntity> : IBusinessValidator<TKey, TEntity>
+    public class BusinessValidator<TKey, TEntity, TErrorCoder> : IBusinessValidator<TKey, TEntity, TErrorCoder>
         where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
+        where TErrorCoder : Enum
     {
-        protected IExceptionHandler<CoreErrors> ExceptionHandler { get; }
+        protected IExceptionHandler<TErrorCoder> ExceptionHandler { get; }
+        protected IMessageHandler<TErrorCoder> MessageHandler { get; }
 
-        public BusinessValidator(IExceptionHandler<CoreErrors> exceptionHandler)
+        public BusinessValidator(IMessageHandler<TErrorCoder> messageHandler, IExceptionHandler<TErrorCoder> exceptionHandler)
         {
+            MessageHandler = messageHandler;
             ExceptionHandler = exceptionHandler;
+            AddValidationRules = new List<ValidationRule>();
+            UpdateValidationRules = new List<ValidationRule>();
+            DeleteValidationRules = new List<ValidationRule>();
         }
 
         public List<ValidationRule> AddValidationRules { get; set; }
@@ -68,11 +74,12 @@ namespace malone.Core.BL.Components.Implementations
         }
     }
 
-    public class BusinessValidator<TEntity> : BusinessValidator<int, TEntity>, IBusinessValidator<TEntity>
+    public class BusinessValidator<TEntity, TErrorCoder> : BusinessValidator<int, TEntity, TErrorCoder>, IBusinessValidator<TEntity, TErrorCoder>
        where TEntity : class, IBaseEntity
+       where TErrorCoder : Enum
     {
 
-        public BusinessValidator(IExceptionHandler<CoreErrors> exceptionHandler) : base(exceptionHandler)
+        public BusinessValidator(IMessageHandler<TErrorCoder> messageHandler, IExceptionHandler<TErrorCoder> exceptionHandler) : base(messageHandler, exceptionHandler)
         {
         }
 

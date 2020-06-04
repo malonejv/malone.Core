@@ -12,58 +12,16 @@ namespace malone.Core.CL.Exceptions
     public class TechnicalException<TCode> : BaseException<TCode>
                 where TCode : Enum
     {
-        public TechnicalException()
-            : base()
-        {
-        }
+        public TechnicalException(TCode code)
+            : base(code) { }
 
-        public TechnicalException(TCode code, string message)
-            : base(code, message)
-        {
-        }
+        public TechnicalException(TCode code, bool rethrow = false, bool shouldLog = true)
+            : base(code, rethrow, shouldLog) { }
 
-        public TechnicalException(TCode code, string message, bool rethrow)
-            : base(code, message, rethrow)
-        {
-        }
+        public TechnicalException(TCode code, string message, bool rethrow = false, bool shouldLog = true)
+            : base(code, message, rethrow, shouldLog) { }
 
-        public TechnicalException(TCode code, string message, Exception innerException)
-            : base(code, message, innerException)
-        {
-        }
-
-        public TechnicalException(TCode code, string message, Exception innerException, bool rethrow)
-            : base(code, message, innerException, rethrow)
-        {
-        }
-    }
-
-
-    public class TechnicalException : BaseException<CoreErrors>
-    {
-        public TechnicalException()
-            : base()
-        {
-        }
-
-        public TechnicalException(CoreErrors code, string message)
-            : base(code, message)
-        {
-        }
-
-        public TechnicalException(CoreErrors code, string message, bool rethrow)
-            : base(code, message, rethrow)
-        {
-        }
-
-        public TechnicalException(CoreErrors code, string message, Exception innerException)
-            : base(code, message, innerException)
-        {
-        }
-
-        public TechnicalException(CoreErrors code, string message, Exception innerException, bool rethrow)
-            : base(code, message, innerException, rethrow)
-        {
-        }
+        public TechnicalException(TCode code, string message, Exception innerException, bool rethrow = false, bool shouldLog = true)
+            : base(code, message, innerException, rethrow, shouldLog) { }
     }
 }

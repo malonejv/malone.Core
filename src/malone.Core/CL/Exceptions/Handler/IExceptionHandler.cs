@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace malone.Core.CL.Exceptions.Handler
 {
-    public interface IExceptionHandler<TCode>
-        where TCode : Enum
+    public interface IExceptionHandler<TErrorCoder>
+        where TErrorCoder : Enum
     {
-        void HandleException<TException>(TCode errorCode, params object[] args) where TException : BaseException<TCode>;
+        void HandleException<TException>(TErrorCoder errorCode, params object[] args) where TException : BaseException<TErrorCoder>;
 
-        void HandleException<TException>(Exception ex, TCode errorCode, params object[] args) where TException : BaseException<TCode>;
-        
-        void HandleException<TValidation>(ValidationResultList validationResult) where TValidation : BusinessValidationException<TCode>;
+        void HandleException<TException>(Exception ex, TErrorCoder errorCode, params object[] args) where TException : BaseException<TErrorCoder>;
+
+        void HandleException<TValidation>(ValidationResultList validationResult) where TValidation : BusinessValidationException;
     }
-
 }
