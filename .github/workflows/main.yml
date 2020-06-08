@@ -39,7 +39,7 @@ jobs:
         run:  nuget restore src/malone.Core.sln
         
       - name: Build malone.Core
-        run:  msbuild src/malone.Core.sln
+        run:  msbuild src/malone.Core.sln /t:Build /p:Configuration=Release
       
       - name: Paquete
         run:  nuget pack src/malone.Core/malone.Core.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
