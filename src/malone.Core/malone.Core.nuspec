@@ -19,6 +19,6 @@
   </metadata>
   <files>
     <file src="capibara.png" />
-    <file src="..\content\web.config.transform" />
+    <file src="..\web.config.transform"  target="content" />
   </files>
 </package>
