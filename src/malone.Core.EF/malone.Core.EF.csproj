@@ -109,10 +109,10 @@
   </Target>
   <PropertyGroup>
     <PostBuildEvent>
-      if $(ConfigurationName) == Release (
-      nuget pack "$(ProjectPath)" -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-      nuget push -SkipDuplicate -source "github"
-      )
+      REM if $(ConfigurationName) == Release (
+      REM nuget pack "$(ProjectPath)" -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+      REM nuget push -SkipDuplicate -source "github"
+      REM )
       if $(ConfigurationName) == ReleaseNuget (
       nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
       nuget push -SkipDuplicate -source "github"

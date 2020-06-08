@@ -144,10 +144,10 @@
   </Target>
   <PropertyGroup>
     <PostBuildEvent>
-      if $(ConfigurationName) == Release (
-      nuget pack "$(ProjectPath)" -Properties Configuration=Release -IncludeReferencedProjects
-      nuget push -SkipDuplicate -source "github"
-      )
+      REM if $(ConfigurationName) == Release (
+      REM nuget pack "$(ProjectPath)" -Properties Configuration=Release -IncludeReferencedProjects
+      REM nuget push -SkipDuplicate -source "github"
+      REM )
       if $(ConfigurationName) == ReleaseNuget (
       nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects
       nuget push -SkipDuplicate -source "github"
