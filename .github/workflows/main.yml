@@ -42,21 +42,22 @@ jobs:
         run:  msbuild src/malone.Core.sln
       
       - name: Pack projects
-        run:  nuget pack src/malone.Core/malone.Core.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core/malone.Core.AdoNet.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core/malone.Core.EF.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core/malone.Core.Patterns.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core/malone.Core.WebApi.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core/malone.Core.AdoNet.Oracle.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core/malone.Core.AdoNet.SqlServer.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core/malone.Core.Unity.IdentityEntityFrameworkInitializer.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core/malone.Core.Unity.Log4NetInitializer.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core/malone.Core.Unity.ModulesInitializers.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core/malone.Core.Unity.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core/malone.Core.Unity.WebApi.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core/malone.Core.Log4Net.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core/malone.Core.Identity.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core/malone.Core.Identity.EntityFramework.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+        run:  
+              - nuget pack src/malone.Core/malone.Core.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              - nuget pack src/malone.Core/malone.Core.AdoNet.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              - nuget pack src/malone.Core/malone.Core.EF.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              - nuget pack src/malone.Core/malone.Core.Patterns.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              - nuget pack src/malone.Core/malone.Core.WebApi.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              - nuget pack src/malone.Core/malone.Core.AdoNet.Oracle.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              - nuget pack src/malone.Core/malone.Core.AdoNet.SqlServer.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              - nuget pack src/malone.Core/malone.Core.Unity.IdentityEntityFrameworkInitializer.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              - nuget pack src/malone.Core/malone.Core.Unity.Log4NetInitializer.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              - nuget pack src/malone.Core/malone.Core.Unity.ModulesInitializers.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              - nuget pack src/malone.Core/malone.Core.Unity.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              - nuget pack src/malone.Core/malone.Core.Unity.WebApi.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              - nuget pack src/malone.Core/malone.Core.Log4Net.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              - nuget pack src/malone.Core/malone.Core.Identity.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              - nuget pack src/malone.Core/malone.Core.Identity.EntityFramework.csproj -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
               
       - name: Push packages
         run:  nuget push **.nupkg
