@@ -12,5 +12,12 @@
     <description>$description$</description>
     <copyright>Copyright 2020</copyright>
 	<repository type="git" url="https://github.com/malonejv/malone.Core" branch="development" />
+	<icon>capibara.png</icon>
+    <dependencies>
+      <group targetFramework=".NETFramework4.7.1" />
+    </dependencies>
   </metadata>
+  <files>
+	<file src="capibara.png" />
+  </files>
 </package>

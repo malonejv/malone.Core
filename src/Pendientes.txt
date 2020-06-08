@@ -6,11 +6,13 @@ PENDIENTES
 - Pasar todas las tareas del fwk a Asincrónicas
 - Buscar Extensions Methods en PIA para encriptar/desencriptar
 - Buscar Extension Methods en PIA para tratar caractéres especiales
+- Investigar flyway o liquidbase
+- Revisar todos los mensajes de error
 
 EN CURSO
 --------
 
-
 RESUELTAS
 --------
 - Agregar una clase Filtro genérica de EF
+- Evaluar un cambio en el manejo de Error Codes

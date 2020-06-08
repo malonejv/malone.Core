@@ -1,7 +1,7 @@
-﻿using malone.Core.CL.DI;
+﻿using malone.Core.Commons.DI;
 using malone.Core.Identity.EntityFramework;
-using malone.Core.Identity.EntityFramework.BL;
-using malone.Core.Identity.EntityFramework.EL;
+using malone.Core.Identity.EntityFramework.Business;
+using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;

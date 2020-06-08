@@ -1,20 +1,16 @@
-﻿using malone.Core.BL.Components.Implementations;
-using malone.Core.BL.Components.Interfaces;
-using malone.Core.CL.Exceptions;
-using malone.Core.CL.Exceptions.Handler;
-using malone.Core.DAL.Repositories;
-using malone.Core.DAL.UnitOfWork;
-using malone.Core.Sample.Middle.CL.Exceptions;
+﻿using malone.Core.Business.Components;
+using malone.Core.DataAccess.Repositories;
+using malone.Core.DataAccess.UnitOfWork;
 using malone.Core.Sample.Middle.EL.Model;
 using System;
 using System.Collections.Generic;
 
 namespace malone.Core.Sample.Middle.BL.Implementations
 {
-    public class TodoListBC : BusinessComponent<TodoList, ITodoListBV, ErrorCodes>, ITodoListBC
+    public class TodoListBC : BusinessComponent<TodoList, ITodoListBV>, ITodoListBC
     {
-        public TodoListBC(IUnitOfWork unitOfWork, ITodoListBV businessValidator, ICoreRepository<TodoList, ErrorCodes> repository, IExceptionHandler<ErrorCodes> exceptionHandler)
-            : base(unitOfWork, businessValidator, repository, exceptionHandler)
+        public TodoListBC(IUnitOfWork unitOfWork, ITodoListBV businessValidator, IRepository<TodoList> repository)
+            : base(unitOfWork, businessValidator, repository)
         { }
 
 

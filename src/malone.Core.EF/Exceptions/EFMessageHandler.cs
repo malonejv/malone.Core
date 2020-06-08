@@ -1,0 +1,13 @@
+﻿using malone.Core.Commons.Exceptions.Manager;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace malone.Core.EF.Exceptions
+{
+    public class EFMessageHandler : MessageHandler<EFErrors>, IEFMessageHandler
+    {
+    }
+}

@@ -8,9 +8,17 @@
     <owners>$author$</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <projectUrl>https://github.com/malonejv/malone.Core</projectUrl>
     <description>$description$</description>
     <copyright>Copyright 2020</copyright>
-	<repository type="git" url="https://github.com/malonejv/malone.Core" branch="development" />
+    <projectUrl>https://github.com/malonejv/malone.Core</projectUrl>
+    <repository type="git" url="https://github.com/malonejv/malone.Core" branch="development" />
+    <icon>capibara.png</icon>
+    <dependencies>
+      <group targetFramework=".NETFramework4.7.1" />
+    </dependencies>
   </metadata>
+  <files>
+    <file src="capibara.png" />
+    <file src="..\web.config.transform" />
+  </files>
 </package>

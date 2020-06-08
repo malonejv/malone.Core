@@ -1,9 +1,9 @@
-﻿using malone.Core.CL.Initializers;
+﻿using malone.Core.Commons.Initializers;
 using Unity;
 
 namespace malone.Core.Sample.DI
 {
-    public class UILayerInitializer : ILayer<IUnityContainer>
+    public class UILayerInitializer : IInitializer<IUnityContainer>
     {
         public void Initialize(IUnityContainer container)
         {

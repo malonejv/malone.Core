@@ -273,6 +273,10 @@
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
       <Name>malone.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\malone.Core.Sample.Middle\malone.Core.Sample.Middle.csproj">
+      <Project>{13E35096-AC30-4D5E-8834-8B8D0CD53774}</Project>
+      <Name>malone.Core.Sample.Middle</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

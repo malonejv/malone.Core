@@ -1,12 +1,7 @@
 ﻿using ErgaOmnes.Api;
-using ErgaOmnes.Core.BL;
 using ErgaOmnes.Core.Initializers;
-using malone.Core.CL.DI;
-using malone.Core.CL.DI.Unity.WebApi;
-using malone.Core.CL.Initializers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using malone.Core.Commons.Initializers;
+using malone.Core.Unity.WebApi;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;

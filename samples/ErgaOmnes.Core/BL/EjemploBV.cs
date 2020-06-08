@@ -1,29 +1,27 @@
 ﻿using ErgaOmnes.Core.CL.Exceptions;
 using ErgaOmnes.Core.EL.Model;
-using malone.Core.BL.Components.Implementations;
-using malone.Core.BL.Components.Interfaces;
-using malone.Core.CL.Exceptions;
-using malone.Core.CL.Exceptions.Handler;
-using malone.Core.CL.Exceptions.Manager;
-using malone.Core.DAL.Repositories;
-using malone.Core.EF.EL.Filters;
+using malone.Core.Business.Components;
+using malone.Core.Commons.Exceptions;
+using malone.Core.Commons.Exceptions.Handler;
+using malone.Core.Commons.Exceptions.Manager;
+using malone.Core.DataAccess.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ErgaOmnes.Core.BL
 {
 
-    public class EjemploBV : BusinessValidator<Ejemplo, ErrorCodes>, IEjemploBV
+    public class EjemploBV : BusinessValidator<Ejemplo>, IEjemploBV
     {
-        protected ICoreRepository<Ejemplo, ErrorCodes> Repository { get; }
+        protected IRepository<Ejemplo> Repository { get; }
+        protected IMessageHandler<ErrorCodes> MessageHandler { get; }
+        protected IExceptionHandler<ErrorCodes> ExceptionHandler { get; }
 
-        public EjemploBV(ICoreRepository<Ejemplo, ErrorCodes> repository, IMessageHandler<ErrorCodes> messageHandler, IExceptionHandler<ErrorCodes> exceptionHandler)
-            : base(messageHandler, exceptionHandler)
+        public EjemploBV(IRepository<Ejemplo> repository, IMessageHandler<ErrorCodes> messageHandler, IExceptionHandler<ErrorCodes> exceptionHandler)
+            : base()
         {
             Repository = repository;
+            MessageHandler = messageHandler;
+            ExceptionHandler = exceptionHandler;
         }
 
         /// <summary>
@@ -51,7 +49,7 @@ namespace ErgaOmnes.Core.BL
             }
             catch (InvalidCastException ex)
             {
-                ExceptionHandler.HandleException<TechnicalException<ErrorCodes>>(ex, ErrorCodes.E8000);
+                ExceptionHandler.HandleException<TechnicalException<ErrorCodes>>(ex,ErrorCodes.E8000);
 
                 throw new ArgumentNullException("args");
             }

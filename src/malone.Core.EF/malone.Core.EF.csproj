@@ -14,8 +14,7 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <PackageIcon>capibara.png</PackageIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,21 +61,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL\Context\EFDbContext.cs" />
-    <Compile Include="DAL\Context\IEFContext.cs" />
-    <Compile Include="DAL\Exceptions\EFErrors.cs" />
-    <Compile Include="DAL\Exceptions\EFExceptionHandler.cs" />
-    <Compile Include="DAL\Exceptions\EFMessageHandler.cs" />
-    <Compile Include="DAL\Exceptions\Exceptions.Designer.cs">
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Context\EFDbContext.cs" />
+    <Compile Include="Context\IEFContext.cs" />
+    <Compile Include="Exceptions\EFErrors.cs" />
+    <Compile Include="Exceptions\EFExceptionHandler.cs" />
+    <Compile Include="Exceptions\EFMessageHandler.cs" />
+    <Compile Include="Exceptions\Exceptions.Designer.cs">
       <DependentUpon>Exceptions.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="DAL\Exceptions\IEFExceptionHandler.cs" />
-    <Compile Include="DAL\Exceptions\IEFMessageHandler.cs" />
-    <Compile Include="DAL\Repositories\EFRepository.cs" />
-    <Compile Include="EL\Filters\FilterExpression.cs" />
-    <Compile Include="EL\Filters\IFilterExpressionEF.cs" />
+    <Compile Include="Exceptions\IEFExceptionHandler.cs" />
+    <Compile Include="Exceptions\IEFMessageHandler.cs" />
+    <Compile Include="Repositories\EFRepository.cs" />
+    <Compile Include="Entities\Filters\FilterExpression.cs" />
+    <Compile Include="Entities\Filters\IFilterExpressionEF.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -88,9 +90,10 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="capibara.png" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DAL\Exceptions\Exceptions.resx">
+    <EmbeddedResource Include="Exceptions\Exceptions.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -106,27 +109,17 @@
     <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
   <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
-  <Target Name="PostBuildMacros">
-    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="Assemblies" ItemName="Targets" />
-    </GetAssemblyIdentity>
-    <ItemGroup>
-      <VersionNumber Include="@(Targets->'%(Version)')" />
-    </ItemGroup>
-  </Target>
   <PropertyGroup>
-    <PostBuildEventDependsOn>
-      $(PostBuildEventDependsOn);
-      PostBuildMacros;
-    </PostBuildEventDependsOn>
     <PostBuildEvent>
-      if $(ConfigurationName) == ReleaseNuget (
-      nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects
-      rem nuget list $(ProjectName) -allversions -SkipDuplicate -source "github" | find /c "$(ProjectName) @(VersionNumber)"
-      rem if errorlevel 1 ( nuget push "$(ProjectName).@(VersionNumber).nupkg" -SkipDuplicate -source "github" )
-	  nuget push "$(ProjectName).@(VersionNumber).nupkg" -SkipDuplicate -source "github"
+      if $(ConfigurationName) == Release (
+      nuget pack "$(ProjectPath)" -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+      nuget push -SkipDuplicate -source "github"
       )
-</PostBuildEvent>
+      if $(ConfigurationName) == ReleaseNuget (
+      nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+      nuget push -SkipDuplicate -source "github"
+      )
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>

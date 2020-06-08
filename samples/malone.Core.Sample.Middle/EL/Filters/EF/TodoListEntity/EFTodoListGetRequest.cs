@@ -1,4 +1,4 @@
-﻿using malone.Core.EF.EL.Filters;
+﻿using malone.Core.EF.Entities.Filters;
 using malone.Core.Sample.Middle.EL.Model;
 using System;
 using System.Linq.Expressions;

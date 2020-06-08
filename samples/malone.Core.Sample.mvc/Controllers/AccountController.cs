@@ -1,5 +1,5 @@
 ﻿using malone.Core.Identity.EntityFramework;
-using malone.Core.Identity.EntityFramework.EL;
+using malone.Core.Identity.EntityFramework.Entities;
 using malone.Core.Sample.mvc.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;

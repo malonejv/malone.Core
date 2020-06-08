@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using malone.Core.Sample.Api.Models;
 using malone.Core.Identity.EntityFramework;
+using malone.Core.Sample.Middle.CL.Exceptions;
 
 namespace malone.Core.Sample.Api.Controllers
 {

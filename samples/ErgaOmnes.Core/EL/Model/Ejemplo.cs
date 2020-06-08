@@ -1,9 +1,4 @@
-﻿using malone.Core.EL.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using malone.Core.Entities.Model;
 
 namespace ErgaOmnes.Core.EL.Model
 {

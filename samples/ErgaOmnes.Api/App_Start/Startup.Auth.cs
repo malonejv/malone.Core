@@ -1,4 +1,5 @@
 ﻿using ErgaOmnes.Api.Providers;
+using ErgaOmnes.Core.CL.Exceptions;
 using malone.Core.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;

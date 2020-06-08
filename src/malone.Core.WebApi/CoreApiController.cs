@@ -1,5 +1,5 @@
-﻿using malone.Core.BL.Components.Interfaces;
-using malone.Core.EL.Model;
+﻿using malone.Core.Business.Components;
+using malone.Core.Entities.Model;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -7,12 +7,11 @@ using System.Web.Http;
 
 namespace malone.Core.WebApi
 {
-    public abstract class CoreApiController<TKey, TEntity, TBusinessComponent, TBusinessValidator, TErrorCoder> : ApiController
+    public abstract class CoreApiController<TKey, TEntity, TBusinessComponent, TBusinessValidator> : ApiController
         where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
-        where TBusinessValidator : IBusinessValidator<TKey, TEntity, TErrorCoder>
-        where TBusinessComponent : IBusinessComponent<TKey, TEntity, TBusinessValidator, TErrorCoder>
-        where TErrorCoder : Enum
+        where TBusinessValidator : IBusinessValidator<TKey, TEntity>
+        where TBusinessComponent : IBusinessComponent<TKey, TEntity, TBusinessValidator>
     {
         private TBusinessComponent BusinessComponent { get; set; }
 
@@ -114,12 +113,11 @@ namespace malone.Core.WebApi
         }
     }
 
-    public abstract class CoreApiController<TEntity, TBusinessComponent, TBusinessValidator, TErrorCoder>
-        : CoreApiController<int, TEntity, TBusinessComponent, TBusinessValidator, TErrorCoder>
+    public abstract class CoreApiController<TEntity, TBusinessComponent, TBusinessValidator>
+        : CoreApiController<int, TEntity, TBusinessComponent, TBusinessValidator>
        where TEntity : class, IBaseEntity
-       where TBusinessValidator : IBusinessValidator<TEntity, TErrorCoder>
-       where TBusinessComponent : IBusinessComponent<TEntity, TBusinessValidator, TErrorCoder>
-       where TErrorCoder : Enum
+       where TBusinessValidator : IBusinessValidator<TEntity>
+       where TBusinessComponent : IBusinessComponent<TEntity, TBusinessValidator>
     {
         public CoreApiController(TBusinessComponent businessComponent) : base(businessComponent)
         {

@@ -1,6 +1,4 @@
-﻿using malone.Core.CL.DI.Unity;
-using malone.Core.Sample.DI;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(malone.Core.Sample.mvc.Startup))]

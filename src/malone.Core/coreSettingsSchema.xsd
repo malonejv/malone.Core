@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="coreSettingsSchema"
+    targetNamespace="urn:malone.Core.Commons.Configurations"
+    elementFormDefault="unqualified"
+    attributeFormDefault="unqualified"
+    xmlns="urn:malone.Core.Commons.Configurations"
+    xmlns:mstns="urn:malone.Core.Commons.Configurations"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:element name="coreSettings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="dataBaseConfiguration" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="modules" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dataBaseConfiguration" >
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="providers"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="providers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="add"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="add">
+    <xs:complexType>
+      <xs:attribute name="connectionStringName" use="required" type="xs:string"/>
+      <xs:attribute name="name" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="modules">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="module"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="module">
+    <xs:complexType>
+      <xs:attribute name="name" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Log4NetLogger" />
+            <xs:enumeration value="IdentityEntityFramework" />
+            <xs:enumeration value="Features" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

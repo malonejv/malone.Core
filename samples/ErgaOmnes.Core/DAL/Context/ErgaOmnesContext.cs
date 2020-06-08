@@ -1,11 +1,6 @@
-﻿using malone.Core.Identity.EntityFramework.DAL.EF.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ErgaOmnes.Core.DAL.Mappings;
+using malone.Core.Identity.EntityFramework.Context;
 using System.Data.Entity;
-using ErgaOmnes.Core.DAL.Mappings;
 
 namespace ErgaOmnes.Core.DAL.Context
 {

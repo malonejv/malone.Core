@@ -1,8 +1,8 @@
-﻿using malone.Core.CL.DI;
-using malone.Core.CL.Helpers.Extensions;
-using malone.Core.DAL.Context;
-using malone.Core.Identity.EntityFramework.DAL.EF.Context;
-using malone.Core.Identity.EntityFramework.EL;
+﻿using malone.Core.Commons.DI;
+using malone.Core.Commons.Helpers.Extensions;
+using malone.Core.DataAccess.Context;
+using malone.Core.Identity.EntityFramework.Context;
+using malone.Core.Identity.EntityFramework.Entities;
 using malone.Core.Sample.Middle.DAL.Context.EF.Mappings;
 using malone.Core.Sample.Middle.EL.Model;
 using Microsoft.AspNet.Identity;

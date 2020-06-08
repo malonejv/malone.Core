@@ -1,4 +1,5 @@
 ﻿using malone.Core.Identity.EntityFramework;
+using malone.Core.Sample.Middle.CL.Exceptions;
 using malone.Core.Sample.UI.EFSqlServer.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;

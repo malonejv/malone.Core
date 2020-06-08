@@ -1,5 +1,4 @@
-﻿using malone.Core.CL.DI;
-using malone.Core.CL.Initializers;
+﻿using malone.Core.Commons.Initializers;
 using System.Collections.Generic;
 using Unity;
 
@@ -11,11 +10,11 @@ namespace malone.Core.Sample.DI
         {
         }
 
-        public override IEnumerable<ILayer<IUnityContainer>> Layers
+        public override IEnumerable<IInitializer<IUnityContainer>> Layers
         {
             get
             {
-                return new ILayer<IUnityContainer>[]
+                return new IInitializer<IUnityContainer>[]
               {
                     new CommonLayerInitializer(),
                     new EntitiesLayerInitializer(),

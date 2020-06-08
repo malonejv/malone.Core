@@ -346,17 +346,17 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\malone.Core.CL.DI.Unity.WebApi\malone.Core.CL.DI.Unity.WebApi.csproj">
-      <Project>{4F97CB6B-C9DD-4EFA-A7D1-328592C05A04}</Project>
-      <Name>malone.Core.CL.DI.Unity.WebApi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\malone.Core.CL.DI.Unity\malone.Core.CL.DI.Unity.csproj">
-      <Project>{0485478E-B02B-407A-9BB6-81BEE44949D2}</Project>
-      <Name>malone.Core.CL.DI.Unity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\malone.Core.Identity.EntityFramework\malone.Core.Identity.EntityFramework.csproj">
       <Project>{ECA07D24-2FD5-42E8-A5F7-3FDF54B10DD4}</Project>
       <Name>malone.Core.Identity.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\malone.Core.Unity.WebApi\malone.Core.Unity.WebApi.csproj">
+      <Project>{DD776491-CE90-473C-B361-51E0F476DCA7}</Project>
+      <Name>malone.Core.Unity.WebApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\malone.Core.Unity\malone.Core.Unity.csproj">
+      <Project>{E76A146E-3EF3-427F-B496-054CF5946CE0}</Project>
+      <Name>malone.Core.Unity</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\malone.Core\malone.Core.csproj">
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>

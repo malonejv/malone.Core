@@ -1,7 +1,7 @@
 namespace malone.Core.Sample.Middle.DAL.Migrations
 {
-    using malone.Core.CL.Helpers.Extensions;
-    using malone.Core.Identity.EntityFramework.EL;
+    using malone.Core.Commons.Helpers.Extensions;
+    using malone.Core.Identity.EntityFramework.Entities;
     using malone.Core.Sample.Middle.DAL.Context.EF;
     using malone.Core.Sample.Middle.EL.Model;
     using Microsoft.AspNet.Identity;

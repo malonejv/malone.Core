@@ -1,13 +1,11 @@
-﻿using System;
+﻿using malone.Core.Identity.EntityFramework;
+using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Owin;
-using malone.Core.Sample.Api.Models;
-using malone.Core.Identity.EntityFramework;
-using malone.Core.Identity.EntityFramework.EL;
+using System;
 
 namespace malone.Core.Sample.Api
 {

@@ -1,9 +1,5 @@
-﻿using malone.Core.BL.Components.Implementations;
-using malone.Core.BL.Components.Interfaces;
-using malone.Core.CL.Exceptions;
-using malone.Core.CL.Exceptions.Handler;
-using malone.Core.CL.Exceptions.Manager;
-using malone.Core.DAL.Repositories;
+﻿using malone.Core.Business.Components;
+using malone.Core.DataAccess.Repositories;
 using malone.Core.Sample.Middle.CL.Exceptions;
 using malone.Core.Sample.Middle.EL.Filters.EF.TodoListEntity;
 using malone.Core.Sample.Middle.EL.Model;
@@ -12,12 +8,12 @@ using System.Linq;
 
 namespace malone.Core.Sample.Middle.BL.Implementations
 {
-    public class TodoListBV : BusinessValidator<TodoList, ErrorCodes>, ITodoListBV
+    public class TodoListBV : BusinessValidator<TodoList>, ITodoListBV
     {
-        protected ICoreRepository<TodoList, ErrorCodes> Repository { get; }
+        protected IRepository<TodoList> Repository { get; }
 
-        public TodoListBV(ICoreRepository<TodoList, ErrorCodes> repository, IMessageHandler<ErrorCodes> messageHandler, IExceptionHandler<ErrorCodes> exceptionHandler)
-            : base(messageHandler, exceptionHandler)
+        public TodoListBV(IRepository<TodoList> repository)
+            : base()
         {
             Repository = repository;
         }

@@ -1,15 +1,9 @@
-﻿using ErgaOmnes.Core.CL.Exceptions;
-using ErgaOmnes.Core.EL.Model;
-using malone.Core.BL.Components.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ErgaOmnes.Core.EL.Model;
+using malone.Core.Business.Components;
 
 namespace ErgaOmnes.Core.BL
 {
-    public interface IEjemploBV : IBusinessValidator<Ejemplo, ErrorCodes>
+    public interface IEjemploBV : IBusinessValidator<Ejemplo>
     {
         ValidationResult ValidarCaracteresEspeciales(params object[] args);
 

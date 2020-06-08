@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using malone.Core.Identity.EntityFramework;
+using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using ErgaOmnes.Api.Models;
-using malone.Core.Identity.EntityFramework;
-using malone.Core.Identity.EntityFramework.EL;
-using Microsoft.Owin.Security.Google;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ErgaOmnes.Api.Providers
 {

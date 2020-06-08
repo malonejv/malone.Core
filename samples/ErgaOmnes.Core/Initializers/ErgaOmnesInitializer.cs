@@ -1,5 +1,4 @@
-﻿using malone.Core.CL.Initializers;
-using System;
+﻿using malone.Core.Commons.Initializers;
 using System.Collections.Generic;
 using Unity;
 
@@ -7,11 +6,11 @@ namespace ErgaOmnes.Core.Initializers
 {
     public class ErgaOmnesInitializer : LayersInitializer<IUnityContainer>
     {
-        public override IEnumerable<ILayer<IUnityContainer>> Layers
+        public override IEnumerable<IInitializer<IUnityContainer>> Layers
         {
             get
             {
-                return new ILayer<IUnityContainer>[]
+                return new IInitializer<IUnityContainer>[]
               {
                     new CLInitializer(),
                     new ELInitializer(),

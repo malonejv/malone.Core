@@ -140,8 +140,6 @@
       <DependentUpon>202005281754271_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\Migrations\Configuration.cs" />
-    <Compile Include="DAL\Repositories\Repository.cs" />
-    <Compile Include="DAL\Repositories\IRepository.cs" />
     <Compile Include="EL\Model\Ejemplo.cs" />
     <Compile Include="Initializers\BLInitializer.cs" />
     <Compile Include="Initializers\CLInitializer.cs" />
@@ -167,10 +165,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\malone.Core.CL.Logging.Log4Net\malone.Core.CL.Logging.Log4Net.csproj">
-      <Project>{6DFC2083-92EF-4D48-AC33-77542EEC33F8}</Project>
-      <Name>malone.Core.CL.Logging.Log4Net</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\malone.Core.EF\malone.Core.EF.csproj">
       <Project>{B3A99961-88EB-4256-984A-01C346541183}</Project>
       <Name>malone.Core.EF</Name>
