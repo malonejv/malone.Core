@@ -41,9 +41,9 @@ jobs:
       - name: Build malone.Core
         run:  msbuild src/malone.Core.sln
       
-      - name: Nuget Restore Sample Packages
-        run:  nuget restore samples/malone.Core.Samples.sln
+#      - name: Nuget Restore Sample Packages
+#        run:  nuget restore samples/malone.Core.Samples.sln
     
-      - name: Build malone.Core.Samples
-        run:  msbuild samples/malone.Core.Samples.sln
+#      - name: Build malone.Core.Samples
+#        run:  msbuild samples/malone.Core.Samples.sln
 
