@@ -8,9 +8,10 @@ on:
   push:
     branches:
       - development
-      - master
-      - release/*
       
+#  branches:
+#      - master
+#      - release/*
 #  pull_request:
 #    branches: [ master ]
 
@@ -32,8 +33,12 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.2
 
-      - name: Add GitHub Source
-        run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ secrets.GITHUB_TOKEN }}
+      - name:  Add GitHub Source
+        shell: cmd
+        env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+             nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password "%GITHUB_TOKEN%"
     
       - name: Nuget Restore Core Packages
         run:  nuget restore src/malone.Core.sln
