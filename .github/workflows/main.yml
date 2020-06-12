@@ -61,7 +61,7 @@ jobs:
                         
       - name: Push packages
         run:  |
-              nuget push src/malone.Core/malone.Core/**/*.nupkg -SkipDuplicate -source "github"
+              nuget push src/malone.Core/**/*.nupkg -SkipDuplicate -source "github"
               nuget push src/malone.Core.AdoNet/**/*.nupkg -SkipDuplicate -source "github"
               
 #      - name: Nuget Restore Sample Packages
