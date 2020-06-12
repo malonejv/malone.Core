@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace malone.Core.Commons.Exceptions.Handler
 {
-    public class CoreExceptionHandler : ExceptionHandler<CoreErrors>, ICoreExceptionHandler
+    internal class CoreExceptionHandler : ExceptionHandler<CoreErrors>, ICoreExceptionHandler
     {
 
         internal CoreExceptionHandler(ILogger logger, ICoreMessageHandler messageHandler)

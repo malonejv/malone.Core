@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using malone.Core.WebApi.Attributes;
+using System.Web.Http;
 using Unity;
 using Unity.AspNet.WebApi;
 
@@ -11,6 +12,7 @@ namespace malone.Core.Unity.WebApi
             var container = base.Initialize();
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+            GlobalConfiguration.Configuration.Filters.Add(new HandleExceptionFilterAttribute());
 
             return container;
         }

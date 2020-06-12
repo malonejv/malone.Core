@@ -117,31 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="E400" xml:space="preserve">
+  <data name="BUSINESS400" xml:space="preserve">
     <value>Se produjo un error al intentar obtener los datos solicitados.</value>
   </data>
-  <data name="E401" xml:space="preserve">
+  <data name="BUSINESS401" xml:space="preserve">
     <value>Se produjo un error al intentar guardar los datos solicitados.</value>
   </data>
-  <data name="E402" xml:space="preserve">
+  <data name="BUSINESS402" xml:space="preserve">
     <value>Se produjo un error al intentar eliminar el dato solicitado.</value>
   </data>
-  <data name="E403" xml:space="preserve">
+  <data name="BUSINESS403" xml:space="preserve">
     <value>Se produjo un error al intentar actualizar los datos solicitados.</value>
   </data>
-  <data name="E404" xml:space="preserve">
+  <data name="BUSINESS404" xml:space="preserve">
     <value>No se encontraron resultados para la consulta realizada.</value>
   </data>
-  <data name="E405" xml:space="preserve">
+  <data name="BUSINESS405" xml:space="preserve">
     <value>Nombre de usuario o contraseña invalido.</value>
   </data>
-  <data name="E406" xml:space="preserve">
+  <data name="BUSINESS406" xml:space="preserve">
     <value>Debes confirmar el email primero.</value>
   </data>
-  <data name="E407" xml:space="preserve">
+  <data name="DATAACCESS600" xml:space="preserve">
+    <value>Error al obtener una lista ordenada de tipo {0}.</value>
+  </data>
+  <data name="DATAACCESS601" xml:space="preserve">
+    <value>Error al obtener una entidad de tipo {0}.</value>
+  </data>
+  <data name="DATAACCESS602" xml:space="preserve">
+    <value>Error al insertar una entidad de tipo {0}.</value>
+  </data>
+  <data name="DATAACCESS603" xml:space="preserve">
+    <value>Error al eliminar una entidad de tipo {0}.</value>
+  </data>
+  <data name="DATAACCESS604" xml:space="preserve">
+    <value>Error al actualizar una entidad de tipo {0}.</value>
+  </data>
+  <data name="SERVAG700" xml:space="preserve">
+    <value>Se produjo un error en la llamada al servicio {0}.</value>
+  </data>
+  <data name="SERVICE300" xml:space="preserve">
     <value>Usuario no autorizado.</value>
   </data>
-  <data name="E700" xml:space="preserve">
-    <value>Se produjo un error en la llamada al servicio {0}.</value>
+  <data name="TECH1" xml:space="preserve">
+    <value>Perdón, algo salió mal.</value>
+  </data>
+  <data name="TECH2" xml:space="preserve">
+    <value>Se produjo un error inesperado.</value>
   </data>
 </root>

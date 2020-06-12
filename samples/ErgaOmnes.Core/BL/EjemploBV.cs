@@ -42,14 +42,14 @@ namespace ErgaOmnes.Core.BL
 
                 if (existe)
                 {
-                    var message = string.Format(MessageHandler.GetMessage(ErrorCodes.E5000, typeof(Ejemplo)));
-                    return new ValidationResult(ErrorCodes.E5000.ToString(), message);
+                    var message = string.Format(MessageHandler.GetMessage(ErrorCodes.BUSVAL5000, typeof(Ejemplo)));
+                    return new ValidationResult(ErrorCodes.BUSVAL5000.ToString(), message);
                 }
                 return null;
             }
             catch (InvalidCastException ex)
             {
-                ExceptionHandler.HandleException<TechnicalException<ErrorCodes>>(ex,ErrorCodes.E8000);
+                ExceptionHandler.HandleException<TechnicalException<ErrorCodes>>(ex,ErrorCodes.TECH1000);
 
                 throw new ArgumentNullException("args");
             }

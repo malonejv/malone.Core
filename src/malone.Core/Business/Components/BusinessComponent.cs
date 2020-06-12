@@ -62,7 +62,7 @@ namespace malone.Core.Business.Components
             }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.E400, typeof(TEntity));
+                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
             }
             return null;
         }
@@ -87,7 +87,7 @@ namespace malone.Core.Business.Components
             }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.E400, typeof(TEntity));
+                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
             }
             return null;
         }
@@ -105,13 +105,13 @@ namespace malone.Core.Business.Components
 
                 if (result == null)
                 {
-                    CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(CoreErrors.E404, typeof(TEntity));
+                    CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(CoreErrors.BUSINESS404, typeof(TEntity));
                 }
                 return result;
             }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.E400, typeof(TEntity));
+                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
             }
             return null;
         }
@@ -129,13 +129,13 @@ namespace malone.Core.Business.Components
 
                 if (result == null)
                 {
-                    CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(CoreErrors.E404, typeof(TEntity));
+                    CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(CoreErrors.BUSINESS404, typeof(TEntity));
                 }
                 return result;
             }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.E400, typeof(TEntity));
+                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
             }
             return null;
         }
@@ -155,7 +155,7 @@ namespace malone.Core.Business.Components
             }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.E401, typeof(TEntity));
+                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.BUSINESS401, typeof(TEntity));
             }
         }
 
@@ -184,7 +184,7 @@ namespace malone.Core.Business.Components
             }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.E403, typeof(TEntity));
+                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.BUSINESS403, typeof(TEntity));
             }
         }
 
@@ -213,7 +213,7 @@ namespace malone.Core.Business.Components
             }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.E402, typeof(TEntity));
+                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.BUSINESS402, typeof(TEntity));
             }
         }
 

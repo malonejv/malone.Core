@@ -117,19 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="E600" xml:space="preserve">
-    <value>Error al obtener una lista ordenada de tipo {0}.</value>
+  <data name="BUSINESS400" xml:space="preserve">
+    <value>An error occurred while trying to get the requested data.</value>
   </data>
-  <data name="E601" xml:space="preserve">
-    <value>Error al obtener una entidad de tipo {0}.</value>
+  <data name="BUSINESS401" xml:space="preserve">
+    <value>An error occurred while trying to save the requested data.</value>
   </data>
-  <data name="E602" xml:space="preserve">
-    <value>Error al insertar una entidad de tipo {0}.</value>
+  <data name="BUSINESS402" xml:space="preserve">
+    <value>An error occurred while trying to delete the requested data.</value>
   </data>
-  <data name="E603" xml:space="preserve">
-    <value>Error al eliminar una entidad de tipo {0}.</value>
+  <data name="BUSINESS403" xml:space="preserve">
+    <value>An error occurred while trying to update the requested data.</value>
   </data>
-  <data name="E604" xml:space="preserve">
-    <value>Error al actualizar una entidad de tipo {0}.</value>
+  <data name="BUSINESS404" xml:space="preserve">
+    <value>No results were found for the query made.</value>
+  </data>
+  <data name="BUSINESS405" xml:space="preserve">
+    <value>Invalid username or password.</value>
+  </data>
+  <data name="BUSINESS406" xml:space="preserve">
+    <value>You must confirm the email first.</value>
+  </data>
+  <data name="DATAACCESS600" xml:space="preserve">
+    <value>Failed to get an ordered list of type {0}.</value>
+  </data>
+  <data name="DATAACCESS601" xml:space="preserve">
+    <value>Failed to get an entity of type {0}.</value>
+  </data>
+  <data name="DATAACCESS602" xml:space="preserve">
+    <value>Error inserting an entity of type {0}.</value>
+  </data>
+  <data name="DATAACCESS603" xml:space="preserve">
+    <value>Failed to delete an entity of type {0}.</value>
+  </data>
+  <data name="DATAACCESS604" xml:space="preserve">
+    <value>Failed to update an entity of type {0}.</value>
+  </data>
+  <data name="SERVAG700" xml:space="preserve">
+    <value>An error occurred in the service call {0}.</value>
+  </data>
+  <data name="SERVICE300" xml:space="preserve">
+    <value>Unauthorized user.</value>
+  </data>
+  <data name="TECH1" xml:space="preserve">
+    <value>Sorry, something went wrong.</value>
+  </data>
+  <data name="TECH2" xml:space="preserve">
+    <value>An unexpected error has ocured.</value>
   </data>
 </root>

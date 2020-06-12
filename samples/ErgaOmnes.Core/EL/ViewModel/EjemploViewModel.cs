@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace malone.Core.Commons.Exceptions.Handler
+namespace ErgaOmnes.Core.EL.ViewModel
 {
-    internal interface ICoreExceptionHandler : IExceptionHandler<CoreErrors>
+    public class EjemploViewModel
     {
+        public string Text { get; set; }
     }
 }

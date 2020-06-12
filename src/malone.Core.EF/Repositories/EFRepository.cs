@@ -3,7 +3,6 @@ using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Exceptions.Handler;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.DataAccess.UnitOfWork;
-using malone.Core.EF.Exceptions;
 using malone.Core.EF.Entities.Filters;
 using malone.Core.Entities.Filters;
 using malone.Core.Entities.Model;
@@ -24,7 +23,12 @@ namespace malone.Core.EF.Repositories.Implementations
 
         protected IUnitOfWork UnitOfWork { get; }
 
-        internal IEFExceptionHandler EFExceptionHandler { get; }
+        private readonly ICoreExceptionHandler CoreExceptionHandler;
+
+        internal ICoreExceptionHandler GetEFExceptionHandler()
+        {
+            return CoreExceptionHandler;
+        }
 
         public EFRepository(IUnitOfWork unitOfWork)
         {
@@ -34,7 +38,7 @@ namespace malone.Core.EF.Repositories.Implementations
             _context = UnitOfWork.Context as DbContext;
             _dbSet = _context.Set<TEntity>();
 
-            EFExceptionHandler = ServiceLocator.Current.Get<IEFExceptionHandler>();
+            CoreExceptionHandler = ServiceLocator.Current.Get<ICoreExceptionHandler>();
         }
 
         protected IQueryable<TEntity> Get(
@@ -74,7 +78,7 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E600, typeof(TEntity));
+                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
             }
             return null;
         }
@@ -107,7 +111,7 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E600, typeof(TEntity));
+                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
             }
             return null;
         }
@@ -128,7 +132,7 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E600, typeof(TEntity));
+                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
             }
             return null;
         }
@@ -148,7 +152,7 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E601, typeof(TEntity));
+                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS601, typeof(TEntity));
             }
             return null;
         }
@@ -181,7 +185,7 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E601, typeof(TEntity));
+                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS601, typeof(TEntity));
             }
             return null;
         }
@@ -194,7 +198,7 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E602, typeof(TEntity));
+                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS602, typeof(TEntity));
             }
         }
 
@@ -209,7 +213,7 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E604, typeof(TEntity));
+                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
             }
         }
 
@@ -222,7 +226,7 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E603, typeof(TEntity));
+                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS603, typeof(TEntity));
             }
         }
 
@@ -238,7 +242,7 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                EFExceptionHandler.HandleException<DataAccessException<EFErrors>>(ex, EFErrors.E603, typeof(TEntity));
+                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS603, typeof(TEntity));
             }
         }
 

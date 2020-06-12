@@ -1,6 +1,10 @@
-﻿using malone.Core.Business.Components;
+﻿using AutoMapper;
+using malone.Core.Business.Components;
 using malone.Core.Entities.Model;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -13,34 +17,44 @@ namespace malone.Core.WebApi
         where TBusinessValidator : IBusinessValidator<TKey, TEntity>
         where TBusinessComponent : IBusinessComponent<TKey, TEntity, TBusinessValidator>
     {
-        private TBusinessComponent BusinessComponent { get; set; }
+        protected TBusinessComponent BusinessComponent { get; set; }
+        protected Mapper Mapper { get; set; }
 
-        public CoreApiController(TBusinessComponent businessComponent)
+        public CoreApiController(TBusinessComponent businessComponent, Mapper mapperInstance)
         {
             BusinessComponent = businessComponent;
+            Mapper = mapperInstance;
         }
 
-        // GET api/ejemplo
+        #region GET (GetAll)
+        // GET api/entity
         public virtual HttpResponseMessage Get()
         {
             try
             {
-                var list = BusinessComponent.GetAll();
+                var list = GetAll();
                 return Request.CreateResponse(HttpStatusCode.OK, list);
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, "mensaje");
             }
         }
+        protected virtual IEnumerable GetAll()
+        {
+            var list = BusinessComponent.GetAll();
+            return list;
+        }
+        #endregion
 
-        // GET api/ejemplo/5
+        #region GET (GetById)
+
+        // GET api/entity/5
         public virtual HttpResponseMessage Get(TKey id)
         {
             try
             {
-                TEntity entity = BusinessComponent.GetById(id);
+                object entity = GetById(id);
 
                 if (entity != null)
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
@@ -53,7 +67,21 @@ namespace malone.Core.WebApi
             }
         }
 
-        // POST api/ejemplo
+        protected virtual object GetById(TKey id)
+        {
+
+            var entity = BusinessComponent.GetById(id);
+            if (entity != null)
+                return entity;
+            else
+                return null;
+        }
+
+        #endregion
+
+        #region POST (Add)
+
+        // POST api/entity
         public virtual HttpResponseMessage Post([FromBody]TEntity entity)
         {
             try
@@ -70,7 +98,11 @@ namespace malone.Core.WebApi
             }
         }
 
-        // PUT api/ejemplo/5
+        #endregion
+
+        #region PUT (Update)
+
+        // PUT api/entity/5
         public virtual HttpResponseMessage Put(TKey id, [FromBody]TEntity entity)
         {
             try
@@ -91,7 +123,11 @@ namespace malone.Core.WebApi
             }
         }
 
-        // DELETE api/ejemplo/5
+        #endregion
+
+        #region DELETE (Delete)
+
+        // DELETE api/entity/5
         public virtual HttpResponseMessage Delete(TKey id)
         {
             try
@@ -111,6 +147,8 @@ namespace malone.Core.WebApi
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
+
+        #endregion
     }
 
     public abstract class CoreApiController<TEntity, TBusinessComponent, TBusinessValidator>
@@ -119,7 +157,7 @@ namespace malone.Core.WebApi
        where TBusinessValidator : IBusinessValidator<TEntity>
        where TBusinessComponent : IBusinessComponent<TEntity, TBusinessValidator>
     {
-        public CoreApiController(TBusinessComponent businessComponent) : base(businessComponent)
+        public CoreApiController(TBusinessComponent businessComponent, Mapper mapperInstance) : base(businessComponent, mapperInstance)
         {
         }
     }

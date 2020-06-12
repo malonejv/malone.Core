@@ -65,17 +65,7 @@
     <Compile Include="Database\DatabaseFactory.cs" />
     <Compile Include="Database\DatabaseProviderEnum.cs" />
     <Compile Include="Database\IDatabase.cs" />
-    <Compile Include="Exceptions\AdoNetExceptionHandler.cs" />
-    <Compile Include="Exceptions\AdoNetMessageHandler.cs" />
-    <Compile Include="Exceptions\Exceptions.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Exceptions.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Exceptions\IAdoNetExceptionHandler.cs" />
-    <Compile Include="Exceptions\IAdoNetMessageHandler.cs" />
     <Compile Include="Extensions\DbParameterAttributeExtensions.cs" />
-    <Compile Include="Exceptions\AdoNetErrors.cs" />
     <Compile Include="Parameters\IParameterConverter.cs" />
     <Compile Include="Repositories\AdoNetRepository.cs" />
     <Compile Include="Entities\Filters\IFilterExpressionAdoNet.cs" />
@@ -92,12 +82,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="capibara.png" Pack="true" PackagePath="\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Exceptions\Exceptions.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

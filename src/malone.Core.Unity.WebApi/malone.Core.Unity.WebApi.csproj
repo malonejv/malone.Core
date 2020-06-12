@@ -92,6 +92,10 @@
       <Project>{e76a146e-3ef3-427f-b496-054cf5946ce0}</Project>
       <Name>malone.Core.Unity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\malone.Core.WebApi\malone.Core.WebApi.csproj">
+      <Project>{C0B7AE10-F8E3-4177-B937-F1787A7F0DF3}</Project>
+      <Name>malone.Core.WebApi</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

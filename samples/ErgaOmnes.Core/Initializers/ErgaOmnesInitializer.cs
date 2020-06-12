@@ -15,7 +15,8 @@ namespace ErgaOmnes.Core.Initializers
                     new CLInitializer(),
                     new ELInitializer(),
                     new DALInitializer(),
-                    new BLInitializer()
+                    new BLInitializer(),
+                    new SLInitializer()
               };
             }
         }

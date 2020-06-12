@@ -63,81 +63,144 @@ namespace malone.Core.Commons.Exceptions.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Se produjo un error al intentar obtener los datos solicitados..
         /// </summary>
-        internal static string E400 {
+        internal static string BUSINESS400 {
             get {
-                return ResourceManager.GetString("E400", resourceCulture);
+                return ResourceManager.GetString("BUSINESS400", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Se produjo un error al intentar guardar los datos solicitados..
         /// </summary>
-        internal static string E401 {
+        internal static string BUSINESS401 {
             get {
-                return ResourceManager.GetString("E401", resourceCulture);
+                return ResourceManager.GetString("BUSINESS401", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Se produjo un error al intentar eliminar el dato solicitado..
         /// </summary>
-        internal static string E402 {
+        internal static string BUSINESS402 {
             get {
-                return ResourceManager.GetString("E402", resourceCulture);
+                return ResourceManager.GetString("BUSINESS402", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Se produjo un error al intentar actualizar los datos solicitados..
         /// </summary>
-        internal static string E403 {
+        internal static string BUSINESS403 {
             get {
-                return ResourceManager.GetString("E403", resourceCulture);
+                return ResourceManager.GetString("BUSINESS403", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to No se encontraron resultados para la consulta realizada..
         /// </summary>
-        internal static string E404 {
+        internal static string BUSINESS404 {
             get {
-                return ResourceManager.GetString("E404", resourceCulture);
+                return ResourceManager.GetString("BUSINESS404", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Nombre de usuario o contraseña invalido..
         /// </summary>
-        internal static string E405 {
+        internal static string BUSINESS405 {
             get {
-                return ResourceManager.GetString("E405", resourceCulture);
+                return ResourceManager.GetString("BUSINESS405", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Debes confirmar el email primero..
         /// </summary>
-        internal static string E406 {
+        internal static string BUSINESS406 {
             get {
-                return ResourceManager.GetString("E406", resourceCulture);
+                return ResourceManager.GetString("BUSINESS406", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usuario no autorizado..
+        ///   Looks up a localized string similar to Error al obtener una lista ordenada de tipo {0}..
         /// </summary>
-        internal static string E407 {
+        internal static string DATAACCESS600 {
             get {
-                return ResourceManager.GetString("E407", resourceCulture);
+                return ResourceManager.GetString("DATAACCESS600", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error al obtener una entidad de tipo {0}..
+        /// </summary>
+        internal static string DATAACCESS601 {
+            get {
+                return ResourceManager.GetString("DATAACCESS601", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error al insertar una entidad de tipo {0}..
+        /// </summary>
+        internal static string DATAACCESS602 {
+            get {
+                return ResourceManager.GetString("DATAACCESS602", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error al eliminar una entidad de tipo {0}..
+        /// </summary>
+        internal static string DATAACCESS603 {
+            get {
+                return ResourceManager.GetString("DATAACCESS603", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error al actualizar una entidad de tipo {0}..
+        /// </summary>
+        internal static string DATAACCESS604 {
+            get {
+                return ResourceManager.GetString("DATAACCESS604", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Se produjo un error en la llamada al servicio {0}..
         /// </summary>
-        internal static string E700 {
+        internal static string SERVAG700 {
             get {
-                return ResourceManager.GetString("E700", resourceCulture);
+                return ResourceManager.GetString("SERVAG700", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuario no autorizado..
+        /// </summary>
+        internal static string SERVICE300 {
+            get {
+                return ResourceManager.GetString("SERVICE300", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perdón, algo salió mal..
+        /// </summary>
+        internal static string TECH1 {
+            get {
+                return ResourceManager.GetString("TECH1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Se produjo un error inesperado..
+        /// </summary>
+        internal static string TECH2 {
+            get {
+                return ResourceManager.GetString("TECH2", resourceCulture);
             }
         }
     }

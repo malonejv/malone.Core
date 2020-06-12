@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using malone.Core.AdoNet.Context;
 using malone.Core.AdoNet.Entities.Filters;
-using malone.Core.AdoNet.Exceptions;
 using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Exceptions.Handler;
@@ -26,7 +25,7 @@ namespace malone.Core.AdoNet.Repositories
 
         protected IUnitOfWork UnitOfWork { get; private set; }
         protected Mapper Mapper { get; private set; }
-        internal IAdoNetExceptionHandler AdoNetExceptionHandler { get; }
+        internal ICoreExceptionHandler CoreExceptionHandler { get; }
 
 
         public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper)
@@ -38,7 +37,7 @@ namespace malone.Core.AdoNet.Repositories
             _context = (AdoNetContext)UnitOfWork.Context;
 
             Mapper = mapper;
-            AdoNetExceptionHandler = ServiceLocator.Current.Get<IAdoNetExceptionHandler>();
+            CoreExceptionHandler = ServiceLocator.Current.Get<ICoreExceptionHandler>();
         }
 
         protected IQueryable<TEntity> GetQueryable(
@@ -86,7 +85,7 @@ namespace malone.Core.AdoNet.Repositories
             }
             catch (Exception ex)
             {
-                AdoNetExceptionHandler.HandleException<DataAccessException<AdoNetErrors>>(ex, AdoNetErrors.E600, typeof(TEntity));
+                CoreExceptionHandler.HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
             }
             return null;
         }
@@ -153,7 +152,7 @@ namespace malone.Core.AdoNet.Repositories
             }
             catch (Exception ex)
             {
-                AdoNetExceptionHandler.HandleException<DataAccessException<AdoNetErrors>>(ex, AdoNetErrors.E600, typeof(TEntity));
+                CoreExceptionHandler.HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
             }
             return null;
         }
@@ -188,7 +187,7 @@ namespace malone.Core.AdoNet.Repositories
             }
             catch (Exception ex)
             {
-                AdoNetExceptionHandler.HandleException<DataAccessException<AdoNetErrors>>(ex, AdoNetErrors.E600, typeof(TEntity));
+                CoreExceptionHandler.HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
             }
             return null;
         }
@@ -225,7 +224,7 @@ namespace malone.Core.AdoNet.Repositories
             }
             catch (Exception ex)
             {
-                AdoNetExceptionHandler.HandleException<DataAccessException<AdoNetErrors>>(ex, AdoNetErrors.E600, typeof(TEntity));
+                CoreExceptionHandler.HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
             }
             return null;
         }

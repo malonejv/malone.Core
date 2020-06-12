@@ -32,7 +32,7 @@ namespace malone.Core.Commons.Configurations
             catch (Exception)
             {
                 //TODO: Mejorar especificación del error
-                throw new TechnicalException<CoreErrors>(CoreErrors.E800);
+                throw new TechnicalException<CoreErrors>(CoreErrors.TECH1);
             }
         }
     }

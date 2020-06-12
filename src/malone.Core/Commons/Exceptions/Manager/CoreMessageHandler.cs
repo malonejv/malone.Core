@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace malone.Core.Commons.Exceptions.Manager
 {
-    public class CoreMessageHandler : MessageHandler<CoreErrors>, ICoreMessageHandler
+    internal class CoreMessageHandler : MessageHandler<CoreErrors>, ICoreMessageHandler
     {
     }
 }

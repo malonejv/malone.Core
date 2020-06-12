@@ -29,7 +29,7 @@ namespace malone.Core.WebApi.Attributes
                 string password = authenticationValues[1];
 
 
-                if (true) //Reemplazar con LoginComponent.Login(username,password)
+                if (true) //TODO: Reemplazar con LoginComponent.Login(username,password)
                 {
                     Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
                 }
