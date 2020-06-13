@@ -1,8 +1,7 @@
-﻿using malone.Core.CL.DI;
+﻿using malone.Core.Commons.DI;
 using malone.Core.Identity.EntityFramework;
-using malone.Core.Identity.EntityFramework.BL;
-using malone.Core.Identity.EntityFramework.EL;
-using malone.Core.Sample.Middle.DAL.Context.EF;
+using malone.Core.Identity.EntityFramework.Business;
+using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -10,19 +9,16 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using System;
-using Unity;
 
 namespace malone.Core.Sample.UI.EFSqlServer
 {
     public partial class Startup
     {
-
-
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
             //OPTION: Configuracion
-            app.CreatePerOwinContext(SampleEFContext.Create);
+            //app.CreatePerOwinContext(SampleEFContext.Create);
             app.CreatePerOwinContext<UserBusinessComponent>(UserBusinessComponent.Create);
             app.CreatePerOwinContext<SignInBusinessComponent>(SignInBusinessComponent.Create);
 

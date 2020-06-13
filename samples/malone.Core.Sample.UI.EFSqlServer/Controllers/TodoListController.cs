@@ -1,9 +1,6 @@
-﻿using malone.Core.EL.Model;
-using malone.Core.Sample.Middle.BL;
+﻿using malone.Core.Sample.Middle.BL;
 using malone.Core.Sample.Middle.EL.Filters.EF.TodoListEntity;
 using malone.Core.Sample.Middle.EL.Model;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -27,6 +24,12 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
                 Expression = (x => x.Name.Contains("List"))
             });
 
+
+            var item = list.First();
+            item.Name = "asdf";
+            TodoListBC.Update(item.Id, item);
+
+
             return View();
         }
 
@@ -46,16 +49,4 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
 
     }
 
-    public class Pepe<TEntity>
-   where TEntity : class, IBaseEntity
-    {
-        public virtual IEnumerable<TEntity> Get<TFilter>(
-        TFilter filter = default(TFilter),
-        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-        bool includeDeleted = false,
-        string includeProperties = "")
-        {
-            return null;
-        }
-    }
 }

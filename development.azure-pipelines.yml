@@ -16,14 +16,17 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
+  displayName: Setup Nuget
 
 - task: NuGetCommand@2
+  displayName: Restore Nuget Packages
   inputs:
-    restoreSolution: '$(solution)'
+    restoreSolution: 'src/$(solution)'
 
 - task: VSBuild@1
+  displayName: Build Solution
   inputs:
-    solution: '$(solution)'
+    solution: 'src/$(solution)'
     msbuildArgs: '/p:DeployOnBuild=true /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'

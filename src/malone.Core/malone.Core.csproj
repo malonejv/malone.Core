@@ -20,9 +20,8 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <Deterministic>true</Deterministic>
+    <PackageIcon>capibara.png</PackageIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,6 +32,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>bin\Debug\malone.Core.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -100,92 +100,109 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BL\Components\Implementations\BusinessComponent.cs" />
-    <Compile Include="BL\Components\Implementations\BusinessValidator.cs" />
-    <Compile Include="BL\Components\Interfaces\IBusinessComponent.cs" />
-    <Compile Include="BL\Components\Interfaces\IBusinessValidator.cs" />
-    <Compile Include="CL\Configurations\Attributes\FeatureDescriptionAttribute.cs" />
-    <Compile Include="CL\Configurations\ConnectionString\ConnectionStringSettings.cs" />
-    <Compile Include="CL\Configurations\ConnectionString\ConnectionStringSettingsDictionary.cs" />
-    <Compile Include="CL\Configurations\CoreConfiguration\CoreSettingConfiguration.cs" />
-    <Compile Include="CL\Configurations\Extensions\FeatureExtensions.cs" />
-    <Compile Include="CL\Configurations\Extensions\IConfigurationExtensions.cs" />
-    <Compile Include="CL\Configurations\ICoreSettingConfiguration.cs" />
-    <Compile Include="CL\Configurations\Sections\Feature\BehaviorElement.cs" />
-    <Compile Include="CL\Configurations\Sections\Feature\BehaviorElementCollection.cs" />
-    <Compile Include="CL\Configurations\Sections\DbFactory\DatabasFactorySection.cs" />
-    <Compile Include="CL\Configurations\Sections\Feature\FeatureElement.cs" />
-    <Compile Include="CL\Configurations\Sections\Feature\FeaturesElementCollection.cs" />
-    <Compile Include="CL\Configurations\Sections\Feature\FeatureSettings.cs" />
-    <Compile Include="CL\Configurations\Sections\Feature\FeatureSettingsSection.cs" />
-    <Compile Include="CL\DI\ServiceLocator.cs" />
-    <Compile Include="CL\Exceptions\BaseException.cs" />
-    <Compile Include="CL\Exceptions\BusinessException.cs" />
-    <Compile Include="CL\Exceptions\BusinessValidationException.cs" />
-    <Compile Include="CL\Exceptions\CoreErrors.cs" />
-    <Compile Include="CL\Exceptions\DataAccessException.cs" />
-    <Compile Include="CL\Exceptions\Handler\Implementations\ExceptionHandler.cs" />
-    <Compile Include="CL\Exceptions\Handler\Interfaces\IExceptionHandler.cs" />
-    <Compile Include="CL\Exceptions\Manager\Implementations\ExceptionMessageManager.cs" />
-    <Compile Include="CL\Exceptions\Manager\Interfaces\IExceptionMessageManager.cs" />
-    <Compile Include="CL\Exceptions\Resources\Exceptions.Designer.cs">
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Business\Components\BusinessComponent.cs" />
+    <Compile Include="Business\Components\BusinessValidator.cs" />
+    <Compile Include="Business\Components\IBusinessComponent.cs" />
+    <Compile Include="Business\Components\IBusinessValidator.cs" />
+    <Compile Include="Business\Components\Validations.cs" />
+    <Compile Include="Commons\Configurations\Attributes\SectionNameAttribute.cs" />
+    <Compile Include="Commons\Configurations\CoreModules.cs" />
+    <Compile Include="Commons\Configurations\ConfigurationExtensions.cs" />
+    <Compile Include="Commons\Configurations\CoreSettingsSection.cs" />
+    <Compile Include="Commons\Configurations\DbFactory\DatabaseConfigurationElement.cs" />
+    <Compile Include="Commons\Configurations\DbFactory\DatabaseProviderElementCollection.cs" />
+    <Compile Include="Commons\Configurations\DbFactory\DatabaseProviderElement.cs" />
+    <Compile Include="Commons\Configurations\Features\FeatureDescriptionAttribute.cs" />
+    <Compile Include="Commons\Configurations\CoreConfiguration.cs" />
+    <Compile Include="Commons\Configurations\Features\FeatureExtensions.cs" />
+    <Compile Include="Commons\Configurations\Features\FeatureSettingsSection.cs" />
+    <Compile Include="Commons\Configurations\ICoreConfiguration.cs" />
+    <Compile Include="Commons\Configurations\Features\BehaviorElement.cs" />
+    <Compile Include="Commons\Configurations\Features\BehaviorElementCollection.cs" />
+    <Compile Include="Commons\Configurations\Features\FeatureElement.cs" />
+    <Compile Include="Commons\Configurations\Features\FeaturesElementCollection.cs" />
+    <Compile Include="Commons\Configurations\Features\FeatureSettings.cs" />
+    <Compile Include="Commons\Configurations\Modules\ModuleElement.cs" />
+    <Compile Include="Commons\Configurations\Modules\ModulesElementCollection.cs" />
+    <Compile Include="Commons\Exceptions\Handler\CoreExceptionHandler.cs" />
+    <Compile Include="Commons\Exceptions\Handler\ICoreExceptionHandler.cs" />
+    <Compile Include="Commons\Exceptions\Manager\CoreMessageHandler.cs" />
+    <Compile Include="Commons\Exceptions\Manager\ICoreMessageHandler.cs" />
+    <Compile Include="Commons\Initializers\AppInitializer.cs" />
+    <Compile Include="Commons\Initializers\IInitializer.cs" />
+    <Compile Include="Commons\Initializers\IInjectorInitializer.cs" />
+    <Compile Include="Commons\DI\ServiceLocator.cs" />
+    <Compile Include="Commons\Exceptions\BaseException.cs" />
+    <Compile Include="Commons\Exceptions\BusinessException.cs" />
+    <Compile Include="Commons\Exceptions\BusinessValidationException.cs" />
+    <Compile Include="Commons\Exceptions\CoreErrors.cs" />
+    <Compile Include="Commons\Exceptions\DataAccessException.cs" />
+    <Compile Include="Commons\Exceptions\Handler\ExceptionHandler.cs" />
+    <Compile Include="Commons\Exceptions\Handler\IExceptionHandler.cs" />
+    <Compile Include="Commons\Exceptions\Manager\MessageHandler.cs" />
+    <Compile Include="Commons\Exceptions\Manager\IMessageHandler.cs" />
+    <Compile Include="Commons\Exceptions\Resources\Exceptions.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.resx</DependentUpon>
     </Compile>
-    <Compile Include="CL\Exceptions\ServiceAgentException.cs" />
-    <Compile Include="CL\Exceptions\ViewException.cs" />
-    <Compile Include="CL\Helpers\Extensions\ByteArrayExtensions.cs" />
-    <Compile Include="CL\Helpers\Extensions\CharExtensions.cs" />
-    <Compile Include="CL\Helpers\Extensions\EnumExtensions.cs" />
-    <Compile Include="CL\Helpers\Extensions\StringExtensions.cs" />
-    <Compile Include="CL\Helpers\Threading\AsyncHelper.cs" />
-    <Compile Include="CL\Helpers\Threading\TaskExtensions.cs" />
-    <Compile Include="CL\Log\IFactoryResolver.cs" />
-    <Compile Include="CL\Log\ILogger.cs" />
-    <Compile Include="CL\Log\LoggerBase.cs" />
-    <Compile Include="CL\Log\LoggerFactory.cs" />
-    <Compile Include="CL\Log\LogItem.cs" />
-    <Compile Include="CL\Log\LogLevel.cs" />
-    <Compile Include="CL\Security\Encryption.cs" />
-    <Compile Include="CL\DI\CoreBootstrapper.cs" />
-    <Compile Include="CL\DI\ILayerBootstrapper.cs" />
-    <Compile Include="DAL\Context\IContext.cs" />
-    <Compile Include="DAL\Repositories\IRepository.cs" />
-    <Compile Include="DAL\UnitOfWork\IUnitOfWork.cs" />
-    <Compile Include="DAL\UnitOfWork\UnitOfWork.cs" />
-    <Compile Include="DAL\ServiceAgents\IServiceAgent.cs" />
-    <Compile Include="DAL\ServiceAgents\ServiceAgent.cs" />
-    <Compile Include="EL\Filters\IFilterExpression.cs" />
-    <Compile Include="EL\Model\IAuditable.cs" />
-    <Compile Include="EL\Model\IBaseEntity.cs" />
-    <Compile Include="EL\Model\ISoftDelete.cs" />
-    <Compile Include="EL\Model\IVersionable.cs" />
+    <Compile Include="Commons\Exceptions\ServiceAgentException.cs" />
+    <Compile Include="Commons\Exceptions\TechnicalException.cs" />
+    <Compile Include="Commons\Helpers\Extensions\ByteArrayExtensions.cs" />
+    <Compile Include="Commons\Helpers\Extensions\CharExtensions.cs" />
+    <Compile Include="Commons\Helpers\Extensions\EnumExtensions.cs" />
+    <Compile Include="Commons\Helpers\Extensions\StringExtensions.cs" />
+    <Compile Include="Commons\Helpers\Threading\AsyncHelper.cs" />
+    <Compile Include="Commons\Helpers\Threading\TaskExtensions.cs" />
+    <Compile Include="Commons\Initializers\IModuleInitializer.cs" />
+    <Compile Include="Commons\Log\IFactoryResolver.cs" />
+    <Compile Include="Commons\Log\ILogger.cs" />
+    <Compile Include="Commons\Log\LoggerBase.cs" />
+    <Compile Include="Commons\Log\LoggerFactory.cs" />
+    <Compile Include="Commons\Log\LogItem.cs" />
+    <Compile Include="Commons\Log\LogLevel.cs" />
+    <Compile Include="Commons\Security\Encryption.cs" />
+    <Compile Include="Commons\Initializers\LayersInitializer.cs" />
+    <Compile Include="Commons\Initializers\ILayerInitializer.cs" />
+    <Compile Include="DataAccess\Context\IContext.cs" />
+    <Compile Include="DataAccess\Repositories\IRepository.cs" />
+    <Compile Include="DataAccess\UnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="DataAccess\UnitOfWork\UnitOfWork.cs" />
+    <Compile Include="DataAccess\ServiceAgents\IServiceAgent.cs" />
+    <Compile Include="DataAccess\ServiceAgents\ServiceAgent.cs" />
+    <Compile Include="Entities\Filters\IFilterExpression.cs" />
+    <Compile Include="Entities\Model\IAuditable.cs" />
+    <Compile Include="Entities\Model\IBaseEntity.cs" />
+    <Compile Include="Entities\Model\IBaseEntityExtensions.cs" />
+    <Compile Include="Entities\Model\ISoftDelete.cs" />
+    <Compile Include="Entities\Model\IVersionable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Admin\IResourceAdmin.cs" />
     <Compile Include="Resources\Exceptions.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CL\Helpers\Attributes\" />
-    <Folder Include="SL\" />
-    <Folder Include="UI\" />
+    <Folder Include="Commons\Helpers\Attributes\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="coreSettingsSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CL\Exceptions\Resources\Exceptions.resx">
+    <EmbeddedResource Include="Commons\Exceptions\Resources\Exceptions.en.resx" />
+    <EmbeddedResource Include="Commons\Exceptions\Resources\Exceptions.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Exceptions.resx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\malone.Core.Patterns\malone.Core.Patterns.csproj">
-      <Project>{041AF239-40F7-4D36-8CAA-1B5DE002FE4C}</Project>
-      <Name>malone.Core.Patterns</Name>
-    </ProjectReference>
+    <Content Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -198,28 +215,17 @@
     <Error Condition="!Exists('..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props'))" />
   </Target>
-  <Target Name="PostBuildMacros">
-    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="Assemblies" ItemName="Targets" />
-    </GetAssemblyIdentity>
-    <ItemGroup>
-      <VersionNumber Include="@(Targets->'%(Version)')" />
-    </ItemGroup>
-  </Target>
   <PropertyGroup>
-    <PostBuildEventDependsOn>
-      $(PostBuildEventDependsOn);
-      PostBuildMacros;
-    </PostBuildEventDependsOn>
     <PostBuildEvent>
+      REM if $(ConfigurationName) == Release (
+      REM nuget pack "$(ProjectPath)" -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+      REM nuget push -SkipDuplicate -source "github"
+      REM )
       if $(ConfigurationName) == ReleaseNuget (
-      nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects
-      nuget list $(ProjectName) -allversions -source http://localhost:8081/repository/nuget-hosted-v3 | find /c "$(ProjectName) @(VersionNumber)"
-      if errorlevel 1 (
-      nuget push "$(ProjectName).@(VersionNumber).nupkg" 5eded2a8-d471-3e41-8fe3-f0cf84c03b2c -src http://localhost:8081/repository/nuget-hosted-v3
+      nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+      nuget push -SkipDuplicate -source "github"
       )
-      )
-</PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

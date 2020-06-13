@@ -1,8 +1,8 @@
-﻿using malone.Core.CL.DI;
-using malone.Core.CL.Helpers.Extensions;
-using malone.Core.DAL.Context;
-using malone.Core.Identity.EntityFramework.DAL.EF.Context;
-using malone.Core.Identity.EntityFramework.EL;
+﻿using malone.Core.Commons.DI;
+using malone.Core.Commons.Helpers.Extensions;
+using malone.Core.DataAccess.Context;
+using malone.Core.Identity.EntityFramework.Context;
+using malone.Core.Identity.EntityFramework.Entities;
 using malone.Core.Sample.Middle.DAL.Context.EF.Mappings;
 using malone.Core.Sample.Middle.EL.Model;
 using Microsoft.AspNet.Identity;
@@ -15,6 +15,8 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF
 {
     public class SampleEFContext : EFIdentityDbContext //EFDbContext
     {
+        public static SampleEFContext Instance { get; private set; }
+
         public SampleEFContext(string connectionStringName)
             : base(connectionStringName)
         {
@@ -23,8 +25,9 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF
             Configuration.ProxyCreationEnabled = false;
 
             //OPTION: Habilita la clase SampleContextInitializer 
-            //Database.SetInitializer<SampleEFContext>(null);
+            Database.SetInitializer<SampleEFContext>(null);
 
+            Instance = this;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -38,8 +41,10 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF
 
         public static SampleEFContext Create()
         {
-            var instance = ServiceLocator.Current.Get<IContext>() as SampleEFContext;
-            return instance;
+            if (Instance == null)
+                Instance = ServiceLocator.Current.Get<IContext>() as SampleEFContext;
+
+            return Instance;
         }
     }
 

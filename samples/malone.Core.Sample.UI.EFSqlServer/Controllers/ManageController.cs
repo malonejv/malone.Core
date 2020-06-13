@@ -1,14 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
+﻿using malone.Core.Identity.EntityFramework;
+using malone.Core.Sample.Middle.CL.Exceptions;
+using malone.Core.Sample.UI.EFSqlServer.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using malone.Core.Sample.UI.EFSqlServer.Models;
-using malone.Core.Identity.EntityFramework;
-using malone.Core.Identity.BL.Extensions;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace malone.Core.Sample.UI.EFSqlServer.Controllers
 {
@@ -60,10 +60,10 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId).ConfigureAwait(false),
+                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId).ConfigureAwait(false),
+                Logins = await UserManager.GetLoginsAsync(userId).ConfigureAwait(false),
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId.ToString(Thread.CurrentThread.CurrentCulture)).ConfigureAwait(false)
             };
             return View(model);
         }
@@ -75,13 +75,13 @@ namespace malone.Core.Sample.UI.EFSqlServer.Controllers
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
         {
             ManageMessageId? message;
-            var result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId<int>(), new UserLoginInfo(loginProvider, providerKey));
+            var result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId<int>(), new UserLoginInfo(loginProvider, providerKey)).ConfigureAwait(false);
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>()).ConfigureAwait(false);
                 if (user != null)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false).ConfigureAwait(false);
                 }
                 message = ManageMessageId.RemoveLoginSuccess;
             }
