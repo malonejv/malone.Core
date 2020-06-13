@@ -9,8 +9,10 @@ on:
     branches:
         - master
         - release/*
-    pull_request:
-      branches: [ master ]
+  pull_request:
+    branches: 
+      - master
+      - release/*
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -50,6 +52,7 @@ jobs:
               nuget pack src/malone.Core.AdoNet.SqlServer/malone.Core.AdoNet.SqlServer.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
               nuget pack src/malone.Core.Unity.IdentityEntityFrameworkInitializer/malone.Core.Unity.IdentityEntityFrameworkInitializer.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
               nuget pack src/malone.Core.Unity.Log4NetInitializer/malone.Core.Unity.Log4NetInitializer.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Unity.ModulesInitializers/malone.Core.Unity.ModulesInitializers.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
               nuget pack src/malone.Core.Unity/malone.Core.Unity.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
               nuget pack src/malone.Core.Unity.WebApi/malone.Core.Unity.WebApi.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
               nuget pack src/malone.Core.Log4Net/malone.Core.Log4Net.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
