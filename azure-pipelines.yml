@@ -4,6 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 
 trigger:
+- development
 - master
 
 pool:
@@ -16,14 +17,17 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
+  displayName: Setup Nuget
 
 - task: NuGetCommand@2
+  displayName: Restore Nuget Packages
   inputs:
-    restoreSolution: '$(solution)'
+    restoreSolution: 'src/$(solution)'
 
 - task: VSBuild@1
+  displayName: Build Solution
   inputs:
-    solution: '$(solution)'
+    solution: 'src/$(solution)'
     msbuildArgs: '/p:DeployOnBuild=true /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
@@ -33,15 +37,15 @@ steps:
 #    platform: '$(buildPlatform)'
 #    configuration: '$(buildConfiguration)'
 
-- task: CopyFiles@2
-  inputs:
-    sourceFolder: $(Build.SourcesDirectory)
-    targetFolder: $(Build.ArtifactStagingDirectory)
+#- task: CopyFiles@2
+#  inputs:
+#    sourceFolder: $(Build.SourcesDirectory)
+#    targetFolder: $(Build.ArtifactStagingDirectory)
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+#- task: PublishBuildArtifacts@1
+#  inputs:
+#    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#    ArtifactName: 'drop'
+#    publishLocation: 'Container'
 
     
