@@ -231,7 +231,7 @@
     <PostBuildEvent>if $(ConfigurationName) == Release (
 	(
 		echo Var:
-		echo   MALONE_CORE_VER=@(VersionNumber)
+		echo   MALONE_CORE_VER:@(VersionNumber)
 	)&gt;"variables"
 )
 if $(ConfigurationName) == ReleaseNuget (
