@@ -225,7 +225,8 @@
     </GetAssemblyIdentity>
     <ItemGroup>
       <!--VERSION DEL ASSEMBLY-->
-      <BuildEnvItem Include="MALONE_CORE_VER=%(MyAssembly.Version)" />
+      <BuildEnvItem Include="key:" />
+      <BuildEnvItem Include=" MALONE_CORE_VER=%(MyAssembly.Version)" />
     </ItemGroup>
     <WriteLinesToFile File="Variables.txt" Lines="@(BuildEnvItem)" Overwrite="true" Encoding=""/>
   </Target>

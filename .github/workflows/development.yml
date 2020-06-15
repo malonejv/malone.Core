@@ -43,15 +43,13 @@ jobs:
         run:  msbuild src/malone.Core.sln /t:Build /p:Configuration=Release
       
       - name: Get Version Number
-        id: read_property
-        uses: christian-draeger/read-properties@1.0.1
+        uses: mrllama123/env-mapper@v1
         with:
-          path: 'src/malone.Core/Variables.txt'
-          property: 'MALONE_CORE_VER'
-
+          envMapperFile: src/malone.Core/Variables.txt
+          envMapperKey: key
+        
       - name: Echo Version Number
-        run: echo ${{ steps.read_property.outputs.value }}
-        # will print "the value of 'the.key.of.the.property'"
+        run: echo $MALONE_CORE_VER
 
 #      - name: Prepare packages
 #        run:  |
