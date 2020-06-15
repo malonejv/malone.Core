@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: CD
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -40,6 +40,12 @@ jobs:
         
       - name: Build malone.Core
         run:  msbuild src/malone.Core.sln /t:Build /p:Configuration=Release
+    
+      - name: Version Number
+        run: |
+             src/malone.Core/EnvVar.cmd
+             echo $MALONE_CORE_VER
+        shell: cmd
       
       - name: Prepare packages
         run:  |
@@ -61,6 +67,8 @@ jobs:
                         
       - name: Push packages
         run:  nuget push *.nupkg -SkipDuplicate -source "github"
+        
+      
               
 #      - name: Nuget Restore Sample Packages
 #        run:  nuget restore samples/malone.Core.Samples.sln
