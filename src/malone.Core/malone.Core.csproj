@@ -204,6 +204,7 @@
   <ItemGroup>
     <Content Include="readme.txt" />
   </ItemGroup>
+
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -215,12 +216,26 @@
     <Error Condition="!Exists('..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props'))" />
   </Target>
+  <Target Name="DefineBuildEnvironmentVariables">
+    <GetAssemblyIdentity
+        AssemblyFiles="$(TargetPath)">
+      <Output
+          TaskParameter="Assemblies"
+          ItemName="MyAssembly"/>
+    </GetAssemblyIdentity>
+    <ItemGroup>
+      <BuildEnvItem Include="REM This file is auto generated. Do not edit" />
+      <BuildEnvItem Include="SET MALONE_CORE_VER=%(MyAssembly.Version)" />
+      <!-- add more as needed -->
+    </ItemGroup>
+    <WriteLinesToFile File="EnvVar.cmd" Lines="@(BuildEnvItem)" Overwrite="true" Encoding="Unicode"/>
+  </Target>
   <PropertyGroup>
+    <PostBuildEventDependsOn>
+      $(PostBuildEventDependsOn);
+      DefineBuildEnvironmentVariables;
+    </PostBuildEventDependsOn>
     <PostBuildEvent>
-      REM if $(ConfigurationName) == Release (
-      REM nuget pack "$(ProjectPath)" -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-      REM nuget push -SkipDuplicate -source "github"
-      REM )
       if $(ConfigurationName) == ReleaseNuget (
       nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
       nuget push -SkipDuplicate -source "github"

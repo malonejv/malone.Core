@@ -19,6 +19,7 @@ namespace ErgaOmnes.Api.Controllers
         public EjemploController(IEjemploBC businessComponent, Mapper mapperInstance) : base(businessComponent, mapperInstance)
         {
         }
+
         protected override IEnumerable GetAll()
         {
             var list = base.GetAll().Cast<Ejemplo>();
