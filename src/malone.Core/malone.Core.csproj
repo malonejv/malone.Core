@@ -204,7 +204,6 @@
   <ItemGroup>
     <Content Include="readme.txt" />
   </ItemGroup>
-
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -216,31 +215,34 @@
     <Error Condition="!Exists('..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props'))" />
   </Target>
-  <Target Name="DefineBuildEnvironmentVariables">
-    <GetAssemblyIdentity
-        AssemblyFiles="$(TargetPath)">
-      <Output
-          TaskParameter="Assemblies"
-          ItemName="MyAssembly"/>
+  <Target Name="GetAssemblyVersion">
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="ProjAssemblyInfo" />
     </GetAssemblyIdentity>
+	<PropertyGroup>
+      <Pattern>(\d+)\.(\d+)\.(\d+)</Pattern>
+      <In>%(ProjAssemblyInfo.Version)</In>
+      <OutVersion>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern)))</OutVersion>
+	</PropertyGroup>
     <ItemGroup>
-      <BuildEnvItem Include="REM This file is auto generated. Do not edit" />
-      <BuildEnvItem Include="SET MALONE_CORE_VER=%(MyAssembly.Version)" />
-      <!-- add more as needed -->
+      <VersionNumber Include="$(OutVersion)" />
     </ItemGroup>
-    <WriteLinesToFile File="EnvVar.cmd" Lines="@(BuildEnvItem)" Overwrite="true" Encoding="Unicode"/>
   </Target>
   <PropertyGroup>
     <PostBuildEventDependsOn>
       $(PostBuildEventDependsOn);
-      DefineBuildEnvironmentVariables;
+      GetAssemblyVersion;
     </PostBuildEventDependsOn>
-    <PostBuildEvent>
-      if $(ConfigurationName) == ReleaseNuget (
-      nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-      nuget push -SkipDuplicate -source "github"
-      )
-    </PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Release (
+	(
+		echo Var:
+		echo   MALONE_CORE_VER: @(VersionNumber)
+	)&gt;"variables"
+)
+if $(ConfigurationName) == ReleaseNuget (
+	nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+	nuget push -SkipDuplicate -source "github"
+)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
