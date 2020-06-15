@@ -1,1 +1,3 @@
 # malonejv.Core ![CI](https://github.com/malonejv/malone.Core/workflows/CI/badge.svg) [![Board Status](https://dev.azure.com/malonejv/45380abc-bef3-4509-b48e-888a31ec7319/d930ffdc-a2ca-481d-92f8-0a4471d4ee97/_apis/work/boardbadge/afbda97e-fb6a-4941-99e1-06a950f80cdb)](https://dev.azure.com/malonejv/45380abc-bef3-4509-b48e-888a31ec7319/_boards/board/t/d930ffdc-a2ca-481d-92f8-0a4471d4ee97/Microsoft.RequirementCategory/)
+
+![Board Status](https://dev.azure.com/malonejv/45380abc-bef3-4509-b48e-888a31ec7319/d930ffdc-a2ca-481d-92f8-0a4471d4ee97/_apis/work/boardbadge/afbda97e-fb6a-4941-99e1-06a950f80cdb)](https://dev.azure.com/malonejv/45380abc-bef3-4509-b48e-888a31ec7319/_boards/board/t/d930ffdc-a2ca-481d-92f8-0a4471d4ee97/Microsoft.RequirementCategory/)
