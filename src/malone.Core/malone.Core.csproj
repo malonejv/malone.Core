@@ -204,7 +204,6 @@
   <ItemGroup>
     <Content Include="readme.txt" />
   </ItemGroup>
-
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -216,31 +215,29 @@
     <Error Condition="!Exists('..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props'))" />
   </Target>
-  <Target Name="DefineBuildEnvironmentVariables">
-    <GetAssemblyIdentity
-        AssemblyFiles="$(TargetPath)">
-      <Output
-          TaskParameter="Assemblies"
-          ItemName="MyAssembly"/>
+  <Target Name="GetAssemblyVersion">
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="Targets" />
     </GetAssemblyIdentity>
     <ItemGroup>
-      <!--VERSION DEL ASSEMBLY-->
-      <BuildEnvItem Include="key:" />
-      <BuildEnvItem Include=" MALONE_CORE_VER=%(MyAssembly.Version)" />
+      <VersionNumber Include="@(Targets->'%(Version)')" />
     </ItemGroup>
-    <WriteLinesToFile File="Variables.txt" Lines="@(BuildEnvItem)" Overwrite="true" Encoding=""/>
   </Target>
   <PropertyGroup>
     <PostBuildEventDependsOn>
       $(PostBuildEventDependsOn);
-      DefineBuildEnvironmentVariables;
+      GetAssemblyVersion;
     </PostBuildEventDependsOn>
-    <PostBuildEvent>
-      if $(ConfigurationName) == ReleaseNuget (
-      nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-      nuget push -SkipDuplicate -source "github"
-      )
-    </PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Release (
+	(
+		echo Var:
+		echo   MALONE_CORE_VER=@(VersionNumber)
+	)&gt;"variables"
+)
+if $(ConfigurationName) == ReleaseNuget (
+	nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+	nuget push -SkipDuplicate -source "github"
+)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -351,4 +351,4 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-/src/malone.Core/Variables.txt
+/src/malone.Core/[Vv]ariables.txt

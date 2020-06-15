@@ -45,8 +45,8 @@ jobs:
       - name: Get Version Number
         uses: mrllama123/env-mapper@1.0.0
         with:
-          envMapperFile: src/malone.Core/Variables.txt
-          envMapperKey: key
+          envMapperFile: src/malone.Core/bin/Release/Variables
+          envMapperKey: Var
         
       - name: Echo Version Number
         run: echo $MALONE_CORE_VER
