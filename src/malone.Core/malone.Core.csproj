@@ -223,12 +223,12 @@
           TaskParameter="Assemblies"
           ItemName="MyAssembly"/>
     </GetAssemblyIdentity>
-    <ItemGroup>
+    <!--<ItemGroup>
       <BuildEnvItem Include="REM This file is auto generated. Do not edit" />
       <BuildEnvItem Include="SET MALONE_CORE_VER=%(MyAssembly.Version)" />
-      <!-- add more as needed -->
+      --><!-- add more as needed --><!--
     </ItemGroup>
-    <WriteLinesToFile File="EnvVar.cmd" Lines="@(BuildEnvItem)" Overwrite="true" Encoding="Unicode"/>
+    <WriteLinesToFile File="EnvVar.cmd" Lines="@(BuildEnvItem)" Overwrite="true" Encoding="Unicode"/>-->
   </Target>
   <PropertyGroup>
     <PostBuildEventDependsOn>
@@ -236,6 +236,7 @@
       DefineBuildEnvironmentVariables;
     </PostBuildEventDependsOn>
     <PostBuildEvent>
+      SET MALONE_CORE_VER=%(MyAssembly.Version)
       if $(ConfigurationName) == ReleaseNuget (
       nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
       nuget push -SkipDuplicate -source "github"

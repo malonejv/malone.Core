@@ -42,9 +42,7 @@ jobs:
         run:  msbuild src/malone.Core.sln /t:Build /p:Configuration=Release
     
       - name: Version Number
-        run: |
-             src/malone.Core/EnvVar.cmd
-             echo $MALONE_CORE_VER
+        run: echo $MALONE_CORE_VER
         shell: cmd
       
       - name: Prepare packages
