@@ -41,31 +41,43 @@ jobs:
       - name: Build malone.Core
         run:  msbuild src/malone.Core.sln /t:Build /p:Configuration=Release
     
-      - name: Version Number
-        run: echo $MALONE_CORE_VER
-        shell: cmd
-      
+      - name: Get Environment Variables
+        uses: mrllama123/env-mapper@1.0.0
+        with:
+          envMapperFile: src/malone.Core/bin/Release/Variables
+          envMapperKey: Var
+        
       - name: Prepare packages
         run:  |
-              nuget pack src/malone.Core/malone.Core.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.AdoNet/malone.Core.AdoNet.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.EF/malone.Core.EF.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Patterns/malone.Core.Patterns.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.WebApi/malone.Core.WebApi.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.AdoNet.Oracle/malone.Core.AdoNet.Oracle.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.AdoNet.SqlServer/malone.Core.AdoNet.SqlServer.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity.IdentityEntityFrameworkInitializer/malone.Core.Unity.IdentityEntityFrameworkInitializer.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity.Log4NetInitializer/malone.Core.Unity.Log4NetInitializer.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity.ModulesInitializers/malone.Core.Unity.ModulesInitializers.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity/malone.Core.Unity.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity.WebApi/malone.Core.Unity.WebApi.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Log4Net/malone.Core.Log4Net.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Identity/malone.Core.Identity.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Identity.EntityFramework/malone.Core.Identity.EntityFramework.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core/malone.Core.csproj -Properties Configuration=Release -Version $MALONE_CORE_VER -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.AdoNet/malone.Core.AdoNet.csproj -Properties Configuration=Release -Version $MALONE_CORE_VER -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.EF/malone.Core.EF.csproj -Properties Configuration=Release -Version $MALONE_CORE_VER -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Patterns/malone.Core.Patterns.csproj -Properties Configuration=Release -Version $MALONE_CORE_VER -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.WebApi/malone.Core.WebApi.csproj -Properties Configuration=Release -Version $MALONE_CORE_VER -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.AdoNet.Oracle/malone.Core.AdoNet.Oracle.csproj -Properties Configuration=Release -Version $MALONE_CORE_VER -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.AdoNet.SqlServer/malone.Core.AdoNet.SqlServer.csproj -Properties Configuration=Release -Version $MALONE_CORE_VER -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Unity.IdentityEntityFrameworkInitializer/malone.Core.Unity.IdentityEntityFrameworkInitializer.csproj -Properties Configuration=Release -Version $MALONE_CORE_VER -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Unity.Log4NetInitializer/malone.Core.Unity.Log4NetInitializer.csproj -Properties Configuration=Release -Version $MALONE_CORE_VER -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Unity.ModulesInitializers/malone.Core.Unity.ModulesInitializers.csproj -Properties Configuration=Release -Version $MALONE_CORE_VER -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Unity/malone.Core.Unity.csproj -Properties Configuration=Release -Version $MALONE_CORE_VER -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Unity.WebApi/malone.Core.Unity.WebApi.csproj -Properties Configuration=Release -Version $MALONE_CORE_VER -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Log4Net/malone.Core.Log4Net.csproj -Properties Configuration=Release -Version $MALONE_CORE_VER -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Identity/malone.Core.Identity.csproj -Properties Configuration=Release -Version $MALONE_CORE_VER -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Identity.EntityFramework/malone.Core.Identity.EntityFramework.csproj -Properties Configuration=Release -Version $MALONE_CORE_VER -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
                         
       - name: Push packages
         run:  nuget push *.nupkg -SkipDuplicate -source "github"
         
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: v$MALONE_CORE_VER
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
       
               
 #      - name: Nuget Restore Sample Packages

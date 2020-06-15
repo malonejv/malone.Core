@@ -217,10 +217,15 @@
   </Target>
   <Target Name="GetAssemblyVersion">
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="Assemblies" ItemName="Targets" />
+      <Output TaskParameter="Assemblies" ItemName="ProjAssemblyInfo" />
     </GetAssemblyIdentity>
+	<PropertyGroup>
+      <Pattern>(\d+)\.(\d+)\.(\d+)</Pattern>
+      <In>%(ProjAssemblyInfo.Version)</In>
+      <OutVersion>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern)))</OutVersion>
+	</PropertyGroup>
     <ItemGroup>
-      <VersionNumber Include="@(Targets->'%(Version)')" />
+      <VersionNumber Include="$(OutVersion)" />
     </ItemGroup>
   </Target>
   <PropertyGroup>
