@@ -42,10 +42,17 @@ jobs:
       - name: Build malone.Core
         run:  msbuild src/malone.Core.sln /t:Build /p:Configuration=Release
       
-      - name: Version Number
-        run: echo $MALONE_CORE_VER
-        shell: cmd
-      
+      - name: Get Version Number
+        id: read_property
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: 'src/malone.Core/Variables.txt'
+          property: 'MALONE_CORE_VER'
+
+      - name: Echo Version Number
+        run: echo ${{ steps.read_property.outputs.value }}
+        # will print "the value of 'the.key.of.the.property'"
+
 #      - name: Prepare packages
 #        run:  |
 #              nuget pack src/malone.Core/malone.Core.csproj -Properties Configuration=Release -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
