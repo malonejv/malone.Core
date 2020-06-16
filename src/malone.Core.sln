@@ -51,6 +51,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
 		Pendientes.txt = Pendientes.txt
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.WebApi", "malone.Core.WebApi\malone.Core.WebApi.csproj", "{C0B7AE10-F8E3-4177-B937-F1787A7F0DF3}"
@@ -485,7 +486,7 @@ Global
 		{54DCB4EF-1475-4C12-AA6C-ACB61519B4A9} = {C36AE08A-5202-43C9-8D1B-95ABF1FCD145}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {BF840011-B60A-44FF-9D38-4CB15C4C9C8A}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
+		SolutionGuid = {BF840011-B60A-44FF-9D38-4CB15C4C9C8A}
 	EndGlobalSection
 EndGlobal
