@@ -28,17 +28,10 @@ namespace malone.Core.WebApi
 
         #region GET (GetAll)
         // GET api/entity
-        public virtual HttpResponseMessage Get()
+        public virtual IHttpActionResult Get()
         {
-            try
-            {
-                var list = GetAll();
-                return Request.CreateResponse(HttpStatusCode.OK, list);
-            }
-            catch (Exception)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "mensaje");
-            }
+            var list = GetAll();
+            return Ok(list);
         }
         protected virtual IEnumerable GetAll()
         {
@@ -50,21 +43,14 @@ namespace malone.Core.WebApi
         #region GET (GetById)
 
         // GET api/entity/5
-        public virtual HttpResponseMessage Get(TKey id)
+        public virtual IHttpActionResult Get(TKey id)
         {
-            try
-            {
-                object entity = GetById(id);
+            object entity = GetById(id);
 
-                if (entity != null)
-                    return Request.CreateResponse(HttpStatusCode.OK, entity);
-                else
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
-            }
-            catch (Exception)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
+            if (entity != null)
+                return Ok(entity);
+            else
+                return NotFound();
         }
 
         protected virtual object GetById(TKey id)
@@ -82,20 +68,13 @@ namespace malone.Core.WebApi
         #region POST (Add)
 
         // POST api/entity
-        public virtual HttpResponseMessage Post([FromBody]TEntity entity)
+        public virtual IHttpActionResult Post([FromBody]TEntity entity)
         {
-            try
-            {
-                BusinessComponent.Add(entity);
+            BusinessComponent.Add(entity);
 
-                var message = Request.CreateResponse(HttpStatusCode.Created, entity);
-                message.Headers.Location = new Uri(Request.RequestUri + entity.Id.ToString());
-                return Request.CreateResponse(HttpStatusCode.Created);
-            }
-            catch (Exception)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
+            var location = new Uri(Request.RequestUri + entity.Id.ToString());
+
+            return Created(location,entity);
         }
 
         #endregion
@@ -103,24 +82,17 @@ namespace malone.Core.WebApi
         #region PUT (Update)
 
         // PUT api/entity/5
-        public virtual HttpResponseMessage Put(TKey id, [FromBody]TEntity entity)
+        public virtual IHttpActionResult Put(TKey id, [FromBody]TEntity entity)
         {
-            try
-            {
                 var entityFound = BusinessComponent.GetById(id);
 
                 if (entityFound != null)
                 {
                     BusinessComponent.Update(entity);
-                    return Request.CreateResponse(HttpStatusCode.OK);
+                    return Ok();
                 }
                 else
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
+                    return NotFound();
         }
 
         #endregion
@@ -128,24 +100,17 @@ namespace malone.Core.WebApi
         #region DELETE (Delete)
 
         // DELETE api/entity/5
-        public virtual HttpResponseMessage Delete(TKey id)
+        public virtual IHttpActionResult Delete(TKey id)
         {
-            try
-            {
                 var entityFound = BusinessComponent.GetById(id);
 
                 if (entityFound != null)
                 {
                     BusinessComponent.Delete(entityFound);
-                    return Request.CreateResponse(HttpStatusCode.OK);
+                    return Ok();
                 }
                 else
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
-            }
-            catch (Exception)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
+                    return NotFound();
         }
 
         #endregion

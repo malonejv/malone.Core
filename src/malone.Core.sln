@@ -31,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Identity.Entity
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Patterns", "malone.Core.Patterns\malone.Core.Patterns.csproj", "{041AF239-40F7-4D36-8CAA-1B5DE002FE4C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04.Tests", "04.Tests", "{5CA54AED-2C29-4E45-89F7-F179126C1A9C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04.UnitTests", "04.UnitTests", "{5CA54AED-2C29-4E45-89F7-F179126C1A9C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.Core", "01.Core", "{F1CDC7E0-7E87-49EB-92A8-3BDB08950ACC}"
 EndProject
@@ -90,6 +90,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05.Nuget", "05.Nuget", "{1C
 	ProjectSection(SolutionItems) = preProject
 		web.config.transform = web.config.transform
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.WebApi.Test", "malone.Core.WebApi.Test\malone.Core.WebApi.Test.csproj", "{740BD134-AB9F-4503-9F86-4642B151FECB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -446,6 +448,24 @@ Global
 		{54DCB4EF-1475-4C12-AA6C-ACB61519B4A9}.ReleaseNuget|x64.Build.0 = Release|Any CPU
 		{54DCB4EF-1475-4C12-AA6C-ACB61519B4A9}.ReleaseNuget|x86.ActiveCfg = Release|Any CPU
 		{54DCB4EF-1475-4C12-AA6C-ACB61519B4A9}.ReleaseNuget|x86.Build.0 = Release|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.Debug|x64.Build.0 = Debug|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.Debug|x86.Build.0 = Debug|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.Release|x64.ActiveCfg = Release|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.Release|x64.Build.0 = Release|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.Release|x86.ActiveCfg = Release|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.Release|x86.Build.0 = Release|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.ReleaseNuget|Any CPU.ActiveCfg = Release|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.ReleaseNuget|Any CPU.Build.0 = Release|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.ReleaseNuget|x64.ActiveCfg = Release|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.ReleaseNuget|x64.Build.0 = Release|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.ReleaseNuget|x86.ActiveCfg = Release|Any CPU
+		{740BD134-AB9F-4503-9F86-4642B151FECB}.ReleaseNuget|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -484,9 +504,10 @@ Global
 		{3C190C0E-59B3-4D09-8DFE-B10C77DFC45E} = {2ECAD1EB-5B0E-4A87-ACAB-197AFBDA5BCD}
 		{DA87FBBB-48F4-46D4-90EF-AF4230A97088} = {C36AE08A-5202-43C9-8D1B-95ABF1FCD145}
 		{54DCB4EF-1475-4C12-AA6C-ACB61519B4A9} = {C36AE08A-5202-43C9-8D1B-95ABF1FCD145}
+		{740BD134-AB9F-4503-9F86-4642B151FECB} = {F1CDC7E0-7E87-49EB-92A8-3BDB08950ACC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 		SolutionGuid = {BF840011-B60A-44FF-9D38-4CB15C4C9C8A}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal
