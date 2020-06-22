@@ -122,7 +122,7 @@ namespace malone.Core.WebApi
        where TBusinessValidator : IBusinessValidator<TEntity>
        where TBusinessComponent : IBusinessComponent<TEntity, TBusinessValidator>
     {
-        public CoreApiController(TBusinessComponent businessComponent, Mapper mapperInstance) : base(businessComponent, mapperInstance)
+        public CoreApiController(TBusinessComponent businessComponent, IMapper mapperInstance) : base(businessComponent, mapperInstance)
         {
         }
     }
