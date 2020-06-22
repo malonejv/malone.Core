@@ -18,9 +18,9 @@ namespace malone.Core.WebApi
         where TBusinessComponent : IBusinessComponent<TKey, TEntity, TBusinessValidator>
     {
         protected TBusinessComponent BusinessComponent { get; set; }
-        protected Mapper Mapper { get; set; }
+        protected IMapper Mapper { get; set; }
 
-        public CoreApiController(TBusinessComponent businessComponent, Mapper mapperInstance)
+        public CoreApiController(TBusinessComponent businessComponent, IMapper mapperInstance)
         {
             BusinessComponent = businessComponent;
             Mapper = mapperInstance;
