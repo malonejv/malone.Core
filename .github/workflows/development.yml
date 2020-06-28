@@ -64,7 +64,7 @@ jobs:
               nuget pack src/malone.Core.Identity.EntityFramework/malone.Core.Identity.EntityFramework.csproj -Properties Configuration=Debug -Version ${{ env.MALONE_CORE_VER }}-dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
                                
       - name: Push packages
-        run:  nuget push *-dev.nupkg -SkipDuplicate -source "github"
+        run:  nuget push *-dev.snupkg -SkipDuplicate -source "github"
         
 #      - name: Nuget Restore Sample Packages
 #        run:  nuget restore samples/malone.Core.Samples.sln
