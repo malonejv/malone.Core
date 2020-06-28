@@ -11,7 +11,7 @@
     <AssemblyName>malone.Core.Unity</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <Deterministic>false</Deterministic>
     <PackageIcon>capibara.png</PackageIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -117,10 +117,6 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-      REM if $(ConfigurationName) == Release (
-      REM nuget pack "$(ProjectPath)" -Properties -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-      REM nuget push -SkipDuplicate -source "github"
-      REM )
       if $(ConfigurationName) == ReleaseNuget (
       nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
       nuget push -SkipDuplicate -source "github"

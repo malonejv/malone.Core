@@ -20,7 +20,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <Deterministic>true</Deterministic>
+    <Deterministic>false</Deterministic>
     <PackageIcon>capibara.png</PackageIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -220,7 +220,7 @@
       <Output TaskParameter="Assemblies" ItemName="ProjAssemblyInfo" />
     </GetAssemblyIdentity>
 	<PropertyGroup>
-      <Pattern>(\d+)\.(\d+)\.(\d+)</Pattern>
+      <Pattern>(\d+)\.(\d+)\.(\d+)\.(\d+)</Pattern>
       <In>%(ProjAssemblyInfo.Version)</In>
       <OutVersion>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern)))</OutVersion>
 	</PropertyGroup>
@@ -228,17 +228,39 @@
       <VersionNumber Include="$(OutVersion)" />
     </ItemGroup>
   </Target>
+  <Target Name="GetSemVer">
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="ProjAssemblyInfo" />
+    </GetAssemblyIdentity>
+	<PropertyGroup>
+      <Pattern>(\d+)\.(\d+)\.(\d+)</Pattern>
+      <In>%(ProjAssemblyInfo.Version)</In>
+      <OutVersion>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern)))</OutVersion>
+	</PropertyGroup>
+    <ItemGroup>
+      <SemVer Include="$(OutVersion)" />
+    </ItemGroup>
+  </Target>
   <PropertyGroup>
     <PostBuildEventDependsOn>
       $(PostBuildEventDependsOn);
       GetAssemblyVersion;
+	  GetSemVer;
     </PostBuildEventDependsOn>
-    <PostBuildEvent>if $(ConfigurationName) == Release (
+    <PostBuildEvent>
+	if $(ConfigurationName) == Debug (
 	(
 		echo Var:
 		echo   MALONE_CORE_VER: @(VersionNumber)
 	)&gt;"variables"
-)
+	)
+	
+	if $(ConfigurationName) == Release (
+	(
+		echo Var:
+		echo   MALONE_CORE_VER: @(SemVer)
+	)&gt;"variables"
+	)
 if $(ConfigurationName) == ReleaseNuget (
 	nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
 	nuget push -SkipDuplicate -source "github"

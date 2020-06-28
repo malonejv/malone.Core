@@ -50,7 +50,7 @@ namespace malone.Core.WebApi.Attributes
             else
             {
                 message = CoreMessageHandler.GetMessage(CoreErrors.TECH2);
-                status = HttpStatusCode.NotFound;
+                status = HttpStatusCode.BadRequest;
             }
 
             actionExecutedContext.Response = new HttpResponseMessage()
