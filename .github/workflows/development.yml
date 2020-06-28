@@ -45,7 +45,7 @@ jobs:
       - name: Echo Version Number
         run: echo $MALONE_CORE_VER
 
-      - name: Prepare packages
+      - name: Prepare Packages
         run:  |
               nuget pack src/malone.Core/malone.Core.csproj -Properties Configuration=Debug -Version ${{ env.MALONE_CORE_VER }}-dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
               nuget pack src/malone.Core.AdoNet/malone.Core.AdoNet.csproj -Properties Configuration=Debug -Version ${{ env.MALONE_CORE_VER }}-dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
@@ -63,7 +63,10 @@ jobs:
               nuget pack src/malone.Core.Identity/malone.Core.Identity.csproj -Properties Configuration=Debug -Version ${{ env.MALONE_CORE_VER }}-dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
               nuget pack src/malone.Core.Identity.EntityFramework/malone.Core.Identity.EntityFramework.csproj -Properties Configuration=Debug -Version ${{ env.MALONE_CORE_VER }}-dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
                                
-      - name: Push packages
+      - name: Push Packages
+        run:  nuget push *-dev.nupkg -SkipDuplicate -source "github"
+
+      - name: Push Symbols
         run:  nuget push *-dev.snupkg -SkipDuplicate -source "github"
         
 #      - name: Nuget Restore Sample Packages

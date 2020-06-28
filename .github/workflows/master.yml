@@ -45,7 +45,7 @@ jobs:
           envMapperFile: src/malone.Core/bin/Release/Variables
           envMapperKey: Var
         
-      - name: Prepare packages
+      - name: Prepare Packages
         run:  |
               nuget pack src/malone.Core/malone.Core.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
               nuget pack src/malone.Core.AdoNet/malone.Core.AdoNet.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
@@ -63,7 +63,7 @@ jobs:
               nuget pack src/malone.Core.Identity/malone.Core.Identity.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
               nuget pack src/malone.Core.Identity.EntityFramework/malone.Core.Identity.EntityFramework.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
                         
-      - name: Push packages
+      - name: Push Packages
         run:  nuget push *.nupkg -SkipDuplicate -source "github"
         
       - name: Create Release
