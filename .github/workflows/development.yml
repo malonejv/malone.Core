@@ -65,6 +65,9 @@ jobs:
                                
       - name: Push Packages
         run:  nuget push *-dev.nupkg -SkipDuplicate -source "github"
+                        
+      - name: Push Symbols
+        run:  nuget push *-dev.symbols.nupkg -SkipDuplicate -source "github"
 
 #      - name: Nuget Restore Sample Packages
 #        run:  nuget restore samples/malone.Core.Samples.sln
