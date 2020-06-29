@@ -220,12 +220,18 @@
       <Output TaskParameter="Assemblies" ItemName="ProjAssemblyInfo" />
     </GetAssemblyIdentity>
 	<PropertyGroup>
-      <Pattern>(\d+)\.(\d+)\.(\d+)\.(\d+)</Pattern>
+      <Pattern>(\d+)\.(\d+)\.(\d+)</Pattern>
       <In>%(ProjAssemblyInfo.Version)</In>
       <OutVersion>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern)))</OutVersion>
 	</PropertyGroup>
+	<PropertyGroup>
+	  <Year>$([System.DateTime]::Now.ToString("yy"))</Year>
+	  <Month>$([System.DateTime]::Now.ToString("MM"))</Month>
+	  <Date>$([System.DateTime]::Now.ToString("dd"))</Date>
+	  <Time>$([System.DateTime]::Now.ToString("HHmm"))</Time>
+	</PropertyGroup>
     <ItemGroup>
-      <VersionNumber Include="$(OutVersion)" />
+      <VersionNumber Include="$(OutVersion).$(Year)$(Month)$(Date)$(Time)" />
     </ItemGroup>
   </Target>
   <Target Name="GetSemVer">
