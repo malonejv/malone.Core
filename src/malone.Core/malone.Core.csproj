@@ -127,30 +127,29 @@
     <Compile Include="Commons\Configurations\Features\FeatureSettings.cs" />
     <Compile Include="Commons\Configurations\Modules\ModuleElement.cs" />
     <Compile Include="Commons\Configurations\Modules\ModulesElementCollection.cs" />
-    <Compile Include="Commons\Exceptions\Handler\CoreExceptionHandler.cs" />
-    <Compile Include="Commons\Exceptions\Handler\ICoreExceptionHandler.cs" />
-    <Compile Include="Commons\Exceptions\Manager\CoreMessageHandler.cs" />
-    <Compile Include="Commons\Exceptions\Manager\ICoreMessageHandler.cs" />
+    <Compile Include="Commons\Exceptions\BaseException.cs" />
+    <Compile Include="Commons\Exceptions\ErrorLocalizationHandler.cs" />
+    <Compile Include="Commons\Exceptions\CoreExceptionFactory.cs" />
+    <Compile Include="Commons\Exceptions\ExceptionFactory.cs" />
+    <Compile Include="Commons\Exceptions\IErrorLocalizationHandler.cs" />
+    <Compile Include="Commons\Localization\CoreContents.cs" />
+    <Compile Include="Commons\Localization\CoreLocalizationHandler.cs" />
+    <Compile Include="Commons\Localization\IContentLocalizationHandler.cs" />
+    <Compile Include="Commons\Exceptions\TechnicalException.cs" />
+    <Compile Include="Commons\Helpers\Extensions\DateRangeExtensions.cs" />
     <Compile Include="Commons\Initializers\AppInitializer.cs" />
     <Compile Include="Commons\Initializers\IInitializer.cs" />
     <Compile Include="Commons\Initializers\IInjectorInitializer.cs" />
     <Compile Include="Commons\DI\ServiceLocator.cs" />
-    <Compile Include="Commons\Exceptions\BaseException.cs" />
-    <Compile Include="Commons\Exceptions\BusinessException.cs" />
     <Compile Include="Commons\Exceptions\BusinessValidationException.cs" />
     <Compile Include="Commons\Exceptions\CoreErrors.cs" />
-    <Compile Include="Commons\Exceptions\DataAccessException.cs" />
-    <Compile Include="Commons\Exceptions\Handler\ExceptionHandler.cs" />
-    <Compile Include="Commons\Exceptions\Handler\IExceptionHandler.cs" />
-    <Compile Include="Commons\Exceptions\Manager\MessageHandler.cs" />
-    <Compile Include="Commons\Exceptions\Manager\IMessageHandler.cs" />
+    <Compile Include="Commons\Localization\LocalizationHandler.cs" />
+    <Compile Include="Commons\Localization\ILocalizationHandler.cs" />
     <Compile Include="Commons\Exceptions\Resources\Exceptions.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.resx</DependentUpon>
     </Compile>
-    <Compile Include="Commons\Exceptions\ServiceAgentException.cs" />
-    <Compile Include="Commons\Exceptions\TechnicalException.cs" />
     <Compile Include="Commons\Helpers\Extensions\ByteArrayExtensions.cs" />
     <Compile Include="Commons\Helpers\Extensions\CharExtensions.cs" />
     <Compile Include="Commons\Helpers\Extensions\EnumExtensions.cs" />
@@ -158,15 +157,24 @@
     <Compile Include="Commons\Helpers\Threading\AsyncHelper.cs" />
     <Compile Include="Commons\Helpers\Threading\TaskExtensions.cs" />
     <Compile Include="Commons\Initializers\IModuleInitializer.cs" />
+    <Compile Include="Commons\Localization\Resources\Contents.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Contents.resx</DependentUpon>
+    </Compile>
     <Compile Include="Commons\Log\IFactoryResolver.cs" />
     <Compile Include="Commons\Log\ILogger.cs" />
     <Compile Include="Commons\Log\LoggerBase.cs" />
     <Compile Include="Commons\Log\LoggerFactory.cs" />
     <Compile Include="Commons\Log\LogItem.cs" />
     <Compile Include="Commons\Log\LogLevel.cs" />
-    <Compile Include="Commons\Security\Encryption.cs" />
     <Compile Include="Commons\Initializers\LayersInitializer.cs" />
     <Compile Include="Commons\Initializers\ILayerInitializer.cs" />
+    <Compile Include="Commons\Security\HashServiceFactory.cs" />
+    <Compile Include="Commons\Security\HashService.cs" />
+    <Compile Include="Commons\Security\SecurityStringExtensions.cs" />
+    <Compile Include="Commons\Security\SymCryptoService.cs" />
+    <Compile Include="Commons\Security\SymCryptoServiceFactory.cs" />
     <Compile Include="DataAccess\Context\IContext.cs" />
     <Compile Include="DataAccess\Repositories\IRepository.cs" />
     <Compile Include="DataAccess\UnitOfWork\IUnitOfWork.cs" />
@@ -174,9 +182,11 @@
     <Compile Include="DataAccess\ServiceAgents\IServiceAgent.cs" />
     <Compile Include="DataAccess\ServiceAgents\ServiceAgent.cs" />
     <Compile Include="Entities\Filters\IFilterExpression.cs" />
+    <Compile Include="Entities\Model\DateRange.cs" />
     <Compile Include="Entities\Model\IAuditable.cs" />
     <Compile Include="Entities\Model\IBaseEntity.cs" />
     <Compile Include="Entities\Model\IBaseEntityExtensions.cs" />
+    <Compile Include="Entities\Model\IDateRange.cs" />
     <Compile Include="Entities\Model\ISoftDelete.cs" />
     <Compile Include="Entities\Model\IVersionable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -199,6 +209,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Commons\Localization\Resources\Contents.en.resx" />
+    <EmbeddedResource Include="Commons\Localization\Resources\Contents.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Contents.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Exceptions.resx" />
   </ItemGroup>
   <ItemGroup>
@@ -219,17 +234,17 @@
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
       <Output TaskParameter="Assemblies" ItemName="ProjAssemblyInfo" />
     </GetAssemblyIdentity>
-	<PropertyGroup>
+    <PropertyGroup>
       <Pattern>(\d+)\.(\d+)\.(\d+)</Pattern>
       <In>%(ProjAssemblyInfo.Version)</In>
       <OutVersion>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern)))</OutVersion>
-	</PropertyGroup>
-	<PropertyGroup>
-	  <Year>$([System.DateTime]::Now.ToString("yy"))</Year>
-	  <Month>$([System.DateTime]::Now.ToString("MM"))</Month>
-	  <Date>$([System.DateTime]::Now.ToString("dd"))</Date>
-	  <Time>$([System.DateTime]::Now.ToString("HHmm"))</Time>
-	</PropertyGroup>
+    </PropertyGroup>
+    <PropertyGroup>
+      <Year>$([System.DateTime]::Now.ToString("yy"))</Year>
+      <Month>$([System.DateTime]::Now.ToString("MM"))</Month>
+      <Date>$([System.DateTime]::Now.ToString("dd"))</Date>
+      <Time>$([System.DateTime]::Now.ToString("HHmm"))</Time>
+    </PropertyGroup>
     <ItemGroup>
       <VersionNumber Include="$(OutVersion).$(Year)$(Month)$(Date)$(Time)" />
     </ItemGroup>
@@ -238,11 +253,11 @@
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
       <Output TaskParameter="Assemblies" ItemName="ProjAssemblyInfo" />
     </GetAssemblyIdentity>
-	<PropertyGroup>
+    <PropertyGroup>
       <Pattern>(\d+)\.(\d+)\.(\d+)</Pattern>
       <In>%(ProjAssemblyInfo.Version)</In>
       <OutVersion>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern)))</OutVersion>
-	</PropertyGroup>
+    </PropertyGroup>
     <ItemGroup>
       <SemVer Include="$(OutVersion)" />
     </ItemGroup>

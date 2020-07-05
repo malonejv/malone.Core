@@ -1,11 +1,9 @@
-﻿using malone.Core.Commons.DI;
-using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Exceptions.Handler;
+﻿using System;
+using malone.Core.Commons.DI;
 using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using System;
 
 namespace malone.Core.Identity.EntityFramework
 {

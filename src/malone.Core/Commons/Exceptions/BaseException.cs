@@ -7,75 +7,34 @@ using System.Threading.Tasks;
 
 namespace malone.Core.Commons.Exceptions
 {
+    //TODO: MODIFICAR
+    //Rethrow y Should log no son necesarios en el constructor. Vamos a setear por configuracion.
+    //Por el momento dejo harcodeado
     public abstract class BaseException : Exception
     {
-        public bool Rethrow { get; protected set; }
-
-        public bool ShouldLog { get; protected set; }
+        public const string SUPPORT_ID = "SupportId";
+        public const string ERROR_CODE = "ErrorCode";
 
         public BaseException() : base()
         {
-            Rethrow = false;
-            ShouldLog = true;
         }
 
-        public BaseException(bool rethrow = false, bool shouldLog = true) : base()
+        public BaseException(string message) : base(message)
         {
-            Rethrow = rethrow;
-            ShouldLog = shouldLog;
         }
 
-        public BaseException(string message, bool rethrow = false, bool shouldLog = true) : base(message)
+        public BaseException(string message, Exception innerException) : base(message, innerException)
         {
-            Rethrow = rethrow;
-            ShouldLog = shouldLog;
         }
 
-        public BaseException(string message, Exception innerException, bool rethrow = false, bool shouldLog = true) : base(message, innerException)
-        {
-            Rethrow = rethrow;
-            ShouldLog = shouldLog;
-        }
+        //    //private static string BaseExceptionMessage()
+        //    //{
+        //    //    //var contacto = "MAIL";
 
-    }
+        //    //    //var mensaje = string.Format(ErrorCode.ToString(), contacto);
 
-    public abstract class BaseException<TCode> : BaseException
-        where TCode : Enum
-    {
-        public TCode ErrorCode { get; private set; }
-
-        public string ErrorMessage { get { return ErrorCode.ToString() + " - " + Message; } }
-
-        public BaseException(TCode code) : base()
-        {
-            if (code.Equals(default(TCode))) throw new ArgumentException(nameof(code));
-
-            ErrorCode = code;
-        }
-
-        public BaseException(TCode code, bool rethrow = false, bool shouldLog = true) : base()
-        {
-            if (code.Equals(default(TCode))) throw new ArgumentException(nameof(code));
-
-            ErrorCode = code;
-            Rethrow = rethrow;
-            ShouldLog = shouldLog;
-        }
-
-        public BaseException(TCode code, string message, bool rethrow = false, bool shouldLog = true)
-            : base(message, rethrow, shouldLog)
-        {
-            if (code.Equals(default(TCode))) throw new ArgumentException(nameof(code));
-
-            ErrorCode = code;
-        }
-
-        public BaseException(TCode code, string message, Exception innerException, bool rethrow = false, bool shouldLog = true)
-            : base(message, innerException, rethrow, shouldLog)
-        {
-            if (code.Equals(default(TCode))) throw new ArgumentException(nameof(code));
-
-            ErrorCode = code;
-        }
+        //    //    //return mensaje;
+        //    //}
+        //}
     }
 }

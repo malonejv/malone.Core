@@ -1,55 +1,67 @@
-﻿using malone.Core.Commons.DI;
-using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Exceptions.Manager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Filters;
+using malone.Core.Commons.DI;
+using malone.Core.Commons.Exceptions;
+using malone.Core.Commons.Localization;
 
 namespace malone.Core.WebApi.Attributes
 {
     public class HandleExceptionFilterAttribute : ExceptionFilterAttribute
     {
-        private ICoreMessageHandler CoreMessageHandler { get; set; }
+        private IContentLocalizationHandler ContentLocalizationHandler { get; set; }
+        private IErrorLocalizationHandler ErrorLocalizationHandler { get; set; }
 
         public HandleExceptionFilterAttribute()
         {
 
-            CoreMessageHandler = ServiceLocator.Current.Get<ICoreMessageHandler>();
+            ContentLocalizationHandler = ServiceLocator.Current.Get<IContentLocalizationHandler>();
+            ErrorLocalizationHandler = ServiceLocator.Current.Get<IErrorLocalizationHandler>();
         }
 
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
-            //var isFaultException = typeof(BaseException).IsAssignableFrom(actionExecutedContext.Exception.GetType());
-
-            //if (context.Exception is BaseException)
-            //{
-            //    context.Response = new HttpResponseMessage(HttpStatusCode.NotImplemented);
-            //}
             HttpStatusCode status = HttpStatusCode.InternalServerError;
             String message = String.Empty;
+            var ex = actionExecutedContext.Exception;
             var exceptionType = actionExecutedContext.Exception.GetType();
 
             //Is BaseException
-            if (typeof(BaseException).IsAssignableFrom(actionExecutedContext.Exception.GetType()))
+            if (typeof(BaseException).IsAssignableFrom(exceptionType))
             {
-                //TODO: DEFINIR UN MÉTODO PARA CONFIGURAR QUE ERRORES SE PUEDEN MOSTRAR AL USUARIO Y CUALES NO
-                message = CoreMessageHandler.GetMessage(CoreErrors.TECH1);
+                var baseEx = ex as BaseException;
+
+                string supportText = ContentLocalizationHandler.GetString(CoreContents.Logging_SupportId);
+                var supporId = baseEx?.Data[BaseException.SUPPORT_ID]?.ToString();
+
+                message = ErrorLocalizationHandler.GetString(CoreErrors.TECH200, supportText, supporId);
+                status = HttpStatusCode.BadRequest;
+            }
+            else if (exceptionType == typeof(BusinessValidationException))
+            {
+                var bvEx = ex as BusinessValidationException;
+                StringBuilder sbMessage = new StringBuilder();
+
+                foreach (var val in bvEx.Results)
+                {
+                    sbMessage.AppendLine(val.Message);
+                }
+
+                message = sbMessage.ToString();
                 status = HttpStatusCode.BadRequest;
             }
             else if (exceptionType == typeof(UnauthorizedAccessException))
             {
-                message = CoreMessageHandler.GetMessage(CoreErrors.SERVICE300);
+                message = ErrorLocalizationHandler.GetString(CoreErrors.SERVICE300);
                 status = HttpStatusCode.Unauthorized;
             }
             else
             {
-                message = CoreMessageHandler.GetMessage(CoreErrors.TECH2);
+                message = ErrorLocalizationHandler.GetString(CoreErrors.TECH201);
                 status = HttpStatusCode.BadRequest;
             }
 
@@ -64,26 +76,44 @@ namespace malone.Core.WebApi.Attributes
 
         public override Task OnExceptionAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
         {
-            HttpStatusCode status = HttpStatusCode.BadRequest;
+            HttpStatusCode status = HttpStatusCode.InternalServerError;
             String message = String.Empty;
+            var ex = actionExecutedContext.Exception;
             var exceptionType = actionExecutedContext.Exception.GetType();
 
             //Is BaseException
-            if (typeof(BaseException).IsAssignableFrom(actionExecutedContext.Exception.GetType()))
+            if (typeof(BaseException).IsAssignableFrom(exceptionType))
             {
-                //TODO: DEFINIR UN MÉTODO PARA CONFIGURAR QUE ERRORES SE PUEDEN MOSTRAR AL USUARIO Y CUALES NO
-                message = CoreMessageHandler.GetMessage(CoreErrors.TECH1);
+                var baseEx = ex as BaseException;
+
+                string supportText = ContentLocalizationHandler.GetString(CoreContents.Logging_SupportId);
+                var supporId = baseEx?.Data[BaseException.SUPPORT_ID]?.ToString();
+
+                message = ErrorLocalizationHandler.GetString(CoreErrors.TECH200, supportText, supporId);
+                status = HttpStatusCode.BadRequest;
+            }
+            else if (exceptionType == typeof(BusinessValidationException))
+            {
+                var bvEx = ex as BusinessValidationException;
+                StringBuilder sbMessage = new StringBuilder();
+
+                foreach (var val in bvEx.Results)
+                {
+                    sbMessage.AppendLine(val.Message);
+                }
+
+                message = sbMessage.ToString();
                 status = HttpStatusCode.BadRequest;
             }
             else if (exceptionType == typeof(UnauthorizedAccessException))
             {
-                message = CoreMessageHandler.GetMessage(CoreErrors.SERVICE300);
+                message = ErrorLocalizationHandler.GetString(CoreErrors.SERVICE300);
                 status = HttpStatusCode.Unauthorized;
             }
             else
             {
-                message = CoreMessageHandler.GetMessage(CoreErrors.TECH2);
-                status = HttpStatusCode.NotFound;
+                message = ErrorLocalizationHandler.GetString(CoreErrors.TECH201);
+                status = HttpStatusCode.BadRequest;
             }
 
             actionExecutedContext.Response = new HttpResponseMessage()

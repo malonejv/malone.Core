@@ -1,6 +1,6 @@
 ﻿using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Exceptions.Handler;
+using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.DataAccess.UnitOfWork;
 using malone.Core.EF.Entities.Filters;
@@ -23,14 +23,9 @@ namespace malone.Core.EF.Repositories.Implementations
 
         protected IUnitOfWork UnitOfWork { get; }
 
-        private readonly ICoreExceptionHandler CoreExceptionHandler;
+        protected ILogger Logger { get; set; }
 
-        internal ICoreExceptionHandler GetEFExceptionHandler()
-        {
-            return CoreExceptionHandler;
-        }
-
-        public EFRepository(IUnitOfWork unitOfWork)
+        public EFRepository(IUnitOfWork unitOfWork, ILogger logger)
         {
             if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
 
@@ -38,7 +33,7 @@ namespace malone.Core.EF.Repositories.Implementations
             _context = UnitOfWork.Context as DbContext;
             _dbSet = _context.Set<TEntity>();
 
-            CoreExceptionHandler = ServiceLocator.Current.Get<ICoreExceptionHandler>();
+            Logger = logger;
         }
 
         protected IQueryable<TEntity> Get(
@@ -78,9 +73,11 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-            return null;
         }
 
         public virtual IEnumerable<TEntity> Get<TFilter>(
@@ -111,9 +108,12 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-            return null;
         }
 
         public virtual IEnumerable<TEntity> GetAll(
@@ -132,9 +132,11 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-            return null;
         }
 
         public virtual TEntity GetById(
@@ -152,9 +154,11 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS601, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS601, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-            return null;
         }
 
         public virtual TEntity GetEntity<TFilter>(
@@ -185,9 +189,11 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS601, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS601, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-            return null;
         }
 
         public virtual void Insert(TEntity entity)
@@ -198,7 +204,10 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS602, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS602, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
         }
 
@@ -213,7 +222,10 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
         }
 
@@ -226,7 +238,10 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS603, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS603, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
         }
 
@@ -242,27 +257,24 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS603, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS603, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
         }
 
     }
 
 
-    public class EFRepository<TEntity> : 
-        EFRepository<int, TEntity>, 
+    public class EFRepository<TEntity> :
+        EFRepository<int, TEntity>,
         IRepository<TEntity>
         where TEntity : class, IBaseEntity
     {
-
-        //public EFRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
-        //{
-        //}
-
-        public EFRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public EFRepository(IUnitOfWork unitOfWork, ILogger logger) : base(unitOfWork, logger)
         {
         }
-
     }
 
 }

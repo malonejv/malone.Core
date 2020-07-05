@@ -11,7 +11,7 @@ namespace malone.Core.Commons.Exceptions
     /// <summary>
     /// Encapsulates funcional validation exceptions in Business Layer
     /// </summary>
-    public class BusinessValidationException : BaseException
+    public class BusinessValidationException : Exception
     {
         public ValidationResultList Results { get; private set; }
 
@@ -33,22 +33,12 @@ namespace malone.Core.Commons.Exceptions
             }
         }
 
-
-        public BusinessValidationException()
-            : base() { }
-
-        public BusinessValidationException(string message, bool rethrow = false, bool shouldLog = true)
-            : base(message, rethrow, shouldLog) { }
-
-        public BusinessValidationException(string message, Exception innerException, bool rethrow = false, bool shouldLog = true)
-            : base(message, innerException, rethrow, shouldLog) { }
-
-
-        public BusinessValidationException(ValidationResultList results, bool rethrow = false, bool shouldLog = true, bool hideErrorCode = false)
-            :base(rethrow,shouldLog)
+        public BusinessValidationException(ValidationResultList results)
+            :base()
         {
             Results = results;
-            HideErrorCodes = hideErrorCode;
+            //TODO: Configurar desde web.config
+            HideErrorCodes = false;
         }
     }
 

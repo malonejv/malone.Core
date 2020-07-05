@@ -10,10 +10,8 @@ namespace malone.Core.Commons.Exceptions.Handler
     public interface IExceptionHandler<TErrorCoder>
         where TErrorCoder : Enum
     {
-        void HandleException<TException>(TErrorCoder errorCode, params object[] args) where TException : BaseException<TErrorCoder>;
+        void HandleException(Exception ex);
 
-        void HandleException<TException>(Exception ex, TErrorCoder errorCode, params object[] args) where TException : BaseException<TErrorCoder>;
-
-        void HandleException<TValidation>(ValidationResultList validationResult) where TValidation : BusinessValidationException;
+        void HandleException(Exception ex, TErrorCoder errorCode, params object[] args);
     }
 }

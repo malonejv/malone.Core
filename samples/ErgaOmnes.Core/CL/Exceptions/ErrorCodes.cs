@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ErgaOmnes.Core.CL.Exceptions
 {
-    public enum ErrorCodes
+    public enum ErrorCode
     {
 
         #region Technical Errors 1000 - 2999

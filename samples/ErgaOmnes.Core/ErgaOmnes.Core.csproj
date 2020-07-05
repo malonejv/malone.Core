@@ -129,11 +129,21 @@
     <Compile Include="BL\EjemploBV.cs" />
     <Compile Include="BL\IEjemploBV.cs" />
     <Compile Include="CL\Exceptions\ErrorCodes.cs" />
+    <Compile Include="CL\Localization\ContentCodes.cs" />
+    <Compile Include="CL\Exceptions\ErrorLocalizationHandler.cs" />
     <Compile Include="CL\Exceptions\Exceptions.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.resx</DependentUpon>
     </Compile>
+    <Compile Include="CL\Exceptions\IErrorLocalizationHandler.cs" />
+    <Compile Include="CL\Localization\ContentLocalizationHandler.cs" />
+    <Compile Include="CL\Localization\Contents.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Contents.resx</DependentUpon>
+    </Compile>
+    <Compile Include="CL\Localization\IContentLocalizationHandler.cs" />
     <Compile Include="DAL\Context\ErgaOmnesContext.cs" />
     <Compile Include="DAL\Mappings\EjemploMapping.cs" />
     <Compile Include="DAL\Migrations\202005281754271_Initial.cs" />
@@ -163,6 +173,10 @@
     <EmbeddedResource Include="CL\Exceptions\Exceptions.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CL\Localization\Contents.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Contents.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="DAL\Migrations\202005281754271_Initial.resx">
       <DependentUpon>202005281754271_Initial.cs</DependentUpon>
