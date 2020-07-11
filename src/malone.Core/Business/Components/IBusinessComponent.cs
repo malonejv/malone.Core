@@ -47,11 +47,9 @@ namespace malone.Core.Business.Components
 
         void Add(TEntity entity);
 
-        void Delete(TEntity entity);
-
-        void Update(TEntity entity);
-
         void Update(TKey id, TEntity entity);
+
+        void Delete(TKey id);
 
         #endregion
 

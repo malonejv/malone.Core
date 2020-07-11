@@ -33,7 +33,7 @@ namespace ErgaOmnes.Core.BL
 
                 base.Add(entity);
             }
-            catch (BusinessValidationException) { throw; }
+            catch (BusinessRulesValidationException) { throw; }
             catch (TechnicalException) { throw; }
             catch (Exception ex)
             {

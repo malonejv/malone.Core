@@ -211,34 +211,17 @@ namespace malone.Core.EF.Repositories.Implementations
             }
         }
 
-        public virtual void Update(TEntity entityToUpdate)
+        public virtual void Update(TEntity oldValues,TEntity newValues)
         {
             try
             {
-                var old = GetById(entityToUpdate.Id);
-                _context.Entry(old).State = EntityState.Detached;
+                _context.Entry(oldValues).State = EntityState.Detached;
 
-                _context.Entry(entityToUpdate).State = EntityState.Modified;
+                _context.Entry(newValues).State = EntityState.Modified;
             }
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
-                if (Logger != null) Logger.Error(techEx);
-
-                throw techEx;
-            }
-        }
-
-        public virtual void Delete(TKey id)
-        {
-            try
-            {
-                TEntity entityToDelete = _dbSet.Find(id);
-                Delete(entityToDelete);
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS603, typeof(TEntity));
                 if (Logger != null) Logger.Error(techEx);
 
                 throw techEx;

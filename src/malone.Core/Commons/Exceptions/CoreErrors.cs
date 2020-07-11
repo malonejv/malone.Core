@@ -93,6 +93,11 @@ namespace malone.Core.Commons.Exceptions
 
         #region Business Validations Errors 500 - 599
 
+        /// <summary>
+        /// La consulta para obtener una entidad de tipo {0}, por id {1} no devolvió resultados.
+        /// </summary>
+        BUSVAL500 = 500,
+
         #endregion
 
         #region Data Access Errors 600 - 699

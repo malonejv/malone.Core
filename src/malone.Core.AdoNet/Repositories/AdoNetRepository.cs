@@ -265,11 +265,9 @@ namespace malone.Core.AdoNet.Repositories
 
         protected abstract KeyValuePair<CommandType, string> ConfigureUpdateCommandText();
 
-        public virtual void Update(TEntity entityToUpdate) { }
+        public virtual void Update(TEntity oldValues, TEntity newValues) { }
 
         protected abstract KeyValuePair<CommandType, string> ConfigureDeleteCommandText();
-
-        public virtual void Delete(TKey id) { }
 
         public virtual void Delete(TEntity entityToDelete) { }
 

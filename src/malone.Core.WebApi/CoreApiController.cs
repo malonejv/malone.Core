@@ -78,15 +78,8 @@ namespace malone.Core.WebApi
         // PUT api/entity/5
         public virtual IHttpActionResult Put(TKey id, [FromBody] TEntity entity)
         {
-            var entityFound = BusinessComponent.GetById(id);
-
-            if (entityFound != null)
-            {
-                BusinessComponent.Update(entity);
-                return Ok();
-            }
-            else
-                return NotFound();
+            BusinessComponent.Update(id, entity);
+            return Ok();
         }
 
         #endregion
@@ -96,15 +89,8 @@ namespace malone.Core.WebApi
         // DELETE api/entity/5
         public virtual IHttpActionResult Delete(TKey id)
         {
-            var entityFound = BusinessComponent.GetById(id);
-
-            if (entityFound != null)
-            {
-                BusinessComponent.Delete(entityFound);
-                return Ok();
-            }
-            else
-                return NotFound();
+            BusinessComponent.Delete(id);
+            return Ok();
         }
 
         #endregion

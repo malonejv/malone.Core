@@ -31,19 +31,9 @@ namespace malone.Core.WebApi.Attributes
             var exceptionType = actionExecutedContext.Exception.GetType();
 
             //Is BaseException
-            if (typeof(BaseException).IsAssignableFrom(exceptionType))
+            if (exceptionType == typeof(BusinessRulesValidationException))
             {
-                var baseEx = ex as BaseException;
-
-                string supportText = ContentLocalizationHandler.GetString(CoreContents.Logging_SupportId);
-                var supporId = baseEx?.Data[BaseException.SUPPORT_ID]?.ToString();
-
-                message = ErrorLocalizationHandler.GetString(CoreErrors.TECH200, supportText, supporId);
-                status = HttpStatusCode.BadRequest;
-            }
-            else if (exceptionType == typeof(BusinessValidationException))
-            {
-                var bvEx = ex as BusinessValidationException;
+                var bvEx = ex as BusinessRulesValidationException;
                 StringBuilder sbMessage = new StringBuilder();
 
                 foreach (var val in bvEx.Results)
@@ -52,6 +42,30 @@ namespace malone.Core.WebApi.Attributes
                 }
 
                 message = sbMessage.ToString();
+                status = HttpStatusCode.BadRequest;
+            }
+            else if (exceptionType == typeof(EntityNotFoundException))
+            {
+                var notFoundEx = ex as EntityNotFoundException;
+
+                message = notFoundEx.Message;
+                status = HttpStatusCode.NotFound;
+            }
+            else if (exceptionType == typeof(BusinessValidationException))
+            {
+                var bvEx = ex as BusinessValidationException;
+
+                message = bvEx.Message;
+                status = HttpStatusCode.BadRequest;
+            }
+            else if (typeof(BaseException).IsAssignableFrom(exceptionType))
+            {
+                var baseEx = ex as BaseException;
+
+                string supportText = ContentLocalizationHandler.GetString(CoreContents.Logging_SupportId);
+                var supporId = baseEx?.Data[BaseException.SUPPORT_ID]?.ToString();
+
+                message = ErrorLocalizationHandler.GetString(CoreErrors.TECH200, supportText, supporId);
                 status = HttpStatusCode.BadRequest;
             }
             else if (exceptionType == typeof(UnauthorizedAccessException))
@@ -92,9 +106,9 @@ namespace malone.Core.WebApi.Attributes
                 message = ErrorLocalizationHandler.GetString(CoreErrors.TECH200, supportText, supporId);
                 status = HttpStatusCode.BadRequest;
             }
-            else if (exceptionType == typeof(BusinessValidationException))
+            else if (exceptionType == typeof(BusinessRulesValidationException))
             {
-                var bvEx = ex as BusinessValidationException;
+                var bvEx = ex as BusinessRulesValidationException;
                 StringBuilder sbMessage = new StringBuilder();
 
                 foreach (var val in bvEx.Results)

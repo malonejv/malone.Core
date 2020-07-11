@@ -128,6 +128,8 @@
     <Compile Include="Commons\Configurations\Modules\ModuleElement.cs" />
     <Compile Include="Commons\Configurations\Modules\ModulesElementCollection.cs" />
     <Compile Include="Commons\Exceptions\BaseException.cs" />
+    <Compile Include="Commons\Exceptions\BusinessValidationException.cs" />
+    <Compile Include="Commons\Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Commons\Exceptions\ErrorLocalizationHandler.cs" />
     <Compile Include="Commons\Exceptions\CoreExceptionFactory.cs" />
     <Compile Include="Commons\Exceptions\ExceptionFactory.cs" />
@@ -141,7 +143,7 @@
     <Compile Include="Commons\Initializers\IInitializer.cs" />
     <Compile Include="Commons\Initializers\IInjectorInitializer.cs" />
     <Compile Include="Commons\DI\ServiceLocator.cs" />
-    <Compile Include="Commons\Exceptions\BusinessValidationException.cs" />
+    <Compile Include="Commons\Exceptions\BusinessRulesValidationException.cs" />
     <Compile Include="Commons\Exceptions\CoreErrors.cs" />
     <Compile Include="Commons\Localization\LocalizationHandler.cs" />
     <Compile Include="Commons\Localization\ILocalizationHandler.cs" />

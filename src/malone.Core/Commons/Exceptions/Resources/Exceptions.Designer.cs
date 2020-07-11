@@ -124,6 +124,15 @@ namespace malone.Core.Commons.Exceptions.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to La consulta para obtener una entidad de tipo {0}, por id {1} no devolvió resultados..
+        /// </summary>
+        internal static string BUSVAL500 {
+            get {
+                return ResourceManager.GetString("BUSVAL500", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ocurrió un error al tratar de obtener el nombre de seccion del tipo {0}.
         /// </summary>
         internal static string CONF1 {

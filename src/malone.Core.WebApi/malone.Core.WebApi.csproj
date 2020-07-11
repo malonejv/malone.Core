@@ -68,6 +68,7 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Attributes\BasicAuthenticationAttribute.cs" />
+    <Compile Include="Attributes\ValidateModelAttribute.cs" />
     <Compile Include="CoreApiController.cs" />
     <Compile Include="Attributes\HandleExceptionFilterAttribute.cs" />
     <Compile Include="Attributes\RequireHttpsAttribute.cs" />
