@@ -1,15 +1,13 @@
-﻿using AutoMapper;
-using ErgaOmnes.Core.BL;
-using ErgaOmnes.Core.EL.Model;
-using ErgaOmnes.Core.EL.ViewModel;
-using malone.Core.WebApi;
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using AutoMapper;
+using ErgaOmnes.Core.BL;
+using ErgaOmnes.Core.EL.Model;
+using ErgaOmnes.Core.EL.RequestParams;
+using ErgaOmnes.Core.EL.ViewModel;
+using malone.Core.EF.Entities.Filters;
+using malone.Core.WebApi;
 
 namespace ErgaOmnes.Api.Controllers
 {
@@ -20,19 +18,28 @@ namespace ErgaOmnes.Api.Controllers
         {
         }
 
-        protected override IEnumerable GetAll()
-        {
-            var list = base.GetAll().Cast<Ejemplo>();
 
-            var mappedList = Mapper.Map<IEnumerable<Ejemplo>, IEnumerable<EjemploViewModel>>(list);
+        protected override IEnumerable GetFiltered(IGetRequestParam<Ejemplo> parameters)
+        {
+            var ejemploParams = parameters as EjemploGetRequestParams;
+            var list = BusinessComponent.Get(new FilterExpression<Ejemplo>()
+            {
+                Expression = (x => x.Text.Contains(ejemploParams.Text))
+            });
+
+            return list;
+        }
+
+        protected override IEnumerable AsViewModelList(IEnumerable list)
+        {
+            var castedList = list.Cast<Ejemplo>();
+            var mappedList = Mapper.Map<IEnumerable<Ejemplo>, IEnumerable<EjemploViewModel>>(castedList);
 
             return mappedList.ToList();
         }
 
-        protected override object GetById(int id)
+        protected override object AsViewModel(Ejemplo entity)
         {
-            var entity = base.GetById(id) as Ejemplo;
-
             var mappedEntity = Mapper.Map<Ejemplo, EjemploViewModel>(entity);
 
             return mappedEntity;

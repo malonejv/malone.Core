@@ -80,42 +80,6 @@ namespace malone.Core.EF.Repositories.Implementations
             }
         }
 
-        public virtual IEnumerable<TEntity> Get<TFilter>(
-           TFilter filter = default(TFilter),
-           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-           bool includeDeleted = false,
-           string includeProperties = "")
-            where TFilter : class, IFilterExpression
-        {
-            try
-            {
-                IQueryable<TEntity> query = _dbSet;
-
-                Expression<Func<TEntity, bool>> filterExp = null;
-                if (filter != null)
-                {
-                    filterExp = (filter as IFilterExpressionEF<TEntity>).Expression;
-                }
-
-                if (filterExp != null)
-                {
-                    query = query.Where(filterExp);
-                }
-
-                query = Get(query, orderBy, includeDeleted, includeProperties);
-
-                return query.ToList();
-            }
-            catch (Exception ex)
-            {
-
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
-                if (Logger != null) Logger.Error(techEx);
-
-                throw techEx;
-            }
-        }
-
         public virtual IEnumerable<TEntity> GetAll(
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             bool includeDeleted = false,
@@ -132,6 +96,43 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
+            }
+        }
+
+        public virtual IEnumerable<TEntity> Get<TFilter>(
+           TFilter filter = default(TFilter),
+           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+           bool includeDeleted = false,
+           string includeProperties = "")
+            where TFilter : class, IFilterExpression
+        {
+            try
+            {
+                IQueryable<TEntity> query = _dbSet;
+
+                Expression<Func<TEntity, bool>> filterExp = null;
+                if (filter != null)
+                {
+                    var filterEF = (filter as IFilterExpressionEF<TEntity>);
+                    filterExp = filterEF?.Expression;
+                }
+
+                if (filterExp != null)
+                {
+                    query = query.Where(filterExp);
+                }
+
+                query = Get(query, orderBy, includeDeleted, includeProperties);
+
+                return query.ToList();
+            }
+            catch (Exception ex)
+            {
+
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
                 if (Logger != null) Logger.Error(techEx);
 

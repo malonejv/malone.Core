@@ -240,5 +240,14 @@ namespace malone.Core.Commons.Exceptions.Resources {
                 return ResourceManager.GetString("TECH201", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El método {0} de la clase {1} no se encuentra implementado..
+        /// </summary>
+        internal static string TECH202 {
+            get {
+                return ResourceManager.GetString("TECH202", resourceCulture);
+            }
+        }
     }
 }

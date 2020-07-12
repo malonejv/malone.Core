@@ -178,4 +178,7 @@
   <data name="TECH201" xml:space="preserve">
     <value>Se produjo un error inesperado.</value>
   </data>
+  <data name="TECH202" xml:space="preserve">
+    <value>El método {0} de la clase {1} no se encuentra implementado.</value>
+  </data>
 </root>

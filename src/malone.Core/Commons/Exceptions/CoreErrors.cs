@@ -37,6 +37,11 @@ namespace malone.Core.Commons.Exceptions
         /// </summary>
         TECH201 = 201,
 
+        /// <summary>
+        /// El método {0} de la clase {1} no se encuentra implementado.
+        /// </summary>
+        TECH202 = 202,
+
         ///// <summary>
         ///// No se encontró un mensaje en el recurso para {0}.{1}.
         ///// </summary>

@@ -38,16 +38,15 @@ namespace malone.Core.Business.Components
 
         #region CRUD
 
-        public virtual IEnumerable<TEntity> Get<TFilter>(
-        TFilter filter = default(TFilter),
-        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-        bool includeDeleted = false,
-        string includeProperties = "")
-         where TFilter : class, IFilterExpression
+        public virtual IEnumerable<TEntity> GetAll(
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            bool includeDeleted = false,
+            string includeProperties = ""
+        )
         {
             try
             {
-                var result = Repository.Get(filter, orderBy, includeDeleted, includeProperties);
+                var result = Repository.GetAll(orderBy, includeDeleted, includeProperties);
 
                 return result;
             }
@@ -61,15 +60,16 @@ namespace malone.Core.Business.Components
             }
         }
 
-        public virtual IEnumerable<TEntity> GetAll(
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            bool includeDeleted = false,
-            string includeProperties = ""
-        )
+        public virtual IEnumerable<TEntity> Get<TFilter>(
+        TFilter filter = default(TFilter),
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+        bool includeDeleted = false,
+        string includeProperties = "")
+         where TFilter : class, IFilterExpression
         {
             try
             {
-                var result = Repository.GetAll(orderBy, includeDeleted, includeProperties);
+                var result = Repository.Get(filter, orderBy, includeDeleted, includeProperties);
 
                 return result;
             }

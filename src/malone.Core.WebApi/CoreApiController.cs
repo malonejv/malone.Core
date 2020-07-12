@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using malone.Core.Business.Components;
+using malone.Core.Commons.Exceptions;
 using malone.Core.Entities.Model;
 using System;
 using System.Collections;
@@ -27,16 +28,45 @@ namespace malone.Core.WebApi
         }
 
         #region GET (GetAll)
+
         // GET api/entity
-        public virtual IHttpActionResult Get()
+        public virtual IHttpActionResult Get([FromBody] IGetRequestParam<TKey, TEntity> parameters = null)
         {
-            var list = GetAll();
+            IEnumerable list = GetList(parameters);
+
             return Ok(list);
         }
+
+        protected virtual IEnumerable GetList(IGetRequestParam<TKey, TEntity> parameters = null)
+        {
+            IEnumerable list = null;
+
+            if (parameters == null)
+            {
+                list = GetAll();
+            }
+            else
+            {
+                list = GetFiltered(parameters);
+            }
+            return AsViewModelList(list);
+        }
+
         protected virtual IEnumerable GetAll()
         {
             return BusinessComponent.GetAll();
         }
+
+        protected virtual IEnumerable GetFiltered(IGetRequestParam<TKey, TEntity> parameters)
+        {
+            throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.TECH202, "GetFiltered", this.GetType().Name);
+        }
+
+        protected virtual IEnumerable AsViewModelList(IEnumerable list)
+        {
+            return list;
+        }
+
         #endregion
 
         #region GET (GetById)
@@ -54,7 +84,13 @@ namespace malone.Core.WebApi
 
         protected virtual object GetById(TKey id)
         {
-            return BusinessComponent.GetById(id);
+            TEntity entity= BusinessComponent.GetById(id);
+            return AsViewModel(entity);
+        }
+
+        protected virtual object AsViewModel(TEntity entity)
+        {
+            return entity;
         }
 
         #endregion
@@ -105,5 +141,26 @@ namespace malone.Core.WebApi
         public CoreApiController(TBusinessComponent businessComponent, IMapper mapperInstance) : base(businessComponent, mapperInstance)
         {
         }
+
+        #region GET (GetAll)
+
+        // GET api/entity
+        public virtual IHttpActionResult Get([FromBody] IGetRequestParam<TEntity> parameters = null)
+        {
+            var list = GetList(parameters);
+            return Ok(list);
+        }
+
+        protected virtual IEnumerable GetList(IGetRequestParam<TEntity> parameters = null)
+        {
+           return base.GetList(parameters);
+        }
+
+        protected virtual IEnumerable GetFiltered(IGetRequestParam<TEntity> parameters)
+        {
+            throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.TECH202, "GetFiltered", this.GetType().Name);
+        }
+
+        #endregion
     }
 }

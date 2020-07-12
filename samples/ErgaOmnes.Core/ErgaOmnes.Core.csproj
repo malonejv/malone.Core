@@ -153,6 +153,7 @@
     <Compile Include="DAL\Migrations\Configuration.cs" />
     <Compile Include="EL\Model\Ejemplo.cs" />
     <Compile Include="EL\Profiles\EjemploViewModelProfile.cs" />
+    <Compile Include="EL\RequestParams\EjemploGetRequestParams.cs" />
     <Compile Include="EL\ViewModel\EjemploViewModel.cs" />
     <Compile Include="Initializers\BLInitializer.cs" />
     <Compile Include="Initializers\CLInitializer.cs" />
@@ -166,9 +167,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EL\Filters\Ejemplo\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="CL\Exceptions\Exceptions.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -194,6 +193,10 @@
     <ProjectReference Include="..\..\src\malone.Core.Identity\malone.Core.Identity.csproj">
       <Project>{0992B1B6-BE12-4B9F-9B15-4D1B03ECD306}</Project>
       <Name>malone.Core.Identity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\malone.Core.WebApi\malone.Core.WebApi.csproj">
+      <Project>{C0B7AE10-F8E3-4177-B937-F1787A7F0DF3}</Project>
+      <Name>malone.Core.WebApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\malone.Core\malone.Core.csproj">
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>

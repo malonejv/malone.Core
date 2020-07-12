@@ -178,4 +178,7 @@
   <data name="TECH201" xml:space="preserve">
     <value>An unexpected error has ocured.</value>
   </data>
+  <data name="TECH202" xml:space="preserve">
+    <value>Method {0} of class {1} is not implemented.</value>
+  </data>
 </root>

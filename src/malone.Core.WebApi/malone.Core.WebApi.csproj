@@ -72,6 +72,7 @@
     <Compile Include="CoreApiController.cs" />
     <Compile Include="Attributes\HandleExceptionFilterAttribute.cs" />
     <Compile Include="Attributes\RequireHttpsAttribute.cs" />
+    <Compile Include="IGetRequestParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

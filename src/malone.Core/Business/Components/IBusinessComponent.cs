@@ -20,18 +20,18 @@ namespace malone.Core.Business.Components
 
         #region CRUD
 
+        IEnumerable<TEntity> GetAll(
+           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+           bool includeDeleted = false,
+            string includeProperties = ""
+           );
+
         IEnumerable<TEntity> Get<TFilter>(
            TFilter filter = default(TFilter),
            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
            bool includeDeleted = false,
            string includeProperties = "")
             where TFilter : class, IFilterExpression;
-
-        IEnumerable<TEntity> GetAll(
-           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-           bool includeDeleted = false,
-            string includeProperties = ""
-           );
 
         TEntity GetById(
             TKey id,
