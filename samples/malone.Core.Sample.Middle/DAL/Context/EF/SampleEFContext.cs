@@ -46,6 +46,8 @@ namespace malone.Core.Sample.Middle.DAL.Context.EF
 
             return Instance;
         }
+
+        public System.Data.Entity.DbSet<malone.Core.Sample.Middle.EL.Model.TodoList> TodoLists { get; set; }
     }
 
     public class SampleContextFactory : IDbContextFactory<SampleEFContext>

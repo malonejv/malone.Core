@@ -20,10 +20,17 @@ namespace malone.Core.Sample.mvc
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap-datepicker.js",
+                      "~/Scripts/bootstrap-datepicker.es.min.js",
+                      "~/Scripts/bootstrap-switch.js",
+                      "~/Scripts/jquery.datepicker.js",
+                      "~/Scripts/jquery.switch.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-datepicker3.css",
+                      "~/Content/bootstrap-switch.css",
                       "~/Content/site.css"));
         }
     }
