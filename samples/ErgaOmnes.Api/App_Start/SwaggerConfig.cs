@@ -5,6 +5,9 @@ using Swashbuckle.Application;
 using System.Web.Http.Description;
 using Swashbuckle.Swagger;
 using System.Linq;
+using System.Reflection;
+using System.IO;
+using ErgaOmnes.Api.App_Start;
 
 //[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -14,22 +17,28 @@ namespace ErgaOmnes.Api
     {
         public static void Register()
         {
+            var config = GlobalConfiguration.Configuration;
             var thisAssembly = typeof(SwaggerConfig).Assembly;
 
             // add the versioned IApiExplorer and capture the strongly-typed implementation (e.g. VersionedApiExplorer vs IApiExplorer)
             // note: the specified format code will format the version as "'v'major[.minor][-status]"
-            var apiExplorer = GlobalConfiguration.Configuration.AddVersionedApiExplorer( options =>
-                                                                                        {
-                                                                                            options.GroupNameFormat = "'v'VVV";
+            var apiExplorer = config
+                                .AddVersionedApiExplorer( 
+                                        options =>
+                                            {
+                                                options.GroupNameFormat = "'v'VVV";
 
-                                                                                            // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
-                                                                                            // can also be used to control the format of the API version in route templates
-                                                                                            options.SubstituteApiVersionInUrl = true;
-                                                                                        });
+                                                // Note: this option is only necessary when versioning by url segment. 
+                                                //The SubstitutionFormat can also be used to control the format of the 
+                                                //API version in route templates
+                                                options.SubstituteApiVersionInUrl = true;
+                                            });
 
-            GlobalConfiguration.Configuration
-                .EnableSwagger(swagger =>
+            config.EnableSwagger(swagger =>
                     {
+                        swagger.DocumentFilter<SwaggerAuthenticationTokenOperation>();
+                        swagger.OperationFilter<SwaggerAuthorizationOperationFilter>();
+
                         // By default, the service root url is inferred from the request used to access the docs.
                         // However, there may be situations (e.g. proxy and load-balanced environments) where this does not
                         // resolve correctly. You can workaround this by providing your own code to determine the root URL.
@@ -71,10 +80,10 @@ namespace ErgaOmnes.Api
                                 }
 
                                 info.Version(group.Name, $"Sample API {group.ApiVersion}")
-                                    .Contact(c => c.Name("Bill Mei").Email("bill.mei@somewhere.com"))
-                                    .Description(description)
-                                    .License(l => l.Name("MIT").Url("https://opensource.org/licenses/MIT"))
-                                    .TermsOfService("Shareware");
+                                    .Contact(c => c.Name("Bill Mei").Email("malonejv@gmail.com"))
+                                    .Description(description);
+                                    //.License(l => l.Name("MIT").Url("https://opensource.org/licenses/MIT"))
+                                    //.TermsOfService("Shareware");
                             }
                         });
 
@@ -94,16 +103,16 @@ namespace ErgaOmnes.Api
                         //    .Name("apiKey")
                         //    .In("header");
                         //
-                        //swagger.OAuth2("oauth2")
-                        //    .Description("OAuth2 Implicit Grant")
-                        //    .Flow("implicit")
-                        //    .AuthorizationUrl("http://petstore.swagger.wordnik.com/api/oauth/dialog")
-                        //    //.TokenUrl("https://tempuri.org/token")
-                        //    .Scopes(scopes =>
-                        //    {
-                        //        scopes.Add("read", "Read access to protected resources");
-                        //        scopes.Add("write", "Write access to protected resources");
-                        //    });
+                        swagger.OAuth2("oauth2")
+                            .Description("OAuth2")
+                            .Flow("password")
+                            .AuthorizationUrl("http://localhost:1744/Login.html")
+                            .TokenUrl("http://localhost:1744/token")
+                            .Scopes(scopes =>
+                            {
+                                scopes.Add("read", "Read access to protected resources");
+                                scopes.Add("write", "Write access to protected resources");
+                            });
 
                         // Set this flag to omit descriptions for any actions decorated with the Obsolete attribute
                         //swagger.IgnoreObsoleteActions();
@@ -178,7 +187,7 @@ namespace ErgaOmnes.Api
                         // Operation filters.
                         //
                         // add a custom operation filter which sets default values
-                        swagger.OperationFilter<SwaggerDefaultValues>();
+                        //swagger.OperationFilter<SwaggerDefaultValues>();
 
                         //
                         // If you've defined an OAuth2 flow as described above, you could use a custom filter
@@ -224,6 +233,9 @@ namespace ErgaOmnes.Api
                         // "Logical Name" is passed to the method as shown above.
                         //
                         //swagger.InjectJavaScript(thisAssembly, "Swashbuckle.Dummy.SwaggerExtensions.testScript1.js");
+                        //var path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "bin", "malone.Core.WebApi.dll");
+                        //var customSwagger = Assembly.ReflectionOnlyLoadFrom(path);
+                        //swagger.InjectJavaScript(customSwagger, "malone.Core.WebApi.Resources.swaggerAuthentication.js");
 
                         // The swagger-ui renders boolean data types as a dropdown. By default, it provides "true" and "false"
                         // strings as the possible choices. You can use this option to change these to something else,
@@ -267,17 +279,18 @@ namespace ErgaOmnes.Api
                         // the Swagger 2.0 specification, you can enable UI support as shown below.
                         //
                         //swagger.EnableOAuth2Support(
-                        //    clientId: "test-client-id",
-                        //    clientSecret: null,
+                        //    clientId: "602355105978-b1pborbospeqt8vd4j5bnc50lb32n8pp.apps.googleusercontent.com",
+                        //    clientSecret: "iUnWoCASXx3TOsDFN3e0Q1Zc",
                         //    realm: "test-realm",
                         //    appName: "Swagger UI"
-                        //    //additionalQueryStringParams: new Dictionary<string, string>() { { "foo", "bar" } }
+                        ////additionalQueryStringParams: new Dictionary<string, string>() { { "foo", "bar" } }
                         //);
 
                         // If your API supports ApiKey, you can override the default values.
                         // "apiKeyIn" can either be "query" or "header"
                         //
                         //swagger.EnableApiKeySupport("apiKey", "header");
+
                     });
         }
     }
