@@ -13,7 +13,7 @@ using malone.Core.WebApi;
 namespace ErgaOmnes.Api.Controllers
 {
     //[Authorize]
-    [RoutePrefix("api/Ejemplo")]
+    //[RoutePrefix("api/Ejemplo")]
     public class EjemploController : CoreApiController<EjemploGetRequestParam, Ejemplo, IEjemploBC, IEjemploBV>
     {
         public EjemploController(IEjemploBC businessComponent, Mapper mapperInstance) : base(businessComponent, mapperInstance)
@@ -23,9 +23,9 @@ namespace ErgaOmnes.Api.Controllers
 
         //GET api/entity
         [HttpPost()]
-        //[Route("~/api/Ejemplo/FilterBy")]
-        [Route("FilterBy")]
-        public IHttpActionResult FilterBy([FromBody] EjemploGetRequestParam parameters = null)
+        [Route("~/api/Ejemplo/FilterBy")]
+        //[Route("FilterBy")]
+        public IHttpActionResult FilterBy([FromBody] EjemploGetRequestParam parameters)
         {
             IEnumerable list = GetList(parameters);
 
