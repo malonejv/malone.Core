@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
 using AutoMapper;
 using ErgaOmnes.Core.BL;
 using ErgaOmnes.Core.EL.Model;
@@ -12,16 +13,30 @@ using malone.Core.WebApi;
 namespace ErgaOmnes.Api.Controllers
 {
     //[Authorize]
-    public class EjemploController : CoreApiController<Ejemplo, IEjemploBC, IEjemploBV>
+    [RoutePrefix("api/Ejemplo")]
+    public class EjemploController : CoreApiController<EjemploGetRequestParam, Ejemplo, IEjemploBC, IEjemploBV>
     {
         public EjemploController(IEjemploBC businessComponent, Mapper mapperInstance) : base(businessComponent, mapperInstance)
         {
         }
 
 
-        protected override IEnumerable GetFiltered(IGetRequestParam<Ejemplo> parameters)
+        //GET api/entity
+        [HttpPost()]
+        //[Route("~/api/Ejemplo/FilterBy")]
+        [Route("FilterBy")]
+        public IHttpActionResult FilterBy([FromBody] EjemploGetRequestParam parameters = null)
         {
-            var ejemploParams = parameters as EjemploGetRequestParams;
+            IEnumerable list = GetList(parameters);
+
+            return Ok(list);
+        }
+
+
+
+        protected override IEnumerable GetFiltered(EjemploGetRequestParam parameters)
+        {
+            var ejemploParams = parameters as EjemploGetRequestParam;
             var list = BusinessComponent.Get(new FilterExpression<Ejemplo>()
             {
                 Expression = (x => x.Text.Contains(ejemploParams.Text))

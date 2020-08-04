@@ -12,8 +12,9 @@ using System.Web.Http;
 
 namespace malone.Core.WebApi
 {
-    public abstract class CoreApiController<TKey, TEntity, TBusinessComponent, TBusinessValidator> : ApiController
+    public abstract class CoreApiController<TKey, TParam, TEntity, TBusinessComponent, TBusinessValidator> : ApiController
         where TKey : IEquatable<TKey>
+        where TParam : class, IGetRequestParam
         where TEntity : class, IBaseEntity<TKey>
         where TBusinessValidator : IBusinessValidator<TKey, TEntity>
         where TBusinessComponent : IBusinessComponent<TKey, TEntity, TBusinessValidator>
@@ -30,14 +31,25 @@ namespace malone.Core.WebApi
         #region GET (GetAll)
 
         // GET api/entity
-        public virtual IHttpActionResult Get([FromBody] IGetRequestParam<TKey, TEntity> parameters = null)
+        //[HttpGet()]
+        //public virtual IHttpActionResult GetFilterBy([FromUri] IGetRequestParam parameters = null)
+        //{
+        //    IEnumerable list = GetList(parameters);
+
+        //    return Ok(list);
+        //}
+
+
+        // GET api/entity
+        public virtual IHttpActionResult Get()
         {
-            IEnumerable list = GetList(parameters);
+            IEnumerable list = GetList(null);
 
             return Ok(list);
         }
 
-        protected virtual IEnumerable GetList(IGetRequestParam<TKey, TEntity> parameters = null)
+
+        protected virtual IEnumerable GetList(TParam parameters = null)
         {
             IEnumerable list = null;
 
@@ -57,7 +69,7 @@ namespace malone.Core.WebApi
             return BusinessComponent.GetAll();
         }
 
-        protected virtual IEnumerable GetFiltered(IGetRequestParam<TKey, TEntity> parameters)
+        protected virtual IEnumerable GetFiltered(TParam parameters)
         {
             throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.TECH202, "GetFiltered", this.GetType().Name);
         }
@@ -84,7 +96,7 @@ namespace malone.Core.WebApi
 
         protected virtual object GetById(TKey id)
         {
-            TEntity entity= BusinessComponent.GetById(id);
+            TEntity entity = BusinessComponent.GetById(id);
             return AsViewModel(entity);
         }
 
@@ -132,8 +144,9 @@ namespace malone.Core.WebApi
         #endregion
     }
 
-    public abstract class CoreApiController<TEntity, TBusinessComponent, TBusinessValidator>
-        : CoreApiController<int, TEntity, TBusinessComponent, TBusinessValidator>
+    public abstract class CoreApiController<TParam, TEntity, TBusinessComponent, TBusinessValidator>
+        : CoreApiController<int, TParam, TEntity, TBusinessComponent, TBusinessValidator>
+       where TParam : class, IGetRequestParam
        where TEntity : class, IBaseEntity
        where TBusinessValidator : IBusinessValidator<TEntity>
        where TBusinessComponent : IBusinessComponent<TEntity, TBusinessValidator>
@@ -144,19 +157,18 @@ namespace malone.Core.WebApi
 
         #region GET (GetAll)
 
-        // GET api/entity
-        public virtual IHttpActionResult Get([FromBody] IGetRequestParam<TEntity> parameters = null)
+        //// GET api/entity
+        //public override IHttpActionResult GetFilterBy([FromUri] IGetRequestParam parameters = null)
+        //{
+        //    return base.GetFilterBy(parameters);
+        //}
+
+        protected override IEnumerable GetList(TParam parameters = null)
         {
-            var list = GetList(parameters);
-            return Ok(list);
+            return base.GetList(parameters);
         }
 
-        protected virtual IEnumerable GetList(IGetRequestParam<TEntity> parameters = null)
-        {
-           return base.GetList(parameters);
-        }
-
-        protected virtual IEnumerable GetFiltered(IGetRequestParam<TEntity> parameters)
+        protected override IEnumerable GetFiltered(TParam parameters)
         {
             throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.TECH202, "GetFiltered", this.GetType().Name);
         }

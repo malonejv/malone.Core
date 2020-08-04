@@ -8,7 +8,7 @@ using ErgaOmnes.Core.EL.Model;
 
 namespace ErgaOmnes.Core.EL.RequestParams
 {
-    public class EjemploGetRequestParams : IGetRequestParam<Ejemplo>
+    public class EjemploGetRequestParam : IGetRequestParam
     {
         public string Text { get; set; }
     }

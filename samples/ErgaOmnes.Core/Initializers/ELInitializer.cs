@@ -12,7 +12,7 @@ namespace ErgaOmnes.Core.Initializers
         {
             container.RegisterType<Ejemplo>();
 
-            container.RegisterType<IGetRequestParam<Ejemplo>, EjemploGetRequestParams>();
+            //container.RegisterType<IGetRequestParam<Ejemplo>, EjemploGetRequestParams>();
         }
     }
 }

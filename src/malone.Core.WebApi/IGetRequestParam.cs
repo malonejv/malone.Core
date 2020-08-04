@@ -7,13 +7,7 @@ using malone.Core.Entities.Model;
 
 namespace malone.Core.WebApi
 {
-    public interface IGetRequestParam<TKey, TEntity>
-        where TKey : IEquatable<TKey>
-        where TEntity : class, IBaseEntity<TKey>
-    {
-    }
-    public interface IGetRequestParam<TEntity> : IGetRequestParam<int, TEntity>
-        where TEntity : class, IBaseEntity<int>
+    public interface IGetRequestParam
     {
     }
 }

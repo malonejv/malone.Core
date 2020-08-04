@@ -206,7 +206,7 @@ namespace malone.Core.Business.Components
                     throw new BusinessRulesValidationException(validationResult);
 
                 var entityToDelete = this.GetById(id);
-                if (entityToDelete.Equals(default(TEntity)))
+                if (entityToDelete == default(TEntity))
                     throw CoreExceptionFactory.CreateException<EntityNotFoundException>(CoreErrors.BUSVAL500, typeof(TEntity), id);
 
                 if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
