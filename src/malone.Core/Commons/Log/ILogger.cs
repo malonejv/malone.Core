@@ -22,13 +22,13 @@ namespace malone.Core.Commons.Log
 
         void Debug(IFormatProvider provider, string format, params object[] args);
 
-        void Debug<TException>(TException exception) where TException : Exception;
+        void Debug(Exception exception);
 
-        void Debug<TException>(TException exception, string message) where TException : Exception;
+        void Debug(Exception exception, string message);
 
-        void Debug<TException>(TException exception, string format, params object[] args) where TException : Exception;
+        void Debug(Exception exception, string format, params object[] args);
 
-        void Debug<TException>(TException exception, string format, IFormatProvider provider, params object[] args) where TException : Exception;
+        void Debug(Exception exception, string format, IFormatProvider provider, params object[] args);
 
         #endregion
 
@@ -42,13 +42,13 @@ namespace malone.Core.Commons.Log
 
         void Info(IFormatProvider provider, string format, params object[] args);
 
-        void Info<TException>(TException exception) where TException : Exception;
+        void Info(Exception exception);
 
-        void Info<TException>(TException exception, string message) where TException : Exception;
+        void Info(Exception exception, string message);
 
-        void Info<TException>(TException exception, string format, params object[] args) where TException : Exception;
+        void Info(Exception exception, string format, params object[] args);
 
-        void Info<TException>(TException exception, string format, IFormatProvider provider, params object[] args) where TException : Exception;
+        void Info(Exception exception, string format, IFormatProvider provider, params object[] args);
 
         #endregion
 
@@ -62,13 +62,13 @@ namespace malone.Core.Commons.Log
 
         void Warn(IFormatProvider provider, string format, params object[] args);
 
-        void Warn<TException>(TException exception) where TException : Exception;
+        void Warn(Exception exception);
 
-        void Warn<TException>(TException exception, string message) where TException : Exception;
+        void Warn(Exception exception, string message);
 
-        void Warn<TException>(TException exception, string format, params object[] args) where TException : Exception;
+        void Warn(Exception exception, string format, params object[] args);
 
-        void Warn<TException>(TException exception, string format, IFormatProvider provider, params object[] args) where TException : Exception;
+        void Warn(Exception exception, string format, IFormatProvider provider, params object[] args);
 
         #endregion
 
@@ -82,13 +82,13 @@ namespace malone.Core.Commons.Log
 
         void Error(IFormatProvider provider, string format, params object[] args);
 
-        void Error<TException>(TException exception) where TException : Exception;
+        void Error(Exception exception);
 
-        void Error<TException>(TException exception, string message) where TException : Exception;
+        void Error(Exception exception, string message);
 
-        void Error<TException>(TException exception, string format, params object[] args) where TException : Exception;
+        void Error(Exception exception, string format, params object[] args);
 
-        void Error<TException>(TException exception, string format, IFormatProvider provider, params object[] args) where TException : Exception;
+        void Error(Exception exception, string format, IFormatProvider provider, params object[] args);
 
         #endregion
 
@@ -102,16 +102,16 @@ namespace malone.Core.Commons.Log
 
         void Fatal(IFormatProvider provider, string format, params object[] args);
 
-        void Fatal<TException>(TException exception) where TException : Exception;
+        void Fatal(Exception exception);
 
-        void Fatal<TException>(TException exception, string message) where TException : Exception;
+        void Fatal(Exception exception, string message);
 
-        void Fatal<TException>(TException exception, string format, params object[] args) where TException : Exception;
+        void Fatal(Exception exception, string format, params object[] args);
 
-        void Fatal<TException>(TException exception, string format, IFormatProvider provider, params object[] args) where TException : Exception;
+        void Fatal(Exception exception, string format, IFormatProvider provider, params object[] args);
 
         #endregion
 
-        void Log<TException>(LogItem<TException> item) where TException : Exception;
+        void Log(LogItem item);
     }
 }

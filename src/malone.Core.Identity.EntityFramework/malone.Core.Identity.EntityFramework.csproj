@@ -12,7 +12,7 @@
     <AssemblyName>malone.Core.Identity.EntityFramework</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <Deterministic>false</Deterministic>
     <PackageIcon>capibara.png</PackageIcon>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -144,10 +144,6 @@
   </Target>
   <PropertyGroup>
     <PostBuildEvent>
-      REM if $(ConfigurationName) == Release (
-      REM nuget pack "$(ProjectPath)" -Properties Configuration=Release -IncludeReferencedProjects
-      REM nuget push -SkipDuplicate -source "github"
-      REM )
       if $(ConfigurationName) == ReleaseNuget (
       nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects
       nuget push -SkipDuplicate -source "github"

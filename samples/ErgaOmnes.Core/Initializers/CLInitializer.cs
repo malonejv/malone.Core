@@ -1,6 +1,5 @@
 ﻿using ErgaOmnes.Core.CL.Exceptions;
-using malone.Core.Commons.Exceptions.Handler;
-using malone.Core.Commons.Exceptions.Manager;
+using ErgaOmnes.Core.CL.Localization;
 using malone.Core.Commons.Initializers;
 using Unity;
 
@@ -10,8 +9,8 @@ namespace ErgaOmnes.Core.Initializers
     {
         public void Initialize(IUnityContainer container)
         {
-            container.RegisterType<IMessageHandler<ErrorCodes>, MessageHandler<ErrorCodes>>();
-            container.RegisterType<IExceptionHandler<ErrorCodes>, ExceptionHandler<ErrorCodes>>();
+            container.RegisterType<IErrorLocalizationHandler, ErrorLocalizationHandler>();
+            container.RegisterType<IContentLocalizationHandler, ContentLocalizationHandler>();
 
 
         }

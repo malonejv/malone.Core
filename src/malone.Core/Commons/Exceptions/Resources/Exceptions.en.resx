@@ -138,6 +138,15 @@
   <data name="BUSINESS406" xml:space="preserve">
     <value>You must confirm the email first.</value>
   </data>
+  <data name="BUSVAL500" xml:space="preserve">
+    <value>The query to get an entity of type {0}, for id {1} returned no results.</value>
+  </data>
+  <data name="CONF1" xml:space="preserve">
+    <value>An error occurred while trying to get the section name of type {0}</value>
+  </data>
+  <data name="CONF2" xml:space="preserve">
+    <value>The section for type {0} is not configured.</value>
+  </data>
   <data name="DATAACCESS600" xml:space="preserve">
     <value>Failed to get an ordered list of type {0}.</value>
   </data>
@@ -153,16 +162,23 @@
   <data name="DATAACCESS604" xml:space="preserve">
     <value>Failed to update an entity of type {0}.</value>
   </data>
+  <data name="DATAACCESS605" xml:space="preserve">
+    <value>Error en la validación de CommandText {0}.</value>
+  </data>
   <data name="SERVAG700" xml:space="preserve">
     <value>An error occurred in the service call {0}.</value>
   </data>
   <data name="SERVICE300" xml:space="preserve">
     <value>Unauthorized user.</value>
   </data>
-  <data name="TECH1" xml:space="preserve">
-    <value>Sorry, something went wrong.</value>
+  <data name="TECH200" xml:space="preserve">
+    <value>Sorry, something went wrong.
+{0}: {1}</value>
   </data>
-  <data name="TECH2" xml:space="preserve">
+  <data name="TECH201" xml:space="preserve">
     <value>An unexpected error has ocured.</value>
+  </data>
+  <data name="TECH202" xml:space="preserve">
+    <value>Method {0} of class {1} is not implemented.</value>
   </data>
 </root>

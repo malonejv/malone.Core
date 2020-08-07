@@ -1,5 +1,7 @@
 ﻿using malone.Core.Commons.Configurations.Attributes;
+using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
+using malone.Core.Commons.Log;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,7 +13,20 @@ namespace malone.Core.Commons.Configurations
 {
     public static class ConfigurationExtensions
     {
-        public static string SectionName(this Type configurationType)
+        internal static ILogger logger;
+        internal static ILogger Logger
+        {
+            get
+            {
+                if (logger == null)
+                {
+                    logger = ServiceLocator.Current.Get<ILogger>();
+                }
+                return logger;
+            }
+        }
+
+        internal static string SectionName(this Type configurationType)
         {
             try
             {
@@ -22,17 +37,20 @@ namespace malone.Core.Commons.Configurations
                     SectionNameAttribute[] attribs = configurationType.GetCustomAttributes(typeof(SectionNameAttribute), false) as SectionNameAttribute[];
 
                     // Return the first if there was a match.
-                    return attribs.Length > 0 ? attribs[0].Name : null;
+                    return attribs?.Length > 0 ? attribs[0].Name : null;
                 }
                 else
                 {
                     return null;
                 }
             }
-            catch (Exception)
+            catch (TechnicalException) { throw; }
+            catch (Exception ex)
             {
-                //TODO: Mejorar especificación del error
-                throw new TechnicalException<CoreErrors>(CoreErrors.TECH1);
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.TECH200, configurationType.Name);
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
         }
     }

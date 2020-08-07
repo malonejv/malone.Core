@@ -9,19 +9,15 @@ namespace malone.Core.Commons.Exceptions
     /// <summary>
     /// Encapsulates general exceptions of Technical purpose
     /// </summary>
-    public class TechnicalException<TCode> : BaseException<TCode>
-                where TCode : Enum
+    public class TechnicalException : BaseException
     {
-        public TechnicalException(TCode code)
-            : base(code) { }
+        public TechnicalException()
+            : base() { }
 
-        public TechnicalException(TCode code, bool rethrow = false, bool shouldLog = true)
-            : base(code, rethrow, shouldLog) { }
+        public TechnicalException(string message)
+            : base(message) { }
 
-        public TechnicalException(TCode code, string message, bool rethrow = false, bool shouldLog = true)
-            : base(code, message, rethrow, shouldLog) { }
-
-        public TechnicalException(TCode code, string message, Exception innerException, bool rethrow = false, bool shouldLog = true)
-            : base(code, message, innerException, rethrow, shouldLog) { }
+        public TechnicalException(string message, Exception innerException)
+            : base(message, innerException) { }
     }
 }

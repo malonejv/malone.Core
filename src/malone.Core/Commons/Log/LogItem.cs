@@ -7,8 +7,7 @@ using System.Xml.Serialization;
 
 namespace malone.Core.Commons.Log
 {
-    public class LogItem<TException>
-        where TException : Exception
+    public class LogItem
     {
 
         #region properties
@@ -47,7 +46,7 @@ namespace malone.Core.Commons.Log
         /// Defaults to <c>null</c>.
         /// </summary>
         [XmlIgnore]
-        public TException Exception { get; set; }
+        public Exception Exception { get; set; }
 
         /// <summary>
         /// Event number or identifier. Defaults to null.
@@ -78,9 +77,9 @@ namespace malone.Core.Commons.Log
         /// Creates a new <see cref="LogItem"/> that is a copy of the current instance.
         /// </summary>
         /// <returns>A new <c>LogItem</c> that is a copy of the current instance.</returns>
-        public LogItem<TException> Clone()
+        public LogItem Clone()
         {
-            LogItem<TException> clone = new LogItem<TException>
+            LogItem clone = new LogItem
             {
                 Title = Title,
                 Message = Message,

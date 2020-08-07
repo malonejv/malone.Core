@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using malone.Core.Business.Components;
+using malone.Core.Commons.Exceptions;
 using malone.Core.Entities.Model;
 using System;
 using System.Collections;
@@ -11,70 +12,97 @@ using System.Web.Http;
 
 namespace malone.Core.WebApi
 {
-    public abstract class CoreApiController<TKey, TEntity, TBusinessComponent, TBusinessValidator> : ApiController
+    public abstract class CoreApiController<TKey, TParam, TEntity, TBusinessComponent, TBusinessValidator> : ApiController
         where TKey : IEquatable<TKey>
+        where TParam : class, IGetRequestParam
         where TEntity : class, IBaseEntity<TKey>
         where TBusinessValidator : IBusinessValidator<TKey, TEntity>
         where TBusinessComponent : IBusinessComponent<TKey, TEntity, TBusinessValidator>
     {
         protected TBusinessComponent BusinessComponent { get; set; }
-        protected Mapper Mapper { get; set; }
+        protected IMapper Mapper { get; set; }
 
-        public CoreApiController(TBusinessComponent businessComponent, Mapper mapperInstance)
+        public CoreApiController(TBusinessComponent businessComponent, IMapper mapperInstance)
         {
             BusinessComponent = businessComponent;
             Mapper = mapperInstance;
         }
 
         #region GET (GetAll)
+
         // GET api/entity
-        public virtual HttpResponseMessage Get()
+        //[HttpGet()]
+        //public virtual IHttpActionResult GetFilterBy([FromUri] IGetRequestParam parameters = null)
+        //{
+        //    IEnumerable list = GetList(parameters);
+
+        //    return Ok(list);
+        //}
+
+
+        // GET api/entity
+        public virtual IHttpActionResult Get()
         {
-            try
-            {
-                var list = GetAll();
-                return Request.CreateResponse(HttpStatusCode.OK, list);
-            }
-            catch (Exception)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "mensaje");
-            }
+            IEnumerable list = GetList(null);
+
+            return Ok(list);
         }
+
+
+        protected virtual IEnumerable GetList(TParam parameters = null)
+        {
+            IEnumerable list = null;
+
+            if (parameters == null)
+            {
+                list = GetAll();
+            }
+            else
+            {
+                list = GetFiltered(parameters);
+            }
+            return AsViewModelList(list);
+        }
+
         protected virtual IEnumerable GetAll()
         {
-            var list = BusinessComponent.GetAll();
+            return BusinessComponent.GetAll();
+        }
+
+        protected virtual IEnumerable GetFiltered(TParam parameters)
+        {
+            throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.TECH202, "GetFiltered", this.GetType().Name);
+        }
+
+        protected virtual IEnumerable AsViewModelList(IEnumerable list)
+        {
             return list;
         }
+
         #endregion
 
         #region GET (GetById)
 
         // GET api/entity/5
-        public virtual HttpResponseMessage Get(TKey id)
+        public virtual IHttpActionResult Get(TKey id)
         {
-            try
-            {
-                object entity = GetById(id);
+            object entity = GetById(id);
 
-                if (entity != null)
-                    return Request.CreateResponse(HttpStatusCode.OK, entity);
-                else
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
-            }
-            catch (Exception)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
+            if (entity != null)
+                return Ok(entity);
+            else
+                return NotFound();
         }
 
         protected virtual object GetById(TKey id)
         {
+            TEntity entity = BusinessComponent.GetById(id);
+            return AsViewModel(entity);
+        }
 
-            var entity = BusinessComponent.GetById(id);
-            if (entity != null)
-                return entity;
-            else
-                return null;
+        protected virtual object AsViewModel(TEntity entity)
+        {
+            return entity;
         }
 
         #endregion
@@ -82,20 +110,13 @@ namespace malone.Core.WebApi
         #region POST (Add)
 
         // POST api/entity
-        public virtual HttpResponseMessage Post([FromBody]TEntity entity)
+        public virtual IHttpActionResult Post([FromBody] TEntity entity)
         {
-            try
-            {
-                BusinessComponent.Add(entity);
+            BusinessComponent.Add(entity);
 
-                var message = Request.CreateResponse(HttpStatusCode.Created, entity);
-                message.Headers.Location = new Uri(Request.RequestUri + entity.Id.ToString());
-                return Request.CreateResponse(HttpStatusCode.Created);
-            }
-            catch (Exception)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
+            var location = new Uri(Request.RequestUri + entity.Id.ToString());
+
+            return Created(location, entity);
         }
 
         #endregion
@@ -103,24 +124,10 @@ namespace malone.Core.WebApi
         #region PUT (Update)
 
         // PUT api/entity/5
-        public virtual HttpResponseMessage Put(TKey id, [FromBody]TEntity entity)
+        public virtual IHttpActionResult Put(TKey id, [FromBody] TEntity entity)
         {
-            try
-            {
-                var entityFound = BusinessComponent.GetById(id);
-
-                if (entityFound != null)
-                {
-                    BusinessComponent.Update(entity);
-                    return Request.CreateResponse(HttpStatusCode.OK);
-                }
-                else
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
+            BusinessComponent.Update(id, entity);
+            return Ok();
         }
 
         #endregion
@@ -128,37 +135,44 @@ namespace malone.Core.WebApi
         #region DELETE (Delete)
 
         // DELETE api/entity/5
-        public virtual HttpResponseMessage Delete(TKey id)
+        public virtual IHttpActionResult Delete(TKey id)
         {
-            try
-            {
-                var entityFound = BusinessComponent.GetById(id);
-
-                if (entityFound != null)
-                {
-                    BusinessComponent.Delete(entityFound);
-                    return Request.CreateResponse(HttpStatusCode.OK);
-                }
-                else
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
-            }
-            catch (Exception)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
+            BusinessComponent.Delete(id);
+            return Ok();
         }
 
         #endregion
     }
 
-    public abstract class CoreApiController<TEntity, TBusinessComponent, TBusinessValidator>
-        : CoreApiController<int, TEntity, TBusinessComponent, TBusinessValidator>
+    public abstract class CoreApiController<TParam, TEntity, TBusinessComponent, TBusinessValidator>
+        : CoreApiController<int, TParam, TEntity, TBusinessComponent, TBusinessValidator>
+       where TParam : class, IGetRequestParam
        where TEntity : class, IBaseEntity
        where TBusinessValidator : IBusinessValidator<TEntity>
        where TBusinessComponent : IBusinessComponent<TEntity, TBusinessValidator>
     {
-        public CoreApiController(TBusinessComponent businessComponent, Mapper mapperInstance) : base(businessComponent, mapperInstance)
+        public CoreApiController(TBusinessComponent businessComponent, IMapper mapperInstance) : base(businessComponent, mapperInstance)
         {
         }
+
+        #region GET (GetAll)
+
+        //// GET api/entity
+        //public override IHttpActionResult GetFilterBy([FromUri] IGetRequestParam parameters = null)
+        //{
+        //    return base.GetFilterBy(parameters);
+        //}
+
+        protected override IEnumerable GetList(TParam parameters = null)
+        {
+            return base.GetList(parameters);
+        }
+
+        protected override IEnumerable GetFiltered(TParam parameters)
+        {
+            throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.TECH202, "GetFiltered", this.GetType().Name);
+        }
+
+        #endregion
     }
 }

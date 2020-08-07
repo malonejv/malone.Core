@@ -124,6 +124,33 @@ namespace malone.Core.Commons.Exceptions.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to La consulta para obtener una entidad de tipo {0}, por id {1} no devolvió resultados..
+        /// </summary>
+        internal static string BUSVAL500 {
+            get {
+                return ResourceManager.GetString("BUSVAL500", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ocurrió un error al tratar de obtener el nombre de seccion del tipo {0}.
+        /// </summary>
+        internal static string CONF1 {
+            get {
+                return ResourceManager.GetString("CONF1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se encuentra configurada la sección para el tipo {0}..
+        /// </summary>
+        internal static string CONF2 {
+            get {
+                return ResourceManager.GetString("CONF2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error al obtener una lista ordenada de tipo {0}..
         /// </summary>
         internal static string DATAACCESS600 {
@@ -169,6 +196,15 @@ namespace malone.Core.Commons.Exceptions.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error en la validación de CommandText {0}..
+        /// </summary>
+        internal static string DATAACCESS605 {
+            get {
+                return ResourceManager.GetString("DATAACCESS605", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Se produjo un error en la llamada al servicio {0}..
         /// </summary>
         internal static string SERVAG700 {
@@ -187,20 +223,30 @@ namespace malone.Core.Commons.Exceptions.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Perdón, algo salió mal..
+        ///   Looks up a localized string similar to Perdón, algo salió mal.
+        ///{0}: {1}.
         /// </summary>
-        internal static string TECH1 {
+        internal static string TECH200 {
             get {
-                return ResourceManager.GetString("TECH1", resourceCulture);
+                return ResourceManager.GetString("TECH200", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Se produjo un error inesperado..
         /// </summary>
-        internal static string TECH2 {
+        internal static string TECH201 {
             get {
-                return ResourceManager.GetString("TECH2", resourceCulture);
+                return ResourceManager.GetString("TECH201", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El método {0} de la clase {1} no se encuentra implementado..
+        /// </summary>
+        internal static string TECH202 {
+            get {
+                return ResourceManager.GetString("TECH202", resourceCulture);
             }
         }
     }

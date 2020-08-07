@@ -61,20 +61,11 @@ namespace ErgaOmnes.Core.CL.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ValidarCaracteresEspeciales.
+        ///   Looks up a localized string similar to Validar caracteres especiales.
         /// </summary>
-        internal static string E5000 {
+        internal static string BUSVAL5000 {
             get {
-                return ResourceManager.GetString("E5000", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Argumento no válido.
-        /// </summary>
-        internal static string E8000 {
-            get {
-                return ResourceManager.GetString("E8000", resourceCulture);
+                return ResourceManager.GetString("BUSVAL5000", resourceCulture);
             }
         }
     }

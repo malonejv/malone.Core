@@ -1,6 +1,6 @@
 ﻿using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Exceptions.Handler;
+using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.DataAccess.UnitOfWork;
 using malone.Core.EF.Entities.Filters;
@@ -23,14 +23,9 @@ namespace malone.Core.EF.Repositories.Implementations
 
         protected IUnitOfWork UnitOfWork { get; }
 
-        private readonly ICoreExceptionHandler CoreExceptionHandler;
+        protected ILogger Logger { get; set; }
 
-        internal ICoreExceptionHandler GetEFExceptionHandler()
-        {
-            return CoreExceptionHandler;
-        }
-
-        public EFRepository(IUnitOfWork unitOfWork)
+        public EFRepository(IUnitOfWork unitOfWork, ILogger logger)
         {
             if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
 
@@ -38,7 +33,7 @@ namespace malone.Core.EF.Repositories.Implementations
             _context = UnitOfWork.Context as DbContext;
             _dbSet = _context.Set<TEntity>();
 
-            CoreExceptionHandler = ServiceLocator.Current.Get<ICoreExceptionHandler>();
+            Logger = logger;
         }
 
         protected IQueryable<TEntity> Get(
@@ -78,42 +73,11 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-            return null;
-        }
-
-        public virtual IEnumerable<TEntity> Get<TFilter>(
-           TFilter filter = default(TFilter),
-           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-           bool includeDeleted = false,
-           string includeProperties = "")
-            where TFilter : class, IFilterExpression
-        {
-            try
-            {
-                IQueryable<TEntity> query = _dbSet;
-
-                Expression<Func<TEntity, bool>> filterExp = null;
-                if (filter != null)
-                {
-                    filterExp = (filter as IFilterExpressionEF<TEntity>).Expression;
-                }
-
-                if (filterExp != null)
-                {
-                    query = query.Where(filterExp);
-                }
-
-                query = Get(query, orderBy, includeDeleted, includeProperties);
-
-                return query.ToList();
-            }
-            catch (Exception ex)
-            {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
-            }
-            return null;
         }
 
         public virtual IEnumerable<TEntity> GetAll(
@@ -132,9 +96,48 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-            return null;
+        }
+
+        public virtual IEnumerable<TEntity> Get<TFilter>(
+           TFilter filter = default(TFilter),
+           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+           bool includeDeleted = false,
+           string includeProperties = "")
+            where TFilter : class, IFilterExpression
+        {
+            try
+            {
+                IQueryable<TEntity> query = _dbSet;
+
+                Expression<Func<TEntity, bool>> filterExp = null;
+                if (filter != null)
+                {
+                    var filterEF = (filter as IFilterExpressionEF<TEntity>);
+                    filterExp = filterEF?.Expression;
+                }
+
+                if (filterExp != null)
+                {
+                    query = query.Where(filterExp);
+                }
+
+                query = Get(query, orderBy, includeDeleted, includeProperties);
+
+                return query.ToList();
+            }
+            catch (Exception ex)
+            {
+
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
+            }
         }
 
         public virtual TEntity GetById(
@@ -152,9 +155,11 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS601, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS601, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-            return null;
         }
 
         public virtual TEntity GetEntity<TFilter>(
@@ -185,9 +190,11 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS601, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS601, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-            return null;
         }
 
         public virtual void Insert(TEntity entity)
@@ -198,35 +205,27 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS602, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS602, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
         }
 
-        public virtual void Update(TEntity entityToUpdate)
+        public virtual void Update(TEntity oldValues,TEntity newValues)
         {
             try
             {
-                var old = GetById(entityToUpdate.Id);
-                _context.Entry(old).State = EntityState.Detached;
+                _context.Entry(oldValues).State = EntityState.Detached;
 
-                _context.Entry(entityToUpdate).State = EntityState.Modified;
+                _context.Entry(newValues).State = EntityState.Modified;
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
-            }
-        }
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
 
-        public virtual void Delete(TKey id)
-        {
-            try
-            {
-                TEntity entityToDelete = _dbSet.Find(id);
-                Delete(entityToDelete);
-            }
-            catch (Exception ex)
-            {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS603, typeof(TEntity));
+                throw techEx;
             }
         }
 
@@ -242,27 +241,24 @@ namespace malone.Core.EF.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                GetEFExceptionHandler().HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS603, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS603, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
         }
 
     }
 
 
-    public class EFRepository<TEntity> : 
-        EFRepository<int, TEntity>, 
+    public class EFRepository<TEntity> :
+        EFRepository<int, TEntity>,
         IRepository<TEntity>
         where TEntity : class, IBaseEntity
     {
-
-        //public EFRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
-        //{
-        //}
-
-        public EFRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public EFRepository(IUnitOfWork unitOfWork, ILogger logger) : base(unitOfWork, logger)
         {
         }
-
     }
 
 }

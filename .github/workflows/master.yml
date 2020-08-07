@@ -1,18 +1,16 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CD
+name: MASTER
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   push:
     branches:
-        - master
-        - release/*
+      - master
   pull_request:
     branches: 
       - master
-      - release/*
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -47,25 +45,25 @@ jobs:
           envMapperFile: src/malone.Core/bin/Release/Variables
           envMapperKey: Var
         
-      - name: Prepare packages
+      - name: Prepare Packages
         run:  |
-              nuget pack src/malone.Core/malone.Core.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.AdoNet/malone.Core.AdoNet.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.EF/malone.Core.EF.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Patterns/malone.Core.Patterns.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.WebApi/malone.Core.WebApi.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.AdoNet.Oracle/malone.Core.AdoNet.Oracle.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.AdoNet.SqlServer/malone.Core.AdoNet.SqlServer.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity.IdentityEntityFrameworkInitializer/malone.Core.Unity.IdentityEntityFrameworkInitializer.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity.Log4NetInitializer/malone.Core.Unity.Log4NetInitializer.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity.ModulesInitializers/malone.Core.Unity.ModulesInitializers.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity/malone.Core.Unity.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity.WebApi/malone.Core.Unity.WebApi.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Log4Net/malone.Core.Log4Net.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Identity/malone.Core.Identity.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Identity.EntityFramework/malone.Core.Identity.EntityFramework.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core/malone.Core.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
+              nuget pack src/malone.Core.AdoNet/malone.Core.AdoNet.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
+              nuget pack src/malone.Core.EF/malone.Core.EF.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
+              nuget pack src/malone.Core.Patterns/malone.Core.Patterns.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
+              nuget pack src/malone.Core.WebApi/malone.Core.WebApi.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
+              nuget pack src/malone.Core.AdoNet.Oracle/malone.Core.AdoNet.Oracle.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
+              nuget pack src/malone.Core.AdoNet.SqlServer/malone.Core.AdoNet.SqlServer.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
+              nuget pack src/malone.Core.Unity.IdentityEntityFrameworkInitializer/malone.Core.Unity.IdentityEntityFrameworkInitializer.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
+              nuget pack src/malone.Core.Unity.Log4NetInitializer/malone.Core.Unity.Log4NetInitializer.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
+              nuget pack src/malone.Core.Unity.ModulesInitializers/malone.Core.Unity.ModulesInitializers.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
+              nuget pack src/malone.Core.Unity/malone.Core.Unity.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
+              nuget pack src/malone.Core.Unity.WebApi/malone.Core.Unity.WebApi.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
+              nuget pack src/malone.Core.Log4Net/malone.Core.Log4Net.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
+              nuget pack src/malone.Core.Identity/malone.Core.Identity.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
+              nuget pack src/malone.Core.Identity.EntityFramework/malone.Core.Identity.EntityFramework.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
                         
-      - name: Push packages
+      - name: Push Packages
         run:  nuget push *.nupkg -SkipDuplicate -source "github"
         
       - name: Create Release

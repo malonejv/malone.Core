@@ -105,7 +105,7 @@ namespace malone.Core.Commons.Log
         /// Logs an exception with a logging level of <see cref="LogLevel.Debug"/>.
         /// </summary>
         /// <param name="exception">The exception to log.</param>
-        public void Debug<TException>(TException exception) where TException : Exception
+        public void Debug(Exception exception)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
             {
@@ -121,7 +121,7 @@ namespace malone.Core.Commons.Log
         /// <param name="exception"> The exception to log.</param>
         /// <param name="message">Additional information regarding the
         /// logged exception.</param>
-        public void Debug<TException>(TException exception, string message) where TException : Exception
+        public void Debug(Exception exception, string message)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
             {
@@ -138,7 +138,7 @@ namespace malone.Core.Commons.Log
         /// arguments.</param>
         /// <param name="args">An <see cref="object"/> array containing zero or more objects
         /// to format.</param>
-        public void Debug<TException>(TException exception, string format, params object[] args) where TException : Exception
+        public void Debug(Exception exception, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
             {
@@ -157,7 +157,7 @@ namespace malone.Core.Commons.Log
         /// arguments.</param>
         /// <param name="args">An <see cref="object"/> array containing zero or more objects
         /// to format.</param>
-        public void Debug<TException>(TException exception, string format, IFormatProvider provider, params object[] args) where TException : Exception
+        public void Debug(Exception exception, string format, IFormatProvider provider, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
             {
@@ -234,7 +234,7 @@ namespace malone.Core.Commons.Log
         /// Logs an exception with a logging level of <see cref="LogLevel.Info"/>.
         /// </summary>
         /// <param name="exception">The exception to log.</param>
-        public void Info<TException>(TException exception) where TException : Exception
+        public void Info(Exception exception)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
             {
@@ -250,7 +250,7 @@ namespace malone.Core.Commons.Log
         /// <param name="exception"> The exception to log.</param>
         /// <param name="message">Additional information regarding the
         /// logged exception.</param>
-        public void Info<TException>(TException exception, string message) where TException : Exception
+        public void Info(Exception exception, string message)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
             {
@@ -267,7 +267,7 @@ namespace malone.Core.Commons.Log
         /// arguments.</param>
         /// <param name="args">An <see cref="object"/> array containing zero or more objects
         /// to format.</param>
-        public void Info<TException>(TException exception, string format, params object[] args) where TException : Exception
+        public void Info(Exception exception, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
             {
@@ -286,7 +286,7 @@ namespace malone.Core.Commons.Log
         /// arguments.</param>
         /// <param name="args">An <see cref="object"/> array containing zero or more objects
         /// to format.</param>
-        public void Info<TException>(TException exception, string format, IFormatProvider provider, params object[] args) where TException : Exception
+        public void Info(Exception exception, string format, IFormatProvider provider, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
             {
@@ -363,7 +363,7 @@ namespace malone.Core.Commons.Log
         /// Logs an exception with a logging level of <see cref="LogLevel.Warn"/>.
         /// </summary>
         /// <param name="exception">The exception to log.</param>
-        public void Warn<TException>(TException exception) where TException : Exception
+        public void Warn(Exception exception)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
             {
@@ -379,7 +379,7 @@ namespace malone.Core.Commons.Log
         /// <param name="exception"> The exception to log.</param>
         /// <param name="message">Additional information regarding the
         /// logged exception.</param>
-        public void Warn<TException>(TException exception, string message) where TException : Exception
+        public void Warn(Exception exception, string message)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
             {
@@ -396,7 +396,7 @@ namespace malone.Core.Commons.Log
         /// arguments.</param>
         /// <param name="args">An <see cref="object"/> array containing zero or more objects
         /// to format.</param>
-        public void Warn<TException>(TException exception, string format, params object[] args) where TException : Exception
+        public void Warn(Exception exception, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
             {
@@ -415,7 +415,7 @@ namespace malone.Core.Commons.Log
         /// arguments.</param>
         /// <param name="args">An <see cref="object"/> array containing zero or more objects
         /// to format.</param>
-        public void Warn<TException>(TException exception, string format, IFormatProvider provider, params object[] args) where TException : Exception
+        public void Warn(Exception exception, string format, IFormatProvider provider, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
             {
@@ -492,7 +492,7 @@ namespace malone.Core.Commons.Log
         /// Logs an exception with a logging level of <see cref="LogLevel.Error"/>.
         /// </summary>
         /// <param name="exception">The exception to log.</param>
-        public void Error<TException>(TException exception) where TException : Exception
+        public void Error(Exception exception)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
             {
@@ -508,7 +508,7 @@ namespace malone.Core.Commons.Log
         /// <param name="exception"> The exception to log.</param>
         /// <param name="message">Additional information regarding the
         /// logged exception.</param>
-        public void Error<TException>(TException exception, string message) where TException : Exception
+        public void Error(Exception exception, string message)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
             {
@@ -525,7 +525,7 @@ namespace malone.Core.Commons.Log
         /// arguments.</param>
         /// <param name="args">An <see cref="object"/> array containing zero or more objects
         /// to format.</param>
-        public void Error<TException>(TException exception, string format, params object[] args) where TException : Exception
+        public void Error(Exception exception, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
             {
@@ -544,7 +544,7 @@ namespace malone.Core.Commons.Log
         /// arguments.</param>
         /// <param name="args">An <see cref="object"/> array containing zero or more objects
         /// to format.</param>
-        public void Error<TException>(TException exception, string format, IFormatProvider provider, params object[] args) where TException : Exception
+        public void Error(Exception exception, string format, IFormatProvider provider, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
             {
@@ -621,7 +621,7 @@ namespace malone.Core.Commons.Log
         /// Logs an exception with a logging level of <see cref="LogLevel.Fatal"/>.
         /// </summary>
         /// <param name="exception">The exception to log.</param>
-        public void Fatal<TException>(TException exception) where TException : Exception
+        public void Fatal(Exception exception)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
             {
@@ -637,7 +637,7 @@ namespace malone.Core.Commons.Log
         /// <param name="exception"> The exception to log.</param>
         /// <param name="message">Additional information regarding the
         /// logged exception.</param>
-        public void Fatal<TException>(TException exception, string message) where TException : Exception
+        public void Fatal(Exception exception, string message)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
             {
@@ -654,7 +654,7 @@ namespace malone.Core.Commons.Log
         /// arguments.</param>
         /// <param name="args">An <see cref="object"/> array containing zero or more objects
         /// to format.</param>
-        public void Fatal<TException>(TException exception, string format, params object[] args) where TException : Exception
+        public void Fatal(Exception exception, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
             {
@@ -673,7 +673,7 @@ namespace malone.Core.Commons.Log
         /// arguments.</param>
         /// <param name="args">An <see cref="object"/> array containing zero or more objects
         /// to format.</param>
-        public void Fatal<TException>(TException exception, string format, IFormatProvider provider, params object[] args) where TException : Exception
+        public void Fatal(Exception exception, string format, IFormatProvider provider, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
             {
@@ -725,7 +725,7 @@ namespace malone.Core.Commons.Log
         /// <param name="message"> The message to log.</param>
         public virtual void Log(LogLevel level, string message)
         {
-            LogItem<Exception> item = new LogItem<Exception> { LogLevel = level, Message = message, LoggerName = Name };
+            LogItem item = new LogItem { LogLevel = level, Message = message, LoggerName = Name };
             Log(item);
         }
 
@@ -736,7 +736,7 @@ namespace malone.Core.Commons.Log
         /// <param name="level">The logging level which is used to indicate severity,
         /// or for filtering the information.</param>
         /// <param name="exception">The exception to log.</param>
-        public virtual void Log<TException>(LogLevel level, TException exception) where TException : Exception
+        public virtual void Log(LogLevel level, Exception exception)
         {
             Log(level, exception, String.Empty);
         }
@@ -752,7 +752,7 @@ namespace malone.Core.Commons.Log
         /// arguments.</param>
         /// <param name="args">An <see cref="object"/> array containing zero or more objects
         /// to format.</param>
-        public virtual void Log<TException>(LogLevel level, TException exception, string format, params object[] args) where TException : Exception
+        public virtual void Log(LogLevel level, Exception exception, string format, params object[] args)
         {
             string message = String.Format(format, args);
             Log(level, exception, message);
@@ -771,8 +771,8 @@ namespace malone.Core.Commons.Log
         /// arguments.</param>
         /// <param name="args">An <see cref="object"/> array containing zero or more objects
         /// to format.</param>
-        public virtual void Log<TException>(LogLevel level, TException exception, IFormatProvider provider, string format,
-                                params object[] args) where TException : Exception
+        public virtual void Log(LogLevel level, Exception exception, IFormatProvider provider, string format,
+                                params object[] args)
         {
             string message = String.Format(provider, format, args);
             Log(level, exception, message);
@@ -787,18 +787,18 @@ namespace malone.Core.Commons.Log
         /// <param name="exception"> The exception to log.</param>
         /// <param name="message">Additional information regarding the
         /// logged exception.</param>
-        /// <typeparam name="TException">Tipo de Excepcion producida</typeparam>
-        public virtual void Log<TException>(LogLevel level, TException exception, string message) where TException : Exception
+        /// <typeparam name="Exception">Tipo de Excepcion producida</typeparam>
+        public virtual void Log(LogLevel level, Exception exception, string message)
         {
-            Type exceptionType = typeof(TException);
-            var codeMessagePropertyInfo = exceptionType.GetProperty("CodeMessage");
-            if (codeMessagePropertyInfo != null)
+            Type exceptionType = typeof(Exception);
+            var errorMessagePropertyInfo = exceptionType.GetProperty("ErrorMessage");
+            if (errorMessagePropertyInfo != null)
             {
-                message = codeMessagePropertyInfo.GetValue(exception).ToString();
+                message = errorMessagePropertyInfo.GetValue(exception).ToString();
             }
 
 
-            LogItem<TException> item = new LogItem<TException> { LogLevel = level, Message = message, LoggerName = this.Name };
+            LogItem item = new LogItem { LogLevel = level, Message = message, LoggerName = this.Name };
             item.Exception = exception;
             Log(item);
         }
@@ -811,7 +811,7 @@ namespace malone.Core.Commons.Log
         /// <param name="item">Encapsulates logging information.</param>
         /// <exception cref="ArgumentNullException">If <paramref name="item"/>
         /// is a null reference.</exception>
-        public abstract void Log<TException>(LogItem<TException> item) where TException : Exception;
+        public abstract void Log(LogItem item);
 
         /// <summary>
         /// Indicates whether the given log level is

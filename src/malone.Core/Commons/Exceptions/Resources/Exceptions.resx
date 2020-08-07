@@ -138,6 +138,15 @@
   <data name="BUSINESS406" xml:space="preserve">
     <value>Debes confirmar el email primero.</value>
   </data>
+  <data name="BUSVAL500" xml:space="preserve">
+    <value>La consulta para obtener una entidad de tipo {0}, por id {1} no devolvió resultados.</value>
+  </data>
+  <data name="CONF1" xml:space="preserve">
+    <value>Ocurrió un error al tratar de obtener el nombre de seccion del tipo {0}</value>
+  </data>
+  <data name="CONF2" xml:space="preserve">
+    <value>No se encuentra configurada la sección para el tipo {0}.</value>
+  </data>
   <data name="DATAACCESS600" xml:space="preserve">
     <value>Error al obtener una lista ordenada de tipo {0}.</value>
   </data>
@@ -153,16 +162,23 @@
   <data name="DATAACCESS604" xml:space="preserve">
     <value>Error al actualizar una entidad de tipo {0}.</value>
   </data>
+  <data name="DATAACCESS605" xml:space="preserve">
+    <value>Error en la validación de CommandText {0}.</value>
+  </data>
   <data name="SERVAG700" xml:space="preserve">
     <value>Se produjo un error en la llamada al servicio {0}.</value>
   </data>
   <data name="SERVICE300" xml:space="preserve">
     <value>Usuario no autorizado.</value>
   </data>
-  <data name="TECH1" xml:space="preserve">
-    <value>Perdón, algo salió mal.</value>
+  <data name="TECH200" xml:space="preserve">
+    <value>Perdón, algo salió mal.
+{0}: {1}</value>
   </data>
-  <data name="TECH2" xml:space="preserve">
+  <data name="TECH201" xml:space="preserve">
     <value>Se produjo un error inesperado.</value>
+  </data>
+  <data name="TECH202" xml:space="preserve">
+    <value>El método {0} de la clase {1} no se encuentra implementado.</value>
   </data>
 </root>
