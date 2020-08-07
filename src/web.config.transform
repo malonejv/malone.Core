@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
-  <configSections xdt:Transform="InsertIfMissing">
-    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler,log4net" xdt:Locator="Match(name)" xdt:Transform="InsertIfMissing"  />
-    <section name="coreSettings" type="malone.Core.Commons.Configurations.CoreSettingsSection,malone.Core" allowDefinition="Everywhere" allowLocation="true" xdt:Locator="Match(name)" xdt:Transform="InsertIfMissing" />
+<configuration>
+  <configSections>
+    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler,log4net"/>
+    <section name="coreSettings" type="malone.Core.Commons.Configurations.CoreSettingsSection,malone.Core" allowDefinition="Everywhere" allowLocation="true" />
   </configSections>
 
-  <log4net debug="true"  xdt:Transform="InsertIfMissing">
+  <log4net debug="true">
     <root>
       <level value="WARN" />
       <appender-ref ref="LogFileAppender" />
@@ -22,9 +22,9 @@
       </layout>
     </appender>
   </log4net>
-  <coreSettings xmlns="urn:malone.Core.Commons.Configurations" xdt:Transform="InsertIfMissing">
-    <modules  xdt:Transform="InsertIfMissing">
-      <module name="Log4NetLogger" xdt:Transform="InsertIfMissing" />
+  <coreSettings xmlns="urn:malone.Core.Commons.Configurations">
+    <modules>
+      <module name="Log4NetLogger"  />
     </modules>
   </coreSettings>
 </configuration>

@@ -10,6 +10,7 @@ namespace malone.Core.Commons.Exceptions.Handler
         where TErrorCoder : Enum
     {
         internal protected ILogger Logger { get; }
+
         internal protected IMessageHandler<TErrorCoder> MessageHandler { get; }
 
         public ExceptionHandler(ILogger logger, IMessageHandler<TErrorCoder> messageHandler)
@@ -22,9 +23,17 @@ namespace malone.Core.Commons.Exceptions.Handler
         {
             if (Logger != null)
                 Logger.Error(ex);
+
+            if (typeof(BaseException).IsAssignableFrom(ex.GetType()))
+            {
+                var baseException = ex as BaseException;
+
+                if (baseException.Rethrow)
+                    throw ex;
+            }
         }
-        public void HandleException<TException>(TErrorCoder errorCode, params object[] args)
-            where TException : BaseException<TErrorCoder>
+
+        public void HandleException(Exception ex, TErrorCoder errorCode, params object[] args)
         {
             string message = MessageHandler.GetMessage(errorCode, args);
 
@@ -32,29 +41,7 @@ namespace malone.Core.Commons.Exceptions.Handler
             Type exceptionType = typeof(TException);
 
             // Get it's constructor
-            ConstructorInfo constructor = exceptionType.GetConstructor(new Type[] { });
-
-            // Invoke it's constructor, which returns an instance.
-            object[] constructorParams = { errorCode, message };
-
-            TException baseException = (TException)constructor.Invoke(constructorParams);
-
-            if (Logger != null && baseException.ShouldLog)
-                Logger.Error(baseException);
-            if (baseException.Rethrow)
-                throw baseException;
-        }
-
-        public void HandleException<TException>(Exception ex, TErrorCoder errorCode, params object[] args)
-            where TException : BaseException<TErrorCoder>
-        {
-            string message = MessageHandler.GetMessage(errorCode, args);
-
-            // Find the class
-            Type exceptionType = typeof(TException);
-
-            // Get it's constructor
-            ConstructorInfo constructor = exceptionType.GetConstructor(new Type[] { typeof(TErrorCoder),typeof(string),typeof(Exception) });
+            ConstructorInfo constructor = exceptionType.GetConstructor(new Type[] { typeof(TErrorCoder), typeof(string), typeof(Exception) });
 
             // Invoke it's constructor, which returns an instance.
             object[] constructorParams = { errorCode, message, ex };
@@ -65,25 +52,6 @@ namespace malone.Core.Commons.Exceptions.Handler
                 Logger.Error(ex);
             if (baseException.Rethrow)
                 throw ex;
-        }
-
-        public void HandleException<TValidation>(ValidationResultList validationResult) where TValidation : BusinessValidationException
-        {
-            // Find the class
-            Type exceptionType = typeof(TValidation);
-
-            // Get it's constructor
-            ConstructorInfo constructor = exceptionType.GetConstructor(new Type[] { });
-
-            // Invoke it's constructor, which returns an instance.
-            object[] constructorParams = { validationResult };
-
-            TValidation baseException = (TValidation)constructor.Invoke(constructorParams);
-
-            if (Logger != null && baseException.ShouldLog)
-                Logger.Error(baseException);
-            if (baseException.Rethrow)
-                throw baseException;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using log4net;
-using malone.Core.Commons.Configurations;
+﻿using malone.Core.Commons.Configurations;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Initializers;
 using malone.Core.Commons.Log;
@@ -15,12 +14,12 @@ namespace malone.Core.Unity.Log4NetInitializer
 
         public void Initialize(IUnityContainer container)
         {
-            ILog logger = LogManager.GetLogger("CoreLogger");
-            //container.RegisterInstance<ILog>(logger);
-
             container.RegisterType<LoggerFactory, Log4NetLoggerFactory>();
-            container.RegisterType<ILogger, Log4netLogger>(new InjectionConstructor(logger));
 
+            LoggerFactory loggerFactory = container.Resolve<LoggerFactory>();
+
+            ILogger logger = loggerFactory.GetLogger();
+            container.RegisterInstance(logger);
         }
     }
 }

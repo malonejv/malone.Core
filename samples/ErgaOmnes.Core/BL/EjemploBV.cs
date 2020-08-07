@@ -1,11 +1,11 @@
-﻿using ErgaOmnes.Core.CL.Exceptions;
+﻿using System;
+using ErgaOmnes.Core.CL.Exceptions;
 using ErgaOmnes.Core.EL.Model;
 using malone.Core.Business.Components;
 using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Exceptions.Handler;
-using malone.Core.Commons.Exceptions.Manager;
+using malone.Core.Commons.Helpers.Extensions;
+using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Repositories;
-using System;
 
 namespace ErgaOmnes.Core.BL
 {
@@ -13,15 +13,15 @@ namespace ErgaOmnes.Core.BL
     public class EjemploBV : BusinessValidator<Ejemplo>, IEjemploBV
     {
         protected IRepository<Ejemplo> Repository { get; }
-        protected IMessageHandler<ErrorCodes> MessageHandler { get; }
-        protected IExceptionHandler<ErrorCodes> ExceptionHandler { get; }
+        protected IErrorLocalizationHandler ErrorLocalizationHandler { get; }
+        protected ILogger Logger { get; }
 
-        public EjemploBV(IRepository<Ejemplo> repository, IMessageHandler<ErrorCodes> messageHandler, IExceptionHandler<ErrorCodes> exceptionHandler)
+        public EjemploBV(IRepository<Ejemplo> repository, IErrorLocalizationHandler errorLocalizationHandler, ILogger logger)
             : base()
         {
             Repository = repository;
-            MessageHandler = messageHandler;
-            ExceptionHandler = exceptionHandler;
+            ErrorLocalizationHandler = errorLocalizationHandler;
+            Logger = logger;
         }
 
         /// <summary>
@@ -36,22 +36,25 @@ namespace ErgaOmnes.Core.BL
                 if (args == null || args.Length == 0)
                     throw new ArgumentNullException("args");
 
-                var ejemplo = Convert.ChangeType(args[0], typeof(Ejemplo));
+                var todoList = args[0] as Ejemplo;
 
-                bool existe = false;
+                bool tieneCaracteresEspeciales = todoList.Text.HasSpecialCharacters();
 
-                if (existe)
+                if (tieneCaracteresEspeciales)
                 {
-                    var message = string.Format(MessageHandler.GetMessage(ErrorCodes.BUSVAL5000, typeof(Ejemplo)));
-                    return new ValidationResult(ErrorCodes.BUSVAL5000.ToString(), message);
+                    var message = ErrorLocalizationHandler.GetString(ErrorCode.BUSVAL5000);
+                    //var formated = string.Format(message, typeof(Ejemplo));
+                    return new ValidationResult(ErrorCode.BUSVAL5000.ToString(), message);
                 }
+
                 return null;
             }
-            catch (InvalidCastException ex)
+            catch (Exception ex)
             {
-                ExceptionHandler.HandleException<TechnicalException<ErrorCodes>>(ex,ErrorCodes.TECH1000);
+                var techEx = ExceptionFactory<ErrorCode,IErrorLocalizationHandler>.CreateException<TechnicalException>(ex, ErrorCode.TECH1000);
+                if (Logger != null) Logger.Error(techEx);
 
-                throw new ArgumentNullException("args");
+                throw techEx;
             }
         }
 

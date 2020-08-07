@@ -26,15 +26,16 @@ namespace malone.Core.Unity
 #if DEBUG
               container.AddExtension(new Diagnostic());
 #endif
-              RegisterCoreTypes(container);
-
-              ////OPTION: Uncomment if you want to use PerRequestLifetimeManager
-              //DynamicModuleUtility.RegisterModule(typeof(UnityPerRequestHttpModule));
 
               //Core Service Locator
               container.RegisterType<IServiceLocator, UnityServiceLocator>(new InjectionConstructor(container));
               var unityServiceLocator = container.Resolve<IServiceLocator>();
               ServiceLocator.SetResolver(unityServiceLocator);
+
+              RegisterCoreTypes(container);
+
+              ////OPTION: Uncomment if you want to use PerRequestLifetimeManager
+              //DynamicModuleUtility.RegisterModule(typeof(UnityPerRequestHttpModule));
 
               return container;
           });

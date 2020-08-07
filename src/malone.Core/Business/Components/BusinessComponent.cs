@@ -1,14 +1,12 @@
-﻿using malone.Core.Business.Components;
-using malone.Core.Commons.DI;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Exceptions.Handler;
+using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.DataAccess.UnitOfWork;
 using malone.Core.Entities.Filters;
 using malone.Core.Entities.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace malone.Core.Business.Components
 {
@@ -26,20 +24,41 @@ namespace malone.Core.Business.Components
 
         public TValidator BusinessValidator { get; set; }
 
-        internal ICoreExceptionHandler CoreExceptionHandler { get; }
+        public ILogger Logger { get; set; }
 
         #endregion
 
-        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TKey, TEntity> repository)
+        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TKey, TEntity> repository, ILogger logger)
         {
             UnitOfWork = unitOfWork;
             BusinessValidator = businessValidator;
             Repository = repository;
-
-            CoreExceptionHandler = ServiceLocator.Current.Get<ICoreExceptionHandler>();
+            Logger = logger;
         }
 
         #region CRUD
+
+        public virtual IEnumerable<TEntity> GetAll(
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            bool includeDeleted = false,
+            string includeProperties = ""
+        )
+        {
+            try
+            {
+                var result = Repository.GetAll(orderBy, includeDeleted, includeProperties);
+
+                return result;
+            }
+            catch (TechnicalException) { throw; }
+            catch (Exception ex)
+            {
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
+            }
+        }
 
         public virtual IEnumerable<TEntity> Get<TFilter>(
         TFilter filter = default(TFilter),
@@ -52,44 +71,16 @@ namespace malone.Core.Business.Components
             {
                 var result = Repository.Get(filter, orderBy, includeDeleted, includeProperties);
 
-                //TODO: Evaluar opcion de configurar por entidad o de forma generica la respuesta ante una consulta que no devuelve datos.
-                //if (result.Count() == 0)
-                //{
-                //    var message = string.Format(messageManager.GetDescription((int)CoreErrors.E404), typeof(TEntity));
-                //    throw new BusinessException((int)CoreErrors.E404, message);
-                //}
                 return result;
             }
+            catch (TechnicalException) { throw; }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
-            }
-            return null;
-        }
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
 
-        public virtual IEnumerable<TEntity> GetAll(
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            bool includeDeleted = false,
-            string includeProperties = ""
-        )
-        {
-            try
-            {
-                var result = Repository.GetAll(orderBy, includeDeleted, includeProperties);
-
-                //TODO: Evaluar opcion de configurar por entidad o de forma generica la respuesta ante una consulta que no devuelve datos.
-                //if (result.Count() == 0)
-                //{
-                //    var message = string.Format(messageManager.GetDescription((int)CoreErrors.E404), typeof(TEntity));
-                //    throw new BusinessException((int)CoreErrors.E404, message);
-                //}
-                return result;
+                throw techEx;
             }
-            catch (Exception ex)
-            {
-                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
-            }
-            return null;
         }
 
         public virtual TEntity GetById(
@@ -103,17 +94,16 @@ namespace malone.Core.Business.Components
 
                 var result = Repository.GetById(id, includeDeleted, includeProperties);
 
-                if (result == null)
-                {
-                    CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(CoreErrors.BUSINESS404, typeof(TEntity));
-                }
                 return result;
             }
+            catch (TechnicalException) { throw; }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-            return null;
         }
 
         public TEntity GetEntity<TFilter>(
@@ -127,17 +117,16 @@ namespace malone.Core.Business.Components
             {
                 var result = Repository.GetEntity(filter, orderBy, includeDeleted, includeProperties);
 
-                if (result == null)
-                {
-                    CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(CoreErrors.BUSINESS404, typeof(TEntity));
-                }
                 return result;
             }
+            catch (TechnicalException) { throw; }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-            return null;
         }
 
         public virtual void Add(TEntity entity)
@@ -148,23 +137,20 @@ namespace malone.Core.Business.Components
 
                 var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteAddValidationRules, BusinessValidator.AddValidationRules);
                 if (!validationResult.IsValid)
-                    CoreExceptionHandler.HandleException<BusinessValidationException>(validationResult);
+                    throw new BusinessRulesValidationException(validationResult);
 
                 Repository.Insert(entity);
                 UnitOfWork.SaveChanges();
             }
+            catch (BusinessRulesValidationException) { throw; }
+            catch (TechnicalException) { throw; }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.BUSINESS401, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS401, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-        }
-
-        public virtual void Update(TEntity entity)
-        {
-            CheckEntity(entity);
-            CheckEntityId(entity);
-
-            Update(entity.Id, entity);
         }
 
         public virtual void Update(TKey id, TEntity entity)
@@ -174,46 +160,75 @@ namespace malone.Core.Business.Components
                 CheckEntity(entity);
                 CheckId(id);
 
+                var oldEntity = this.GetById(id);
+                if (oldEntity.Equals(default(TEntity)))
+                    throw CoreExceptionFactory.CreateException<EntityNotFoundException>(CoreErrors.BUSVAL500, typeof(TEntity), id);
+
                 var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteUpdateValidationRules, BusinessValidator.UpdateValidationRules);
                 if (!validationResult.IsValid)
-                    CoreExceptionHandler.HandleException<BusinessValidationException>(validationResult);
+                    throw new BusinessRulesValidationException(validationResult);
 
                 entity.Id = id;
-                Repository.Update(entity);
+                Repository.Update(oldEntity, entity);
                 UnitOfWork.SaveChanges();
             }
+            catch (EntityNotFoundException ex)
+            {
+                if (Logger != null) Logger.Warn(ex);
+
+                throw;
+            }
+            catch (BusinessRulesValidationException ex)
+            {
+                if (Logger != null) Logger.Warn(ex);
+
+                throw;
+            }
+            catch (TechnicalException) { throw; }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.BUSINESS403, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS403, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
         }
 
-        public virtual void Delete(TEntity entity)
+        public virtual void Delete(TKey id)
         {
             try
             {
-                CheckEntity(entity);
-                CheckEntityId(entity);
+                CheckId(id);
+
 
                 var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteDeleteValidationRules, BusinessValidator.DeleteValidationRules);
                 if (!validationResult.IsValid)
-                    CoreExceptionHandler.HandleException<BusinessValidationException>(validationResult);
+                    throw new BusinessRulesValidationException(validationResult);
 
-                if (entity is ISoftDelete)
+                var entityToDelete = this.GetById(id);
+                if (entityToDelete == default(TEntity))
+                    throw CoreExceptionFactory.CreateException<EntityNotFoundException>(CoreErrors.BUSVAL500, typeof(TEntity), id);
+
+                if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
                 {
-                    ISoftDelete noDeletableEntity = entity as ISoftDelete;
-                    noDeletableEntity.IsDeleted = true;
-                    Repository.Update(entity);
+                    var softDelete = entityToDelete as ISoftDelete;
+                    softDelete.IsDeleted = true;
+                    Repository.Update(entityToDelete, softDelete as TEntity);
                 }
                 else
                 {
-                    Repository.Delete(entity);
+                    Repository.Delete(entityToDelete);
                 }
                 UnitOfWork.SaveChanges();
             }
+            catch (BusinessRulesValidationException) { throw; }
+            catch (TechnicalException) { throw; }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<BusinessException<CoreErrors>>(ex, CoreErrors.BUSINESS402, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS402, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
         }
 
@@ -239,8 +254,8 @@ namespace malone.Core.Business.Components
         where TValidator : IBusinessValidator<TEntity>
     {
 
-        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TEntity> repository)
-            : base(unitOfWork, businessValidator, repository)
+        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TEntity> repository, ILogger logger)
+            : base(unitOfWork, businessValidator, repository, logger)
         {
         }
     }

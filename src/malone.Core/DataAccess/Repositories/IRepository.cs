@@ -39,11 +39,9 @@ namespace malone.Core.DataAccess.Repositories
 
         void Insert(TEntity entity);
 
-        void Delete(TKey id);
-
         void Delete(TEntity entityToDelete);
 
-        void Update(TEntity entityToUpdate);
+        void Update(TEntity oldValues, TEntity newValues);
     }
 
     public interface IRepository<TEntity> : IRepository<int, TEntity>

@@ -33,7 +33,7 @@ namespace malone.Core.Log4Net
         /// information to be logged.</param>
         /// <exception cref="ArgumentNullException">If <paramref name="item"/>
         /// is a null reference.</exception>
-        public override void Log<TException>(LogItem<TException> item) 
+        public override void Log(LogItem item) 
         {
             if (item == null) throw new ArgumentNullException("item");
 

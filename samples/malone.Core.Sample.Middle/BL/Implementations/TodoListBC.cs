@@ -1,4 +1,5 @@
 ﻿using malone.Core.Business.Components;
+using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.DataAccess.UnitOfWork;
 using malone.Core.Sample.Middle.EL.Model;
@@ -9,8 +10,8 @@ namespace malone.Core.Sample.Middle.BL.Implementations
 {
     public class TodoListBC : BusinessComponent<TodoList, ITodoListBV>, ITodoListBC
     {
-        public TodoListBC(IUnitOfWork unitOfWork, ITodoListBV businessValidator, IRepository<TodoList> repository)
-            : base(unitOfWork, businessValidator, repository)
+        public TodoListBC(IUnitOfWork unitOfWork, ITodoListBV businessValidator, IRepository<TodoList> repository, ILogger logger)
+            : base(unitOfWork, businessValidator, repository, logger)
         { }
 
 

@@ -20,18 +20,18 @@ namespace malone.Core.Business.Components
 
         #region CRUD
 
+        IEnumerable<TEntity> GetAll(
+           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+           bool includeDeleted = false,
+            string includeProperties = ""
+           );
+
         IEnumerable<TEntity> Get<TFilter>(
            TFilter filter = default(TFilter),
            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
            bool includeDeleted = false,
            string includeProperties = "")
             where TFilter : class, IFilterExpression;
-
-        IEnumerable<TEntity> GetAll(
-           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-           bool includeDeleted = false,
-            string includeProperties = ""
-           );
 
         TEntity GetById(
             TKey id,
@@ -47,11 +47,9 @@ namespace malone.Core.Business.Components
 
         void Add(TEntity entity);
 
-        void Delete(TEntity entity);
-
-        void Update(TEntity entity);
-
         void Update(TKey id, TEntity entity);
+
+        void Delete(TKey id);
 
         #endregion
 

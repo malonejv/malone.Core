@@ -1,17 +1,17 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using AutoMapper;
 using malone.Core.AdoNet.Context;
 using malone.Core.AdoNet.Entities.Filters;
 using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Exceptions.Handler;
+using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.DataAccess.UnitOfWork;
 using malone.Core.Entities.Filters;
 using malone.Core.Entities.Model;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 
 namespace malone.Core.AdoNet.Repositories
 {
@@ -25,10 +25,10 @@ namespace malone.Core.AdoNet.Repositories
 
         protected IUnitOfWork UnitOfWork { get; private set; }
         protected Mapper Mapper { get; private set; }
-        internal ICoreExceptionHandler CoreExceptionHandler { get; }
+        internal ILogger Logger { get; }
 
 
-        public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper)
+        public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper, ILogger logger)
         {
             if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
             if (mapper == null) throw new ArgumentNullException(nameof(mapper));
@@ -37,7 +37,7 @@ namespace malone.Core.AdoNet.Repositories
             _context = (AdoNetContext)UnitOfWork.Context;
 
             Mapper = mapper;
-            CoreExceptionHandler = ServiceLocator.Current.Get<ICoreExceptionHandler>();
+            Logger = logger;
         }
 
         protected IQueryable<TEntity> GetQueryable(
@@ -85,37 +85,49 @@ namespace malone.Core.AdoNet.Repositories
             }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-            return null;
         }
 
         protected KeyValuePair<CommandType, string> validateCommandText(KeyValuePair<CommandType, string> commandTextConfig)
         {
-            if (commandTextConfig.Value == null) throw new ArgumentNullException(nameof(commandTextConfig.Value));
-            if (commandTextConfig.Value == string.Empty) throw new ArgumentException(nameof(commandTextConfig.Value));
+            try
+            {
+                if (commandTextConfig.Value == null) throw new ArgumentNullException(nameof(commandTextConfig.Value));
+                if (commandTextConfig.Value == string.Empty) throw new ArgumentException(nameof(commandTextConfig.Value));
 
-            string commandText = "";
-            bool hasSemicolon = commandTextConfig.Value.Last() == ';';
-            if (commandTextConfig.Key == CommandType.Text)
-            {
-                if (!hasSemicolon)
+                string commandText = "";
+                bool hasSemicolon = commandTextConfig.Value.Last() == ';';
+                if (commandTextConfig.Key == CommandType.Text)
                 {
-                    commandText = commandTextConfig.Value + ';';
+                    if (!hasSemicolon)
+                    {
+                        commandText = commandTextConfig.Value + ';';
+                    }
                 }
-            }
-            else
-            {
-                if (hasSemicolon)
+                else
                 {
-                    var indSemicolon = commandTextConfig.Value.LastIndexOf(';');
-                    commandText = commandTextConfig.Value.Substring(0, indSemicolon);
+                    if (hasSemicolon)
+                    {
+                        var indSemicolon = commandTextConfig.Value.LastIndexOf(';');
+                        commandText = commandTextConfig.Value.Substring(0, indSemicolon);
+                    }
                 }
+                if (!string.IsNullOrEmpty(commandText))
+                    return new KeyValuePair<CommandType, string>(commandTextConfig.Key, commandText);
+                else
+                    return commandTextConfig;
             }
-            if (!string.IsNullOrEmpty(commandText))
-                return new KeyValuePair<CommandType, string>(commandTextConfig.Key, commandText);
-            else
-                return commandTextConfig;
+            catch (Exception ex)
+            {
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS605, commandTextConfig);
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
+            }
         }
 
         protected abstract KeyValuePair<CommandType, string> ConfigureGetCommandText(bool includeDeleted, string includeProperties);
@@ -152,9 +164,11 @@ namespace malone.Core.AdoNet.Repositories
             }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-            return null;
         }
 
         protected abstract KeyValuePair<CommandType, string> ConfigureGetAllCommandText(bool includeDeleted, string includeProperties);
@@ -187,9 +201,11 @@ namespace malone.Core.AdoNet.Repositories
             }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-            return null;
         }
 
         protected abstract KeyValuePair<CommandType, string> ConfigureGetByIdCommandText(bool includeDeleted, string includeProperties);
@@ -224,9 +240,11 @@ namespace malone.Core.AdoNet.Repositories
             }
             catch (Exception ex)
             {
-                CoreExceptionHandler.HandleException<DataAccessException<CoreErrors>>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
             }
-            return null;
         }
 
         protected abstract KeyValuePair<CommandType, string> ConfigureGetEntityCommandText(bool includeDeleted, string includeProperties);
@@ -247,11 +265,9 @@ namespace malone.Core.AdoNet.Repositories
 
         protected abstract KeyValuePair<CommandType, string> ConfigureUpdateCommandText();
 
-        public virtual void Update(TEntity entityToUpdate) { }
+        public virtual void Update(TEntity oldValues, TEntity newValues) { }
 
         protected abstract KeyValuePair<CommandType, string> ConfigureDeleteCommandText();
-
-        public virtual void Delete(TKey id) { }
 
         public virtual void Delete(TEntity entityToDelete) { }
 
@@ -261,7 +277,7 @@ namespace malone.Core.AdoNet.Repositories
     public abstract class AdoNetRepository<TEntity> : AdoNetRepository<int, TEntity>, IRepository<TEntity>
         where TEntity : class, IBaseEntity
     {
-        public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper) : base(unitOfWork, mapper)
+        public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper,ILogger logger) : base(unitOfWork, mapper, logger)
         {
         }
     }

@@ -22,12 +22,20 @@ namespace malone.Core.Sample.mvc.Controllers
         {
             var list = TodoListBC.GetAll(includeProperties: "Items");
 
-            var list2 = TodoListBC.Get(new EFTodoListGetRequest()
-            {
-                Expression = (x => x.Name.Contains("List"))
-            });
+            //Ejemplo para filtrar la lista
+            //var list2 = TodoListBC.Get(new EFTodoListGetRequest()
+            //{
+            //    Expression = (x => x.Name.Contains("List"))
+            //});
 
-            return View();
+            return View(list);
+        }
+
+        public ActionResult Details(int id)
+        {
+            var todoList = TodoListBC.GetById(id);
+
+            return View(todoList);
         }
 
         public ActionResult Create()
@@ -36,13 +44,49 @@ namespace malone.Core.Sample.mvc.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken] //Annotation added
         public ActionResult Create(TodoList todoList)
         {
-
-            TodoListBC.Add(todoList);
-
-            return View();
+            if (ModelState.IsValid)
+            {
+                TodoListBC.Add(todoList);
+                return RedirectToAction("Index");
+            }
+            return View(ModelState);
         }
 
+        public ActionResult Edit(int id)
+        {
+            var todoList = TodoListBC.GetById(id);
+
+            return View(todoList);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken] //Annotation added
+        public ActionResult Edit(TodoList todoList)
+        {
+            if (ModelState.IsValid)
+            {
+                TodoListBC.Update(todoList.Id, todoList);
+                return RedirectToAction("Index");
+            }
+            return View(ModelState);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var todoList = TodoListBC.GetById(id);
+
+            return View(todoList);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken] //Annotation added
+        public ActionResult Delete(TodoList todoList)
+        {
+            TodoListBC.Delete(todoList.Id);
+            return RedirectToAction("Index");
+        }
     }
 }
