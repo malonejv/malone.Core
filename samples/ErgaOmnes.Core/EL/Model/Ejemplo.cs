@@ -1,4 +1,5 @@
 ﻿using malone.Core.Entities.Model;
+using malone.Core.Identity.EntityFramework.Entities;
 
 namespace ErgaOmnes.Core.EL.Model
 {
@@ -6,5 +7,7 @@ namespace ErgaOmnes.Core.EL.Model
     {
         public int Id { get; set; }
         public string Text { get; set; }
+
+        public virtual CoreUser User { get; set; }
     }
 }

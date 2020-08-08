@@ -1,4 +1,4 @@
-﻿using ErgaOmnes.Api.Models;
+﻿using ErgaOmnes.Api.Models.v1;
 using ErgaOmnes.Api.Providers;
 using ErgaOmnes.Api.Results;
 using malone.Core.Identity.EntityFramework;
@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using Microsoft.Web.Http;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -16,11 +17,13 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 
-namespace ErgaOmnes.Api.Controllers
+namespace ErgaOmnes.Api.Controllers.v1
 {
     //[Authorize]
-    [RoutePrefix("Account")]
+    [ApiVersion("1.0")]
+    [RoutePrefix("v{version:apiVersion}/Account")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
