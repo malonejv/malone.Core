@@ -20,7 +20,7 @@ using System.Web.Http;
 namespace ErgaOmnes.Api.Controllers
 {
     //[Authorize]
-    [RoutePrefix("api/Account")]
+    [RoutePrefix("Account")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";

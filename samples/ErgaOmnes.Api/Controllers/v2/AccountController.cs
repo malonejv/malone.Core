@@ -1,6 +1,10 @@
-﻿using ErgaOmnes.Api.Models;
+﻿using ErgaOmnes.Api.Models.v2;
 using ErgaOmnes.Api.Providers;
 using ErgaOmnes.Api.Results;
+using ErgaOmnes.Core.BL;
+using ErgaOmnes.Core.EL.Model;
+using malone.Core.Commons.DI;
+using malone.Core.EF.Entities.Filters;
 using malone.Core.Identity.EntityFramework;
 using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity;
@@ -11,6 +15,7 @@ using Microsoft.Owin.Security.OAuth;
 using Microsoft.Web.Http;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -35,10 +40,12 @@ namespace ErgaOmnes.Api.Controllers.v2
         }
 
         public AccountController(UserBusinessComponent userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat,
+            IEjemploBC ejemploBC)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+            EjemploBC = ejemploBC;
         }
 
         public UserBusinessComponent UserManager
@@ -55,6 +62,8 @@ namespace ErgaOmnes.Api.Controllers.v2
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
+        public IEjemploBC EjemploBC { get; set; }
+
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
@@ -62,11 +71,19 @@ namespace ErgaOmnes.Api.Controllers.v2
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
+            var username = User.Identity.GetUserName();
+            EjemploBC = ServiceLocator.Current.Get<IEjemploBC>();
+            var ejemplo = EjemploBC.GetEntity(new FilterExpression<Ejemplo>
+            {
+                Expression = e => e.User.UserName == username
+            });
+
             return new UserInfoViewModel
             {
                 Email = User.Identity.GetUserName(),
                 HasRegistered = externalLogin == null,
-                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
+                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null,
+                Ejemplo = ejemplo.Text
             };
         }
 

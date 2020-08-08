@@ -1,4 +1,4 @@
-﻿using ErgaOmnes.Api.Models;
+﻿using ErgaOmnes.Api.Models.v1;
 using ErgaOmnes.Api.Providers;
 using ErgaOmnes.Api.Results;
 using malone.Core.Identity.EntityFramework;

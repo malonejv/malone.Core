@@ -15,6 +15,7 @@ namespace ErgaOmnes.Api.Controllers.v1
 {
     [Authorize]
     [ApiVersion("1.0")]
+    [RoutePrefix("v{version:apiVersion}/Ejemplo")]
     public class EjemploController : CoreApiController<EjemploGetRequestParam, Ejemplo, IEjemploBC, IEjemploBV>
     {
 
@@ -25,8 +26,8 @@ namespace ErgaOmnes.Api.Controllers.v1
 
         //GET api/entity
         [HttpPost()]
-        [Route("~/api/Ejemplo/FilterBy")]
-        //[Route("FilterBy")]
+        //[Route("~/api/Ejemplo/FilterBy")]
+        [Route("FilterBy")]
         public IHttpActionResult FilterBy(EjemploGetRequestParam parameters)
         {
             IEnumerable list = GetList(parameters);
