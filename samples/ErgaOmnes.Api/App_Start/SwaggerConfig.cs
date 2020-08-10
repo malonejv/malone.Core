@@ -1,13 +1,10 @@
-using System.Web.Http;
-using WebActivatorEx;
-using ErgaOmnes.Api;
-using Swashbuckle.Application;
-using System.Web.Http.Description;
-using Swashbuckle.Swagger;
-using System.Linq;
-using System.Reflection;
 using System.IO;
+using System.Linq;
+using System.Web.Http;
+using System.Web.Http.Description;
 using ErgaOmnes.Api.App_Start;
+using Swashbuckle.Application;
+using Swashbuckle.Swagger;
 
 //[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -23,7 +20,7 @@ namespace ErgaOmnes.Api
             // add the versioned IApiExplorer and capture the strongly-typed implementation (e.g. VersionedApiExplorer vs IApiExplorer)
             // note: the specified format code will format the version as "'v'major[.minor][-status]"
             var apiExplorer = config
-                                .AddVersionedApiExplorer( 
+                                .AddVersionedApiExplorer(
                                         options =>
                                             {
                                                 options.GroupNameFormat = "'v'VVV";
@@ -82,8 +79,8 @@ namespace ErgaOmnes.Api
                                 info.Version(group.Name, $"Sample API {group.ApiVersion}")
                                     .Contact(c => c.Name("Bill Mei").Email("malonejv@gmail.com"))
                                     .Description(description);
-                                    //.License(l => l.Name("MIT").Url("https://opensource.org/licenses/MIT"))
-                                    //.TermsOfService("Shareware");
+                                //.License(l => l.Name("MIT").Url("https://opensource.org/licenses/MIT"))
+                                //.TermsOfService("Shareware");
                             }
                         });
 
@@ -103,16 +100,16 @@ namespace ErgaOmnes.Api
                         //    .Name("apiKey")
                         //    .In("header");
                         //
-                        swagger.OAuth2("oauth2")
-                            .Description("OAuth2")
-                            .Flow("password")
-                            .AuthorizationUrl("http://localhost:1744/Login.html")
-                            .TokenUrl("http://localhost:1744/token")
-                            .Scopes(scopes =>
-                            {
-                                scopes.Add("read", "Read access to protected resources");
-                                scopes.Add("write", "Write access to protected resources");
-                            });
+                        //swagger.OAuth2("oauth2")
+                        //    .Description("OAuth2")
+                        //    .Flow("password")
+                        //    .AuthorizationUrl("http://localhost:1744/Login.html")
+                        //    .TokenUrl("http://localhost:1744/token")
+                        //    .Scopes(scopes =>
+                        //    {
+                        //        scopes.Add("read", "Read access to protected resources");
+                        //        scopes.Add("write", "Write access to protected resources");
+                        //    });
 
                         // Set this flag to omit descriptions for any actions decorated with the Obsolete attribute
                         //swagger.IgnoreObsoleteActions();
@@ -137,7 +134,7 @@ namespace ErgaOmnes.Api
                         // those comments into the generated docs and UI. You can enable this by providing the path to one or
                         // more Xml comment files.
                         //
-                        //swagger.IncludeXmlComments(GetXmlCommentsPath());
+                        swagger.IncludeXmlComments(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "bin", "ErgaOmnes.Api.xml"));
 
                         // Swashbuckle makes a best attempt at generating Swagger compliant JSON schemas for the various types
                         // exposed in your API. However, there may be occasions when more control of the output is needed.

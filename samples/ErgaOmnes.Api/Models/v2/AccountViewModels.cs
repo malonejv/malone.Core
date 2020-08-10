@@ -32,8 +32,6 @@ namespace ErgaOmnes.Api.Models.v2
         public bool HasRegistered { get; set; }
 
         public string LoginProvider { get; set; }
-
-        public string Ejemplo { get; set; }
     }
 
     public class UserLoginInfoViewModel

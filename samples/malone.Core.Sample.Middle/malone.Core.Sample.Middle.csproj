@@ -157,6 +157,14 @@
     <Compile Include="EL\Model\RoleTypeEnum.cs" />
     <Compile Include="EL\Model\TaskItem.cs" />
     <Compile Include="EL\Model\TodoList.cs" />
+    <Compile Include="EL\Resource\EntitiesEnum.cs" />
+    <Compile Include="EL\Resource\Entities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Entities.resx</DependentUpon>
+    </Compile>
+    <Compile Include="EL\Resource\EntitiesLocalizationHandler.cs" />
+    <Compile Include="EL\Resource\IEntitiesLocalizationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +180,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DAL\Migrations\202005240038453_Change2.resx">
       <DependentUpon>202005240038453_Change2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EL\Resource\Entities.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Entities.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -17,7 +17,7 @@ namespace malone.Core.Sample.mvc.Controllers
         {
             TodoListBC = todoListBC;
         }
-        // GET: TodoList
+
         public ActionResult Index()
         {
             var list = TodoListBC.GetAll(includeProperties: "Items");
@@ -52,7 +52,7 @@ namespace malone.Core.Sample.mvc.Controllers
                 TodoListBC.Add(todoList);
                 return RedirectToAction("Index");
             }
-            return View(ModelState);
+            return View(todoList);
         }
 
         public ActionResult Edit(int id)
@@ -71,7 +71,7 @@ namespace malone.Core.Sample.mvc.Controllers
                 TodoListBC.Update(todoList.Id, todoList);
                 return RedirectToAction("Index");
             }
-            return View(ModelState);
+            return View(todoList);
         }
 
         public ActionResult Delete(int id)

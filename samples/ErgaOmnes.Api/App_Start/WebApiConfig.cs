@@ -28,8 +28,9 @@ namespace ErgaOmnes.Api
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                routeTemplate: "v{apiVersion}/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional },
+                constraints: new { apiVersion = new ApiVersionRouteConstraint() }
             );
 
             //Descomentar si no queremos devolver XML nunca

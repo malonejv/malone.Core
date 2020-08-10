@@ -38,6 +38,7 @@ namespace ErgaOmnes.Api.App_Start
                             new Parameter{
                                 type="string",
                                 name="password",
+                                format="password",
                                 required=false,
                                 @in="formData"
                             },
