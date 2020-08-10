@@ -1,4 +1,5 @@
 ﻿using malone.Core.Entities.Model;
+using malone.Core.Identity.EntityFramework.Entities;
 
 namespace ErgaOmnes.Core.EL.Model
 {

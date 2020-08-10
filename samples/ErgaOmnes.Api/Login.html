@@ -160,10 +160,10 @@
             });
 
             $('#btnGoogleLogin').click(function () {
-                //window.location.href ="/api/Account/ExternalLogin?provider=Google&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Flocalhost%3A1744%2F&state=WN3ic29KkcdlGH16N1IzYGouKpE3PSpCMSKfSw7kISg1"
+                //window.location.href ="/v1/Account/ExternalLogin?provider=Google&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Flocalhost%3A1744%2F&state=WN3ic29KkcdlGH16N1IzYGouKpE3PSpCMSKfSw7kISg1"
                 $.ajax({
                     // Post username, password & the grant type to /token
-                    url: 'http://localhost:1744/api/Account/ExternalLogins?returnUrl=%2FLogin.html&generateState=true',
+                    url: 'http://localhost:1744/v1/Account/ExternalLogins?returnUrl=%2FLogin.html&generateState=true',
                     method: 'GET',
                     contentType: 'application/json',
                     success: function (response) {

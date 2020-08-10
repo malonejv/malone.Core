@@ -1,4 +1,4 @@
-﻿using ErgaOmnes.Api.Models;
+﻿using ErgaOmnes.Api.Models.v1;
 using ErgaOmnes.Api.Providers;
 using ErgaOmnes.Api.Results;
 using malone.Core.Identity.EntityFramework;
@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using Microsoft.Web.Http;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -16,11 +17,13 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 
-namespace ErgaOmnes.Api.Controllers
+namespace ErgaOmnes.Api.Controllers.v1
 {
-    //[Authorize]
-    [RoutePrefix("Account")]
+    [Authorize]
+    [ApiVersion("1.0")]
+    [RoutePrefix("v{version:apiVersion}/Account")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
@@ -51,7 +54,7 @@ namespace ErgaOmnes.Api.Controllers
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
-        // GET api/Account/UserInfo
+        // GET Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
         public UserInfoViewModel GetUserInfo()
@@ -66,7 +69,7 @@ namespace ErgaOmnes.Api.Controllers
             };
         }
 
-        // POST api/Account/Logout
+        // POST Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()
         {
@@ -74,7 +77,7 @@ namespace ErgaOmnes.Api.Controllers
             return Ok();
         }
 
-        // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
+        // GET Account/ManageInfo?returnUrl=%2F&generateState=true
         [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
         {
@@ -114,7 +117,7 @@ namespace ErgaOmnes.Api.Controllers
             };
         }
 
-        // POST api/Account/ChangePassword
+        // POST Account/ChangePassword
         [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
@@ -134,7 +137,7 @@ namespace ErgaOmnes.Api.Controllers
             return Ok();
         }
 
-        // POST api/Account/SetPassword
+        // POST Account/SetPassword
         [Route("SetPassword")]
         public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
         {
@@ -153,7 +156,7 @@ namespace ErgaOmnes.Api.Controllers
             return Ok();
         }
 
-        // POST api/Account/AddExternalLogin
+        // POST Account/AddExternalLogin
         [Route("AddExternalLogin")]
         public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBindingModel model)
         {
@@ -191,7 +194,7 @@ namespace ErgaOmnes.Api.Controllers
             return Ok();
         }
 
-        // POST api/Account/RemoveLogin
+        // POST Account/RemoveLogin
         [Route("RemoveLogin")]
         public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
         {
@@ -220,7 +223,7 @@ namespace ErgaOmnes.Api.Controllers
             return Ok();
         }
 
-        // GET api/Account/ExternalLogin
+        // GET Account/ExternalLogin
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
         [AllowAnonymous]
@@ -277,7 +280,7 @@ namespace ErgaOmnes.Api.Controllers
             return Ok();
         }
 
-        // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
+        // GET Account/ExternalLogins?returnUrl=%2F&generateState=true
         [AllowAnonymous]
         [Route("ExternalLogins")]
         public IEnumerable<ExternalLoginViewModel> GetExternalLogins(string returnUrl, bool generateState = false)
@@ -318,7 +321,7 @@ namespace ErgaOmnes.Api.Controllers
             return logins;
         }
 
-        // POST api/Account/Register
+        // POST Account/Register
         [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
@@ -340,7 +343,7 @@ namespace ErgaOmnes.Api.Controllers
             return Ok();
         }
 
-        // POST api/Account/RegisterExternal
+        // POST Account/RegisterExternal
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("RegisterExternal")]
