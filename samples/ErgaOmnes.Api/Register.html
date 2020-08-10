@@ -96,7 +96,7 @@
             // Save the new user details
             $('#btnRegister').click(function () {
                 $.ajax({
-                    url: '/api/account/register',
+                    url: '/v1/account/register',
                     method: 'POST',
                     data: {
                         email: $('#txtEmail').val(),

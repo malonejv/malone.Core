@@ -23,9 +23,9 @@ namespace ErgaOmnes.Api.Controllers.v2
         {
         }
 
-        //GET api/entity
+        //GET entity
         [HttpPost()]
-        //[Route("~/api/Ejemplo/FilterBy")]
+        //[Route("~/Ejemplo/FilterBy")]
         [Route("FilterBy")]
         public IHttpActionResult FilterBy(EjemploGetRequestParam parameters)
         {
