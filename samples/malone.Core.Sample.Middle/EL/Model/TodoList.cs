@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Resources;
 
 namespace malone.Core.Sample.Middle.EL.Model
 {
@@ -12,7 +13,7 @@ namespace malone.Core.Sample.Middle.EL.Model
         public int Id { get; set; }
 
         [Required(ErrorMessage = "El campo nombre es requerido")]
-        [DisplayName("Nombre")]
+        [DisplayName("Nombre de Lista")]
         [StringLength(100)]
         public string Name { get; set; }
 

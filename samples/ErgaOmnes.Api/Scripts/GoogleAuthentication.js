@@ -11,7 +11,7 @@
 
 function isUserRegistered(accessToken) {
     $.ajax({
-        url: '/api/Account/UserInfo',
+        url: '/v1/Account/UserInfo',
         method: 'GET',
         headers: {
             'content-type': 'application/JSON',
@@ -32,14 +32,14 @@ function isUserRegistered(accessToken) {
 
 function signupExternalUser(accessToken) {
     $.ajax({
-        url: '/api/Account/RegisterExternal',
+        url: '/v1/Account/RegisterExternal',
         method: 'POST',
         headers: {
             'content-type': 'application/json',
             'Authorization': 'Bearer ' + accessToken
         },
         success: function () {
-            window.location.href = "/api/Account/ExternalLogin?provider=Google&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Flocalhost%3A1744%2FLogin.html&state=NCs9-3qriIcVAQPWoUPnrrAYUOl6BDZKxkmB3zFvTTc1";
+            window.location.href = "/v1/Account/ExternalLogin?provider=Google&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Flocalhost%3A1744%2FLogin.html&state=NCs9-3qriIcVAQPWoUPnrrAYUOl6BDZKxkmB3zFvTTc1";
         }
     });
 
