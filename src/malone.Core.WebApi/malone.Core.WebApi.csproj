@@ -79,16 +79,8 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="capibara.png" Pack="true" PackagePath="\" />
-    <None Include="malone.Core.WebApi.Debug.nuspec">
-      <DependentUpon>malone.Core.WebApi.nuspec</DependentUpon>
-      <IsTransformFile>true</IsTransformFile>
-    </None>
     <None Include="malone.Core.WebApi.nuspec">
       <TransformOnBuild>true</TransformOnBuild>
-    </None>
-    <None Include="malone.Core.WebApi.Release.nuspec">
-      <DependentUpon>malone.Core.WebApi.nuspec</DependentUpon>
-      <IsTransformFile>true</IsTransformFile>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -110,11 +102,4 @@
       )
     </PostBuildEvent>
   </PropertyGroup>
-  <Import Project="..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets" Condition="Exists('..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets'))" />
-  </Target>
 </Project>

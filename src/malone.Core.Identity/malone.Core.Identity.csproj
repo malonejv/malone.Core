@@ -114,16 +114,8 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="capibara.png" Pack="true" PackagePath="\" />
-    <None Include="malone.Core.Identity.Debug.nuspec">
-      <DependentUpon>malone.Core.Identity.nuspec</DependentUpon>
-      <IsTransformFile>true</IsTransformFile>
-    </None>
     <None Include="malone.Core.Identity.nuspec">
       <TransformOnBuild>true</TransformOnBuild>
-    </None>
-    <None Include="malone.Core.Identity.Release.nuspec">
-      <DependentUpon>malone.Core.Identity.nuspec</DependentUpon>
-      <IsTransformFile>true</IsTransformFile>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -148,8 +140,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets'))" />
   </Target>
   <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
-  <Import Project="..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets" Condition="Exists('..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets')" />
 </Project>

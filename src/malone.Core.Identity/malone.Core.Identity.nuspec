@@ -11,7 +11,7 @@
 		<projectUrl>https://github.com/malonejv/malone.Core</projectUrl>
 		<description>$description$</description>
 		<copyright>Copyright 2020</copyright>
-		<repository type="git" url="https://github.com/malonejv/malone.Core.git" branch="master" />
+		<repository type="git" url="https://github.com/malonejv/malone.Core.git" branch="development" />
 		<icon>capibara.png</icon>
 		<dependencies>
 			<group targetFramework=".NETFramework4.5" />
@@ -27,16 +27,16 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="bin\Release\**" exclude="*.pdb" target="lib/net45" />
-		<file src="bin\Release\**" exclude="*.pdb" target="lib/net451" />
-		<file src="bin\Release\**" exclude="*.pdb" target="lib/net452" />
-		<file src="bin\Release\**" exclude="*.pdb" target="lib/net46" />
-		<file src="bin\Release\**" exclude="*.pdb" target="lib/net461" />
-		<file src="bin\Release\**" exclude="*.pdb" target="lib/net462" />
-		<file src="bin\Release\**" exclude="*.pdb" target="lib/net47" />
-		<file src="bin\Release\**" exclude="*.pdb" target="lib/net471" />
-		<file src="bin\Release\**" exclude="*.pdb" target="lib/net472" />
-		<file src="bin\Release\**" exclude="*.pdb" target="lib/net48" />
+		<file src="bin\$configuration$\**" target="lib/net45" />
+		<file src="bin\$configuration$\**" target="lib/net451" />
+		<file src="bin\$configuration$\**" target="lib/net452" />
+		<file src="bin\$configuration$\**" target="lib/net46" />
+		<file src="bin\$configuration$\**" target="lib/net461" />
+		<file src="bin\$configuration$\**" target="lib/net462" />
+		<file src="bin\$configuration$\**" target="lib/net47" />
+		<file src="bin\$configuration$\**" target="lib/net471" />
+		<file src="bin\$configuration$\**" target="lib/net472" />
+		<file src="bin\$configuration$\**" target="lib/net48" />
 		<file src="capibara.png" />
 	</files>
 </package>
