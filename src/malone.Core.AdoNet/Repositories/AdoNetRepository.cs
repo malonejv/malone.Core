@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using AutoMapper;
 using malone.Core.AdoNet.Context;
 using malone.Core.AdoNet.Entities.Filters;
-using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Repositories;
@@ -24,19 +22,16 @@ namespace malone.Core.AdoNet.Repositories
         protected AdoNetContext Context => _context;
 
         protected IUnitOfWork UnitOfWork { get; private set; }
-        protected Mapper Mapper { get; private set; }
         internal ILogger Logger { get; }
 
 
-        public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper, ILogger logger)
+        public AdoNetRepository(IUnitOfWork unitOfWork, ILogger logger)
         {
             if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
-            if (mapper == null) throw new ArgumentNullException(nameof(mapper));
 
             UnitOfWork = unitOfWork;
             _context = (AdoNetContext)UnitOfWork.Context;
 
-            Mapper = mapper;
             Logger = logger;
         }
 
@@ -65,9 +60,9 @@ namespace malone.Core.AdoNet.Repositories
                 if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
                 {
                     TEntity entityMapped;
-                    foreach (var dr in ds.Tables[0].Rows)
+                    foreach (DataRow row in ds.Tables[0].Rows)
                     {
-                        entityMapped = Mapper.Map<TEntity>(dr);
+                        entityMapped = Map(row);
                         result.Add(entityMapped);
                     }
                 }
@@ -271,13 +266,15 @@ namespace malone.Core.AdoNet.Repositories
 
         public virtual void Delete(TEntity entityToDelete) { }
 
+        protected abstract TEntity Map(DataRow row);
+
     }
 
 
     public abstract class AdoNetRepository<TEntity> : AdoNetRepository<int, TEntity>, IRepository<TEntity>
         where TEntity : class, IBaseEntity
     {
-        public AdoNetRepository(IUnitOfWork unitOfWork, Mapper mapper,ILogger logger) : base(unitOfWork, mapper, logger)
+        public AdoNetRepository(IUnitOfWork unitOfWork, ILogger logger) : base(unitOfWork, logger)
         {
         }
     }
