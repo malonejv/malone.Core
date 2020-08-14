@@ -53,7 +53,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="capibara.png" Pack="true" PackagePath="\" />
-    <None Include="malone.Core.AdoNet.SqlServer.nuspec" />
+    <None Include="malone.Core.AdoNet.SqlServer.Debug.nuspec">
+      <DependentUpon>malone.Core.AdoNet.SqlServer.nuspec</DependentUpon>
+      <IsTransformFile>true</IsTransformFile>
+    </None>
+    <None Include="malone.Core.AdoNet.SqlServer.nuspec">
+      <TransformOnBuild>true</TransformOnBuild>
+    </None>
+    <None Include="malone.Core.AdoNet.SqlServer.Release.nuspec">
+      <DependentUpon>malone.Core.AdoNet.SqlServer.nuspec</DependentUpon>
+      <IsTransformFile>true</IsTransformFile>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -63,17 +73,11 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-      if $(ConfigurationName) == ReleaseNuget (
-      nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-      nuget push -SkipDuplicate -source "github"
-      )
-    </PostBuildEvent>
-  </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets'))" />
   </Target>
+  <Import Project="..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets" Condition="Exists('..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets')" />
 </Project>

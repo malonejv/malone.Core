@@ -1,5 +1,5 @@
-﻿using malone.Core.Commons.Initializers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using malone.Core.Commons.Initializers;
 using Unity;
 
 namespace malone.Core.Sample.DI

@@ -198,7 +198,17 @@
     <None Include="coreSettingsSchema.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="malone.Core.nuspec" />
+    <None Include="malone.Core.Debug.nuspec">
+      <DependentUpon>malone.Core.nuspec</DependentUpon>
+      <IsTransformFile>true</IsTransformFile>
+    </None>
+    <None Include="malone.Core.nuspec">
+      <TransformOnBuild>true</TransformOnBuild>
+    </None>
+    <None Include="malone.Core.Release.nuspec">
+      <DependentUpon>malone.Core.nuspec</DependentUpon>
+      <IsTransformFile>true</IsTransformFile>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +232,7 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets'))" />
   </Target>
   <Target Name="GetAssemblyVersion">
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
@@ -280,6 +291,7 @@ if $(ConfigurationName) == ReleaseNuget (
 	nuget push -SkipDuplicate -source "github"
 )</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets" Condition="Exists('..\..\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--For more information on using transformations see the web.config examples at http://go.microsoft.com/fwlink/?LinkId=214134. -->
+<package xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+	<metadata>
+		<repository type="git" url="https://github.com/malonejv/malone.Core.git" branch="development" xdt:Transform="Replace" />
+	</metadata>
+	<files  xdt:Transform="Replace">
+		<file src="bin\Debug\**" target="lib/net45" />
+		<file src="bin\Debug\**" target="lib/net451" />
+		<file src="bin\Debug\**" target="lib/net452" />
+		<file src="bin\Debug\**" target="lib/net46" />
+		<file src="bin\Debug\**" target="lib/net461" />
+		<file src="bin\Debug\**" target="lib/net462" />
+		<file src="bin\Debug\**" target="lib/net47" />
+		<file src="bin\Debug\**" target="lib/net471" />
+		<file src="bin\Debug\**" target="lib/net472" />
+		<file src="bin\Debug\**" target="lib/net48" />
+		<file src="readme.txt" />
+		<file src="capibara.png" />
+		<file src="..\web.config.transform"  target="content" />
+	</files>
+</package>

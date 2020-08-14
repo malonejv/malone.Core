@@ -27,16 +27,16 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="bin\Release\**\*.ddl" target="lib/net45" />
-		<file src="bin\Release\**\*.ddl" target="lib/net451" />
-		<file src="bin\Release\**\*.ddl" target="lib/net452" />
-		<file src="bin\Release\**\*.ddl" target="lib/net46" />
-		<file src="bin\Release\**\*.ddl" target="lib/net461" />
-		<file src="bin\Release\**\*.ddl" target="lib/net462" />
-		<file src="bin\Release\**\*.ddl" target="lib/net47" />
-		<file src="bin\Release\**\*.ddl" target="lib/net471" />
-		<file src="bin\Release\**\*.ddl" target="lib/net472" />
-		<file src="bin\Release\**\*.ddl" target="lib/net48" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net45" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net451" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net452" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net46" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net461" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net462" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net47" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net471" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net472" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net48" />
 		<file src="readme.txt" />
 		<file src="capibara.png" />
 		<file src="..\web.config.transform"  target="content" />

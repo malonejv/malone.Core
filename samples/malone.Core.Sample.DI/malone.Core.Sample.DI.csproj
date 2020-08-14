@@ -174,7 +174,7 @@
       <Name>malone.Core.Identity</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\malone.Core\malone.Core.csproj">
-      <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
+      <Project>{b59a92f9-abdc-4200-a80d-58a5ab936591}</Project>
       <Name>malone.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\malone.Core.Sample.Middle\malone.Core.Sample.Middle.csproj">

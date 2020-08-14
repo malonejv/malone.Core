@@ -76,12 +76,4 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-      if $(ConfigurationName) == ReleaseNuget (
-      nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-      nuget push -SkipDuplicate -source "github"
-      )
-    </PostBuildEvent>
-  </PropertyGroup>
 </Project>
