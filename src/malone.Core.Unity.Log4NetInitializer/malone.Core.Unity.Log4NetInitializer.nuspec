@@ -25,17 +25,18 @@
 			<group targetFramework=".NETFramework4.7.2" />
 			<group targetFramework=".NETFramework4.8" />
 		</dependencies>
-		<files>
-			<file src="bin\Release\**" exclude="*.pdb" target="lib/net45" />
-			<file src="bin\Release\**" exclude="*.pdb" target="lib/net451" />
-			<file src="bin\Release\**" exclude="*.pdb" target="lib/net452" />
-			<file src="bin\Release\**" exclude="*.pdb" target="lib/net46" />
-			<file src="bin\Release\**" exclude="*.pdb" target="lib/net461" />
-			<file src="bin\Release\**" exclude="*.pdb" target="lib/net462" />
-			<file src="bin\Release\**" exclude="*.pdb" target="lib/net47" />
-			<file src="bin\Release\**" exclude="*.pdb" target="lib/net471" />
-			<file src="bin\Release\**" exclude="*.pdb" target="lib/net472" />
-			<file src="bin\Release\**" exclude="*.pdb" target="lib/net48" />
+	</metadata>
+	<files>
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net45" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net451" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net452" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net46" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net461" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net462" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net47" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net471" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net472" />
+		<file src="bin\Release\**" exclude="*.pdb" target="lib/net48" />
 		<file src="capibara.png" />
 	</files>
 </package>
