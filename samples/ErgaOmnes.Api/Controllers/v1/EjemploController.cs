@@ -20,13 +20,17 @@ namespace ErgaOmnes.Api.Controllers.v1
     [RoutePrefix("v{version:apiVersion}/Ejemplo")]
     public class EjemploController : CoreApiController<EjemploGetRequestParam, Ejemplo, IEjemploBC, IEjemploBV>
     {
+
+        public Mapper Mapper { get; set; }
+
         /// <summary>
         /// Instancia un controlador de tipo <c>EjemploController</c>.
         /// </summary>
         /// <param name="businessComponent">Componente de negocio para administrar el recurso REST.</param>
         /// <param name="mapperInstance">instancia de Autommaper.</param>
-        public EjemploController(IEjemploBC businessComponent, Mapper mapperInstance) : base(businessComponent, mapperInstance)
+        public EjemploController(IEjemploBC businessComponent, Mapper mapperInstance) : base(businessComponent)
         {
+            Mapper = mapperInstance;
         }
 
 
