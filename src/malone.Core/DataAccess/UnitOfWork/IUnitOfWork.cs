@@ -7,7 +7,7 @@ using malone.Core.DataAccess.Context;
 
 namespace malone.Core.DataAccess.UnitOfWork
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         IContext Context { get; }
 

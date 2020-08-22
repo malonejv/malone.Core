@@ -1,0 +1,116 @@
+
+
+
+--***********
+--***********
+
+CREATE GENERATOR SEQ_TODOLISTS_ID;
+SET GENERATOR SEQ_TODOLISTS_ID TO 0;
+
+-------------
+
+SET TERM ^ ;
+
+CREATE TRIGGER TODOLIST_SEQ FOR "TodoLists"
+ ACTIVE 
+ BEFORE INSERT
+ POSITION 0
+AS 
+BEGIN 
+    IF (new."Id" IS NULL) THEN
+        new."Id" = gen_id(SEQ_TODOLISTS_ID, 1);
+END^
+
+SET TERM ; ^
+
+
+--***********
+--***********
+
+CREATE GENERATOR SEQ_TASKITEMS_ID;
+SET GENERATOR SEQ_TASKITEMS_ID TO 0;
+
+-------------
+
+SET TERM ^ ;
+
+CREATE TRIGGER TASKITEMS_SEQ FOR "TaskItems"
+ ACTIVE 
+ BEFORE INSERT
+ POSITION 0
+AS 
+BEGIN 
+    IF (new."Id" IS NULL) THEN
+        new."Id" = gen_id(SEQ_TASKITEMS_ID, 1);
+END^
+
+SET TERM ; ^
+
+--***********
+--***********
+
+CREATE GENERATOR SEQ_ROLES_ID;
+SET GENERATOR SEQ_ROLES_ID TO 0;
+
+-------------
+
+SET TERM ^ ;
+
+CREATE TRIGGER ROLES_SEQ FOR "Roles"
+ ACTIVE 
+ BEFORE INSERT
+ POSITION 0
+AS 
+BEGIN 
+    IF (new."Id" IS NULL) THEN
+        new."Id" = gen_id(SEQ_ROLES_ID, 1);
+END^
+
+SET TERM ; ^
+
+--***********
+--***********
+
+CREATE GENERATOR SEQ_USERS_ID;
+SET GENERATOR SEQ_USERS_ID TO 0;
+
+-------------
+
+SET TERM ^ ;
+
+CREATE TRIGGER USERS_SEQ FOR "Users"
+ ACTIVE 
+ BEFORE INSERT
+ POSITION 0
+AS 
+BEGIN 
+    IF (new."Id" IS NULL) THEN
+        new."Id" = gen_id(SEQ_USERS_ID, 1);
+END^
+
+SET TERM ; ^
+
+--***********
+--***********
+
+CREATE GENERATOR SEQ_USERSCLAIMS_ID;
+SET GENERATOR SEQ_USERSCLAIMS_ID TO 0;
+
+-------------
+
+SET TERM ^ ;
+
+CREATE TRIGGER USERSCLAIMS_SEQ FOR "UsersClaims"
+ ACTIVE 
+ BEFORE INSERT
+ POSITION 0
+AS 
+BEGIN 
+    IF (new."Id" IS NULL) THEN
+        new."Id" = gen_id(SEQ_USERSCLAIMS_ID, 1);
+END^
+
+SET TERM ; ^
+
+--***********
+--***********

@@ -62,6 +62,13 @@
       <Project>{492F80C1-E1F2-4CC9-8DBE-83BA63E7DE4C}</Project>
       <Name>malone.Core.AdoNet</Name>
     </ProjectReference>
+    <ProjectReference Include="..\malone.Core\malone.Core.csproj">
+      <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
+      <Name>malone.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TypeConverters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
