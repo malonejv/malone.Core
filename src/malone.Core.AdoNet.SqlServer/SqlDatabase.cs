@@ -1,17 +1,12 @@
-﻿using malone.Core.AdoNet.Database;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
+using malone.Core.AdoNet.Database;
 
-namespace malone.Core.AdoNet.Provider.SqlServer
+namespace malone.Core.AdoNet.SqlServer
 {
     public class SqlDatabase : IDatabase
     {
-        private const string ID = "@Id";
-        private const string IS_DELETED = "@IsDeleted";
-
         private string ConnectionString { get; set; }
 
 
@@ -33,16 +28,6 @@ namespace malone.Core.AdoNet.Provider.SqlServer
             sqlconnection.Dispose();
         }
 
-        public IDbCommand CreateCommand(string commandText, CommandType commandType, IDbConnection connection)
-        {
-            return new SqlCommand()
-            {
-                CommandText = commandText,
-                CommandType = commandType,
-                Connection = (SqlConnection)connection
-            };
-        }
-
         public IDataAdapter CreateAdapter(IDbCommand command)
         {
             return new SqlDataAdapter((SqlCommand)command);
@@ -53,33 +38,48 @@ namespace malone.Core.AdoNet.Provider.SqlServer
             SqlCommand sqlCommand = (SqlCommand)command;
             return sqlCommand.CreateParameter();
         }
-        public void AddParameter(IDbCommand command, IDbDataParameter parameter, object type)
-        {
-            SqlParameter sqlParameter = (SqlParameter)parameter;
-            sqlParameter.SqlDbType = (SqlDbType)type;
 
-            command.Parameters.Add(sqlParameter);
+        public void AddCommandParameter(IDbCommand command, string parameterName, object value, ParameterDirection parameterdirection, object parameterType)
+        {
+            SqlCommand sqlCommand = SqlDatabase.ValidateCommand(command);
+            if (parameterType is SqlDbType)
+            {
+                var dbType = (SqlDbType)parameterType;
+                SqlParameter sqlParameter = sqlCommand.Parameters.Add(parameterName, dbType);
+                sqlParameter.Value = value;
+                sqlParameter.Direction = parameterdirection;
+            }
+            else
+            {
+                //TODO: manejar con errores del core.
+                throw new InvalidOperationException(string.Format("SqlType unrecognized: {0}", (object)parameterName));
+            }
         }
 
-        public void AddParameterId(IDbCommand command, object id)
+        public void AddCommandParameter(IDbCommand command, string parameterName, object value, ParameterDirection parameterdirection, object parameterType, int size)
         {
-            var parameterId = (SqlParameter)CreateParameter(command);
-            parameterId.ParameterName = ID;
-            parameterId.Value = (SqlDbType)id;
-            parameterId.SqlDbType = SqlDbType.Int;
-
-            command.Parameters.Add(parameterId);
+            SqlCommand sqlCommand = SqlDatabase.ValidateCommand(command);
+            if (parameterType is SqlDbType)
+            {
+                var dbType = (SqlDbType)parameterType;
+                SqlParameter sqlParameter = sqlCommand.Parameters.Add(parameterName, dbType, size);
+                sqlParameter.Value = value;
+                sqlParameter.Direction = parameterdirection;
+            }
+            else
+            {
+                //TODO: manejar con errores del core.
+                throw new InvalidOperationException(string.Format("SqlType unrecognized: {0}", (object)parameterName));
+            }
         }
 
-        public void AddParameterIsDeleted(IDbCommand command, object isDeleted)
+        private static SqlCommand ValidateCommand(IDbCommand command)
         {
-            var parameterIsDeleted = (SqlParameter)CreateParameter(command);
-            parameterIsDeleted.ParameterName = IS_DELETED;
-            parameterIsDeleted.Value = isDeleted;
-            parameterIsDeleted.SqlDbType = SqlDbType.Bit;
-
-            command.Parameters.Add(parameterIsDeleted);
+            if (!(command is SqlCommand sqlCommand))
+                throw new InvalidOperationException("Error");
+            //TODO: manejar con errores del core.
+            //string.Format((IFormatProvider)CultureInfo.CurrentCulture, Resources.SqlCommandExpected, (object)command.GetType().FullName))
+            return sqlCommand;
         }
-
     }
 }

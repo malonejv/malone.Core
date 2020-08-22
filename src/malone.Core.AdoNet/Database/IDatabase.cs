@@ -9,9 +9,9 @@ namespace malone.Core.AdoNet.Database
     {
         IDbConnection CreateConnection();
         void CloseConnection(IDbConnection connection);
-        IDbCommand CreateCommand(string commandText, CommandType commandType, IDbConnection connection);
         IDataAdapter CreateAdapter(IDbCommand command);
         IDbDataParameter CreateParameter(IDbCommand command);
-        void AddParameter(IDbCommand command, IDbDataParameter parameter, object type);
+        void AddCommandParameter(IDbCommand command, string parameterName, object value, ParameterDirection parameterdirection, object parameterType);
+        void AddCommandParameter(IDbCommand command, string parameterName, object value, ParameterDirection parameterdirection, object parameterType, int size);
     }
 }

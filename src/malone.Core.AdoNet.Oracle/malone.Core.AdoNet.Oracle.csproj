@@ -53,11 +53,12 @@
     </Compile>
     <Compile Include="Attributes\OracleResultSetAttribute.cs" />
     <Compile Include="OracleDatabase.cs" />
-    <Compile Include="Parameters\OracleDecimalToIntParameterConverter.cs" />
-    <Compile Include="Parameters\OracleNumberToDecimalConverter.cs" />
-    <Compile Include="Parameters\OracleNumberToFloatConverter.cs" />
-    <Compile Include="Parameters\OracleStringToStringParameterConverter.cs" />
+    <Compile Include="TypeConverters\OracleDecimalToIntParameterConverter.cs" />
+    <Compile Include="TypeConverters\OracleNumberToDecimalConverter.cs" />
+    <Compile Include="TypeConverters\OracleNumberToFloatConverter.cs" />
+    <Compile Include="TypeConverters\OracleStringToStringParameterConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeConverters\OracleVarcharToSecureString.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -71,6 +72,10 @@
     <ProjectReference Include="..\malone.Core.AdoNet\malone.Core.AdoNet.csproj">
       <Project>{492F80C1-E1F2-4CC9-8DBE-83BA63E7DE4C}</Project>
       <Name>malone.Core.AdoNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core\malone.Core.csproj">
+      <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
+      <Name>malone.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

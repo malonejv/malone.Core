@@ -4,6 +4,8 @@ using malone.Core.Commons.Helpers.Extensions;
 using System;
 using System.Configuration;
 using System.Reflection;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace malone.Core.AdoNet.Database
 {
@@ -25,51 +27,57 @@ namespace malone.Core.AdoNet.Database
             Configuration = configuration;
 
             var coreSettings = Configuration.GetSection<CoreSettingsSection>();
-            if(coreSettings == null) throw new ConfigurationErrorsException(nameof(coreSettings));
+            if (coreSettings == null) throw new ConfigurationErrorsException(nameof(coreSettings));
 
             DatabaseConfiguration = coreSettings.DatabaseConfiguration;
         }
 
         //TODO: Terminar
-        public IDatabase CreateDatabase()
+        public IDatabase CreateDatabase(string connectionStringName)
         {
-            //// Verify a DatabaseFactoryConfiguration line exists in the web.config.
-            //if (DatabaseConfiguration.Providers == null || DatabaseConfiguration.Providers.Count == 0)
-            //{
-            //    throw new Exception("Database Provider not defined in DatabaseFactoryConfiguration section of web.config.");
-            //}
-            //try
-            //{
-            //    DatabaseProvider provider = default(DatabaseProvider);
-            //    //TODO: Corregir. Solo obtengo el 1er proveedor.
-            //    DatabaseConfiguration.Providers
-            //    Enum.TryParse<DatabaseProvider>(DatabaseConfiguration.Providers, out provider);
+            // Verify a DatabaseFactoryConfiguration line exists in the web.config.
+            if (DatabaseConfiguration.Providers == null || DatabaseConfiguration.Providers.Count == 0)
+            {
+                //TODO: Utilizar errores del Core
+                throw new Exception("Database Provider not defined in DatabaseFactoryConfiguration section of config file.");
+            }
 
-            //    // Find the class
-            //    Type databaseType = Type.GetType(provider.GetDescription());
+            try
+            {
+                DatabaseProviderElement providerElement = DatabaseConfiguration.Providers
+                                                                        .Cast<DatabaseProviderElement>()
+                                                                        .Where(p => p.ConnectionStringName == connectionStringName)
+                                                                        .FirstOrDefault();
 
-            //    // Get it's constructor
-            //    ConstructorInfo constructor = databaseType.GetConstructor(new Type[] { });
+                DatabaseProvider provider = default(DatabaseProvider);
+                Enum.TryParse<DatabaseProvider>(providerElement.Name, out provider);
 
-            //    // Invoke it's constructor, which returns an instance.
-            //    string connectionStringName = Configuration.GetConnectionString(DatabaseConfiguration.ConnectionStringName);
-            //    object[] args = { connectionStringName };
-            //    IDatabase database = (IDatabase)constructor.Invoke(args);
+                // Find the class
+                Type databaseType = Type.GetType(provider.GetDescription());
 
-            //    // Pass back the instance as a Database
-            //    return database;
-            //}
-            //catch (ArgumentException)
-            //{
-            //    throw new Exception("Not a valid Database Provider Name.");
-            //}
-            //catch (Exception excep)
-            //{
-            //    throw new Exception("Error instantiating database " + DatabaseConfiguration.Provider + ". " + excep.Message);
-            //}
-            return null;
+                // Get it's constructor
+                ConstructorInfo constructor = databaseType.GetConstructor(new Type[] { typeof(string) });
+
+                var connectionString = Configuration.GetConnectionString(connectionStringName);
+
+                // Invoke it's constructor, which returns an instance.
+                object[] args = { connectionString };
+                IDatabase database = (IDatabase)constructor.Invoke(args);
+
+                // Pass back the instance as a Database
+                return database;
+            }
+            catch (ArgumentException)
+            {
+                //TODO: Utilizar errores del Core
+                throw new Exception("Not a valid Database Provider Name.");
+            }
+            catch (Exception excep)
+            {
+                //TODO: Utilizar errores del Core
+                throw new Exception("Error instantiating database " + connectionStringName + ". " + excep.Message);
+            }
         }
-
     }
 
 }

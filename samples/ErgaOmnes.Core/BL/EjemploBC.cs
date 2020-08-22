@@ -14,8 +14,8 @@ namespace ErgaOmnes.Core.BL
 
     public class EjemploBC : BusinessComponent<Ejemplo, IEjemploBV>, IEjemploBC
     {
-        public EjemploBC(IUnitOfWork unitOfWork, IEjemploBV businessValidator, IRepository<Ejemplo> repository, ILogger logger)
-            : base(unitOfWork, businessValidator, repository, logger)
+        public EjemploBC(IEjemploBV businessValidator, IRepository<Ejemplo> repository, ILogger logger)
+            : base(businessValidator, repository, logger)
         { }
 
 

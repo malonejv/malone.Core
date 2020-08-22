@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<package >
+<package>
 	<metadata>
 		<id>$id$</id>
 		<version>$version$</version>
@@ -25,6 +25,11 @@
 			<group targetFramework=".NETFramework4.7.2" />
 			<group targetFramework=".NETFramework4.8" />
 		</dependencies>
+		<contentFiles>
+			<!-- Include Assets as Content -->
+			<files include="*.png" buildAction="EmbeddedResource" copyToOutput="false" />
+			<files include="*.xsd" buildAction="EmbeddedResource" copyToOutput="false" />
+		</contentFiles>
 	</metadata>
 	<files>
 		<file src="bin\$configuration$\**" target="lib/net45" />
@@ -37,6 +42,5 @@
 		<file src="bin\$configuration$\**" target="lib/net471" />
 		<file src="bin\$configuration$\**" target="lib/net472" />
 		<file src="bin\$configuration$\**" target="lib/net48" />
-		<file src="capibara.png" />
 	</files>
 </package>

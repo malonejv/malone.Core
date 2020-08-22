@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -16,6 +18,33 @@ namespace malone.Core.Commons.Helpers.Extensions
             for (int i = 0; i < NumberChars; i += 2)
                 bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
             return bytes;
+        }
+
+        public static SecureString ToSecureString(this string source)
+        {
+            if (string.IsNullOrWhiteSpace(source))
+                return (SecureString)null;
+            SecureString secureString = new SecureString();
+            foreach (char c in source)
+                secureString.AppendChar(c);
+            return secureString;
+        }
+
+        public static string SecureStringToString(this SecureString value)
+        {
+            if (value == null)
+                return (string)null;
+            IntPtr ptr = IntPtr.Zero;
+            try
+            {
+                ptr = Marshal.SecureStringToBSTR(value);
+                return Marshal.PtrToStringBSTR(ptr);
+            }
+            finally
+            {
+                if (ptr != IntPtr.Zero)
+                    Marshal.FreeBSTR(ptr);
+            }
         }
 
         #region Special Characters
