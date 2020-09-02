@@ -1,4 +1,6 @@
-﻿using malone.Core.Commons.DI;
+﻿using AutoMapper.Configuration;
+using malone.Core.Commons.Configurations;
+using malone.Core.Commons.DI;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.EntityFramework.Context;
@@ -7,15 +9,18 @@ using malone.Core.Sample.EF.SqlServer.Middle.DAL.Context.EF.Mappings;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
+using System.Data.SqlClient;
 
 namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Context.EF
 {
     public class SampleEFContext : EFIdentityDbContext //EFDbContext
     {
-        public static SampleEFContext Instance { get; private set; }
+
+        public SampleEFContext() : this("SampleConnection") { }
 
         public SampleEFContext(string connectionStringName)
             : base(connectionStringName)
@@ -27,7 +32,6 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Context.EF
             //OPTION: Habilita la clase SampleContextInitializer 
             Database.SetInitializer<SampleEFContext>(null);
 
-            Instance = this;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -38,16 +42,23 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Context.EF
             modelBuilder.Configurations.Add(new TaskItemMapping());
         }
 
-
-        public static SampleEFContext Create()
+        public System.Data.Entity.DbSet<malone.Core.Sample.EF.SqlServer.Middle.EL.Model.TodoList> TodoLists { get; set; }
+    }
+    public class SampleContextDbConnectionFactory : IDbConnectionFactory
+    {
+        public SampleContextDbConnectionFactory()
         {
-            if (Instance == null)
-                Instance = ServiceLocator.Current.Get<IContext>() as SampleEFContext;
-
-            return Instance;
         }
 
-        public System.Data.Entity.DbSet<malone.Core.Sample.EF.SqlServer.Middle.EL.Model.TodoList> TodoLists { get; set; }
+        #region IDbConnectionFactory implementation
+        public DbConnection CreateConnection(string nameOrConnectionString)
+        {
+            var configuration = ServiceLocator.Current.Get<ICoreConfiguration>();
+            var connectionString = configuration.GetConnectionString("SampleConnection");
+            var connection = new SqlConnection(connectionString);
+            return connection;
+        }
+        #endregion
     }
 
     public class SampleContextFactory : IDbContextFactory<SampleEFContext>

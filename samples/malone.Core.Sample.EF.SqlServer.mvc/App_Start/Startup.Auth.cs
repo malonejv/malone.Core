@@ -1,5 +1,9 @@
-﻿using malone.Core.Identity.EntityFramework;
+﻿using malone.Core.Commons.DI;
+using malone.Core.DataAccess.Context;
+using malone.Core.Identity.EntityFramework;
+using malone.Core.Identity.EntityFramework.Context;
 using malone.Core.Identity.EntityFramework.Entities;
+using malone.Core.Sample.EF.SqlServer.Middle.DAL.Context.EF;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -15,10 +19,10 @@ namespace malone.Core.Sample.EF.SqlServer.mvc
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
-            //app.CreatePerOwinContext(ApplicationDbContext.Create);
-            app.CreatePerOwinContext<UserBusinessComponent>(UserBusinessComponent.Create);
+            app.CreatePerOwinContext(SampleEFContext.Create);
+            app.CreatePerOwinContext<UserBusinessComponent>(UserBusinessComponent.CreateAndConfigure);
             app.CreatePerOwinContext<SignInBusinessComponent>(SignInBusinessComponent.Create);
-
+            
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             // Configure the sign in cookie

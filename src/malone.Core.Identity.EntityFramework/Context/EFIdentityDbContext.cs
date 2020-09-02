@@ -1,7 +1,11 @@
-﻿using malone.Core.EF.Context;
+﻿using malone.Core.Commons.DI;
+using malone.Core.DataAccess.Context;
+using malone.Core.EF.Context;
 using malone.Core.Identity.EntityFramework.DAL.Mappings;
 using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
@@ -17,6 +21,14 @@ namespace malone.Core.Identity.EntityFramework.Context
         where TRoleEntity : CoreRole<TKey, TUserRole>
         where TUserEntity : CoreUser<TKey, TUserLogin, TUserRole, TUserClaim>
     {
+
+        public static EFIdentityDbContext Create()
+        {
+            var instance = ServiceLocator.Current.Get<IContext>() as EFIdentityDbContext;
+            return instance;
+        }
+
+
         public EFIdentityDbContext() : base() { }
         public EFIdentityDbContext(string nameOrConnectionStringName) : base(nameOrConnectionStringName)
         {

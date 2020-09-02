@@ -14,7 +14,9 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("malone.Core.WebApi")]
 [assembly: InternalsVisibleTo("malone.Core.EF")]
 [assembly: InternalsVisibleTo("malone.Core.AdoNet")]
+[assembly: InternalsVisibleTo("malone.Core.Identity.EntityFramework")]
 [assembly: InternalsVisibleTo("malone.Core.Unity.ModulesInitializers")]
+
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
