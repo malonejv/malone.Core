@@ -1,13 +1,67 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #EFEFD0;
 }
+
+body {
+    padding-bottom: 20px;
+    overflow: hidden;
+}
+
+.navbar {
+    background-color: #004E89;
+    color: #EFEFD0;
+    padding: 0 1rem;
+}
+
+    .navbar .navbar-brand {
+        color: #EFEFD0;
+    }
+
+    .navbar li.navbar-item {
+        position: relative;
+        padding: 0.6rem 1rem;
+    }
+
+        .navbar li.navbar-item a {
+            color: #EFEFD0 !important;
+        }
+
+        .navbar li.navbar-item:hover {
+            box-shadow: 0 0 25px 0 rgba(50, 50, 50, 0.3) inset;
+        }
+
+            .navbar li.navbar-item:hover a,
+            .navbar a.navbar-brand:hover {
+                position: relative;
+                color: white !important;
+            }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    min-height: calc(100% - 65px);
+    margin-bottom: 85px;
+    padding-top: 1rem;
+    /*overflow: auto;*/
 }
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    height: 85px;
+}
+
+    footer hr {
+        margin-top: 0;
+        padding: 0;
+    }
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
@@ -22,3 +76,184 @@ select,
 textarea {
     max-width: 280px;
 }
+
+ul {
+    list-style-type: none !important;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+
+    .btn-circle.btn-lg {
+        width: 50px;
+        height: 50px;
+        padding: 10px 16px;
+        font-size: 18px;
+        line-height: 1.33;
+        border-radius: 25px;
+    }
+
+    .btn-circle.btn-xl {
+        width: 70px;
+        height: 70px;
+        padding: 10px 16px;
+        font-size: 24px;
+        line-height: 1.33;
+        border-radius: 35px;
+    }
+
+.fixed-bottom {
+    position: absolute;
+    width: 100%;
+}
+
+.list-group,
+.list-group-item {
+    background-color: #EFEFD0;
+}
+
+    .list-group-item:hover {
+        background-color: #EFEFD0;
+        box-shadow: 0 0 6px -3px rgba(50, 50, 50, 0.3) inset;
+    }
+
+/************************************************************************/
+/*LIST*/
+/************************************************************************/
+/*----------------------------------------------------------------------*/
+/*INDEX*/
+/*----------------------------------------------------------------------*/
+.list-container {
+}
+
+    .list-container .list {
+        padding: 0;
+        font-size: 16px;
+    }
+
+        .list-container .list li {
+            padding: 7.5px;
+        }
+
+            .list-container .list li:hover {
+                background: white;
+            }
+
+.add-list-container {
+    height: 75px;
+}
+
+/*----------------------------------------------------------------------*/
+/*DETAIL*/
+/*----------------------------------------------------------------------*/
+
+/************************************************************************/
+/*END LIST */
+/************************************************************************/
+
+/************************************************************************/
+/*COLORS*/
+/************************************************************************/
+
+
+.bg-orange {
+    background-color: #ff6b35;
+}
+
+.bg-peach {
+    background-color: #f7c59f;
+}
+
+.bg-beige {
+    background-color: #efefd0;
+    color: #1a659e;
+}
+
+.bg-blue {
+    background-color: #004e89;
+    color: #efefd0;
+}
+
+.bg-saphire {
+    background-color: #1a659e;
+    color: #1a659e;
+}
+
+.font-orange {
+    color: #ff6b35;
+}
+
+.font-peach {
+    color: #f7c59f;
+}
+
+.font-beige {
+    color: #efefd0;
+}
+
+.font-blue {
+    color: #1a659e;
+}
+
+.font-saphire {
+    color: #ff6b35;
+}
+
+/************************************************************************/
+/*END COLORS */
+/************************************************************************/
+
+
+
+/************************************************************************/
+/*EFFECTS*/
+/************************************************************************/
+
+
+/*----------------------------------------------------------------------*/
+/*TEXT SHADOW*/
+/*----------------------------------------------------------------------*/
+
+h1, h2,
+.depth {
+    display: block;
+    color: black;
+    position: relative;
+}
+
+    h1:before, h1:after,
+    h2:before, h2:after,
+    .depth:before, .depth:after {
+        content: attr(title);
+        color: rgba(255,255,255,.1);
+        position: absolute;
+    }
+
+    h1:before,
+    h2:before,
+    .depth:before {
+        top: 1px;
+        left: 1px
+    }
+
+    h1:after,
+    h2:after,
+    .depth:after {
+        top: 2px;
+        left: 2px
+    }
+
+/************************************************************************/
+/*END EFFECTS */
+/************************************************************************/

@@ -1,40 +1,65 @@
-﻿@model malone.Core.Sample.EF.SqlServer.Middle.EL.Model.TodoList
+﻿@using malone.Core.Sample.EF.SqlServer.Middle.EL.Model.Extensions
+@model malone.Core.Sample.EF.SqlServer.Middle.EL.Model.TodoList
 
 @{
-    ViewBag.Title = "Detalle";
+    ViewBag.Title = Model.Name;
 }
 
 <div>
-    <h2>Detalle de &nbsp;<span class="text-muted">lista</span></h2>
+    <h2>
+        @Html.DisplayFor(model => model.Name)
+        <button  class="btn btn-primary btn-circle" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            &hellip;
+        </button>
+    </h2>
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Date)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsDeleted)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsDeleted)
+                </dd>
+            </dl>
+            @Html.ActionLink("Editar", "Edit", new { id = Model.Id })
+        </div>
+    </div>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <ul class="p-0">
+        @foreach (var item in Model.PendingItems())
+        {
+            <li class="row">
+                <div class="col-xs-8">@Html.DisplayFor(modelItem => item.Description)</div>
+                <div class="col-xs-4">
+                    <div class="pull-right">
+                        @Html.ActionLink("Ver", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-
-    </dl>
 </div>
 <p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Volver", "Index")
 </p>

@@ -5,42 +5,57 @@
 }
 
 <h2>Listas</h2>
+<div class="list-container">
+    <div class="list-group list-group-flush">
+        @foreach (var list in Model)
+        {
+            <a href="@Url.Action("Details", new { id = list.Id })" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                @Html.DisplayFor(modelItem => list.Name)
+                <span class="pull-right">
+                    <span class="badge bg-orange badge-pill">@list.Items.Count()</span>
 
-<p>
-    @Html.ActionLink("Crear nueva lista", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+                    <span class="btn btn-primary btn-circle" onclick="alert('Action1 -> Play'); event.stopPropagation();">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                        </svg>
+                    </span>
+                </span>
+            </a>
+        }
+    </div>
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>
-            <td>
-                @Html.ActionLink("Ver", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var list in Model)
+        {
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    @Html.ActionLink("Ver", "Details", new { id = list.Id }) |
+                    @Html.ActionLink("Editar", "Edit", new { id = list.Id }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = list.Id })
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div class="fixed-bottom add-list-container">
+        <input type="text" placeholder="Agregar nueva lista" />
+    </div>
+
+    <p>
+        @Html.ActionLink("Crear nueva lista", "Create")
+    </p>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/ListController")
+}

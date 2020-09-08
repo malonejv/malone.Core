@@ -9,7 +9,8 @@ namespace malone.Core.Sample.EF.SqlServer.mvc
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/url-helper.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -26,6 +27,9 @@ namespace malone.Core.Sample.EF.SqlServer.mvc
                       "~/Scripts/bootstrap-switch.js",
                       "~/Scripts/jquery.datepicker.js",
                       "~/Scripts/jquery.switch.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/ListController").Include(
+                      "~/Scripts/controller-list.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

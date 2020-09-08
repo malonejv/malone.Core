@@ -9,11 +9,14 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.EL.Model
         [ScaffoldColumn(false)]
         public int Id { get; set; }
 
-
         [Required(ErrorMessage = "El campo descripción es requerido")]
         [DisplayName("Descripción")]
         [StringLength(100)]
         public string Description { get; set; }
+
+        [DisplayName("Pendiente")]
+        [DefaultValue(true)]
+        public bool Pending { get; set; }
 
         [DisplayName("Eliminado")]
         public bool IsDeleted { get; set; }

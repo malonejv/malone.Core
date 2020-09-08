@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
 {
+    [Authorize]
     public class ListController : Controller
     {
         public ITodoListBC TodoListBC { get; set; }
@@ -33,7 +34,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
 
         public ActionResult Details(int id)
         {
-            var todoList = TodoListBC.GetById(id);
+            var todoList = TodoListBC.GetById(id, includeProperties: "Items");
 
             return View(todoList);
         }
