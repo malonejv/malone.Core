@@ -19,6 +19,9 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.BL.Implementations
         {
             try
             {
+                if (!entity.Date.HasValue) entity.Date = DateTime.Now.Date;
+                entity.IsDeleted = false;
+
                 BusinessValidator.AddValidationRules
                     .Add(
                         new ValidationRule()

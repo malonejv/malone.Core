@@ -15,8 +15,8 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.EL.Model
         public string Description { get; set; }
 
         [DisplayName("Pendiente")]
-        [DefaultValue(true)]
-        public bool Pending { get; set; }
+        [DefaultValue(false)]
+        public bool Done { get; set; }
 
         [DisplayName("Eliminado")]
         public bool IsDeleted { get; set; }

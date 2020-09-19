@@ -15,7 +15,7 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.EL.Model.Extensions
             List<TaskItem> items = new List<TaskItem>();
             if (list.Items != null)
             {
-                items = list.Items.Where(i => i.Pending && i.IsDeleted == includeDeleted).ToList();
+                items = list.Items.Where(i => !i.Done && i.IsDeleted == includeDeleted).ToList();
             }
             return items;
         }
@@ -26,7 +26,7 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.EL.Model.Extensions
             List<TaskItem> items = new List<TaskItem>();
             if (list.Items != null)
             {
-                items = list.Items.Where(i => !i.Pending && i.IsDeleted == includeDeleted).ToList();
+                items = list.Items.Where(i => i.Done && i.IsDeleted == includeDeleted).ToList();
             }
             return items;
         }

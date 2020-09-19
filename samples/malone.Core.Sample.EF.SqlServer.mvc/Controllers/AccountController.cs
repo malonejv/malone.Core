@@ -151,7 +151,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    //return RedirectToAction("Index", "Home");
+                    //return RedirectToAction("Index", "List");
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -400,7 +400,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "List");
         }
 
         //
@@ -457,7 +457,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "List");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

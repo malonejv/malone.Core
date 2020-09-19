@@ -53,6 +53,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.ChangeUserNameSuccess ? "Your username has been set."
                 : "";
 
             var userId = User.Identity.GetUserId<int>();
@@ -203,6 +204,37 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
+        }
+
+        //
+        // GET: /Manage/ChangeUserName
+        public ActionResult ChangeUserName()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/ChangeUserName
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeUserName(ChangeUserNameViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userId = User.Identity.GetUserId<int>();
+            var user = await UserManager.FindByIdAsync(userId);
+            user.UserName = model.UserName;
+
+            var result = await UserManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangeUserNameSuccess });
+            }
+            AddErrors(result);
+            return View(model);
         }
 
         //
@@ -369,6 +401,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
         {
             AddPhoneSuccess,
             ChangePasswordSuccess,
+            ChangeUserNameSuccess,
             SetTwoFactorSuccess,
             SetPasswordSuccess,
             RemoveLoginSuccess,

@@ -18,6 +18,12 @@ namespace malone.Core.Sample.EF.SqlServer.mvc
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "List", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "EditingTasks",
+                url: "{controller}/{action}/{listId}/{taskId}",
+                defaults: new { controller = "List", action = "EditTask" }
+            );
         }
     }
 }

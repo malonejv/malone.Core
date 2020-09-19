@@ -149,6 +149,14 @@
     <Compile Include="DAL\Migrations\202009020402504_Change3.designer.cs">
       <DependentUpon>202009020402504_Change3.cs</DependentUpon>
     </Compile>
+    <Compile Include="DAL\Migrations\202009140425038_Change4.cs" />
+    <Compile Include="DAL\Migrations\202009140425038_Change4.designer.cs">
+      <DependentUpon>202009140425038_Change4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Migrations\202009170327352_Change5.cs" />
+    <Compile Include="DAL\Migrations\202009170327352_Change5.designer.cs">
+      <DependentUpon>202009170327352_Change5.cs</DependentUpon>
+    </Compile>
     <Compile Include="DAL\Migrations\Configuration.cs" />
     <Compile Include="EL\Filters\EF\TodoListEntity\EFTodoListGetRequest.cs" />
     <Compile Include="EL\Model\Extensions\TodoListExtensions.cs" />
@@ -181,6 +189,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DAL\Migrations\202009020402504_Change3.resx">
       <DependentUpon>202009020402504_Change3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DAL\Migrations\202009140425038_Change4.resx">
+      <DependentUpon>202009140425038_Change4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DAL\Migrations\202009170327352_Change5.resx">
+      <DependentUpon>202009170327352_Change5.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EL\Resource\Entities.resx">
       <Generator>ResXFileCodeGenerator</Generator>

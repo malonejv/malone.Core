@@ -1,17 +1,19 @@
 ﻿//#region MvcUrl Class
 
-function MvcUrl(controller, action) {
+function MvcUrl(url, controller, action, id) {
+    let self = this;
 
-    var _controller = controller;
-    this.Controller = function () {
-        return _controller;
-    }
+    self.Url = url.href;
 
-    var _action = action;
-    this.Action = function () {
-        return _action;
-    }
+    self.Origin = url.origin;
 
+    self.Path = url.pathname;
+
+    self.Controller = controller;
+
+    self.Action = action;
+
+    self.Id = id;
 }
 
 //#endregion
@@ -29,6 +31,7 @@ Helper.getMvcUrl = function () {
         if (path != null && path.trim() != '') {
             let controller = '';
             let action = '';
+            let id = null;
             let splitUrl = null;
 
             if (path.substring(0, 1) == "/" && path.length > 1) {
@@ -39,12 +42,14 @@ Helper.getMvcUrl = function () {
                         controller = splitPath[i];
                     } else if (i == 1) {
                         action = splitPath[i];
+                    } else if (i == 2) {
+                        id = splitPath[i];
                     }
                     else {
                         break;
                     }
                 }
-                mvcUrl = new MvcUrl(controller, action);
+                mvcUrl = new MvcUrl(url, controller, action, id);
             }
         }
     }
