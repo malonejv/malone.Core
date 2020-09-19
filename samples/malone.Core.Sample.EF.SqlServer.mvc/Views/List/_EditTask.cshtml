@@ -1,0 +1,29 @@
+﻿@model malone.Core.Sample.EF.SqlServer.mvc.Models.ListDetailsViewModel
+
+
+@using (Html.BeginForm("EditTask", "List", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Lista.Id)
+    @Html.HiddenFor(model => model.Lista.Name)
+    @Html.HiddenFor(model => model.EditarTarea.Id)
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "row text-danger" })
+        <div class="input-group">
+            @Html.EditorFor(model => model.EditarTarea.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Descripción de la tarea" } })
+            <div class="input-group-append">
+                @if (Model.EditarTarea != null && !string.IsNullOrEmpty(Model.EditarTarea.Description) && Model.EditarTarea.Description.Length > 0)
+                {
+                    <a href="@Url.Action("Details", new { id = Model.Lista.Id })" class="btn btn-outline-secondary">X</a>
+                }
+                <input type="submit" value="Actualizar" class="btn btn-primary" />
+            </div>
+        </div>
+        <div class="row">@Html.ValidationMessageFor(model => model.EditarTarea.Description, "", new { @class = "text-danger" })</div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
