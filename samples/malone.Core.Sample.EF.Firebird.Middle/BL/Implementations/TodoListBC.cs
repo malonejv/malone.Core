@@ -15,7 +15,7 @@ namespace malone.Core.Sample.EF.Firebird.Middle.BL.Implementations
         { }
 
 
-        public override void Add(TodoList entity)
+        public override void Add(TodoList entity, bool saveChanges = true, bool disposeUoW = true)
         {
             try
             {

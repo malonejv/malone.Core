@@ -14,8 +14,7 @@ namespace malone.Core.Sample.AdoNet.Firebird.Middle.BL.Implementations
             : base(businessValidator, repository, logger)
         { }
 
-
-        public override void Add(TodoList entity)
+        public override void Add(TodoList entity, bool saveChanges = true, bool disposeUoW = true)
         {
             try
             {

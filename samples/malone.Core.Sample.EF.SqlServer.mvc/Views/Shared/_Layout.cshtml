@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using malone.Core.Sample.EF.SqlServer.mvc.Resources;
+@using malone.Core.Sample.EF.SqlServer.mvc.Attributes;
+@{
+
+    //var errorMessage = ViewBag.ErrorMessage;
+    var errorMessage = (ErrorMessage)Session["ErrorMessage"];
+
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -20,6 +28,41 @@
                 <li class="navbar-item">@Html.ActionLink("Listas", "Index", "List", new { @class = "nav-link" })</li>
             </ul>
             @Html.Partial("_LoginPartial")
+        </div>
+        @if (errorMessage != null)
+        {
+            <div id="messageWrapper">
+                <div class="alert alert-danger alert-dismissible fade in show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <div class="text-danger text-bold alert-heading">
+                        <strong>@errorMessage.Header</strong>
+                        @if (errorMessage.Paragraphs.Count == 1)
+                        {
+                            <small>@errorMessage.Paragraphs[0]</small>
+                        }
+                    </div>
+                    @if (errorMessage.Paragraphs.Count > 1)
+                    {
+                        <ul>
+                            @foreach (var paragraph in errorMessage.Paragraphs)
+                            {
+                            <li class='text-@errorMessage.Status'>
+                                @paragraph
+                            </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+            Session.Remove("ErrorMessage");
+        }
+        else
+        {
+            <div id="messageWrapper" class="d-none">
+            </div>
+        }
+        <div id="loadingWrapper" class="d-none">
+            <span class="gray-loading"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>&nbsp;@ViewTexts.Layout_Cargando</span>
         </div>
     </nav>
     <div class="body-content pt-1 pb-1 pt-md-2 pb-md-2 pt-lg-3 pb-lg-3 pt-xl-4 pb-xl-4">

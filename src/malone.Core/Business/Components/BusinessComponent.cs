@@ -126,21 +126,25 @@ namespace malone.Core.Business.Components
             }
         }
 
-        public virtual void Add(TEntity entity)
+
+        public virtual void Add(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
         {
             try
             {
-                using (var uow = UnitOfWork.Create())
-                {
-                    CheckEntity(entity);
+                var uow = UnitOfWork.Create();
 
-                    var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteAddValidationRules, BusinessValidator.AddValidationRules);
-                    if (!validationResult.IsValid)
-                        throw new BusinessRulesValidationException(validationResult);
+                CheckEntity(entity);
 
-                    Repository.Insert(entity);
+                var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteAddValidationRules, BusinessValidator.AddValidationRules);
+                if (!validationResult.IsValid)
+                    throw new BusinessRulesValidationException(validationResult);
+
+                Repository.Insert(entity);
+
+                if (saveChanges)
                     uow.SaveChanges();
-                }
+                if (disposeUoW)
+                    uow.Dispose();
             }
             catch (BusinessRulesValidationException) { throw; }
             catch (TechnicalException) { throw; }
@@ -153,27 +157,33 @@ namespace malone.Core.Business.Components
             }
         }
 
-        public virtual void Update(TKey id, TEntity entity)
+
+        protected virtual void SetUpdateValidationRules(TEntity entity) { }
+
+        public virtual void Update(TKey id, TEntity entity, bool saveChanges = true, bool disposeUoW = true)
         {
             try
             {
-                using (var uow = UnitOfWork.Create())
-                {
-                    CheckEntity(entity);
-                    CheckId(id);
+                var uow = UnitOfWork.Create();
+                CheckEntity(entity);
+                CheckId(id);
 
-                    var oldEntity = this.GetById(id);
-                    if (oldEntity.Equals(default(TEntity)))
-                        throw CoreExceptionFactory.CreateException<EntityNotFoundException>(CoreErrors.BUSVAL500, typeof(TEntity), id);
+                var oldEntity = this.GetById(id);
+                if (oldEntity.Equals(default(TEntity)))
+                    throw CoreExceptionFactory.CreateException<EntityNotFoundException>(CoreErrors.BUSVAL500, typeof(TEntity), id);
 
-                    var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteUpdateValidationRules, BusinessValidator.UpdateValidationRules);
-                    if (!validationResult.IsValid)
-                        throw new BusinessRulesValidationException(validationResult);
+                SetUpdateValidationRules(entity);
+                var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteUpdateValidationRules, BusinessValidator.UpdateValidationRules);
+                if (!validationResult.IsValid)
+                    throw new BusinessRulesValidationException(validationResult);
 
-                    entity.Id = id;
-                    Repository.Update(oldEntity, entity);
+                entity.Id = id;
+                Repository.Update(oldEntity, entity);
+                if (saveChanges)
                     uow.SaveChanges();
-                }
+                if (disposeUoW)
+                    uow.Dispose();
+
             }
             catch (EntityNotFoundException ex)
             {
@@ -197,35 +207,39 @@ namespace malone.Core.Business.Components
             }
         }
 
-        public virtual void Delete(TKey id)
+        protected virtual void SetDeleteValidationRules(TEntity entity) { }
+
+        public virtual void Delete(TKey id, bool saveChanges = true, bool disposeUoW = true)
         {
             try
             {
-                using (var uow = UnitOfWork.Create())
+                var uow = UnitOfWork.Create();
+                CheckId(id);
+                
+                var entityToDelete = this.GetById(id);
+                if (entityToDelete == default(TEntity))
+                    throw CoreExceptionFactory.CreateException<EntityNotFoundException>(CoreErrors.BUSVAL500, typeof(TEntity), id);
+
+                SetDeleteValidationRules(entityToDelete);
+                var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteDeleteValidationRules, BusinessValidator.DeleteValidationRules);
+                if (!validationResult.IsValid)
+                    throw new BusinessRulesValidationException(validationResult);
+
+                if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
                 {
-                    CheckId(id);
-
-
-                    var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteDeleteValidationRules, BusinessValidator.DeleteValidationRules);
-                    if (!validationResult.IsValid)
-                        throw new BusinessRulesValidationException(validationResult);
-
-                    var entityToDelete = this.GetById(id);
-                    if (entityToDelete == default(TEntity))
-                        throw CoreExceptionFactory.CreateException<EntityNotFoundException>(CoreErrors.BUSVAL500, typeof(TEntity), id);
-
-                    if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
-                    {
-                        var softDelete = entityToDelete as ISoftDelete;
-                        softDelete.IsDeleted = true;
-                        Repository.Update(entityToDelete, softDelete as TEntity);
-                    }
-                    else
-                    {
-                        Repository.Delete(entityToDelete);
-                    }
-                    uow.SaveChanges();
+                    var softDelete = entityToDelete as ISoftDelete;
+                    softDelete.IsDeleted = true;
+                    Repository.Update(entityToDelete, softDelete as TEntity);
                 }
+                else
+                {
+                    Repository.Delete(entityToDelete);
+                }
+
+                if (saveChanges)
+                    uow.SaveChanges();
+                if (disposeUoW)
+                    uow.Dispose();
             }
             catch (BusinessRulesValidationException) { throw; }
             catch (TechnicalException) { throw; }

@@ -45,11 +45,11 @@ namespace malone.Core.Business.Components
             string includeProperties = "")
             where TFilter : class, IFilterExpression;
 
-        void Add(TEntity entity);
+        void Add(TEntity entity, bool saveChanges = true, bool disposeUoW = true);
 
-        void Update(TKey id, TEntity entity);
+        void Update(TKey id, TEntity entity, bool saveChanges = true, bool disposeUoW = true);
 
-        void Delete(TKey id);
+        void Delete(TKey id, bool saveChanges = true, bool disposeUoW = true);
 
         #endregion
 

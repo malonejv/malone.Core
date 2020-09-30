@@ -10,6 +10,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery.Message.js",
                         "~/Scripts/url-helper.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

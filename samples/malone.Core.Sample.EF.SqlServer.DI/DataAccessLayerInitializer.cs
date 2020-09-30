@@ -5,12 +5,13 @@ using malone.Core.DataAccess.Repositories;
 using malone.Core.EF.Repositories.Implementations;
 using malone.Core.Identity.EntityFramework.Context;
 using malone.Core.Sample.EF.SqlServer.Middle.DAL.Context.EF;
+using malone.Core.Sample.EF.SqlServer.Middle.DAL.Repositories;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
 using Unity;
 using Unity.AspNet.Mvc;
 using Unity.Injection;
 
-namespace malone.Core.Sample.DI
+namespace malone.Core.Sample.EF.SqlServer.DI
 {
     public class DataAccessLayerInitializer : IInitializer<IUnityContainer>
     {
@@ -24,7 +25,7 @@ namespace malone.Core.Sample.DI
             container.RegisterInstance<EFIdentityDbContext>(context as EFIdentityDbContext);
             
             //Repositories
-            container.RegisterType<IRepository<TodoList>, EFRepository<TodoList>>();
+            container.RegisterType<IRepository<TodoList>, TodoListRepository>();
             container.RegisterType<IRepository<TaskItem>, EFRepository<TaskItem>>();
 
         }

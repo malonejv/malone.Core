@@ -1,4 +1,5 @@
 ﻿using malone.Core.Business.Components;
+using malone.Core.Identity.EntityFramework.Entities;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
 
 namespace malone.Core.Sample.EF.SqlServer.Middle.BL

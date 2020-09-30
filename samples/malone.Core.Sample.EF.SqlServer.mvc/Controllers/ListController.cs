@@ -1,8 +1,12 @@
-﻿using malone.Core.Sample.EF.SqlServer.Middle.BL;
+﻿using malone.Core.Identity.EntityFramework;
+using malone.Core.Identity.EntityFramework.Entities;
+using malone.Core.Sample.EF.SqlServer.Middle.BL;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Filters.EF.TodoListEntity;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
+using malone.Core.Sample.EF.SqlServer.mvc.Attributes;
 using malone.Core.Sample.EF.SqlServer.mvc.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
@@ -15,8 +19,19 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
     [Authorize]
     public class ListController : Controller
     {
+        private UserBusinessComponent _userManager;
+
         public ITodoListBC TodoListBC { get; set; }
         public ITaskItemBC TaskItemBC { get; set; }
+        public UserBusinessComponent UserManager
+        {
+            get
+            {
+                if (_userManager == null)
+                    _userManager = HttpContext.GetOwinContext().Get<UserBusinessComponent>();
+                return _userManager;
+            }
+        }
 
         public ListController(ITodoListBC todoListBC, ITaskItemBC taskItemBC)
         {
@@ -28,13 +43,8 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
 
         public ActionResult Index()
         {
-            var userId = User.Identity.GetUserId<int>();
-
             //Ejemplo para filtrar la lista
-            var lists = TodoListBC.Get(new EFTodoListGetRequest()
-            {
-                Expression = (l => l.User.Id == userId)
-            }, includeProperties: "Items");
+            var lists = GetUserLists();
 
             return View(new ListIndexViewModel
             {
@@ -60,17 +70,19 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
         {
             if (ModelState.IsValid)
             {
+                model.NuevaLista.User = GetLoggedUser();
                 TodoListBC.Add(model.NuevaLista);
+
                 return RedirectToAction("Details", new { model.NuevaLista.Id });
             }
-            model.Listas = TodoListBC.GetAll(includeProperties: "Items");
+            model.Listas = GetUserLists();
             return View("Index", model);
         }
 
         public ActionResult Edit(int id)
         {
             var todoList = TodoListBC.GetById(id);
-            var lists = TodoListBC.GetAll(includeProperties: "Items");
+            var lists = GetUserLists();
 
             return View("Index", new ListIndexViewModel
             {
@@ -88,14 +100,14 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
                 TodoListBC.Update(model.EditarLista.Id, model.EditarLista);
                 return RedirectToAction("Index");
             }
-            model.Listas = TodoListBC.GetAll(includeProperties: "Items");
+            model.Listas = GetUserLists();
             return View("Index", model);
         }
 
         public ActionResult Delete(int id)
         {
             var todoList = TodoListBC.GetById(id);
-            var lists = TodoListBC.GetAll(includeProperties: "Items");
+            var lists = GetUserLists();
 
             return View("Index", new ListIndexViewModel
             {
@@ -175,6 +187,22 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
         }
 
         #endregion
+
+        private CoreUser GetLoggedUser()
+        {
+            var userId = User.Identity.GetUserId<int>();
+            return UserManager.FindById(userId);
+        }
+
+        private IEnumerable<TodoList> GetUserLists()
+        {
+            var userId = User.Identity.GetUserId<int>();
+
+            return TodoListBC.Get(new EFTodoListGetRequest()
+            {
+                Expression = (l => l.User.Id == userId)
+            }, includeProperties: "Items,User");
+        }
 
     }
 }

@@ -1,6 +1,9 @@
 ﻿(function () {
     let self = this;
 
+
+    //#region Index
+
     self.Index = function () {
         $("div#lists a").bind("contextmenu", function (event) {
             event.preventDefault();
@@ -38,6 +41,9 @@
             $modalConfirmarEliminar.modal('show');
         }
     }
+    //#endregion
+
+    //#region Details
 
     self.Details = function () {
         var url = Helper.getMvcUrl();
@@ -48,7 +54,7 @@
             let id = $(event.target).data("id");
 
             const Edit = "/List/EditTask/" + url.Id + '/' + id;
-            const Delete = "/List/DeleteTask/" + url.Id + '/' +  id;
+            const Delete = "/List/DeleteTask/" + url.Id + '/' + id;
 
             if (url == null) {
                 $("#editAction").attr("href", Edit);
@@ -101,6 +107,34 @@
         });
     }
 
+    //#endregion
+
+    //#region General functions
+
+    self.ShowLoading = function () {
+        //show a progress modal of your choosing
+        var $wrapper = $("#loadingWrapper");
+        $wrapper.removeClass("d-none");
+    };
+
+    self.HideLoading = function () {
+        //hide it
+        var $wrapper = $("#loadingWrapper");
+        $wrapper.addClass("d-none");
+    };
+
+    self.ShowMessage = function (message) {
+        var $wrapper = $("#messageWrapper");
+
+        $wrapper.ShowMessage(message,
+            {
+                popupTime: 0,
+                dismissable: true
+            });
+    };
+
+    //#endregion
+
     let init = function () {
         self.Index();
 
@@ -111,8 +145,28 @@
             if (self[url.Action] != undefined)
                 self[url.Action]();
         }
-
     }
     init();
 
+    $(document).ajaxStart(function () {
+        if (self != null)
+            self.ShowLoading();
+    });
+    $(document).ajaxStop(function () {
+        if (self != null)
+            self.HideLoading();
+    });
+    $(document).ajaxError(function (e, jqxhr, settings, exception) {
+        e.stopPropagation();
+
+        if (jqxhr != null) {
+            try {
+                var content = $.parseJSON(jqxhr.responseText == "" ? null : jqxhr.responseText);
+                if (self != null && content != null)
+                    self.ShowMessage(content);
+            } catch (e) {
+                alert('Ocurrió un error inesperado.');
+            }
+        }
+    });
 })();

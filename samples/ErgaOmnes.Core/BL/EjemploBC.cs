@@ -19,7 +19,7 @@ namespace ErgaOmnes.Core.BL
         { }
 
 
-        public override void Add(Ejemplo entity)
+        public override void Add(Ejemplo entity, bool saveChanges = true, bool disposeUoW = true)
         {
             try
             {

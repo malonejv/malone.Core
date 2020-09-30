@@ -126,8 +126,23 @@
     <Compile Include="BL\ITodoListBC.cs" />
     <Compile Include="BL\ITodoListBV.cs" />
     <Compile Include="CL\Exceptions\ErrorCodes.cs" />
+    <Compile Include="CL\Exceptions\ErrorLocalizationHandler.cs" />
+    <Compile Include="CL\Exceptions\Exceptions.Designer.cs">
+      <DependentUpon>Exceptions.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CL\Exceptions\IErrorLocalizationHandler.cs" />
     <Compile Include="CL\Features\Configurations.cs" />
     <Compile Include="CL\Features\Features.cs" />
+    <Compile Include="CL\Localization\ContentCodes.cs" />
+    <Compile Include="CL\Localization\ContentLocalizationHandler.cs" />
+    <Compile Include="CL\Localization\Contents.Designer.cs">
+      <DependentUpon>Contents.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CL\Localization\IContentLocalizationHandler.cs" />
     <Compile Include="DAL\Context\EF\SampleEFContext.cs" />
     <Compile Include="DAL\Context\EF\Mappings\TaskItemMapping.cs" />
     <Compile Include="DAL\Context\EF\Mappings\TodoListMapping.cs" />
@@ -158,11 +173,14 @@
       <DependentUpon>202009170327352_Change5.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\Migrations\Configuration.cs" />
+    <Compile Include="DAL\Repositories\TodoListRepository.cs" />
     <Compile Include="EL\Filters\EF\TodoListEntity\EFTodoListGetRequest.cs" />
     <Compile Include="EL\Model\Extensions\TodoListExtensions.cs" />
     <Compile Include="EL\Model\RoleTypeEnum.cs" />
     <Compile Include="EL\Model\TaskItem.cs" />
     <Compile Include="EL\Model\TodoList.cs" />
+    <Compile Include="EL\Profiles\TodoListViewModelProfile.cs" />
+    <Compile Include="EL\RequestParams\TodoListGetRequestParam.cs" />
     <Compile Include="EL\Resource\EntitiesEnum.cs" />
     <Compile Include="EL\Resource\Entities.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -171,6 +189,7 @@
     </Compile>
     <Compile Include="EL\Resource\EntitiesLocalizationHandler.cs" />
     <Compile Include="EL\Resource\IEntitiesLocalizationHandler.cs" />
+    <Compile Include="EL\ViewModel\TodoListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +197,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CL\Exceptions\Exceptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CL\Localization\Contents.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Contents.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="DAL\Migrations\201810171807394_Initial.resx">
       <DependentUpon>201810171807394_Initial.cs</DependentUpon>
     </EmbeddedResource>
@@ -204,7 +231,6 @@
   <ItemGroup>
     <Folder Include="BL\Mappers\" />
     <Folder Include="CL\Configuration\" />
-    <Folder Include="DAL\Repositories\" />
     <Folder Include="DAL\ServiceAgents\" />
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +241,10 @@
     <ProjectReference Include="..\..\src\malone.Core.Identity.EntityFramework\malone.Core.Identity.EntityFramework.csproj">
       <Project>{ECA07D24-2FD5-42E8-A5F7-3FDF54B10DD4}</Project>
       <Name>malone.Core.Identity.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\malone.Core.WebApi\malone.Core.WebApi.csproj">
+      <Project>{C0B7AE10-F8E3-4177-B937-F1787A7F0DF3}</Project>
+      <Name>malone.Core.WebApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\malone.Core\malone.Core.csproj">
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>

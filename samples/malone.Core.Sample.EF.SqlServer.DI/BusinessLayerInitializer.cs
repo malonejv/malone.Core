@@ -1,14 +1,11 @@
 ﻿using malone.Core.Business.Components;
 using malone.Core.Commons.Initializers;
-using malone.Core.Identity.EntityFramework;
 using malone.Core.Sample.EF.SqlServer.Middle.BL;
 using malone.Core.Sample.EF.SqlServer.Middle.BL.Implementations;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using Unity;
 
-namespace malone.Core.Sample.DI
+namespace malone.Core.Sample.EF.SqlServer.DI
 {
     public class BusinessLayerInitializer : IInitializer<IUnityContainer>
     {

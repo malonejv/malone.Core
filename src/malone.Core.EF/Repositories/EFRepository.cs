@@ -80,11 +80,11 @@ namespace malone.Core.EF.Repositories.Implementations
 
                 if (orderBy != null)
                 {
-                    return orderBy(query);
+                    return orderBy(query).AsNoTracking<TEntity>();
                 }
                 else
                 {
-                    return query;
+                    return query.AsNoTracking<TEntity>();
                 }
             }
             catch (Exception ex)
