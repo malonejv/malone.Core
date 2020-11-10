@@ -1,4 +1,6 @@
-﻿using malone.Core.Business.Components;
+﻿using System;
+using System.Linq;
+using malone.Core.Business.Components;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
@@ -7,8 +9,6 @@ using malone.Core.Identity.EntityFramework.Entities;
 using malone.Core.Sample.EF.SqlServer.Middle.CL.Exceptions;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Filters.EF.TodoListEntity;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
-using System;
-using System.Linq;
 
 namespace malone.Core.Sample.EF.SqlServer.Middle.BL.Implementations
 {

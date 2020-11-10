@@ -2,12 +2,9 @@
 
 namespace malone.Core.Identity.AdoNet.Entities
 {
-    public class CoreUserRole<TKey>
+    public class CoreUserRole<TKey> 
         where TKey : IEquatable<TKey>
     {
-        public CoreUserRole() { }
-
-
         /// <summary>
         ///     UserId for the user that is in the role
         /// </summary>
@@ -22,7 +19,7 @@ namespace malone.Core.Identity.AdoNet.Entities
 
     public class CoreUserRole : CoreUserRole<int>
     {
-        public CoreUserRole() : base() { }
+        public CoreUserRole():base() { }
 
     }
 }

@@ -70,7 +70,7 @@
     </Compile>
     <Compile Include="Attributes\BasicAuthenticationAttribute.cs" />
     <Compile Include="Attributes\ValidateModelAttribute.cs" />
-    <Compile Include="CoreApiController.cs" />
+    <Compile Include="ApiController.cs" />
     <Compile Include="Attributes\HandleExceptionFilterAttribute.cs" />
     <Compile Include="Attributes\RequireHttpsAttribute.cs" />
     <Compile Include="IGetRequestParam.cs" />

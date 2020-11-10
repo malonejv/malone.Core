@@ -4,45 +4,47 @@
     ViewBag.Title = "Eliminar";
 }
 
-<div>
-    <h2>Eliminar&nbsp;<span class="text-muted">lista</span></h2>
-    <h3>Estas seguro de que quieres eliminar la lista?</h3>
+    <div>
+        <h2>Eliminar&nbsp;<span class="text-muted">lista</span></h2>
+        <hr />
+        <br />
+        <h4>Estas seguro de que quieres eliminar la lista?</h4>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
+            <dd>
+                @if (Model.Date.HasValue)
+                {
+                    @Html.DisplayFor(model => model.Date);
+                }
+                else
+                {
+                    <span> -- </span>
+                }
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
+        </dl>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-        <dd>
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <a href="@Url.Action("Index")" class="btn btn-outline-secondary">Volver</a>
+                    <input type="submit" value="Eliminar" class="btn btn-primary" />
 
-    </dl>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Eliminar" class="btn btn-default" /> |
-            @Html.ActionLink("Volver", "Index")
-        </div>
-    }
-</div>
+                </div>
+            </div>
+        }
+    </div>

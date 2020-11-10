@@ -2,7 +2,7 @@ namespace malone.Core.Sample.EF.Firebird.Middle.DAL.Migrations
 {
     using malone.Core.Commons.Helpers.Extensions;
     using malone.Core.Identity.EntityFramework.Entities;
-    using malone.Core.Sample.EF.Firebird.Middle.DAL.Context.EF;
+    using malone.Core.Sample.EF.Firebird.Middle.DAL.Context;
     using malone.Core.Sample.EF.Firebird.Middle.EL.Model;
     using Microsoft.AspNet.Identity;
     using System;
@@ -13,7 +13,7 @@ namespace malone.Core.Sample.EF.Firebird.Middle.DAL.Migrations
     /// <summary>
     /// Se ejecuta cuando se ejecuta el comando update-database
     /// </summary>
-    internal sealed class Configuration : DbMigrationsConfiguration<SampleEFContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<SampleContext>
     {
         public Configuration()
         {
@@ -21,7 +21,7 @@ namespace malone.Core.Sample.EF.Firebird.Middle.DAL.Migrations
             MigrationsDirectory = @"DAL\Migrations";
         }
 
-        protected override void Seed(SampleEFContext context)
+        protected override void Seed(SampleContext context)
         {
             try
             {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(malone.Core.Sample.EF.Firebird.Api.Startup))]
+[assembly: OwinStartupAttribute("EFFirebirdApiStartup", typeof(malone.Core.Sample.EF.Firebird.Api.Startup))]
 namespace malone.Core.Sample.EF.Firebird.Api
 {
     public partial class Startup

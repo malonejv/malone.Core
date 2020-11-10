@@ -16,7 +16,13 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "List", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "EditingTasks",
+                url: "{controller}/{action}/{listId}/{taskId}",
+                defaults: new { controller = "List", action = "EditTask" }
             );
         }
     }

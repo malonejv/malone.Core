@@ -1,19 +1,12 @@
-﻿using System.Web;
-using malone.Core.Commons.Configurations;
+﻿using malone.Core.Commons.Configurations;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Initializers;
-using malone.Core.DataAccess.EF.Repositories.Identity;
 using malone.Core.Identity;
-using malone.Core.Identity.EntityFramework;
 using malone.Core.Identity.EntityFramework.Business;
-using malone.Core.Identity.EntityFramework.Context;
 using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Unity;
-using Unity.Injection;
 
 namespace malone.Core.Unity.IdentityEntityFramworkInitializer
 {
@@ -30,9 +23,9 @@ namespace malone.Core.Unity.IdentityEntityFramworkInitializer
             container.RegisterType<CoreUserRole>();
             container.RegisterType<CoreUserClaim>();
 
-            //IDENTITY REPOSITORIES
-            container.RegisterType<IRoleStore<CoreRole, int>, RoleRepository<EFIdentityDbContext>>();
-            container.RegisterType<IUserStore<CoreUser, int>, UserRepository<EFIdentityDbContext>>();
+            //IDENTITY STORES
+            container.RegisterType<IRoleStore<CoreRole, int>, RoleStore<CoreRole, int, CoreUserRole>>();
+            container.RegisterType<IUserStore<CoreUser, int>, UserStore<CoreUser, CoreRole, int, CoreUserLogin, CoreUserRole, CoreUserClaim>>();
 
             ////IDENTITY SERVICES
             container.RegisterType<IEmailMessageService, EmailService>();

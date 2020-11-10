@@ -2,7 +2,7 @@
 using malone.Core.Sample.EF.Firebird.Middle.EL.Model;
 using Unity;
 
-namespace malone.Core.Sample.DI
+namespace malone.Core.Sample.EF.Firebird.DI
 {
     public class EntitiesLayerInitializer : IInitializer<IUnityContainer>
     {

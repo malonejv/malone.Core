@@ -1,40 +1,88 @@
-﻿@model malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model.TodoList
+﻿@using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model.Extensions
+@model malone.Core.Sample.AdoNet.SqlServer.mvc.Models.ListDetailsViewModel
 
 @{
-    ViewBag.Title = "Detalle";
+    ViewBag.Title = Model.Lista.Name;
 }
+@Html.AntiForgeryToken()
 
-<div>
-    <h2>Detalle de &nbsp;<span class="text-muted">lista</span></h2>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+<div class="row page-header rounded-bottom pt-1 pb-1 pt-md-2 pb-md-2 pt-lg-3 pb-lg-3 pt-xl-4 pb-xl-4">
+    <h2 class="col-12 col-xl-2 m-0 text-center text-xl-left">@Html.DisplayFor(model => model.Lista.Name)</h2>
+    <div class="col-12 col-xl-10">
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-
-    </dl>
+        @if (Model.EditarTarea != null)
+        {
+            @Html.Partial("_EditTask", Model, ViewData)
+        }
+        else
+        {
+            @Html.Partial("_CreateTask", Model, ViewData)
+        }
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Volver", "Index")
-</p>
+
+<div class="row">
+    <div class="col-12 list-container">
+        <ul id="tasksPending" class="list-group list-group-flush">
+            @foreach (var item in Model.Lista.PendingItems())
+            {
+                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" data-id="@item.Id">
+                    <input type="checkbox" id="taskDone_@item.Id" class="todo" value="@item.Done" @(item.Done ? "checked=\"checked\"" : "") data-id="@item.Id" />
+                    <label for="taskDone_@item.Id">@item.Description</label>
+                </li>
+                @*<a href="@Url.Action("Details", new { id = list.Id })" data-id="@list.Id" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        @Html.DisplayFor(modelItem => list.Name)
+                        <span class="pull-right">
+                            <span class="badge bg-orange badge-pill">@list.Items.Count()</span>
+                        </span>
+                    </a>*@
+            }
+
+            @foreach (var item in Model.Lista.DoneItems())
+            {
+                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" data-id="@item.Id">
+                    <input type="checkbox" id="taskDone_@item.Id" class="todo" value="@item.Done" @(item.Done ? "checked=\"checked\"" : "") data-id="@item.Id" />
+                    <label for="taskDone_@item.Id">@item.Description</label>
+                </li>
+                @*<a href="@Url.Action("Details", new { id = list.Id })" data-id="@list.Id" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        @Html.DisplayFor(modelItem => list.Name)
+                        <span class="pull-right">
+                            <span class="badge bg-orange badge-pill">@list.Items.Count()</span>
+                        </span>
+                    </a>*@
+            }
+        </ul>
+    </div>
+</div>
+<ul class="contextMenu" style="display:none;">
+    <li>
+        <a id="editAction" href="#">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+            </svg>
+            <span>Editar</span>
+        </a>
+    </li>
+    <li>
+        <a id="deleteAction" href="#">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+            </svg>
+            <span>Eliminar</span>
+        </a>
+    </li>
+</ul>
+
+@if (Model.EliminarTarea != null)
+{
+    @Html.Partial("_DeleteTask", Model, ViewData)
+}
+<br />
+<a href="@Url.Action("Index")" class="btn btn-outline-secondary">Volver</a>
+
+
+@section Scripts{
+    @Scripts.Render("~/bundles/ListController")
+}

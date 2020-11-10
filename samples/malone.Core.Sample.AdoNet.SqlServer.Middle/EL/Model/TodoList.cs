@@ -1,11 +1,11 @@
-﻿using malone.Core.AdoNet.Attributes;
-using malone.Core.Entities.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Resources;
+using malone.Core.AdoNet.Attributes;
+using malone.Core.Entities.Model;
+using malone.Core.Identity.AdoNet.SqlServer.Entities;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model
 {
@@ -32,5 +32,6 @@ namespace malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model
         [DisplayName("Items")]
         public List<TaskItem> Items { get; set; }
 
+        public CoreUser User { get; set; }
     }
 }

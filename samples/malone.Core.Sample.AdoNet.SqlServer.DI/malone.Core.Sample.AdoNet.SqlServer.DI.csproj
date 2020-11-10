@@ -144,7 +144,7 @@
     <Compile Include="DataAccessLayerInitializer.cs" />
     <Compile Include="EntitiesLayerInitializer.cs" />
     <Compile Include="SampleInitializer.cs" />
-    <Compile Include="UILayerInitializer.cs" />
+    <Compile Include="ServiceLayerInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -158,6 +158,10 @@
     <ProjectReference Include="..\..\src\malone.Core.AdoNet\malone.Core.AdoNet.csproj">
       <Project>{492f80c1-e1f2-4cc9-8dbe-83ba63e7de4c}</Project>
       <Name>malone.Core.AdoNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\malone.Core.Identity.AdoNet.SqlServer\malone.Core.Identity.AdoNet.SqlServer.csproj">
+      <Project>{765b4548-f6b9-41c9-a640-a12b3f91185b}</Project>
+      <Name>malone.Core.Identity.AdoNet.SqlServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\malone.Core.Identity\malone.Core.Identity.csproj">
       <Project>{0992B1B6-BE12-4B9F-9B15-4D1B03ECD306}</Project>

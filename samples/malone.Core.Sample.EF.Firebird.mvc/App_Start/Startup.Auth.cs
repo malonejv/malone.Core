@@ -3,7 +3,7 @@ using malone.Core.DataAccess.Context;
 using malone.Core.Identity.EntityFramework;
 using malone.Core.Identity.EntityFramework.Context;
 using malone.Core.Identity.EntityFramework.Entities;
-using malone.Core.Sample.EF.Firebird.Middle.DAL.Context.EF;
+using malone.Core.Sample.EF.Firebird.Middle.DAL.Context;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -22,7 +22,7 @@ namespace malone.Core.Sample.EF.Firebird.mvc
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
-            app.CreatePerOwinContext(SampleEFContext.Create);
+            app.CreatePerOwinContext(SampleContext.Create);
             app.CreatePerOwinContext<UserBusinessComponent>(UserBusinessComponent.CreateAndConfigure);
             app.CreatePerOwinContext<SignInBusinessComponent>(SignInBusinessComponent.Create);
             

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -179,5 +180,34 @@ namespace malone.Core.Commons.Helpers.Extensions
             return row[columnName].ToString();
         }
 
+        public static T AsTOrDefault<T>(this DataRow row, string columnName)
+            where T: IEquatable<T>
+        {
+            if (row.IsNull())
+            {//TODO: Manejar con excepciones del Core
+                throw new ArgumentException(nameof(row));
+            }
+
+            if (string.IsNullOrEmpty(columnName) || !row.Table.Columns.Contains(columnName))
+            {//TODO: Manejar con excepciones del Core
+                throw new ArgumentException(nameof(columnName));
+            }
+
+            if (row[columnName] is DBNull)
+                return default(T);
+
+            return ChangeType<T>(row[columnName].ToString());
+        }
+
+        private static T ChangeType<T>(string value)
+        {
+            var t = typeof(T);
+            if (t.GetTypeInfo().IsGenericType && t.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
+            {
+                t = Nullable.GetUnderlyingType(t);
+            }
+
+            return (T)Convert.ChangeType(value, t);
+        }
     }
 }

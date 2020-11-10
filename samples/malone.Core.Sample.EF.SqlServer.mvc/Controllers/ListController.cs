@@ -55,7 +55,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
 
         public ActionResult Details(int id)
         {
-            var todoList = TodoListBC.GetById(id, includeProperties: "Items");
+            var todoList = TodoListBC.GetById(id, includeProperties: "Items,User");
 
             return View(new ListDetailsViewModel
             {
@@ -97,7 +97,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                TodoListBC.Update(model.EditarLista.Id, model.EditarLista);
+                TodoListBC.Update(model.EditarLista);
                 return RedirectToAction("Index");
             }
             model.Listas = GetUserLists();
@@ -135,7 +135,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
             var taskItem = TaskItemBC.GetById(taskId);
             taskItem.Done = !taskItem.Done;
 
-            TaskItemBC.Update(taskItem.Id, taskItem);
+            TaskItemBC.Update(taskItem);
 
             var redirectUrl = new UrlHelper(Request.RequestContext).Action("Details", new { id = listId });
             return Json(new { Url = redirectUrl });
@@ -145,12 +145,12 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
         [ValidateAntiForgeryToken] //Annotation added
         public ActionResult AddTask(ListDetailsViewModel model)
         {
-            model.Lista = TodoListBC.GetById(model.Lista.Id, includeProperties: "Items");
+            model.Lista = TodoListBC.GetById(model.Lista.Id, includeProperties: "Items,User");
 
             if (ModelState.IsValid)
             {
                 model.Lista.Items.Add(model.NuevaTarea);
-                TodoListBC.Update(model.Lista.Id, model.Lista);
+                TodoListBC.Update(model.Lista);
                 return RedirectToAction("Details", new { id = model.Lista.Id });
             }
             return View("Details", model);
@@ -173,7 +173,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                TaskItemBC.Update(model.EditarTarea.Id, model.EditarTarea);
+                TaskItemBC.Update(model.EditarTarea);
                 return RedirectToAction("Details", new { model.Lista.Id });
             }
             model.Lista = TodoListBC.GetById(model.Lista.Id, includeProperties: "Items");

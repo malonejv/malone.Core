@@ -14,7 +14,7 @@ using Microsoft.Web.Http;
 
 namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
 {
-    /// <inheritdoc cref="CoreApiController{TKey, TParam, TEntity, TBusinessComponent, TBusinessValidator}"/>
+    /// <inheritdoc cref="ApiController{TKey, TParam, TEntity, TBusinessComponent, TBusinessValidator}"/>
     [Authorize]
     [ApiVersion("1.0")]
     [RoutePrefix("v{version:apiVersion}/List")]

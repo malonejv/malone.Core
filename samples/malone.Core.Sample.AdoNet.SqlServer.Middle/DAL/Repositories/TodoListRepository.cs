@@ -7,7 +7,7 @@ using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.Middle.DAL.Repositories
 {
-    public class TodoListRepository : AdoNetRepository<TodoList>
+    public class TodoListRepository : Repository<TodoList>
     {
         public TodoListRepository(IContext context, ILogger logger) : base(context, logger)
         {

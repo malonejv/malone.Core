@@ -15,6 +15,10 @@ namespace malone.Core.Sample.EF.Firebird.Middle.EL.Model
         [StringLength(100)]
         public string Description { get; set; }
 
+        [DisplayName("Pendiente")]
+        [DefaultValue(false)]
+        public bool Done { get; set; }
+
         [DisplayName("Eliminado")]
         public bool IsDeleted { get; set; }
     }

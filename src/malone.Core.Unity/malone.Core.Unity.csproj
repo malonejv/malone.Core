@@ -103,6 +103,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\malone.Core.Unity.IdentityAdoNetSqlServerInitializer\malone.Core.Unity.IdentityAdoNetSqlServerInitializer.csproj">
+      <Project>{1c1a8c42-f043-4d14-b522-e501580d3364}</Project>
+      <Name>malone.Core.Unity.IdentityAdoNetSqlServerInitializer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\malone.Core.Unity.IdentityEntityFrameworkInitializer\malone.Core.Unity.IdentityEntityFrameworkInitializer.csproj">
       <Project>{AEF2E9DC-848A-42C9-9EB9-9A6F4CA1EB7D}</Project>
       <Name>malone.Core.Unity.IdentityEntityFrameworkInitializer</Name>

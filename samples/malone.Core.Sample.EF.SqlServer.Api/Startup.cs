@@ -1,7 +1,7 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(malone.Core.Sample.EF.SqlServer.Api.Startup))]
+[assembly: OwinStartupAttribute("EFSqlServerApiStartup", typeof(malone.Core.Sample.EF.SqlServer.Api.Startup))]
 namespace malone.Core.Sample.EF.SqlServer.Api
 {
     public partial class Startup

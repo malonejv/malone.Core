@@ -1,0 +1,27 @@
+﻿@model malone.Core.Sample.AdoNet.SqlServer.mvc.Models.ListIndexViewModel
+
+
+@using (Html.BeginForm("Edit", "List", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.EditarLista.Id)
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="input-group">
+            @Html.EditorFor(model => model.EditarLista.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre de lista" } })
+            <div class="input-group-append">
+                @if (Model.EditarLista != null && !string.IsNullOrEmpty(Model.EditarLista.Name) && Model.EditarLista.Name.Length > 0)
+                {
+                    <a href="@Url.Action("Index")" class="btn btn-outline-secondary">X</a>
+                }
+                <input type="submit" value="Actualizar" class="btn btn-primary" />
+            </div>
+        </div>
+        <div class="">@Html.ValidationMessageFor(model => model.EditarLista.Name, "", new { @class = "text-danger" })</div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

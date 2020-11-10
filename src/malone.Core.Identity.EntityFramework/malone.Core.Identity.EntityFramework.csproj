@@ -109,14 +109,12 @@
     <Compile Include="Business\TokenProvider.cs" />
     <Compile Include="Business\UserBusinessComponent.cs" />
     <Compile Include="Business\UserBussinessValidator.cs" />
-    <Compile Include="Context\EFIdentityDbContext.cs" />
+    <Compile Include="Context\CoreIdentityDbContext.cs" />
     <Compile Include="Mappings\CoreRoleMapping.cs" />
     <Compile Include="Mappings\CoreUserClaimMapping.cs" />
     <Compile Include="Mappings\CoreUserLoginMapping.cs" />
     <Compile Include="Mappings\CoreUserMapping.cs" />
     <Compile Include="Mappings\CoreUserRoleMapping.cs" />
-    <Compile Include="Repositories\RoleRepository.cs" />
-    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Entities\CoreRole.cs" />
     <Compile Include="Entities\CoreUser.cs" />
     <Compile Include="Entities\CoreUserClaim.cs" />

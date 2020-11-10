@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using malone.Core.Entities.Model;
+using Microsoft.AspNet.Identity;
 
 namespace malone.Core.Identity.AdoNet.Entities
 {
-    public class CoreUser<TKey, TUserLogin, TUserRole, TUserClaim> : IBaseEntity<TKey>
+    public class CoreUser<TKey, TUserLogin, TUserRole, TUserClaim> : IUser<TKey>, IBaseEntity<TKey>
         where TKey : IEquatable<TKey>
         where TUserLogin : CoreUserLogin<TKey>
         where TUserRole : CoreUserRole<TKey>
         where TUserClaim : CoreUserClaim<TKey>
     {
-
+        /// <summary>
+        ///     Constructor
+        /// </summary>
         public CoreUser()
         {
-            Claims = new List<TUserClaim>();
-            Roles = new List<TUserRole>();
-            Logins = new List<TUserLogin>();
+            Logins = null;
+            Roles = null;
+            Claims = null;
         }
 
         /// <summary>
@@ -71,48 +74,39 @@ namespace malone.Core.Identity.AdoNet.Entities
         /// <summary>
         ///     Navigation property for user roles
         /// </summary>
-        public virtual ICollection<TUserRole> Roles { get; private set; }
+        public virtual ICollection<TUserRole> Roles { get; internal set; }
 
         /// <summary>
         ///     Navigation property for user claims
         /// </summary>
-        public virtual ICollection<TUserClaim> Claims { get; private set; }
+        public virtual ICollection<TUserClaim> Claims { get; internal set; }
 
         /// <summary>
         ///     Navigation property for user logins
         /// </summary>
-        public virtual ICollection<TUserLogin> Logins { get; private set; }
+        public virtual ICollection<TUserLogin> Logins { get; internal set; }
 
         /// <summary>
         ///     User ID (Primary Key)
         /// </summary>
         public virtual TKey Id { get; set; }
 
-        /// <summary>
-        ///     User name
-        /// </summary>
-        public virtual string UserName { get; set; }
+        public string UserName { get; set; }
     }
 
-    //public class CoreUser<TKey> : CoreUser<TKey, CoreUserLogin<TKey>, CoreUserRole<TKey>, CoreUserClaim<TKey>>, IBaseEntity<TKey>
-    //    where TKey : IEquatable<TKey>
-    //{ }
 
-    public class CoreUser : CoreUser<int, CoreUserLogin, CoreUserRole, CoreUserClaim>, IBaseEntity
+    public class CoreUser<TUserLogin, TUserRole, TUserClaim> : CoreUser<int, TUserLogin, TUserRole, TUserClaim>, IBaseEntity
+        where TUserLogin : CoreUserLogin
+        where TUserRole : CoreUserRole
+        where TUserClaim : CoreUserClaim
     {
         public CoreUser()
         {
             Id = this.GetHashCode();
         }
+    }
 
-        /// <summary>
-        ///     Constructor that takes a userName
-        /// </summary>
-        /// <param name="userName"></param>
-        public CoreUser(string userName)
-            : this()
-        {
-            UserName = userName;
-        }
+    public class CoreUser : CoreUser<CoreUserLogin, CoreUserRole, CoreUserClaim>
+    {
     }
 }

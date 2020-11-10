@@ -143,9 +143,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="CL\Localization\IContentLocalizationHandler.cs" />
-    <Compile Include="DAL\Context\EF\SampleEFContext.cs" />
-    <Compile Include="DAL\Context\EF\Mappings\TaskItemMapping.cs" />
-    <Compile Include="DAL\Context\EF\Mappings\TodoListMapping.cs" />
+    <Compile Include="DAL\Context\SampleContext.cs" />
+    <Compile Include="DAL\Context\Mappings\TaskItemMapping.cs" />
+    <Compile Include="DAL\Context\Mappings\TodoListMapping.cs" />
     <Compile Include="DAL\Mappers\DataRowTaskItemProfile.cs" />
     <Compile Include="DAL\Mappers\DataRowTodoListProfile.cs" />
     <Compile Include="DAL\Migrations\201810171807394_Initial.cs" />

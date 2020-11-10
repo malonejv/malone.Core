@@ -14,26 +14,32 @@ namespace malone.Core.Sample.AdoNet.SqlServer.Middle.BL.Implementations
             : base(businessValidator, repository, logger)
         { }
 
-
         public override void Add(TodoList entity, bool saveChanges = true, bool disposeUoW = true)
         {
-            try
-            {
-                BusinessValidator.AddValidationRules
-                    .Add(
+            if (!entity.Date.HasValue) entity.Date = DateTime.Now.Date;
+            entity.IsDeleted = false;
+
+            BusinessValidator.AddValidationRules
+                .AddRange(new List<ValidationRule> {
+                        new ValidationRule()
+                        {
+                            Method = BusinessValidator.ValidarCaracteresEspeciales,
+                            Arguments = new List<object>() { entity }
+                        },
                         new ValidationRule()
                         {
                             Method = BusinessValidator.ValidarNombreRepetido,
                             Arguments = new List<object>() { entity }
-                        });
+                        }
+                });
 
-                base.Add(entity);
-            }
-            catch (Exception)
-            {
+            //var user = entity.User;
+            //entity.User = null;
+            base.Add(entity, disposeUoW: false);
 
-                throw;
-            }
+            //entity.User = user;
+            //base.Update(entity.Id, entity);
         }
+
     }
 }

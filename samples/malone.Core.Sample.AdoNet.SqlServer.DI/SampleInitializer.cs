@@ -19,7 +19,8 @@ namespace malone.Core.Sample.AdoNet.SqlServer.DI
                     new CommonLayerInitializer(),
                     new EntitiesLayerInitializer(),
                     new DataAccessLayerInitializer(),
-                    new BusinessLayerInitializer()
+                    new BusinessLayerInitializer(),
+                    new ServiceLayerInitializer()
               };
             }
         }

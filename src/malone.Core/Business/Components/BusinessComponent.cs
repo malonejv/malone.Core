@@ -10,15 +10,15 @@ using malone.Core.Entities.Model;
 
 namespace malone.Core.Business.Components
 {
-    public abstract class BusinessComponent<TKey, TEntity, TValidator> : IBusinessComponent<TKey, TEntity, TValidator>
-        where TKey : IEquatable<TKey>
-        where TEntity : class, IBaseEntity<TKey>
-        where TValidator : IBusinessValidator<TKey, TEntity>
+
+    public abstract class BaseBusinessComponent<TEntity, TValidator> : IBaseBusinessComponent<TEntity, TValidator>
+        where TEntity : class
+        where TValidator : IBaseBusinessValidator<TEntity>
     {
 
         #region Properties
 
-        protected IRepository<TKey, TEntity> Repository { get; private set; }
+        public IBaseRepository<TEntity> Repository { get; set; }
 
         public TValidator BusinessValidator { get; set; }
 
@@ -26,7 +26,7 @@ namespace malone.Core.Business.Components
 
         #endregion
 
-        public BusinessComponent(TValidator businessValidator, IRepository<TKey, TEntity> repository, ILogger logger)
+        public BaseBusinessComponent(TValidator businessValidator, IBaseRepository<TEntity> repository, ILogger logger)
         {
             BusinessValidator = businessValidator;
             Repository = repository;
@@ -67,29 +67,6 @@ namespace malone.Core.Business.Components
             try
             {
                 var result = Repository.Get(filter, orderBy, includeDeleted, includeProperties);
-
-                return result;
-            }
-            catch (TechnicalException) { throw; }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
-                if (Logger != null) Logger.Error(techEx);
-
-                throw techEx;
-            }
-        }
-
-        public virtual TEntity GetById(
-            TKey id,
-            bool includeDeleted = false,
-            string includeProperties = "")
-        {
-            try
-            {
-                CheckId(id);
-
-                var result = Repository.GetById(id, includeDeleted, includeProperties);
 
                 return result;
             }
@@ -157,28 +134,20 @@ namespace malone.Core.Business.Components
             }
         }
 
-
-        protected virtual void SetUpdateValidationRules(TEntity entity) { }
-
-        public virtual void Update(TKey id, TEntity entity, bool saveChanges = true, bool disposeUoW = true)
+        public virtual void Update(TEntity oldValues, TEntity newValues, bool saveChanges = true, bool disposeUoW = true)
         {
             try
             {
                 var uow = UnitOfWork.Create();
-                CheckEntity(entity);
-                CheckId(id);
+                CheckEntity(oldValues);
+                CheckEntityId(oldValues);
+                CheckEntity(newValues);
 
-                var oldEntity = this.GetById(id);
-                if (oldEntity.Equals(default(TEntity)))
-                    throw CoreExceptionFactory.CreateException<EntityNotFoundException>(CoreErrors.BUSVAL500, typeof(TEntity), id);
-
-                SetUpdateValidationRules(entity);
                 var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteUpdateValidationRules, BusinessValidator.UpdateValidationRules);
                 if (!validationResult.IsValid)
                     throw new BusinessRulesValidationException(validationResult);
 
-                entity.Id = id;
-                Repository.Update(oldEntity, entity);
+                Repository.Update(oldValues, newValues);
                 if (saveChanges)
                     uow.SaveChanges();
                 if (disposeUoW)
@@ -207,33 +176,27 @@ namespace malone.Core.Business.Components
             }
         }
 
-        protected virtual void SetDeleteValidationRules(TEntity entity) { }
-
-        public virtual void Delete(TKey id, bool saveChanges = true, bool disposeUoW = true)
+        public virtual void Delete(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
         {
             try
             {
                 var uow = UnitOfWork.Create();
-                CheckId(id);
-                
-                var entityToDelete = this.GetById(id);
-                if (entityToDelete == default(TEntity))
-                    throw CoreExceptionFactory.CreateException<EntityNotFoundException>(CoreErrors.BUSVAL500, typeof(TEntity), id);
+                CheckEntity(entity);
+                CheckEntityId(entity);
 
-                SetDeleteValidationRules(entityToDelete);
                 var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteDeleteValidationRules, BusinessValidator.DeleteValidationRules);
                 if (!validationResult.IsValid)
                     throw new BusinessRulesValidationException(validationResult);
 
                 if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
                 {
-                    var softDelete = entityToDelete as ISoftDelete;
+                    var softDelete = entity as ISoftDelete;
                     softDelete.IsDeleted = true;
-                    Repository.Update(entityToDelete, softDelete as TEntity);
+                    Repository.Update(entity, softDelete as TEntity);
                 }
                 else
                 {
-                    Repository.Delete(entityToDelete);
+                    Repository.Delete(entity);
                 }
 
                 if (saveChanges)
@@ -254,20 +217,265 @@ namespace malone.Core.Business.Components
 
         #endregion
 
+        #region Protected Methods
+
         protected void CheckEntity(TEntity entity)
         {
             if (entity == default(TEntity)) throw new ArgumentException(nameof(entity));
         }
-        protected void CheckEntityId(TEntity entity)
+
+        protected abstract void CheckEntityId(TEntity entity);
+
+        protected abstract void CheckId(params object[] args);
+
+        #endregion
+    }
+
+    public abstract class BusinessComponent<TKey, TEntity, TValidator> : BaseBusinessComponent<TEntity, TValidator>, IBusinessComponent<TKey, TEntity, TValidator>
+        where TKey : IEquatable<TKey>
+        where TEntity : class, IBaseEntity<TKey>
+        where TValidator : IBusinessValidator<TKey, TEntity>
+    {
+
+        #region Properties
+        public IRepository<TKey, TEntity> Repository { get; set; }
+
+        public TValidator BusinessValidator { get; set; }
+
+        public ILogger Logger { get; set; }
+
+        #endregion
+
+        public BusinessComponent(TValidator businessValidator, IRepository<TKey, TEntity> repository, ILogger logger) : base(businessValidator, repository, logger)
+        {
+            BusinessValidator = businessValidator;
+            Repository = repository;
+            Logger = logger;
+        }
+
+        #region CRUD
+
+        //public virtual IEnumerable<TEntity> GetAll(
+        //    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+        //    bool includeDeleted = false,
+        //    string includeProperties = ""
+        //)
+        //{
+        //    try
+        //    {
+        //        var result = Repository.GetAll(orderBy, includeDeleted, includeProperties);
+
+        //        return result;
+        //    }
+        //    catch (TechnicalException) { throw; }
+        //    catch (Exception ex)
+        //    {
+        //        var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
+        //        if (Logger != null) Logger.Error(techEx);
+
+        //        throw techEx;
+        //    }
+        //}
+
+        //public virtual IEnumerable<TEntity> Get<TFilter>(
+        //TFilter filter = default(TFilter),
+        //Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+        //bool includeDeleted = false,
+        //string includeProperties = "")
+        // where TFilter : class, IFilterExpression
+        //{
+        //    try
+        //    {
+        //        var result = Repository.Get(filter, orderBy, includeDeleted, includeProperties);
+
+        //        return result;
+        //    }
+        //    catch (TechnicalException) { throw; }
+        //    catch (Exception ex)
+        //    {
+        //        var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
+        //        if (Logger != null) Logger.Error(techEx);
+
+        //        throw techEx;
+        //    }
+        //}
+
+        public virtual TEntity GetById(
+            TKey id,
+            bool includeDeleted = false,
+            string includeProperties = "")
+        {
+            try
+            {
+                CheckId(id);
+
+                var result = Repository.GetById(id, includeDeleted, includeProperties);
+
+                return result;
+            }
+            catch (TechnicalException) { throw; }
+            catch (Exception ex)
+            {
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
+            }
+        }
+
+        //public TEntity GetEntity<TFilter>(
+        //    TFilter filter = default(TFilter),
+        //    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+        //    bool includeDeleted = false,
+        //    string includeProperties = "")
+        //    where TFilter : class, IFilterExpression
+        //{
+        //    try
+        //    {
+        //        var result = Repository.GetEntity(filter, orderBy, includeDeleted, includeProperties);
+
+        //        return result;
+        //    }
+        //    catch (TechnicalException) { throw; }
+        //    catch (Exception ex)
+        //    {
+        //        var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
+        //        if (Logger != null) Logger.Error(techEx);
+
+        //        throw techEx;
+        //    }
+        //}
+
+
+        //public virtual void Add(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
+        //{
+        //    try
+        //    {
+        //        var uow = UnitOfWork.Create();
+
+        //        CheckEntity(entity);
+
+        //        var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteAddValidationRules, BusinessValidator.AddValidationRules);
+        //        if (!validationResult.IsValid)
+        //            throw new BusinessRulesValidationException(validationResult);
+
+        //        Repository.Insert(entity);
+
+        //        if (saveChanges)
+        //            uow.SaveChanges();
+        //        if (disposeUoW)
+        //            uow.Dispose();
+        //    }
+        //    catch (BusinessRulesValidationException) { throw; }
+        //    catch (TechnicalException) { throw; }
+        //    catch (Exception ex)
+        //    {
+        //        var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS401, typeof(TEntity));
+        //        if (Logger != null) Logger.Error(techEx);
+
+        //        throw techEx;
+        //    }
+        //}
+
+        public virtual void Update(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
+        {
+            try
+            {
+                var uow = UnitOfWork.Create();
+                CheckEntity(entity);
+                CheckEntityId(entity);
+
+                var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteUpdateValidationRules, BusinessValidator.UpdateValidationRules);
+                if (!validationResult.IsValid)
+                    throw new BusinessRulesValidationException(validationResult);
+
+                Repository.Update(entity);
+                if (saveChanges)
+                    uow.SaveChanges();
+                if (disposeUoW)
+                    uow.Dispose();
+
+            }
+            catch (EntityNotFoundException ex)
+            {
+                if (Logger != null) Logger.Warn(ex);
+
+                throw;
+            }
+            catch (BusinessRulesValidationException ex)
+            {
+                if (Logger != null) Logger.Warn(ex);
+
+                throw;
+            }
+            catch (TechnicalException) { throw; }
+            catch (Exception ex)
+            {
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS403, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
+            }
+        }
+
+        public virtual void Delete(TKey id, bool saveChanges = true, bool disposeUoW = true)
+        {
+            try
+            {
+                var uow = UnitOfWork.Create();
+                CheckId(id);
+
+                var entity = this.GetById(id);
+                if (entity == default(TEntity))
+                    throw CoreExceptionFactory.CreateException<EntityNotFoundException>(CoreErrors.BUSVAL500, typeof(TEntity), id);
+
+                Delete(entity, saveChanges, disposeUoW);
+            }
+            catch (BusinessRulesValidationException) { throw; }
+            catch (TechnicalException) { throw; }
+            catch (Exception ex)
+            {
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS402, typeof(TEntity));
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
+            }
+        }
+
+        //#endregion
+
+        #endregion
+
+        #region Protected Methods
+
+        protected void CheckEntity(TEntity entity)
+        {
+            if (entity == default(TEntity)) throw new ArgumentException(nameof(entity));
+        }
+
+        protected override void CheckEntityId(TEntity entity)
         {
             if (entity.Id.Equals(default(TKey))) throw new ArgumentException(nameof(entity.Id));
         }
+
         protected void CheckId(TKey id)
         {
             if (id.Equals(default(TKey))) throw new ArgumentException(nameof(id));
         }
-    }
 
+        protected override void CheckId(params object[] args)
+        {
+            if (args == null) throw new ArgumentNullException(nameof(args));
+            if (args.Length == 0) throw new ArgumentException(nameof(args));
+
+            int id = (int)args[0];
+
+            if (id.Equals(default(TKey))) throw new ArgumentException(nameof(id));
+        }
+
+        #endregion
+
+    }
 
     public abstract class BusinessComponent<TEntity, TValidator> : BusinessComponent<int, TEntity, TValidator>, IBusinessComponent<TEntity, TValidator>
         where TEntity : class, IBaseEntity

@@ -27,8 +27,8 @@
             <a href="@Url.Action("Details", new { id = list.Id })" data-id="@list.Id" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                 @Html.DisplayFor(modelItem => list.Name)
                 <span class="pull-right">
-                    <span class="badge bg-orange badge-pill" title="Pending">@list.PendingItems().Count</span>
-                    <span class="badge bg-blue badge-pill" title="Done">@list.DoneItems().Count</span>
+                    <span class="badge bg-blue badge-pill" title="Pending">@list.PendingItems().Count</span>
+                    <span class="badge bg-orange badge-pill" title="Done">@list.DoneItems().Count</span>
                 </span>
             </a>
         }

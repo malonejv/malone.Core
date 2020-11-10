@@ -122,7 +122,7 @@
     <Compile Include="CL\Exceptions\ErrorCodes.cs" />
     <Compile Include="CL\Features\Configurations.cs" />
     <Compile Include="CL\Features\Features.cs" />
-    <Compile Include="DAL\Context\SampleAdoNetContext.cs" />
+    <Compile Include="DAL\Context\SampleContext.cs" />
     <Compile Include="DAL\Mappers\DataRowTaskItemProfile.cs" />
     <Compile Include="DAL\Mappers\DataRowTodoListProfile.cs" />
     <Compile Include="DAL\Repositories\TaskItemRepository.cs" />

@@ -64,7 +64,7 @@ namespace malone.Core.Sample.AdoNet.Firebird.mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                TodoListBC.Update(todoList.Id, todoList);
+                TodoListBC.Update(todoList);
                 return RedirectToAction("Index");
             }
             return View(todoList);

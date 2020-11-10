@@ -1,9 +1,8 @@
-﻿using malone.Core.Identity.AdoNet.Entities;
+﻿using malone.Core.Sample.AdoNet.Entities;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 
-namespace malone.Core.Identity.AdoNet
+namespace malone.Core.Identity.AdoNet.Business
 {
     public class RoleBusinessComponent<TKey, TRoleEntity, TUserRole> : RoleManager<TRoleEntity, TKey>
         where TKey : IEquatable<TKey>

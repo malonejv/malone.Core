@@ -130,6 +130,7 @@
     <Compile Include="Commons\Exceptions\ExceptionFactory.cs" />
     <Compile Include="Commons\Exceptions\IErrorLocalizationHandler.cs" />
     <Compile Include="Commons\Helpers\Extensions\DataRowExtensions.cs" />
+    <Compile Include="Commons\Helpers\Extensions\ObjectExtensions.cs" />
     <Compile Include="Commons\Helpers\Extensions\TypeExtensions.cs" />
     <Compile Include="Commons\Localization\CoreContents.cs" />
     <Compile Include="Commons\Localization\CoreLocalizationHandler.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Commons\Security\SymCryptoServiceFactory.cs" />
     <Compile Include="DataAccess\Context\IContext.cs" />
     <Compile Include="DataAccess\Repositories\IRepository.cs" />
+    <Compile Include="DataAccess\Repositories\IBaseRepository.cs" />
     <Compile Include="DataAccess\UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="DataAccess\UnitOfWork\UnitOfWork.cs" />
     <Compile Include="DataAccess\ServiceAgents\IServiceAgent.cs" />

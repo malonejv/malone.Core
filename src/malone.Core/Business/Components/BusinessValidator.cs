@@ -4,12 +4,10 @@ using System.Collections.Generic;
 
 namespace malone.Core.Business.Components
 {
-    //TODO: Estudiar dejarlo como abstract para obligar a escribir las reglas de validacion aca
-    public class BusinessValidator<TKey, TEntity> : IBusinessValidator<TKey, TEntity>
-        where TKey : IEquatable<TKey>
-        where TEntity : class, IBaseEntity<TKey>
+    public class BaseBusinessValidator<TEntity> : IBaseBusinessValidator<TEntity>
+           where TEntity : class
     {
-        public BusinessValidator()
+        public BaseBusinessValidator()
         {
             AddValidationRules = new List<ValidationRule>();
             UpdateValidationRules = new List<ValidationRule>();
@@ -41,7 +39,6 @@ namespace malone.Core.Business.Components
             return resultValidations;
         }
 
-
         protected ValidationResultList ExecutesValidationRules(List<ValidationRule> validationRules)
         {
             ValidationResultList resultValidations = new ValidationResultList();
@@ -63,14 +60,21 @@ namespace malone.Core.Business.Components
             return rule(args);
         }
     }
+    //TODO: Estudiar dejarlo como abstract para obligar a escribir las reglas de validacion aca
+    public class BusinessValidator<TKey, TEntity> : BaseBusinessValidator<TEntity>, IBusinessValidator<TKey, TEntity>
+        where TKey : IEquatable<TKey>
+        where TEntity : class, IBaseEntity<TKey>
+    {
+        public BusinessValidator() : base()
+        {
+        }
+    }
 
     public class BusinessValidator<TEntity> : BusinessValidator<int, TEntity>, IBusinessValidator<TEntity>
        where TEntity : class, IBaseEntity
     {
-
         public BusinessValidator() : base()
         {
         }
-
     }
 }

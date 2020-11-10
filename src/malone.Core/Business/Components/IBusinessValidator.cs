@@ -5,10 +5,8 @@ using System.Collections.Generic;
 namespace malone.Core.Business.Components
 {
     public delegate ValidationResultList ExecuteValidationRulesDelegate(List<ValidationRule> validationRules);
-
-    public interface IBusinessValidator<TKey, TEntity>
-        where TKey : IEquatable<TKey>
-        where TEntity : class, IBaseEntity<TKey>
+    public interface IBaseBusinessValidator<TEntity>
+        where TEntity : class
     {
 
         List<ValidationRule> AddValidationRules { get; set; }
@@ -21,6 +19,13 @@ namespace malone.Core.Business.Components
         ValidationResultList ExecuteDeleteValidationRules(List<ValidationRule> validationRules);
 
         ValidationResultList Validate(ExecuteValidationRulesDelegate validationTriggerMethod, List<ValidationRule> validationRules);
+    }
+
+    public interface IBusinessValidator<TKey, TEntity> : IBaseBusinessValidator<TEntity>
+        where TKey : IEquatable<TKey>
+        where TEntity : class, IBaseEntity<TKey>
+    {
+
     }
 
     public interface IBusinessValidator<TEntity> : IBusinessValidator<int, TEntity>

@@ -134,22 +134,37 @@
     <Compile Include="BL\ITodoListBC.cs" />
     <Compile Include="BL\ITodoListBV.cs" />
     <Compile Include="CL\Exceptions\ErrorCodes.cs" />
+    <Compile Include="CL\Exceptions\ErrorLocalizationHandler.cs" />
+    <Compile Include="CL\Exceptions\Exceptions.Designer.cs" />
+    <Compile Include="CL\Exceptions\IErrorLocalizationHandler.cs" />
     <Compile Include="CL\Features\Configurations.cs" />
     <Compile Include="CL\Features\Features.cs" />
-    <Compile Include="DAL\Context\EF\SampleEFContext.cs" />
-    <Compile Include="DAL\Context\EF\Mappings\TaskItemMapping.cs" />
-    <Compile Include="DAL\Context\EF\Mappings\TodoListMapping.cs" />
+    <Compile Include="CL\Localization\ContentCodes.cs" />
+    <Compile Include="CL\Localization\ContentLocalizationHandler.cs" />
+    <Compile Include="CL\Localization\Contents.Designer.cs" />
+    <Compile Include="CL\Localization\IContentLocalizationHandler.cs" />
+    <Compile Include="DAL\Context\SampleContext.cs" />
+    <Compile Include="DAL\Context\Mappings\TaskItemMapping.cs" />
+    <Compile Include="DAL\Context\Mappings\TodoListMapping.cs" />
     <Compile Include="DAL\Mappers\DataRowTaskItemProfile.cs" />
     <Compile Include="DAL\Mappers\DataRowTodoListProfile.cs" />
     <Compile Include="DAL\Migrations\202008222201485_Initial.cs" />
     <Compile Include="DAL\Migrations\202008222201485_Initial.designer.cs">
       <DependentUpon>202008222201485_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="DAL\Migrations\202010272157481_change1.cs" />
+    <Compile Include="DAL\Migrations\202010272157481_change1.designer.cs">
+      <DependentUpon>202010272157481_change1.cs</DependentUpon>
+    </Compile>
     <Compile Include="DAL\Migrations\Configuration.cs" />
+    <Compile Include="DAL\Repositories\TodoListRepository.cs" />
     <Compile Include="EL\Filters\EF\TodoListEntity\EFTodoListGetRequest.cs" />
+    <Compile Include="EL\Model\Extensions\TodoListExtensions.cs" />
     <Compile Include="EL\Model\RoleTypeEnum.cs" />
     <Compile Include="EL\Model\TaskItem.cs" />
     <Compile Include="EL\Model\TodoList.cs" />
+    <Compile Include="EL\Profiles\TodoListViewModelProfile.cs" />
+    <Compile Include="EL\RequestParams\TodoListGetRequestParam.cs" />
     <Compile Include="EL\Resource\EntitiesEnum.cs" />
     <Compile Include="EL\Resource\Entities.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -158,6 +173,7 @@
     </Compile>
     <Compile Include="EL\Resource\EntitiesLocalizationHandler.cs" />
     <Compile Include="EL\Resource\IEntitiesLocalizationHandler.cs" />
+    <Compile Include="EL\ViewModel\TodoListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -165,8 +181,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CL\Exceptions\Exceptions.resx" />
+    <EmbeddedResource Include="CL\Localization\Contents.resx" />
     <EmbeddedResource Include="DAL\Migrations\202008222201485_Initial.resx">
       <DependentUpon>202008222201485_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DAL\Migrations\202010272157481_change1.resx">
+      <DependentUpon>202010272157481_change1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EL\Resource\Entities.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -176,8 +197,6 @@
   <ItemGroup>
     <Folder Include="BL\Mappers\" />
     <Folder Include="CL\Configuration\" />
-    <Folder Include="DAL\Context\EF\Test\" />
-    <Folder Include="DAL\Repositories\" />
     <Folder Include="DAL\ServiceAgents\" />
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +207,10 @@
     <ProjectReference Include="..\..\src\malone.Core.Identity.EntityFramework\malone.Core.Identity.EntityFramework.csproj">
       <Project>{ECA07D24-2FD5-42E8-A5F7-3FDF54B10DD4}</Project>
       <Name>malone.Core.Identity.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\malone.Core.WebApi\malone.Core.WebApi.csproj">
+      <Project>{C0B7AE10-F8E3-4177-B937-F1787A7F0DF3}</Project>
+      <Name>malone.Core.WebApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\malone.Core\malone.Core.csproj">
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>

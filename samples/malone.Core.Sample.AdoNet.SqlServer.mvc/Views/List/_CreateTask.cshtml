@@ -1,0 +1,26 @@
+﻿@model malone.Core.Sample.AdoNet.SqlServer.mvc.Models.ListDetailsViewModel
+
+
+@using (Html.BeginForm("AddTask", "List", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Lista.Id)
+    @Html.HiddenFor(model => model.Lista.Name)
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "row text-danger" })
+        <div class="input-group">
+            @Html.EditorFor(model => model.NuevaTarea.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Nueva tarea" } })
+            <div class="input-group-append">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </div>
+        <div class="row">
+            @Html.ValidationMessageFor(model => model.NuevaTarea.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

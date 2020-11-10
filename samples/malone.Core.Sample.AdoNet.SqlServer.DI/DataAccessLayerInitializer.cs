@@ -16,28 +16,10 @@ namespace malone.Core.Sample.AdoNet.SqlServer.DI
         public void Initialize(IUnityContainer container)
         {
             //Context
-            container.RegisterType<IContext, SampleAdoNetContext>(new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
-            //            container.RegisterType<EFIdentityDbContext, SampleEFContext>(new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
-            //            container.RegisterType<IDatabaseInitializer<SampleEFContext>, SampleContextInitializer>();
-
-            //            IDatabaseInitializer<SampleEFContext> initializer = null;
-            //            //TODO: Habilitar configuración para SampleContextInitializer
-            //#if DEBUG
-            //            initializer = container.Resolve<IDatabaseInitializer<SampleEFContext>>();
-            //#endif
-            //            //OPTION: Habilita la clase SampleContextInitializer 
-            //            Database.SetInitializer<SampleEFContext>(initializer);
-
+            container.RegisterType<IContext, SampleContext>(new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
             //Repositories
             container.RegisterType<IRepository<TodoList>, TodoListRepository>();
-            container.RegisterType<IRepository<TaskItem>, AdoNetRepository<TaskItem>>();
-
-            //container.RegisterType<IRoleStore<CoreRole, int>, RoleRepository<EFIdentityDbContext>>();
-            //container.RegisterType<IUserStore<CoreUser, int>, UserRepository<EFIdentityDbContext>>();
-
-            //General
-            //container.RegisterType<IUnitOfWork, UnitOfWork>(new PerRequestLifetimeManager());
-            //container.RegisterType<IPasswordHasher, PasswordHasher>();
+            container.RegisterType<IRepository<TaskItem>, TaskItemRepository>();
 
         }
     }

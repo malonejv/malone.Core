@@ -155,7 +155,6 @@
     <Compile Include="EntitiesLayerInitializer.cs" />
     <Compile Include="SampleInitializer.cs" />
     <Compile Include="ServiceLayerInitializer.cs" />
-    <Compile Include="UILayerInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

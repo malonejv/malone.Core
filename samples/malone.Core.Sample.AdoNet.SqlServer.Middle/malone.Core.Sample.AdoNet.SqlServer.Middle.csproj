@@ -116,9 +116,24 @@
     <Compile Include="BL\ITodoListBC.cs" />
     <Compile Include="BL\ITodoListBV.cs" />
     <Compile Include="CL\Exceptions\ErrorCodes.cs" />
+    <Compile Include="CL\Exceptions\ErrorLocalizationHandler.cs" />
+    <Compile Include="CL\Exceptions\Exceptions.Designer.cs">
+      <DependentUpon>Exceptions.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CL\Exceptions\IErrorLocalizationHandler.cs" />
     <Compile Include="CL\Features\Configurations.cs" />
     <Compile Include="CL\Features\Features.cs" />
-    <Compile Include="DAL\Context\SampleAdoNetContext.cs" />
+    <Compile Include="CL\Localization\ContentCodes.cs" />
+    <Compile Include="CL\Localization\ContentLocalizationHandler.cs" />
+    <Compile Include="CL\Localization\Contents.Designer.cs">
+      <DependentUpon>Contents.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CL\Localization\IContentLocalizationHandler.cs" />
+    <Compile Include="DAL\Context\SampleContext.cs" />
     <Compile Include="DAL\Mappers\DataRowTaskItemProfile.cs" />
     <Compile Include="DAL\Mappers\DataRowTodoListProfile.cs" />
     <Compile Include="DAL\Repositories\TaskItemRepository.cs" />
@@ -127,6 +142,8 @@
     <Compile Include="EL\Model\RoleTypeEnum.cs" />
     <Compile Include="EL\Model\TaskItem.cs" />
     <Compile Include="EL\Model\TodoList.cs" />
+    <Compile Include="EL\Profiles\TodoListViewModelProfile.cs" />
+    <Compile Include="EL\RequestParams\TodoListGetRequestParam.cs" />
     <Compile Include="EL\Resource\EntitiesEnum.cs" />
     <Compile Include="EL\Resource\Entities.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -135,6 +152,7 @@
     </Compile>
     <Compile Include="EL\Resource\EntitiesLocalizationHandler.cs" />
     <Compile Include="EL\Resource\IEntitiesLocalizationHandler.cs" />
+    <Compile Include="EL\ViewModel\TodoListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +160,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CL\Exceptions\Exceptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CL\Localization\Contents.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Contents.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="EL\Resource\Entities.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Entities.Designer.cs</LastGenOutput>
@@ -161,9 +187,17 @@
       <Project>{492f80c1-e1f2-4cc9-8dbe-83ba63e7de4c}</Project>
       <Name>malone.Core.AdoNet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\malone.Core.Identity.EntityFramework\malone.Core.Identity.EntityFramework.csproj">
-      <Project>{ECA07D24-2FD5-42E8-A5F7-3FDF54B10DD4}</Project>
-      <Name>malone.Core.Identity.EntityFramework</Name>
+    <ProjectReference Include="..\..\src\malone.Core.Identity.AdoNet.SqlServer\malone.Core.Identity.AdoNet.SqlServer.csproj">
+      <Project>{765b4548-f6b9-41c9-a640-a12b3f91185b}</Project>
+      <Name>malone.Core.Identity.AdoNet.SqlServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\malone.Core.Identity\malone.Core.Identity.csproj">
+      <Project>{0992b1b6-be12-4b9f-9b15-4d1b03ecd306}</Project>
+      <Name>malone.Core.Identity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\malone.Core.WebApi\malone.Core.WebApi.csproj">
+      <Project>{C0B7AE10-F8E3-4177-B937-F1787A7F0DF3}</Project>
+      <Name>malone.Core.WebApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\malone.Core\malone.Core.csproj">
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>

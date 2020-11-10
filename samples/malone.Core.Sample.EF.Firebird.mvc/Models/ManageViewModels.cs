@@ -39,6 +39,13 @@ namespace malone.Core.Sample.EF.Firebird.mvc.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class ChangeUserNameViewModel
+    {
+        [Required]
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
+    }
+
     public class ChangePasswordViewModel
     {
         [Required]

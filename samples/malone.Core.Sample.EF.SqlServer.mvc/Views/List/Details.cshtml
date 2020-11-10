@@ -27,29 +27,29 @@
             @foreach (var item in Model.Lista.PendingItems())
             {
                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" data-id="@item.Id">
-                    <input type="checkbox" id="taskDone_@item.Id" value="@item.Done" @(item.Done ? "checked=\"checked\"" : "") data-id="@item.Id" />
+                    <input type="checkbox" id="taskDone_@item.Id" class="todo" value="@item.Done" @(item.Done ? "checked=\"checked\"" : "") data-id="@item.Id" />
                     <label for="taskDone_@item.Id">@item.Description</label>
                 </li>
                 @*<a href="@Url.Action("Details", new { id = list.Id })" data-id="@list.Id" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                @Html.DisplayFor(modelItem => list.Name)
-                <span class="pull-right">
-                    <span class="badge bg-orange badge-pill">@list.Items.Count()</span>
-                </span>
-            </a>*@
+                        @Html.DisplayFor(modelItem => list.Name)
+                        <span class="pull-right">
+                            <span class="badge bg-orange badge-pill">@list.Items.Count()</span>
+                        </span>
+                    </a>*@
             }
 
             @foreach (var item in Model.Lista.DoneItems())
             {
                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" data-id="@item.Id">
-                    <input type="checkbox" id="taskDone_@item.Id" value="@item.Done" @(item.Done ? "checked=\"checked\"" : "") data-id="@item.Id" />
+                    <input type="checkbox" id="taskDone_@item.Id" class="todo" value="@item.Done" @(item.Done ? "checked=\"checked\"" : "") data-id="@item.Id" />
                     <label for="taskDone_@item.Id">@item.Description</label>
                 </li>
                 @*<a href="@Url.Action("Details", new { id = list.Id })" data-id="@list.Id" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                @Html.DisplayFor(modelItem => list.Name)
-                <span class="pull-right">
-                    <span class="badge bg-orange badge-pill">@list.Items.Count()</span>
-                </span>
-            </a>*@
+                        @Html.DisplayFor(modelItem => list.Name)
+                        <span class="pull-right">
+                            <span class="badge bg-orange badge-pill">@list.Items.Count()</span>
+                        </span>
+                    </a>*@
             }
         </ul>
     </div>

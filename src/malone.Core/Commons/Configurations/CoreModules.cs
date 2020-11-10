@@ -15,6 +15,8 @@ namespace malone.Core.Commons.Configurations
         Log4NetLogger,
         [Description("Features")]
         Features,
+        [Description("IdentityAdoNetSqlServer")]
+        IdentityAdoNetSqlServer,
         [Description("IdentityEntityFramework")]
         IdentityEntityFramework
     }

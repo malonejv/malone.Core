@@ -1,8 +1,6 @@
 ﻿using malone.Core.Business.Components;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Repositories;
-using malone.Core.DataAccess.UnitOfWork;
-using malone.Core.Sample.EF.Firebird.Middle.CL.Exceptions;
 using malone.Core.Sample.EF.Firebird.Middle.EL.Model;
 
 namespace malone.Core.Sample.EF.Firebird.Middle.BL.Implementations

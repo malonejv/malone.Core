@@ -10,7 +10,7 @@ using malone.Core.AdoNet.Database;
 using malone.Core.AdoNet.Entities.Filters;
 using malone.Core.Commons.Helpers.Extensions;
 
-namespace malone.Core.AdoNet.SqlServer
+namespace malone.Core.AdoNet
 {
     public static class IFilterExpressionAdoNetExtensions
     {
