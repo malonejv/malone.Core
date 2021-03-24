@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using malone.Core.Identity.AdoNet.SqlServer.Business;
+﻿using malone.Core.Identity.AdoNet.SqlServer.Business;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.Api.Providers
 {

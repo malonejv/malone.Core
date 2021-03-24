@@ -1,12 +1,12 @@
+using malone.Core.Commons.Initializers;
+using malone.Core.Sample.EF.Firebird.Api;
+using malone.Core.Sample.EF.Firebird.Middle.Initializers;
+using malone.Core.Unity.WebApi;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using malone.Core.Commons.Initializers;
-using malone.Core.Sample.EF.Firebird.Api;
-using malone.Core.Sample.EF.Firebird.DI;
-using malone.Core.Unity.WebApi;
 using Unity;
 
 [assembly: PreApplicationStartMethod(typeof(AppStart), nameof(AppStart.Start))]

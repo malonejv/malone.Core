@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.Commons.Exceptions;
+﻿using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.EF.Entities.Filters;
 using malone.Core.Entities.Filters;
 using malone.Core.Entities.Model;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace malone.Core.EF.Repositories
 {
@@ -276,7 +274,7 @@ namespace malone.Core.EF.Repositories
         #endregion
 
         #region Dispose
-        
+
         protected bool _disposed;
 
         /// <summary>

@@ -1,14 +1,12 @@
-﻿using System;
+﻿using malone.Core.Commons.DI;
+using malone.Core.Commons.Exceptions;
+using malone.Core.Commons.Log;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using malone.Core.Commons.DI;
-using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Localization;
-using malone.Core.Commons.Log;
 
 namespace malone.Core.Sample.EF.SqlServer.mvc.Attributes
 {
@@ -117,7 +115,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Attributes
 
     public class ErrorMessage
     {
-        public string Header{ get; set; }
+        public string Header { get; set; }
         public List<string> Paragraphs { get; set; }
         public string Status { get; set; }
     }

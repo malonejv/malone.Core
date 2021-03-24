@@ -1,6 +1,6 @@
-﻿using malone.Core.Identity.EntityFramework;
-using malone.Core.Identity.EntityFramework.Entities;
-using malone.Core.Sample.Api.Models;
+﻿//using malone.Core.Identity.EntityFramework;
+//using malone.Core.Identity.EntityFramework.Entities;
+using malone.Core.Sample.AdoNet.SqlServer.Api.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace malone.Core.Sample.Api.Controllers
+namespace malone.Core.Sample.AdoNet.SqlServer.Api.Controllers
 {
     [Authorize]
     public class AccountController : Controller

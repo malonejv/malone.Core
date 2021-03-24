@@ -1,6 +1,6 @@
-﻿using System.ComponentModel;
+﻿using malone.Core.Entities.Model;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using malone.Core.Entities.Model;
 
 namespace malone.Core.Sample.EF.SqlServer.Middle.EL.Model
 {

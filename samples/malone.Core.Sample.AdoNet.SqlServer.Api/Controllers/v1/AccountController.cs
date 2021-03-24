@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using malone.Core.Identity.AdoNet.SqlServer.Business;
+﻿using malone.Core.Identity.AdoNet.SqlServer.Business;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using malone.Core.Sample.AdoNet.SqlServer.Api.Models.v1;
 using malone.Core.Sample.AdoNet.SqlServer.Api.Providers;
@@ -17,6 +9,14 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Web.Http;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.Api.Controllers.v1
 {
@@ -127,7 +127,7 @@ namespace malone.Core.Sample.AdoNet.SqlServer.Api.Controllers.v1
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId<int>(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -260,9 +260,9 @@ namespace malone.Core.Sample.AdoNet.SqlServer.Api.Controllers.v1
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -371,7 +371,7 @@ namespace malone.Core.Sample.AdoNet.SqlServer.Api.Controllers.v1
             result = await UserManager.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result); 
+                return GetErrorResult(result);
             }
             return Ok();
         }

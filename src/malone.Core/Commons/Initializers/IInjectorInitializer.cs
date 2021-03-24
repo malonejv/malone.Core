@@ -1,15 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿//<author>Javier López Malone</author>
+//<date>25/11/2020 02:48:02</date>
 
 namespace malone.Core.Commons.Initializers
 {
+    /// <summary>
+    /// Defines the <see cref="IInjectorInitializer{TContainer}" />.
+    /// </summary>
+    /// <typeparam name="TContainer">.</typeparam>
     public interface IInjectorInitializer<TContainer>
     {
+        /// <summary>
+        /// The Initialize.
+        /// </summary>
+        /// <returns>The <see cref="TContainer"/>.</returns>
         TContainer Initialize();
+
+        /// <summary>
+        /// The Terminate.
+        /// </summary>
         void Terminate();
     }
 }

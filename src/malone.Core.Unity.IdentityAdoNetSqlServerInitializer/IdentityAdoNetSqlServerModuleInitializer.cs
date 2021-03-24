@@ -27,8 +27,8 @@ namespace malone.Core.Unity.IdentityAdoNetSqlServerInitializer
             container.RegisterType<IUserLoginRepository<CoreUserLogin>, UserLoginRepository<CoreUserLogin>>();
             container.RegisterType<IUserClaimRepository<CoreUserClaim>, UserClaimRepository<CoreUserClaim>>();
             container.RegisterType<IUserRoleRepository<CoreUserRole>, UserRoleRepository<CoreUserRole>>();
-            container.RegisterType<IRoleRepository<CoreRole>, RoleRepository<CoreRole,CoreUserRole>>();
-            container.RegisterType<IUserRepository<CoreUser>, UserRepository<CoreUser,CoreUserLogin,CoreUserRole,CoreUserClaim>>();
+            container.RegisterType<IRoleRepository<CoreRole>, RoleRepository<CoreRole, CoreUserRole>>();
+            container.RegisterType<IUserRepository<CoreUser>, UserRepository<CoreUser, CoreUserLogin, CoreUserRole, CoreUserClaim>>();
             container.RegisterType<IRoleStore<CoreRole, int>, RoleStore<CoreRole, CoreUserRole>>();
             container.RegisterType<IUserStore<CoreUser, int>, UserStore<CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim>>();
 

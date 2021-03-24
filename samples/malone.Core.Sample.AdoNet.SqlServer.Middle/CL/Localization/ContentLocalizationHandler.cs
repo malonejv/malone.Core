@@ -1,5 +1,5 @@
-﻿using System.Resources;
-using malone.Core.Commons.Localization;
+﻿using malone.Core.Commons.Localization;
+using System.Resources;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.Middle.CL.Localization
 {

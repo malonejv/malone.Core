@@ -18,7 +18,7 @@ namespace malone.Core.Identity
         /// <returns></returns>
         public static async Task<bool> TwoFactorBrowserRememberedAsync<TKey>(this IAuthenticationManager manager,
             TKey userId)
-            where TKey : IEquatable<TKey>,IConvertible
+            where TKey : IEquatable<TKey>, IConvertible
         {
             if (manager == null)
             {

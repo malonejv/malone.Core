@@ -1,23 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//<author>Javier López Malone</author>
+//<date>25/11/2020 02:47:56</date>
+
+using System;
 
 namespace malone.Core.Commons.Exceptions
 {
     /// <summary>
-    /// Encapsulates general exceptions of Technical purpose
+    /// Encapsulates general exceptions of Technical purpose.
     /// </summary>
     public class TechnicalException : BaseException
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TechnicalException"/> class.
+        /// </summary>
         public TechnicalException()
-            : base() { }
+            : base()
+        {
+        }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TechnicalException"/> class.
+        /// </summary>
+        /// <param name="message">The message<see cref="string"/>.</param>
         public TechnicalException(string message)
-            : base(message) { }
+            : base(message)
+        {
+        }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TechnicalException"/> class.
+        /// </summary>
+        /// <param name="message">The message<see cref="string"/>.</param>
+        /// <param name="innerException">The innerException<see cref="Exception"/>.</param>
         public TechnicalException(string message, Exception innerException)
-            : base(message, innerException) { }
+            : base(message, innerException)
+        {
+        }
     }
 }

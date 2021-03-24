@@ -1,23 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//<author>Javier López Malone</author>
+//<date>25/11/2020 02:47:52</date>
+
+using System;
 
 namespace malone.Core.Commons.Exceptions
 {
     /// <summary>
-    /// 
+    /// Defines the <see cref="BusinessValidationException" />.
     /// </summary>
     public class BusinessValidationException : BaseException
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BusinessValidationException"/> class.
+        /// </summary>
         public BusinessValidationException()
-            : base() { }
+            : base()
+        {
+        }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BusinessValidationException"/> class.
+        /// </summary>
+        /// <param name="message">The message<see cref="string"/>.</param>
         public BusinessValidationException(string message)
-            : base(message) { }
+            : base(message)
+        {
+        }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BusinessValidationException"/> class.
+        /// </summary>
+        /// <param name="message">The message<see cref="string"/>.</param>
+        /// <param name="innerException">The innerException<see cref="Exception"/>.</param>
         public BusinessValidationException(string message, Exception innerException)
-            : base(message, innerException) { }
+            : base(message, innerException)
+        {
+        }
     }
 }

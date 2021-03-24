@@ -1,11 +1,11 @@
-﻿using System;
+﻿using malone.Core.AdoNet.Attributes;
+using malone.Core.Entities.Model;
+using malone.Core.Identity.AdoNet.SqlServer.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-using malone.Core.AdoNet.Attributes;
-using malone.Core.Entities.Model;
-using malone.Core.Identity.AdoNet.SqlServer.Entities;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model
 {

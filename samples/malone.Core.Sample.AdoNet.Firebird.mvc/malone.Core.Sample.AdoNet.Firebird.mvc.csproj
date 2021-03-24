@@ -64,6 +64,12 @@
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.Base, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Configuration.ConfigurationBuilders.Base.2.0.0\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.Environment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Configuration.ConfigurationBuilders.Environment.2.0.0\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.Environment.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Owin.4.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -376,14 +382,13 @@
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
       <Name>malone.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\malone.Core.Sample.AdoNet.Firebird.DI\malone.Core.Sample.AdoNet.Firebird.DI.csproj">
-      <Project>{4bba551d-ae87-4ad4-956e-93af3920f5d1}</Project>
-      <Name>malone.Core.Sample.AdoNet.Firebird.DI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\malone.Core.Sample.AdoNet.Firebird.Middle\malone.Core.Sample.AdoNet.Firebird.Middle.csproj">
       <Project>{5b3d84c2-d970-41ba-8f01-8dc931ebaa8f}</Project>
       <Name>malone.Core.Sample.AdoNet.Firebird.Middle</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -392,9 +397,6 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

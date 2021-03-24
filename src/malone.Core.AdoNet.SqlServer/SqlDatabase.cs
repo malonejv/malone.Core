@@ -1,7 +1,7 @@
-﻿using System;
+﻿using malone.Core.AdoNet.Database;
+using System;
 using System.Data;
 using System.Data.SqlClient;
-using malone.Core.AdoNet.Database;
 
 namespace malone.Core.AdoNet.SqlServer
 {

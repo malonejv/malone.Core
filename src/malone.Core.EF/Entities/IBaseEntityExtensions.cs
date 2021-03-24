@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using malone.Core.Entities.Model;
+using System;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.Entities.Model;
 
 namespace malone.Core.EF.Entities
 {

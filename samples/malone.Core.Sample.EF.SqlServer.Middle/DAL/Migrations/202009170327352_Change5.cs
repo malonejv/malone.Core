@@ -1,8 +1,7 @@
 ﻿namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class Change5 : DbMigration
     {
         public override void Up()
@@ -11,7 +10,7 @@
             CreateIndex("dbo.TodoLists", "User_Id");
             AddForeignKey("dbo.TodoLists", "User_Id", "dbo.Users", "Id");
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.TodoLists", "User_Id", "dbo.Users");

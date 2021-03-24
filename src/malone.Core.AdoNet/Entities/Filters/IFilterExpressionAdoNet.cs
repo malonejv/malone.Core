@@ -2,7 +2,7 @@
 
 namespace malone.Core.AdoNet.Entities.Filters
 {
-    public interface IFilterExpressionAdoNet: IFilterExpression
+    public interface IFilterExpressionAdoNet : IFilterExpression
     {
         //List<IFilterField> Fields { get; set; }
 

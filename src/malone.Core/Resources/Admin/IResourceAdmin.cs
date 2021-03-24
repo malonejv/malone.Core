@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//<author>Javier López Malone</author>
+//<date>25/11/2020 02:48:20</date>
 
 namespace malone.Core.Resources.Admin
 {
+    /// <summary>
+    /// Defines the <see cref="IResourceAdmin" />.
+    /// </summary>
     public interface IResourceAdmin
     {
         /// <summary>
@@ -13,7 +13,6 @@ namespace malone.Core.Resources.Admin
         /// </summary>
         /// <param name="clave">Clave del recurso de texto a obtener.</param>
         /// <returns>String que representa el recurso de texto pedido.</returns>
-        /// <remarks></remarks>
         string GetText(string clave);
 
         /// <summary>
@@ -25,11 +24,10 @@ namespace malone.Core.Resources.Admin
         string GetText(string clave, params string[] parametros);
 
         /// <summary>
-        ///Obtiene un recurso de texto, que representa una ruta de una imagen. el cual es fijo (no es parametrizable).
-        ///</summary>
-        ///<param name="clave">Clave del recurso del path a obtener.</param>
-        ///<returns>String que representa el path pedido.</returns>
-        ///<remarks></remarks>
+        /// Obtiene un recurso de texto, que representa una ruta de una imagen. el cual es fijo (no es parametrizable).
+        /// </summary>
+        /// <param name="clave">The clave<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         string GetResource(string clave);
     }
 }

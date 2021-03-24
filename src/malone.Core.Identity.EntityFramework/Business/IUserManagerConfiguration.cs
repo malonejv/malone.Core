@@ -1,5 +1,4 @@
-﻿using malone.Core.Identity;
-using malone.Core.Identity.EntityFramework.Entities;
+﻿using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 

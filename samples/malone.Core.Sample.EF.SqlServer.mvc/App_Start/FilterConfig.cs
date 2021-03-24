@@ -1,6 +1,5 @@
-﻿using System.Web;
+﻿using malone.Core.Sample.EF.SqlServer.mvc.Attributes;
 using System.Web.Mvc;
-using malone.Core.Sample.EF.SqlServer.mvc.Attributes;
 
 namespace malone.Core.Sample.EF.SqlServer.mvc
 {

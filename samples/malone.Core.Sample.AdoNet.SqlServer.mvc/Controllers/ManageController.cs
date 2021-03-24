@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using malone.Core.Identity.AdoNet.SqlServer.Business;
+﻿using malone.Core.Identity.AdoNet.SqlServer.Business;
 using malone.Core.Sample.AdoNet.SqlServer.mvc.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
 {
@@ -355,7 +355,7 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -407,6 +407,6 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

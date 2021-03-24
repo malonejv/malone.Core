@@ -1,6 +1,5 @@
-﻿using System.Web;
+﻿using malone.Core.Sample.EF.Firebird.mvc.Attributes;
 using System.Web.Mvc;
-using malone.Core.Sample.EF.Firebird.mvc.Attributes;
 
 namespace malone.Core.Sample.EF.Firebird.mvc
 {

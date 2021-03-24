@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.Identity.EntityFramework.Entities;
+﻿using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security.DataProtection;
+using System;
 
 namespace malone.Core.Identity.EntityFramework.Business
 {

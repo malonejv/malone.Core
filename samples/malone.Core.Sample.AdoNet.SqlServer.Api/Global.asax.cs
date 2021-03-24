@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using malone.Core.Commons.Initializers;
+using malone.Core.Sample.AdoNet.SqlServer.Api;
+using malone.Core.Sample.AdoNet.SqlServer.Middle.Initializers;
+using malone.Core.Unity.WebApi;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using malone.Core.Commons.Initializers;
-using malone.Core.Sample.AdoNet.SqlServer.Api;
-using malone.Core.Sample.AdoNet.SqlServer.DI;
-using malone.Core.Unity.WebApi;
 using Unity;
 
 [assembly: PreApplicationStartMethod(typeof(AppStart), nameof(AppStart.Start))]

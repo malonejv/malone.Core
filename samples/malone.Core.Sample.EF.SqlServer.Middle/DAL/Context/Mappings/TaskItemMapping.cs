@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.Sample.EF.SqlServer.Middle.EL;
-using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
 
 namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Context.Mappings
 {

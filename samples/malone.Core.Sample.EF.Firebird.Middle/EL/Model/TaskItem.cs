@@ -1,6 +1,6 @@
-﻿using System.ComponentModel;
+﻿using malone.Core.Entities.Model;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using malone.Core.Entities.Model;
 
 namespace malone.Core.Sample.EF.Firebird.Middle.EL.Model
 {
@@ -8,7 +8,6 @@ namespace malone.Core.Sample.EF.Firebird.Middle.EL.Model
     {
         [ScaffoldColumn(false)]
         public int Id { get; set; }
-
 
         [Required(ErrorMessage = "El campo descripción es requerido")]
         [DisplayName("Descripción")]

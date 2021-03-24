@@ -1,13 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿//<author>Javier López Malone</author>
+//<date>25/11/2020 02:47:56</date>
+
 using System.Text;
-using System.Threading.Tasks;
 
 namespace malone.Core.Commons.Helpers.Extensions
 {
+    /// <summary>
+    /// Defines the <see cref="ByteArrayExtensions" />.
+    /// </summary>
     public static class ByteArrayExtensions
     {
+        /// <summary>
+        /// The ToHexString.
+        /// </summary>
+        /// <param name="ba">The ba<see cref="byte[]"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string ToHexString(this byte[] ba)
         {
             StringBuilder hex = new StringBuilder(ba.Length * 2);
@@ -15,6 +22,5 @@ namespace malone.Core.Commons.Helpers.Extensions
                 hex.AppendFormat("{0:x2}", b);
             return hex.ToString();
         }
-
     }
 }

@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using malone.Core.Identity.AdoNet.SqlServer.Business;
+﻿using malone.Core.Identity.AdoNet.SqlServer.Business;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.BL;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Filters;
@@ -10,6 +6,10 @@ using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model;
 using malone.Core.Sample.AdoNet.SqlServer.mvc.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
 {

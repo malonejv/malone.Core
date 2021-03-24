@@ -1,10 +1,12 @@
-﻿using System;
-using System.Data;
-using malone.Core.AdoNet.Repositories;
+﻿using malone.Core.AdoNet.Repositories;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 {
@@ -23,6 +25,15 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         #region Get
 
+        public override TRoleEntity GetById(TKey id, bool includeDeleted = false, string includeProperties = "Users")
+        {
+            TRoleEntity role = base.GetById(id, includeDeleted, includeProperties);
+
+            role.Users = new List<TUserRole>();
+
+            return role;
+        }
+
         protected override void ConfigureCommandForGetById(IDbCommand command, bool includeDeleted, string includeProperties)
         {
             string query = @"SELECT Id, Name
@@ -33,6 +44,16 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
             command.CommandType = CommandType.Text;
         }
 
+        public override IEnumerable<TRoleEntity> GetAll(Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Users")
+        {
+            IEnumerable<TRoleEntity> roles = base.GetAll(orderBy, includeDeleted, includeProperties);
+
+            foreach (var role in roles)
+            {
+                role.Users = new List<TUserRole>();
+            }
+            return roles;
+        }
         protected override void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties)
         {
             string query = @"SELECT Id, Name
@@ -42,6 +63,16 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
             command.CommandType = CommandType.Text;
         }
 
+        public override IEnumerable<TRoleEntity> Get<TFilter>(TFilter filter = null, Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Users")
+        {
+            IEnumerable<TRoleEntity> roles = base.Get(filter, orderBy, includeDeleted, includeProperties);
+
+            foreach (var role in roles)
+            {
+                role.Users = new List<TUserRole>();
+            }
+            return roles;
+        }
         protected override void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties)
         {
             string query = @"SELECT Id, Name
@@ -52,6 +83,14 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
             command.CommandType = CommandType.Text;
         }
 
+        public override TRoleEntity GetEntity<TFilter>(TFilter filter = null, Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Users")
+        {
+            TRoleEntity role = base.GetEntity(filter, orderBy, includeDeleted, includeProperties);
+
+            role.Users = new List<TUserRole>();
+
+            return role;
+        }
         protected override void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties)
         {
             string query = @"SELECT Id, Name

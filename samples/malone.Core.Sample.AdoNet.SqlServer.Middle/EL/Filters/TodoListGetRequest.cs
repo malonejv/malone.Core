@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Data;
-using malone.Core.AdoNet.Attributes;
+﻿using malone.Core.AdoNet.Attributes;
 using malone.Core.AdoNet.Entities.Filters;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Filters
 {

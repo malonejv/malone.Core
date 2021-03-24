@@ -1,6 +1,6 @@
-﻿using System;
-using malone.Core.Identity.AdoNet.SqlServer.Entities;
+﻿using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using Microsoft.AspNet.Identity.Owin;
+using System;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Business
 {

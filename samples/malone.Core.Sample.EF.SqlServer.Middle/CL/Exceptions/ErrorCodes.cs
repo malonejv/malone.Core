@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace malone.Core.Sample.EF.SqlServer.Middle.CL.Exceptions
+﻿namespace malone.Core.Sample.EF.SqlServer.Middle.CL.Exceptions
 {
     public enum ErrorCode
     {
@@ -45,7 +39,7 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.CL.Exceptions
         /// <summary>
         /// ValidarNombreRepetido
         /// </summary>
-        BUSVAL5001 = 5001, 
+        BUSVAL5001 = 5001,
 
         #endregion
 

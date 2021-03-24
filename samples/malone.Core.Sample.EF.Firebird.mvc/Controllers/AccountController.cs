@@ -4,7 +4,6 @@ using malone.Core.Sample.EF.Firebird.mvc.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;

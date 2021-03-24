@@ -3,12 +3,9 @@ using malone.Core.Identity.EntityFramework.Entities;
 using malone.Core.Sample.EF.SqlServer.Middle.BL;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Filters.EF.TodoListEntity;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
-using malone.Core.Sample.EF.SqlServer.mvc.Attributes;
 using malone.Core.Sample.EF.SqlServer.mvc.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -198,7 +195,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
         {
             var userId = User.Identity.GetUserId<int>();
 
-            return TodoListBC.Get(new EFTodoListGetRequest()
+            return TodoListBC.Get(new TodoListGetRequest()
             {
                 Expression = (l => l.User.Id == userId)
             }, includeProperties: "Items,User");

@@ -86,6 +86,12 @@
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.Base, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Configuration.ConfigurationBuilders.Base.2.0.0\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.Environment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Configuration.ConfigurationBuilders.Environment.2.0.0\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.Environment.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Owin.4.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -400,10 +406,6 @@
     <ProjectReference Include="..\..\src\malone.Core\malone.Core.csproj">
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
       <Name>malone.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\malone.Core.Sample.EF.Firebird.DI\malone.Core.Sample.EF.Firebird.DI.csproj">
-      <Project>{a1c5862f-b988-4765-a3bf-796782367a74}</Project>
-      <Name>malone.Core.Sample.EF.Firebird.DI</Name>
     </ProjectReference>
     <ProjectReference Include="..\malone.Core.Sample.EF.Firebird.Middle\malone.Core.Sample.EF.Firebird.Middle.csproj">
       <Project>{d7377349-b8ec-4752-b5ec-96830d11d942}</Project>

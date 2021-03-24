@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Web.Http;
-using malone.Core.Business.Components;
+﻿using malone.Core.Business.Components;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Entities.Model;
+using System;
+using System.Collections;
+using System.Web.Http;
 
 namespace malone.Core.WebApi
 {
@@ -45,7 +45,7 @@ namespace malone.Core.WebApi
         public virtual IHttpActionResult Get()
         {
             IEnumerable list = GetList(null);
-            
+
             return Ok(list);
         }
 
@@ -120,7 +120,7 @@ namespace malone.Core.WebApi
         /// <param name="id">Id de tipo <typeparamref name="TKey"/>.</param>
         /// <response code="200">OK. Devuelve el objeto solicitado.</response>        
         /// <response code="404">NotFound. No se ha encontrado el objeto solicitado.</response>
-        [HttpGet,HttpHead]
+        [HttpGet, HttpHead]
         public virtual IHttpActionResult Get(TKey id)
         {
             object entity = GetById(id);
@@ -222,14 +222,14 @@ namespace malone.Core.WebApi
     }
 
     /// <inheritdoc/>
-    public abstract class CoreApiController<TParam, TEntity, TBusinessComponent, TBusinessValidator>
+    public abstract class ApiController<TParam, TEntity, TBusinessComponent, TBusinessValidator>
         : ApiController<int, TParam, TEntity, TBusinessComponent, TBusinessValidator>
        where TParam : class, IGetRequestParam
        where TEntity : class, IBaseEntity
        where TBusinessValidator : IBusinessValidator<TEntity>
        where TBusinessComponent : IBusinessComponent<TEntity, TBusinessValidator>
     {
-        public CoreApiController(TBusinessComponent businessComponent) : base(businessComponent)
+        public ApiController(TBusinessComponent businessComponent) : base(businessComponent)
         {
         }
 

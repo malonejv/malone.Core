@@ -1,11 +1,10 @@
-﻿using System;
-using malone.Core.Commons.DI;
+﻿using malone.Core.Commons.DI;
 using malone.Core.Identity.EntityFramework.Business;
 using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using Microsoft.Owin.Security.DataProtection;
+using System;
 
 namespace malone.Core.Identity.EntityFramework
 {
@@ -51,7 +50,7 @@ namespace malone.Core.Identity.EntityFramework
             var store = ServiceLocator.Current.Get<IUserStore<TUserEntity, TKey>>();
             var userBusinessComponent = new UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>(store);
             var userBusinessComponentConfiguration = ServiceLocator.Current.Get<IUserManagerConfiguration<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>>>();
-            
+
             userBusinessComponentConfiguration.ConfigureUserManager(userBusinessComponent, options);
 
             return userBusinessComponent;

@@ -1,7 +1,6 @@
 ﻿using malone.Core.Business.Components;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Repositories;
-using malone.Core.DataAccess.UnitOfWork;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model;
 using System;
 using System.Collections.Generic;

@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace malone.Core.Sample.AdoNet.Firebird.Middle.EL.Resource
+﻿namespace malone.Core.Sample.AdoNet.Firebird.Middle.EL.Resource
 {
     public enum EntitiesEnum
     {
-        TodoList_Name 
+        TodoList_Name
     }
 }

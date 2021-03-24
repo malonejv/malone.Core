@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
-using System.Web.Http.Description;
-using AutoMapper;
+﻿using AutoMapper;
 using malone.Core.EF.Entities.Filters;
 using malone.Core.Sample.EF.Firebird.Middle.BL;
 using malone.Core.Sample.EF.Firebird.Middle.EL.Model;
@@ -11,6 +6,11 @@ using malone.Core.Sample.EF.Firebird.Middle.EL.RequestParams;
 using malone.Core.Sample.EF.Firebird.Middle.EL.ViewModel;
 using malone.Core.WebApi;
 using Microsoft.Web.Http;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace malone.Core.Sample.EF.Firebird.Api.Controllers.v1
 {
@@ -18,7 +18,7 @@ namespace malone.Core.Sample.EF.Firebird.Api.Controllers.v1
     [Authorize]
     [ApiVersion("1.0")]
     [RoutePrefix("v{version:apiVersion}/List")]
-    public class TodoListController : CoreApiController<TodoListGetRequestParam, TodoList, ITodoListBC, ITodoListBV>
+    public class TodoListController : ApiController<TodoListGetRequestParam, TodoList, ITodoListBC, ITodoListBV>
     {
 
         public Mapper Mapper { get; set; }
@@ -35,11 +35,12 @@ namespace malone.Core.Sample.EF.Firebird.Api.Controllers.v1
 
 
         /// <summary>
-        /// Obtiene un lista de objetos.
+        /// Obtiene un lista de objetos de tipo <c>TodoListViewModel</c>.
         /// </summary>
         /// <remarks>
-        /// Obtiene una lista de objetos de tipo <see cref="TodoListViewModel"/>, a partir de los valores de filtrado que se proveen en el parametro <paramref name="parameters"/>.
+        /// El parámetro <paramref name="parameters"/> permite filtrar el resultado obtenido.
         /// </remarks>
+        /// <param name="parameters">Parámetro de filtrado.</param>
         /// <response code="200">OK. Devuelve la lista solicitada.</response>
         [HttpPost()]
         [Route("FilterBy")]
@@ -47,7 +48,7 @@ namespace malone.Core.Sample.EF.Firebird.Api.Controllers.v1
         public IHttpActionResult FilterBy(TodoListGetRequestParam parameters)
         {
             IEnumerable list = GetList(parameters);
-            
+
             return Ok(list);
         }
 
@@ -59,7 +60,7 @@ namespace malone.Core.Sample.EF.Firebird.Api.Controllers.v1
         /// </summary>
         /// <remarks>
         /// Obtiene una lista de objetos del tipo retornado por el método <c>AsViewModelList</c>.
-        /// Si el método <c>AsViewModelList</c> no es sobrescrito los objetos son, por defecto, de tipo <see cref="TodoList"/>.
+        /// Si el método <c>AsViewModelList</c> no es sobrescrito los objetos son, por defecto, de tipo <c>"TodoList"</c>.
         /// </remarks>
         /// <response code="200">OK. Devuelve el objeto solicitado.</response>
         [ResponseType(typeof(IEnumerable<TodoListViewModel>))]
@@ -74,7 +75,7 @@ namespace malone.Core.Sample.EF.Firebird.Api.Controllers.v1
         /// </summary>
         /// <remarks>
         /// Obtiene un objeto por su Id del tipo retornado por el método <c>AsViewModel</c>.
-        /// Si el método <c>AsViewModel</c> no es sobrescrito el objeto, por defecto, es de tipo <see cref="TodoList"/>.
+        /// Si el método <c>AsViewModel</c> no es sobrescrito el objeto, por defecto, es de tipo <c>TodoList</c>.
         /// </remarks>
         /// <param name="id">Id de tipo <c>int</c>.</param>
         /// <response code="200">OK. Devuelve el objeto solicitado.</response>        
@@ -87,9 +88,9 @@ namespace malone.Core.Sample.EF.Firebird.Api.Controllers.v1
 
         /// <inheritdoc/>
         /// <summary>
-        /// Crea un nuevo objeto de tipo <see cref="TodoList"/> y lo persiste.
+        /// Crea un nuevo objeto de tipo <c>TodoList</c> y lo persiste.
         /// </summary>
-        /// <param name="entity">Objeto de tipo <see cref="TodoList"/> a crear.</param>
+        /// <param name="entity">Objeto de tipo <c>TodoList</c> a crear.</param>
         /// <response code="201">Created. Objeto correctamente creado.</response>        
         /// <response code="400">BadRequest. No se ha creado el objeto.</response>
         /// <response code="409">Conflict. El objeto a crear ya existe.</response>
@@ -104,10 +105,10 @@ namespace malone.Core.Sample.EF.Firebird.Api.Controllers.v1
         /// Actualiza el objeto.
         /// </summary>
         /// <remarks>
-        /// Actualiza el objeto de tipo <see cref="TodoList"/> persistido con <paramref name="id"/> que reemplazará los valores con los pasados por <paramref name="entity"/>.
+        /// Actualiza el objeto de tipo <c>TodoList</c> persistido con <paramref name="id"/> que reemplazará los valores con los pasados por <paramref name="entity"/>.
         /// </remarks>
         /// <param name="id">Id del objeto a actualizar</param>
-        /// <param name="entity">Objeto de tipo <see cref="TodoList"/> a actualizar.</param>
+        /// <param name="entity">Objeto de tipo <c>TodoList</c> a actualizar.</param>
         /// <response code="200">OK. Objeto actualizado correctamente.</response>        
         /// <response code="400">BadRequest. No se ha actualizado el objeto.</response>
         [ResponseType(typeof(void))]
@@ -121,7 +122,7 @@ namespace malone.Core.Sample.EF.Firebird.Api.Controllers.v1
         /// Elimina el objeto cuyo Id se corresponda con <paramref name="id"/>.
         /// </summary>
         /// <remarks>
-        /// Elimina un objeto de tipo <see cref="TodoList"/> por su Id.
+        /// Elimina un objeto de tipo <c>TodoList</c> por su Id.
         /// </remarks>
         /// <param name="id">Id de tipo <c>int</c>.</param>
         /// <response code="200">OK. Objeto eliminado.</response>        
@@ -161,7 +162,7 @@ namespace malone.Core.Sample.EF.Firebird.Api.Controllers.v1
         protected override object AsViewModel(TodoList entity)
         {
             var mappedEntity = Mapper.Map<TodoList, TodoListViewModel>(entity);
-            
+
             return mappedEntity;
         }
 

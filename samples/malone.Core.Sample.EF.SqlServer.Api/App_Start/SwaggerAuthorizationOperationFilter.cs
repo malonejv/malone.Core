@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Swashbuckle.Swagger;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http.Description;
-using Swashbuckle.Swagger;
 
 namespace malone.Core.Sample.EF.SqlServer.Api.App_Start
 {
@@ -22,7 +19,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.App_Start
                 @in = "header",
                 description = "access token",
                 required = false,
-                type="string"
+                type = "string"
             });
         }
     }

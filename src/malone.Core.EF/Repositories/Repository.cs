@@ -1,18 +1,13 @@
-﻿using malone.Core.Commons.DI;
-using malone.Core.Commons.Exceptions;
+﻿using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
-using malone.Core.DataAccess.UnitOfWork;
 using malone.Core.EF.Entities;
-using malone.Core.EF.Entities.Filters;
-using malone.Core.Entities.Filters;
 using malone.Core.Entities.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace malone.Core.EF.Repositories.Implementations
 {

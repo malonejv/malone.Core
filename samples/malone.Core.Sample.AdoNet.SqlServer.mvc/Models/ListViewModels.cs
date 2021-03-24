@@ -1,8 +1,5 @@
-﻿using System;
+﻿using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Models
 {

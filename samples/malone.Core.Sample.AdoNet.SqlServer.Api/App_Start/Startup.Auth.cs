@@ -1,6 +1,5 @@
 ﻿//using malone.Core.Identity.EntityFramework;
 //using malone.Core.Identity.EntityFramework.Entities;
-using System;
 using malone.Core.Identity.AdoNet.SqlServer.Business;
 using malone.Core.Sample.AdoNet.SqlServer.Api.Providers;
 using Microsoft.AspNet.Identity;
@@ -8,6 +7,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
+using System;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.Api
 {

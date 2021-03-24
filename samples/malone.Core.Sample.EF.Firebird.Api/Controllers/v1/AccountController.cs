@@ -1,8 +1,8 @@
+using malone.Core.Identity.EntityFramework;
+using malone.Core.Identity.EntityFramework.Entities;
 using malone.Core.Sample.EF.Firebird.Api.Models.v1;
 using malone.Core.Sample.EF.Firebird.Api.Providers;
 using malone.Core.Sample.EF.Firebird.Api.Results;
-using malone.Core.Identity.EntityFramework;
-using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -17,7 +17,6 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.Description;
 
 namespace malone.Core.Sample.EF.Firebird.Api.Controllers.v1
 {
@@ -128,7 +127,7 @@ namespace malone.Core.Sample.EF.Firebird.Api.Controllers.v1
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId<int>(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -261,9 +260,9 @@ namespace malone.Core.Sample.EF.Firebird.Api.Controllers.v1
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -372,7 +371,7 @@ namespace malone.Core.Sample.EF.Firebird.Api.Controllers.v1
             result = await UserManager.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result); 
+                return GetErrorResult(result);
             }
             return Ok();
         }

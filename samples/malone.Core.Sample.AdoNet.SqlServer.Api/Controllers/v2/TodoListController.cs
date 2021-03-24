@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
-using AutoMapper;
+﻿using AutoMapper;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.BL;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Filters;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model;
@@ -10,13 +6,17 @@ using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.RequestParams;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.ViewModel;
 using malone.Core.WebApi;
 using Microsoft.Web.Http;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Http;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.Api.Controllers.v2
 {
     [Authorize]
     [ApiVersion("2.0")]
     [RoutePrefix("v{version:apiVersion}/List")]
-    public class TodoListController : CoreApiController<TodoListGetRequestParam, TodoList, ITodoListBC, ITodoListBV>
+    public class TodoListController : ApiController<TodoListGetRequestParam, TodoList, ITodoListBC, ITodoListBV>
     {
         public Mapper Mapper { get; set; }
 
@@ -42,7 +42,7 @@ namespace malone.Core.Sample.AdoNet.SqlServer.Api.Controllers.v2
             var todoListParams = parameters as TodoListGetRequestParam;
             var list = BusinessComponent.Get(new TodoListGetRequest()
             {
-                Name=todoListParams.Name
+                Name = todoListParams.Name
             });
 
             return list;

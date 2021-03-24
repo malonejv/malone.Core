@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using malone.Core.AdoNet.Context;
+﻿using malone.Core.AdoNet.Context;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
@@ -13,6 +6,13 @@ using malone.Core.Entities.Model;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using malone.Core.Identity.AdoNet.SqlServer.Entities.Filters;
 using Microsoft.AspNet.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 {
@@ -50,11 +50,16 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
         /// </summary>
         public bool AutoSaveChanges { get; set; }
 
-        public UserStore(IContext context, ILogger logger)
+        public UserStore(IUserLoginRepository<TKey, TUserLogin> logins, IUserClaimRepository<TKey, TUserClaim> userClaims, IUserRoleRepository<TKey, TUserRole> userRoles, IRoleRepository<TKey, TRoleEntity> roles, IUserRepository<TKey, TUserEntity> users, IContext context, ILogger logger)
         {
             CheckContext(context);
             CheckLogger(logger);
 
+            _logins = logins;
+            _userClaims = userClaims;
+            _userRoles = userRoles;
+            _roles = roles;
+            _users = users;
             Context = context;
             Logger = logger;
 
@@ -171,7 +176,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
         public Task<TUserEntity> FindByNameAsync(string userName)
         {
             ThrowIfDisposed();
-            return GetUserAggregateAsync(u => u.UserName.ToUpper() == userName.ToUpper());
+            return GetUserAggregateAsync(u => u.UserName.Equals(userName));
         }
 
         #endregion
@@ -413,7 +418,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
         public Task<TUserEntity> FindByEmailAsync(string email)
         {
             ThrowIfDisposed();
-            return GetUserAggregateAsync(u => u.Email.ToUpper() == email.ToUpper());
+            return GetUserAggregateAsync(u => u.Email.Equals(email));
         }
 
         #endregion
@@ -880,7 +885,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
             where TRoleEntity : CoreRole<TUserRole>
             where TUserEntity : CoreUser<TUserLogin, TUserRole, TUserClaim>
     {
-        public UserStore(IContext context, ILogger logger) : base(context, logger)
+        public UserStore(IUserLoginRepository<TUserLogin> logins, IUserClaimRepository<TUserClaim> userClaims, IUserRoleRepository<TUserRole> userRoles, IRoleRepository<TRoleEntity> roles, IUserRepository<TUserEntity> users, IContext context, ILogger logger) : base(logins, userClaims, userRoles, roles, users, context, logger)
         {
         }
     }

@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http.Description;
 using Swashbuckle.Swagger;
+using System.Collections.Generic;
+using System.Web.Http.Description;
 
 namespace malone.Core.Sample.EF.Firebird.Api.App_Start
 {

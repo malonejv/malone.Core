@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace malone.Core.Sample.EF.Firebird.Middle.EL.Filters.EF.TodoListEntity
 {
-    public class EFTodoListGetRequest: IFilterExpressionEF<TodoList>
+    public class EFTodoListGetRequest : IFilterExpressionEF<TodoList>
     {
         public Expression<Func<TodoList, bool>> Expression { get; set; }
     }

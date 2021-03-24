@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿//<author>Javier López Malone</author>
+//<date>25/11/2020 02:48:12</date>
+
 using System.Security.Cryptography;
 
 namespace malone.Core.Commons.Security
 {
+    /// <summary>
+    /// Defines the <see cref="CryptoServiceFactory" />.
+    /// </summary>
     public class CryptoServiceFactory
     {
+        /// <summary>
+        /// The Create.
+        /// </summary>
+        /// <param name="algorithm">The algorithm<see cref="SymmetricAlgorithm"/>.</param>
+        /// <returns>The <see cref="CryptoService"/>.</returns>
         public static CryptoService Create(SymmetricAlgorithm algorithm = null)
         {
             if (algorithm == null)
@@ -18,5 +23,4 @@ namespace malone.Core.Commons.Security
                 return new CryptoService(algorithm);
         }
     }
-
 }

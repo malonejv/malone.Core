@@ -1,7 +1,7 @@
-﻿using System;
-using malone.Core.Identity.AdoNet.SqlServer.Entities;
+﻿using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using System;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Business
 {
@@ -48,7 +48,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Business
                 //{
                 //    TokenLifespan = TimeSpan.FromDays(1)
                 //};
-                
+
                 var tokenProvider = TokenProvider<TKey, TUserEntity, TUserLogin, TUserRole, TUserClaim>.Provider;
                 userBusinessComponent.UserTokenProvider = tokenProvider;
             }

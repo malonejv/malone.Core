@@ -1,7 +1,7 @@
-﻿using System;
-using System.Data;
-using FirebirdSql.Data.FirebirdClient;
+﻿using FirebirdSql.Data.FirebirdClient;
 using malone.Core.AdoNet.Database;
+using System;
+using System.Data;
 
 namespace malone.Core.AdoNet.Firebird
 {

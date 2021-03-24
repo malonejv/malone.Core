@@ -11,7 +11,7 @@ namespace malone.Core.Log4Net
             // load the log4net configuration from the application configuration.
             XmlConfigurator.Configure();
         }
-        
+
         public override ILogger GetLogger()
         {
             return new Log4netLogger(LogManager.GetLogger(typeof(ILog)));

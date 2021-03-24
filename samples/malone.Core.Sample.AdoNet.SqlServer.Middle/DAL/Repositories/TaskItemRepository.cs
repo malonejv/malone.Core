@@ -1,9 +1,10 @@
-﻿using System.Data;
-using malone.Core.AdoNet.Repositories;
+﻿using malone.Core.AdoNet.Repositories;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model;
+using System.Data;
+
 namespace malone.Core.Sample.AdoNet.SqlServer.Middle.DAL.Repositories
 {
     public class TaskItemRepository : Repository<TaskItem>

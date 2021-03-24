@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace malone.Core.Sample.EF.SqlServer.Api.Models
+namespace malone.Core.Sample.AdoNet.SqlServer.Api.Models
 {
     public class IndexViewModel
     {

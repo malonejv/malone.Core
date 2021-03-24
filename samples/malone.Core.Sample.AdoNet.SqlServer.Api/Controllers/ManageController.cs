@@ -6,11 +6,11 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using malone.Core.Sample.Api.Models;
+using malone.Core.Sample.AdoNet.SqlServer.Api.Models;
 using malone.Core.Identity.EntityFramework;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.CL.Exceptions;
 
-namespace malone.Core.Sample.Api.Controllers
+namespace malone.Core.Sample.AdoNet.SqlServer.Api.Controllers
 {
     [Authorize]
     public class ManageController : Controller

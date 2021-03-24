@@ -1,18 +1,12 @@
-﻿using malone.Core.Commons.DI;
-using malone.Core.DataAccess.Context;
-using malone.Core.Identity.EntityFramework;
-using malone.Core.Identity.EntityFramework.Context;
+﻿using malone.Core.Identity.EntityFramework;
 using malone.Core.Identity.EntityFramework.Entities;
 using malone.Core.Sample.EF.Firebird.Middle.DAL.Context;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using System;
-using System.Web;
-using Unity;
 
 namespace malone.Core.Sample.EF.Firebird.mvc
 {
@@ -25,7 +19,7 @@ namespace malone.Core.Sample.EF.Firebird.mvc
             app.CreatePerOwinContext(SampleContext.Create);
             app.CreatePerOwinContext<UserBusinessComponent>(UserBusinessComponent.CreateAndConfigure);
             app.CreatePerOwinContext<SignInBusinessComponent>(SignInBusinessComponent.Create);
-            
+
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             // Configure the sign in cookie
@@ -43,7 +37,7 @@ namespace malone.Core.Sample.EF.Firebird.mvc
                         getUserIdCallback: claims => claims.GetUserId<int>()
                     )
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.

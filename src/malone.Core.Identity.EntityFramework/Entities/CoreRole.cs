@@ -1,10 +1,6 @@
 ﻿using malone.Core.Entities.Model;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace malone.Core.Identity.EntityFramework.Entities
 {
@@ -16,7 +12,7 @@ namespace malone.Core.Identity.EntityFramework.Entities
     }
 
 
-    public class CoreRole: CoreRole<int, CoreUserRole>, IBaseEntity
+    public class CoreRole : CoreRole<int, CoreUserRole>, IBaseEntity
     {
         public CoreRole()
         {

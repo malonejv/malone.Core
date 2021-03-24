@@ -1,10 +1,12 @@
-﻿using System;
-using System.Data;
-using malone.Core.AdoNet.Repositories;
+﻿using malone.Core.AdoNet.Repositories;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 {
@@ -25,9 +27,20 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         #region Get
 
+        public override TUserEntity GetById(TKey id, bool includeDeleted = false, string includeProperties = "Claims,Roles,Logins")
+        {
+            TUserEntity user = base.GetById(id, includeDeleted, includeProperties);
+
+            user.Claims = new List<TUserClaim>();
+            user.Roles = new List<TUserRole>();
+            user.Logins = new List<TUserLogin>();
+
+            return user;
+        }
+
         protected override void ConfigureCommandForGetById(IDbCommand command, bool includeDeleted, string includeProperties)
         {
-            string query = @"SELECT Id, Email, EmailConfirmed, PaswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName
+            string query = @"SELECT Id, Email, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName
                                FROM Users
                               WHERE Id = @Id;";
 
@@ -35,18 +48,43 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
             command.CommandType = CommandType.Text;
         }
 
+        public override IEnumerable<TUserEntity> GetAll(Func<IQueryable<TUserEntity>, IOrderedQueryable<TUserEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Claims,Roles,Logins")
+        {
+            IEnumerable<TUserEntity> users = base.GetAll(orderBy, includeDeleted, includeProperties);
+
+            foreach (var user in users)
+            {
+                user.Claims = new List<TUserClaim>();
+                user.Roles = new List<TUserRole>();
+                user.Logins = new List<TUserLogin>();
+            }
+            return users;
+        }
         protected override void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties)
         {
-            string query = @"SELECT Id, Email, EmailConfirmed, PaswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName
+            string query = @"SELECT Id, Email, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName
                                FROM Users;";
 
             command.CommandText = query;
             command.CommandType = CommandType.Text;
         }
 
+        public override IEnumerable<TUserEntity> Get<TFilter>(TFilter filter = null, Func<IQueryable<TUserEntity>, IOrderedQueryable<TUserEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Claims,Roles,Logins")
+        {
+            IEnumerable<TUserEntity> users = base.Get(filter, orderBy, includeDeleted, includeProperties);
+
+            foreach (var user in users)
+            {
+                user.Claims = new List<TUserClaim>();
+                user.Roles = new List<TUserRole>();
+                user.Logins = new List<TUserLogin>();
+            }
+            return users;
+        }
+
         protected override void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties)
         {
-            string query = @"SELECT Id, Email, EmailConfirmed, PaswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName
+            string query = @"SELECT Id, Email, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName
                                FROM Users
                               WHERE UserId = @UserId;";
 
@@ -54,13 +92,22 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
             command.CommandType = CommandType.Text;
         }
 
+        public override TUserEntity GetEntity<TFilter>(TFilter filter = null, Func<IQueryable<TUserEntity>, IOrderedQueryable<TUserEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Claims,Roles,Logins")
+        {
+            TUserEntity user = base.GetEntity(filter, orderBy, includeDeleted, includeProperties);
+            
+            user.Claims = new List<TUserClaim>();
+            user.Roles = new List<TUserRole>();
+            user.Logins = new List<TUserLogin>();
+            
+            return user;
+        }
+
         protected override void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties)
         {
-            string query = @"SELECT Id, Email, EmailConfirmed, PaswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName
+            string query = @"SELECT Id, Email, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName
                                FROM Users
-                              WHERE UserId = @UserId
-                                AND ClaimType = @ClaimType
-                                AND ClaimValue = @ClaimValue;";
+                              WHERE (UserName = @UserNameOrEmail OR Email = @UserNameOrEmail);";
 
             command.CommandText = query;
             command.CommandType = CommandType.Text;
@@ -72,7 +119,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected override void ConfigureCommandForInsert(IDbCommand command)
         {
-            string query = @"INSERT INTO Users (Email, EmailConfirmed, PaswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName) VALUES ( @Email, @EmailConfirmed, @PaswordHash, @SecurityStamp, @PhoneNumber, @PhoneNumberConfirmed, @TwoFactorEnabled, @LockoutEndDateUtc, @LockoutEnabled, @AccessFailedCount, @UserName );";
+            string query = @"INSERT INTO Users (Email, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName) VALUES ( @Email, @EmailConfirmed, @PasswordHash, @SecurityStamp, @PhoneNumber, @PhoneNumberConfirmed, @TwoFactorEnabled, @LockoutEndDateUtc, @LockoutEnabled, @AccessFailedCount, @UserName );";
 
             command.CommandText = query;
             command.CommandType = CommandType.Text;
@@ -87,7 +134,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
             string query = @"UPDATE Users SET  
                                     Email = @Email,
                                     EmailConfirmed = @EmailConfirmed,
-                                    PaswordHash = @PaswordHash
+                                    PasswordHash = @PasswordHash
                                     SecurityStamp = @SecurityStamp
                                     PhoneNumber = @PhoneNumber
                                     PhoneNumberConfirmed = @PhoneNumberConfirmed

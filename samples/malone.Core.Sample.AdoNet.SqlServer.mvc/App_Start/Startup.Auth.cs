@@ -1,5 +1,4 @@
-﻿using System;
-using malone.Core.Identity.AdoNet.SqlServer.Business;
+﻿using malone.Core.Identity.AdoNet.SqlServer.Business;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.DAL.Context;
 using Microsoft.AspNet.Identity;
@@ -7,6 +6,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
+using System;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.mvc
 {
@@ -19,7 +19,7 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc
             app.CreatePerOwinContext(SampleContext.Create);
             app.CreatePerOwinContext<UserBusinessComponent>(UserBusinessComponent.CreateAndConfigure);
             app.CreatePerOwinContext<SignInBusinessComponent>(SignInBusinessComponent.Create);
-            
+
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             // Configure the sign in cookie
@@ -37,7 +37,7 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc
                         getUserIdCallback: claims => claims.GetUserId<int>()
                     )
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.

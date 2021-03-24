@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using malone.Core.AdoNet.Context;
+﻿using malone.Core.AdoNet.Context;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using malone.Core.Identity.AdoNet.SqlServer.Entities.Filters;
 using Microsoft.AspNet.Identity;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 {

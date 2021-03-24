@@ -75,6 +75,12 @@
   <ItemGroup>
     <None Include="capibara.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\malone.Core\malone.Core.csproj">
+      <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
+      <Name>malone.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

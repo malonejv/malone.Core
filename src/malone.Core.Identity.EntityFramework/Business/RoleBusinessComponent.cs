@@ -1,6 +1,5 @@
 ﻿using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 
 namespace malone.Core.Identity.EntityFramework

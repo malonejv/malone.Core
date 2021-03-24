@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using malone.Core.Sample.EF.Firebird.Middle.EL.Model;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.Sample.EF.Firebird.Middle.EL;
-using malone.Core.Sample.EF.Firebird.Middle.EL.Model;
 
 namespace malone.Core.Sample.EF.Firebird.Middle.DAL.Context.Mappings
 {
@@ -13,7 +7,7 @@ namespace malone.Core.Sample.EF.Firebird.Middle.DAL.Context.Mappings
     {
         public TaskItemMapping()
         {
-            ToTable("TASKITEMS");
+            ToTable("TaskItems");
             //Comentar ToTable y habilitar la linea de abajo para filtrar "siempre" los campos eliminados.
             //Map(m => m.ToTable("TaskItems").Requires("IsDeleted").HasValue(false)).Ignore(m => m.IsDeleted);
 

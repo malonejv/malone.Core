@@ -1,10 +1,9 @@
-using System.IO;
-using System.Linq;
-using System.Web.Http;
-using System.Web.Http.Description;
 using malone.Core.Sample.EF.Firebird.Api.App_Start;
 using Swashbuckle.Application;
 using Swashbuckle.Swagger;
+using System.Linq;
+using System.Web.Http;
+using System.Web.Http.Description;
 
 //[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -69,15 +68,15 @@ namespace malone.Core.Sample.EF.Firebird.Api
                         {
                             foreach (var group in apiExplorer.ApiDescriptions)
                             {
-                                var description = "A sample application with Swagger, Swashbuckle, and API versioning.";
+                                var description = "Orgnzr is a sample todo list application that use malone.Core.";
 
                                 if (group.IsDeprecated)
                                 {
                                     description += " This API version has been deprecated.";
                                 }
 
-                                info.Version(group.Name, $"Sample API {group.ApiVersion}")
-                                    .Contact(c => c.Name("Bill Mei").Email("malonejv@gmail.com"))
+                                info.Version(group.Name, $"Orgnzr API {group.ApiVersion}")
+                                    .Contact(c => c.Name("Javier López Malone").Email("malonejv@gmail.com"))
                                     .Description(description);
                                 //.License(l => l.Name("MIT").Url("https://opensource.org/licenses/MIT"))
                                 //.TermsOfService("Shareware");

@@ -6,7 +6,7 @@ namespace malone.Core.Unity
 {
     public class UnityServiceLocator : IServiceLocator
     {
-        private readonly IUnityContainer _container;  
+        private readonly IUnityContainer _container;
 
         public UnityServiceLocator(IUnityContainer container)
         {

@@ -1,9 +1,9 @@
-﻿using System;
-using malone.Core.Commons.DI;
+﻿using malone.Core.Commons.DI;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using System;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Business
 {
@@ -49,7 +49,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Business
             var store = ServiceLocator.Current.Get<IUserStore<TUserEntity, TKey>>();
             var userBusinessComponent = new UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>(store);
             var userBusinessComponentConfiguration = ServiceLocator.Current.Get<IUserManagerConfiguration<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>>>();
-            
+
             userBusinessComponentConfiguration.ConfigureUserManager(userBusinessComponent, options);
 
             return userBusinessComponent;

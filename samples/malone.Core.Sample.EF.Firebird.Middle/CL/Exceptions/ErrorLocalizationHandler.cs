@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 using malone.Core.Commons.Localization;
+using System.Resources;
 
 namespace malone.Core.Sample.EF.Firebird.Middle.CL.Exceptions
 {

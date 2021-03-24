@@ -1,12 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using malone.Core.Commons.DI;
+﻿using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Log;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using System;
+using System.Threading.Tasks;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Business
 {

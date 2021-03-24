@@ -1,15 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//<author>Javier López Malone</author>
+//<date>25/11/2020 02:47:57</date>
 
 namespace malone.Core.Commons.Helpers.Extensions
 {
+    /// <summary>
+    /// Defines the <see cref="CharExtensions" />.
+    /// </summary>
     public static class CharExtensions
     {
+        /// <summary>
+        /// Defines the DefaultSeparator.
+        /// </summary>
         public const char DefaultSeparator = ';';
 
+        /// <summary>
+        /// The Concat.
+        /// </summary>
+        /// <param name="separator">The separator<see cref="char"/>.</param>
+        /// <param name="parameters">The parameters<see cref="string[]"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string Concat(this char separator, params string[] parameters)
         {
             var result = "";
@@ -24,6 +33,12 @@ namespace malone.Core.Commons.Helpers.Extensions
             return result;
         }
 
+        /// <summary>
+        /// The Split.
+        /// </summary>
+        /// <param name="separator">The separator<see cref="char"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <returns>The <see cref="string[]"/>.</returns>
         public static string[] Split(this char separator, string value)
         {
             string[] result = value.Split(separator);

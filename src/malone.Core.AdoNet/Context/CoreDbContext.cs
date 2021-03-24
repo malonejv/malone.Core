@@ -1,10 +1,12 @@
-﻿using System;
+﻿using malone.Core.AdoNet.Attributes;
+using malone.Core.AdoNet.Database;
+using malone.Core.Commons.DI;
+using malone.Core.Commons.Helpers.Extensions;
+using malone.Core.DataAccess.Context;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using malone.Core.AdoNet.Database;
-using malone.Core.Commons.DI;
-using malone.Core.DataAccess.Context;
 
 namespace malone.Core.AdoNet.Context
 {
@@ -18,7 +20,7 @@ namespace malone.Core.AdoNet.Context
         protected DatabaseFactory DbFactory { get; private set; }
 
         protected IDbConnection Connection { get; private set; }
-        
+
         protected IDbTransaction Transaction { get; private set; }
 
         protected IDatabase Db
@@ -46,7 +48,7 @@ namespace malone.Core.AdoNet.Context
 
         public IDbCommand CreateCommand()
         {
-            IDbCommand command = Connection.CreateCommand(); 
+            IDbCommand command = Connection.CreateCommand();
             command.Transaction = Transaction;
 
             return command;
@@ -66,10 +68,13 @@ namespace malone.Core.AdoNet.Context
         {
             foreach (DbParameterWithValue parameter in parameters.OrderBy<DbParameterWithValue, int>(e => e.DbParameter.Order))
             {
-                    if (parameter.DbParameter.IsSizeDefined)
-                        Db.AddCommandParameter(command, parameter.DbParameter.Name, parameter.Value, parameter.DbParameter.Direction, parameter.DbParameter.Type, parameter.DbParameter.Size);
-                    else
-                        Db.AddCommandParameter(command, parameter.DbParameter.Name, parameter.Value, parameter.DbParameter.Direction, parameter.DbParameter.Type);
+                parameter.ThrowIfNull("DbParameter");
+
+                if (parameter.DbParameter.IsSizeDefined)
+                    Db.AddCommandParameter(command, parameter.DbParameter.Name, parameter.Value, parameter.DbParameter.Direction, parameter.DbParameter.Type, parameter.DbParameter.Size);
+                else
+                    Db.AddCommandParameter(command, parameter.DbParameter.Name, parameter.Value, parameter.DbParameter.Direction, parameter.DbParameter.Type);
+
             }
         }
 

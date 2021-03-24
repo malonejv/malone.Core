@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using malone.Core.Business.Components;
+﻿using malone.Core.Business.Components;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
@@ -8,6 +6,8 @@ using malone.Core.DataAccess.Repositories;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.CL.Exceptions;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Filters;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model;
+using System;
+using System.Linq;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.Middle.BL.Implementations
 {

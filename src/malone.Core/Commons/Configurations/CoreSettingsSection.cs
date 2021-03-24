@@ -1,19 +1,23 @@
-﻿using malone.Core.Commons.Configurations.Attributes;
+﻿//<author>Javier López Malone</author>
+//<date>25/11/2020 02:47:44</date>
+
+using malone.Core.Commons.Configurations.Attributes;
 using malone.Core.Commons.Configurations.DbFactory;
-using malone.Core.Commons.Configurations.Features;
 using malone.Core.Commons.Configurations.Modules;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace malone.Core.Commons.Configurations
 {
+    /// <summary>
+    /// Defines the <see cref="CoreSettingsSection" />.
+    /// </summary>
     [SectionName("coreSettings")]
     public class CoreSettingsSection : ConfigurationSection
     {
+        /// <summary>
+        /// Gets the Xmlns.
+        /// </summary>
         [ConfigurationProperty("xmlns", IsRequired = false)]
         public String Xmlns
         {
@@ -23,6 +27,9 @@ namespace malone.Core.Commons.Configurations
             }
         }
 
+        /// <summary>
+        /// Gets or sets the DatabaseConfiguration.
+        /// </summary>
         [ConfigurationProperty("databaseConfiguration", IsDefaultCollection = true)]
         public DatabaseConfigurationElement DatabaseConfiguration
         {
@@ -30,6 +37,9 @@ namespace malone.Core.Commons.Configurations
             set { this["databaseConfiguration"] = value; }
         }
 
+        /// <summary>
+        /// Gets the Modules.
+        /// </summary>
         [ConfigurationProperty("modules", IsRequired = false)]
         public ModulesElementCollection Modules
         {
@@ -38,6 +48,5 @@ namespace malone.Core.Commons.Configurations
                 return (ModulesElementCollection)this["modules"];
             }
         }
-
     }
 }

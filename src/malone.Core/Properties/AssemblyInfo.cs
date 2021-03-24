@@ -1,6 +1,11 @@
-﻿using System.Reflection;
+﻿//<author>Javier López Malone</author>
+//<date>25/11/2020 02:48:19</date>
+
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+
+
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -28,7 +33,6 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("b59a92f9-abdc-4200-a80d-58a5ab936591")]
-
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version
@@ -39,5 +43,3 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-
-

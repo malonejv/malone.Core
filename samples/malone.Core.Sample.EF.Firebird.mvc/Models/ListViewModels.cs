@@ -1,8 +1,5 @@
-﻿using System;
+﻿using malone.Core.Sample.EF.Firebird.Middle.EL.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using malone.Core.Sample.EF.Firebird.Middle.EL.Model;
 
 namespace malone.Core.Sample.EF.Firebird.mvc.Models
 {

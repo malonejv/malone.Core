@@ -3,7 +3,6 @@ using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Repositories;
-using malone.Core.Identity.EntityFramework.Entities;
 using malone.Core.Sample.EF.Firebird.Middle.CL.Exceptions;
 using malone.Core.Sample.EF.Firebird.Middle.EL.Filters.EF.TodoListEntity;
 using malone.Core.Sample.EF.Firebird.Middle.EL.Model;

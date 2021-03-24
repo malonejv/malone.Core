@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.Owin.Security.OAuth;
+using Microsoft.Web.Http.Routing;
+using Newtonsoft.Json.Serialization;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Routing;
-using Microsoft.Owin.Security.OAuth;
-using Microsoft.Web.Http.Routing;
-using Newtonsoft.Json.Serialization;
 
 namespace malone.Core.Sample.EF.SqlServer.Api
 {

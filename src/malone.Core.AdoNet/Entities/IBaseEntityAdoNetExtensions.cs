@@ -1,14 +1,12 @@
-﻿using System;
+﻿using malone.Core.AdoNet.Attributes;
+using malone.Core.AdoNet.Database;
+using malone.Core.Commons.Helpers.Extensions;
+using malone.Core.Entities.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.AdoNet.Attributes;
-using malone.Core.AdoNet.Database;
-using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Entities.Model;
 
 namespace malone.Core.AdoNet.Entities
 {

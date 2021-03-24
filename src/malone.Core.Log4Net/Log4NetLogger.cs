@@ -1,10 +1,6 @@
 ﻿using log4net;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using malone.Core.Commons.Log;
+using System;
 
 namespace malone.Core.Log4Net
 {
@@ -33,7 +29,7 @@ namespace malone.Core.Log4Net
         /// information to be logged.</param>
         /// <exception cref="ArgumentNullException">If <paramref name="item"/>
         /// is a null reference.</exception>
-        public override void Log(LogItem item) 
+        public override void Log(LogItem item)
         {
             if (item == null) throw new ArgumentNullException("item");
 

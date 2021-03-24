@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using malone.Core.Identity.AdoNet.SqlServer.Business;
+﻿using malone.Core.Identity.AdoNet.SqlServer.Business;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using malone.Core.Sample.AdoNet.SqlServer.Api.Models.v2;
 using malone.Core.Sample.AdoNet.SqlServer.Api.Providers;
@@ -18,6 +10,14 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Web.Http;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.Api.Controllers.v2
 {

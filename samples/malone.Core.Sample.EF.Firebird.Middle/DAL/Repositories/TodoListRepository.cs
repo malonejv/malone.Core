@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
-using malone.Core.EF.Entities;
 using malone.Core.EF.Repositories.Implementations;
 using malone.Core.Sample.EF.Firebird.Middle.EL.Model;
+using System.Data.Entity;
 
 namespace malone.Core.Sample.EF.Firebird.Middle.DAL.Repositories
 {

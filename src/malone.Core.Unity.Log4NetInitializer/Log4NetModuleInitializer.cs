@@ -4,7 +4,6 @@ using malone.Core.Commons.Initializers;
 using malone.Core.Commons.Log;
 using malone.Core.Log4Net;
 using Unity;
-using Unity.Injection;
 
 namespace malone.Core.Unity.Log4NetInitializer
 {

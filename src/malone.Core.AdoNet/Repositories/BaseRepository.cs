@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using malone.Core.AdoNet.Context;
+﻿using malone.Core.AdoNet.Context;
 using malone.Core.AdoNet.Database;
 using malone.Core.AdoNet.Entities;
 using malone.Core.AdoNet.Entities.Filters;
@@ -12,6 +8,10 @@ using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.Entities.Filters;
 using malone.Core.Entities.Model;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace malone.Core.AdoNet.Repositories
 {
@@ -335,7 +335,7 @@ namespace malone.Core.AdoNet.Repositories
         #endregion
 
         #region Dispose
-        
+
         protected bool _disposed;
 
         /// <summary>

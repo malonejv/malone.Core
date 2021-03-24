@@ -1,15 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//<author>Javier López Malone</author>
+//<date>25/11/2020 02:48:18</date>
+
+using System;
 
 namespace malone.Core.Entities.Model
 {
+    /// <summary>
+    /// Defines the <see cref="IDateRange" />.
+    /// </summary>
     public interface IDateRange
     {
+        /// <summary>
+        /// Gets or sets the FromDate.
+        /// </summary>
         DateTime? FromDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ToDate.
+        /// </summary>
         DateTime? ToDate { get; set; }
     }
-
 }
