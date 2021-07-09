@@ -1,6 +1,6 @@
-﻿using malone.Core.AdoNet.Repositories;
-using malone.Core.Commons.Helpers.Extensions;
+﻿using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
+using malone.Core.Dapper.Repositories;
 using malone.Core.DataAccess.Context;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model;
 using System.Data;
@@ -15,102 +15,102 @@ namespace malone.Core.Sample.AdoNet.SqlServer.Middle.DAL.Repositories
 
         #region Overridden Methods
 
-        #region Crud Operations
+        //#region Crud Operations
 
-        #region Get
+        //#region Get
 
-        protected override void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties)
-        {
-            string query = @"SELECT Id, Description, Done, IsDeleted
-                               FROM TaskItems;";
+        //protected override void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties)
+        //{
+        //    string query = @"SELECT Id, Description, Done, IsDeleted
+        //                       FROM TaskItems;";
 
-            command.CommandText = query;
-            command.CommandType = CommandType.Text;
-        }
+        //    command.CommandText = query;
+        //    command.CommandType = CommandType.Text;
+        //}
 
-        protected override void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties)
-        {
-            string query = @"SELECT Id, Description, Done, IsDeleted
-                               FROM TaskItems
-                              WHERE LOWER(Description) like LOWER('%' + @Description + '%');";
+        //protected override void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties)
+        //{
+        //    string query = @"SELECT Id, Description, Done, IsDeleted
+        //                       FROM TaskItems
+        //                      WHERE LOWER(Description) like LOWER('%' + @Description + '%');";
 
-            command.CommandText = query;
-            command.CommandType = CommandType.Text;
-        }
+        //    command.CommandText = query;
+        //    command.CommandType = CommandType.Text;
+        //}
 
-        protected override void ConfigureCommandForGetById(IDbCommand command, bool includeDeleted, string includeProperties)
-        {
-            string query = @"SELECT Id, Description, Done, IsDeleted
-                               FROM TaskItems
-                              WHERE Id = @Id;";
+        //protected override void ConfigureCommandForGetById(IDbCommand command, bool includeDeleted, string includeProperties)
+        //{
+        //    string query = @"SELECT Id, Description, Done, IsDeleted
+        //                       FROM TaskItems
+        //                      WHERE Id = @Id;";
 
-            command.CommandText = query;
-            command.CommandType = CommandType.Text;
-        }
+        //    command.CommandText = query;
+        //    command.CommandType = CommandType.Text;
+        //}
 
-        protected override void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties)
-        {
-            string query = @"SELECT Id, Description, Done, IsDeleted
-                               FROM TaskItems
-                              WHERE Id = @Id;";
+        //protected override void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties)
+        //{
+        //    string query = @"SELECT Id, Description, Done, IsDeleted
+        //                       FROM TaskItems
+        //                      WHERE Id = @Id;";
 
-            command.CommandText = query;
-            command.CommandType = CommandType.Text;
-        }
+        //    command.CommandText = query;
+        //    command.CommandType = CommandType.Text;
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Add
+        //#region Add
 
-        protected override void ConfigureCommandForInsert(IDbCommand command)
-        {
-            string query = @"INSERT INTO TaskItems (Description, Done, IsDeleted) VALUES ( @Description, @Done, @IsDeleted );";
+        //protected override void ConfigureCommandForInsert(IDbCommand command)
+        //{
+        //    string query = @"INSERT INTO TaskItems (Description, Done, IsDeleted) VALUES ( @Description, @Done, @IsDeleted );";
 
-            command.CommandText = query;
-            command.CommandType = CommandType.Text;
-        }
+        //    command.CommandText = query;
+        //    command.CommandType = CommandType.Text;
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Update
+        //#region Update
 
-        protected override void ConfigureCommandForUpdate(IDbCommand command)
-        {
-            string query = @"UPDATE TaskItems SET 
-                                Description = @Description,
-                                Done = @Done,
-                                IsDeleted = @IsDeleted
-                              WHERE Id = @Id;";
+        //protected override void ConfigureCommandForUpdate(IDbCommand command)
+        //{
+        //    string query = @"UPDATE TaskItems SET 
+        //                        Description = @Description,
+        //                        Done = @Done,
+        //                        IsDeleted = @IsDeleted
+        //                      WHERE Id = @Id;";
 
-            command.CommandText = query;
-            command.CommandType = CommandType.Text;
-        }
+        //    command.CommandText = query;
+        //    command.CommandType = CommandType.Text;
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Delete
+        //#region Delete
 
-        protected override void ConfigureCommandForDelete(IDbCommand command)
-        {
-            string query = "";
-            if (true)
-            {
-                query = @"UPDATE TaskItems SET 
-                                IsDeleted = @IsDeleted
-                           WHERE Id = @Id;";
-            }
-            else
-            {
-                query = $"DELETE FROM TaskItems WHERE Id = @Id;";
-            }
+        //protected override void ConfigureCommandForDelete(IDbCommand command)
+        //{
+        //    string query = "";
+        //    if (true)
+        //    {
+        //        query = @"UPDATE TaskItems SET 
+        //                        IsDeleted = @IsDeleted
+        //                   WHERE Id = @Id;";
+        //    }
+        //    else
+        //    {
+        //        query = $"DELETE FROM TaskItems WHERE Id = @Id;";
+        //    }
 
-            command.CommandText = query;
-            command.CommandType = CommandType.Text;
-        }
+        //    command.CommandText = query;
+        //    command.CommandType = CommandType.Text;
+        //}
 
-        #endregion
+        //#endregion
 
-        #endregion
+        //#endregion
 
         protected override TaskItem Map(DataRow row)
         {

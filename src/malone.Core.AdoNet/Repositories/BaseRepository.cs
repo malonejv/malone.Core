@@ -50,13 +50,13 @@ namespace malone.Core.AdoNet.Repositories
             ThrowIfDisposed();
             try
             {
-                IQueryable<TEntity> query;
+                IQueryable<TEntity> queryableResult;
 
                 var command = Context.CreateCommand();
                 ConfigureCommandForGetAll(command, includeDeleted, includeProperties);
-                query = GetQueryable(command, includeDeleted, orderBy);
+                queryableResult = GetQueryable(command, includeDeleted, orderBy);
 
-                return query.ToList<TEntity>();
+                return queryableResult.ToList<TEntity>();
             }
             catch (Exception ex)
             {
@@ -83,7 +83,7 @@ namespace malone.Core.AdoNet.Repositories
             ThrowIfDisposed();
             try
             {
-                IQueryable<TEntity> query;
+                IQueryable<TEntity> queryableResult;
 
                 var command = Context.CreateCommand();
                 ConfigureCommandForGet(command, includeDeleted, includeProperties);
@@ -96,9 +96,9 @@ namespace malone.Core.AdoNet.Repositories
                     Context.AddCommandParameters(command, parameters);
                 }
 
-                query = GetQueryable(command, includeDeleted, orderBy);
+                queryableResult = GetQueryable(command, includeDeleted, orderBy);
 
-                return query.ToList<TEntity>();
+                return queryableResult.ToList<TEntity>();
             }
             catch (Exception ex)
             {
@@ -125,7 +125,7 @@ namespace malone.Core.AdoNet.Repositories
             ThrowIfDisposed();
             try
             {
-                IQueryable<TEntity> query;
+                IQueryable<TEntity> queryableResult;
 
                 var command = Context.CreateCommand();
                 ConfigureCommandForGetEntity(command, includeDeleted, includeProperties);
@@ -138,9 +138,9 @@ namespace malone.Core.AdoNet.Repositories
                     Context.AddCommandParameters(command, parameters);
                 }
 
-                query = GetQueryable(command, includeDeleted, orderBy);
+                queryableResult = GetQueryable(command, includeDeleted, orderBy);
 
-                return query.SingleOrDefault<TEntity>();
+                return queryableResult.SingleOrDefault<TEntity>();
             }
             catch (Exception ex)
             {
@@ -310,14 +310,14 @@ namespace malone.Core.AdoNet.Repositories
                     }
                 }
 
-                var query = result.AsQueryable<TEntity>();
+                var queryableResult = result.AsQueryable<TEntity>();
                 if (orderBy != null && result.Count > 0)
                 {
-                    return orderBy(query);
+                    return orderBy(queryableResult);
                 }
                 else
                 {
-                    return query;
+                    return queryableResult;
                 }
 
             }

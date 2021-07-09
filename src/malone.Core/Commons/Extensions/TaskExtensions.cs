@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace malone.Core.Commons.Helpers.Threading
+namespace malone.Core.Commons.Threading
 {
     /// <summary>
     /// Defines the <see cref="TaskExtensions" />.

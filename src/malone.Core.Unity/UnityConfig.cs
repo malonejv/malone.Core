@@ -3,6 +3,7 @@ using malone.Core.Commons.Configurations.Modules;
 using malone.Core.Commons.DI;
 using malone.Core.Commons.Initializers;
 using malone.Core.Unity.IdentityAdoNetSqlServerInitializer;
+using malone.Core.Unity.IdentityDapperInitializer;
 using malone.Core.Unity.IdentityEntityFramworkInitializer;
 using malone.Core.Unity.Log4NetInitializer;
 using malone.Core.Unity.ModulesInitializers;
@@ -91,7 +92,8 @@ namespace malone.Core.Unity
                     new Log4NetModuleInitializer(),
                     new FeaturesModuleInitializer(),
                     new IdentityEntityFramworkModuleInitializer(),
-                    new IdentityAdoNetSqlServerModuleInitializer()
+                    new IdentityAdoNetSqlServerModuleInitializer(),
+                    new IdentityDapperModuleInitializer()
               };
             }
         }

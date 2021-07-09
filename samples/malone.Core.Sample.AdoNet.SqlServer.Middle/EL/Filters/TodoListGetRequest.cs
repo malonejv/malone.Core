@@ -1,23 +1,23 @@
-﻿using malone.Core.AdoNet.Attributes;
-using malone.Core.AdoNet.Entities.Filters;
+﻿using malone.Core.Dapper.Attributes;
+using malone.Core.Dapper.Entities.Filters;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Filters
 {
-    public class TodoListGetRequest : IFilterExpressionAdoNet
+    public class TodoListGetRequest : IFilterExpressionDapper
     {
         [StringLength(100)]
-        [DbParameter("@Name", Type = SqlDbType.NVarChar, Order = 1, Direction = ParameterDirection.Input)]
+        [Parameter("@Name", DbType.String, Order = 1, Direction = ParameterDirection.Input)]
         public string Name { get; set; }
 
-        [DbParameter("@IsDeleted", Type = SqlDbType.Bit, Order = 2, Direction = ParameterDirection.Input)]
+        [Parameter("@IsDeleted", DbType.Boolean, Order = 2, Direction = ParameterDirection.Input)]
         public bool IsDeleted { get; set; }
 
-        [DbParameter("@UserId", Type = SqlDbType.Int, Order = 3, Direction = ParameterDirection.Input)]
+        [Parameter("@UserId", DbType.Int32, Order = 3, Direction = ParameterDirection.Input)]
         public int UserId { get; set; }
 
-        [DbParameter("@Id", Type = SqlDbType.Int, Order = 4, Direction = ParameterDirection.Input)]
+        [Parameter("@Id", DbType.Int32, Order = 4, Direction = ParameterDirection.Input)]
         public int Id { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace malone.Core.AdoNet.SqlServer
 
         public IDbConnection CreateConnection()
         {
+
             return new SqlConnection(ConnectionString);
         }
 

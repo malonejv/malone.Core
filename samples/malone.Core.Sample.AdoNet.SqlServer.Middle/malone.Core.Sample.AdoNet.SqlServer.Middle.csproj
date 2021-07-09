@@ -63,9 +63,6 @@
     <Reference Include="Flurl.Http, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Flurl.Http.2.4.2\lib\net46\Flurl.Http.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
@@ -222,17 +219,17 @@
     <Folder Include="DAL\ServiceAgents\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\malone.Core.AdoNet.SqlServer\malone.Core.AdoNet.SqlServer.csproj">
-      <Project>{54dcb4ef-1475-4c12-aa6c-acb61519b4a9}</Project>
-      <Name>malone.Core.AdoNet.SqlServer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\malone.Core.AdoNet\malone.Core.AdoNet.csproj">
-      <Project>{492f80c1-e1f2-4cc9-8dbe-83ba63e7de4c}</Project>
+      <Project>{492F80C1-E1F2-4CC9-8DBE-83BA63E7DE4C}</Project>
       <Name>malone.Core.AdoNet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\malone.Core.Identity.AdoNet.SqlServer\malone.Core.Identity.AdoNet.SqlServer.csproj">
-      <Project>{765b4548-f6b9-41c9-a640-a12b3f91185b}</Project>
-      <Name>malone.Core.Identity.AdoNet.SqlServer</Name>
+    <ProjectReference Include="..\..\src\malone.Core.Dapper\malone.Core.Dapper.csproj">
+      <Project>{207004DC-E04E-4A6D-97A2-42172836E7D2}</Project>
+      <Name>malone.Core.Dapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\malone.Core.Identity.Dapper\malone.Core.Identity.Dapper.csproj">
+      <Project>{5c683c67-9122-43ed-bd2d-faed83007d78}</Project>
+      <Name>malone.Core.Identity.Dapper</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\malone.Core.Identity\malone.Core.Identity.csproj">
       <Project>{0992b1b6-be12-4b9f-9b15-4d1b03ecd306}</Project>

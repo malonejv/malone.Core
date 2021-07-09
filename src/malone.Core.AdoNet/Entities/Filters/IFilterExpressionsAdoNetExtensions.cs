@@ -1,13 +1,12 @@
 ﻿using malone.Core.AdoNet.Attributes;
 using malone.Core.AdoNet.Database;
-using malone.Core.AdoNet.Entities.Filters;
 using malone.Core.Commons.Helpers.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 
-namespace malone.Core.AdoNet
+namespace malone.Core.AdoNet.Entities.Filters
 {
     public static class IFilterExpressionAdoNetExtensions
     {

@@ -1,5 +1,5 @@
-﻿using malone.Core.Identity.AdoNet.SqlServer.Business;
-using malone.Core.Identity.AdoNet.SqlServer.Entities;
+﻿using malone.Core.Identity.Dapper.Business;
+using malone.Core.Identity.Dapper.Entities;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.BL;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Filters;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model;

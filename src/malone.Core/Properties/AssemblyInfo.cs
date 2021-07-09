@@ -19,11 +19,14 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("malone.Core.WebApi")]
 [assembly: InternalsVisibleTo("malone.Core.EF")]
 [assembly: InternalsVisibleTo("malone.Core.AdoNet")]
+[assembly: InternalsVisibleTo("malone.Core.Dapper")]
 [assembly: InternalsVisibleTo("malone.Core.Identity")]
 [assembly: InternalsVisibleTo("malone.Core.Identity.AdoNet")]
 [assembly: InternalsVisibleTo("malone.Core.Identity.AdoNet.SqlServer")]
+[assembly: InternalsVisibleTo("malone.Core.Identity.Dapper")]
 [assembly: InternalsVisibleTo("malone.Core.Identity.EntityFramework")]
 [assembly: InternalsVisibleTo("malone.Core.Unity.ModulesInitializers")]
+
 
 
 // Setting ComVisible to false makes the types in this assembly not visible 

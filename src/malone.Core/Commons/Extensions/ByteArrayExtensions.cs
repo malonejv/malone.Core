@@ -3,7 +3,7 @@
 
 using System.Text;
 
-namespace malone.Core.Commons.Helpers.Extensions
+namespace malone.Core.Commons.Extensions
 {
     /// <summary>
     /// Defines the <see cref="ByteArrayExtensions" />.

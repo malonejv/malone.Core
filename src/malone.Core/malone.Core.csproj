@@ -135,14 +135,14 @@
     <Compile Include="Commons\Exceptions\CoreExceptionFactory.cs" />
     <Compile Include="Commons\Exceptions\ExceptionFactory.cs" />
     <Compile Include="Commons\Exceptions\IErrorLocalizationHandler.cs" />
-    <Compile Include="Commons\Helpers\Extensions\DataRowExtensions.cs" />
-    <Compile Include="Commons\Helpers\Extensions\ObjectExtensions.cs" />
-    <Compile Include="Commons\Helpers\Extensions\TypeExtensions.cs" />
+    <Compile Include="Commons\Extensions\DataRowExtensions.cs" />
+    <Compile Include="Commons\Extensions\ObjectExtensions.cs" />
+    <Compile Include="Commons\Extensions\TypeExtensions.cs" />
     <Compile Include="Commons\Localization\CoreContents.cs" />
     <Compile Include="Commons\Localization\CoreLocalizationHandler.cs" />
     <Compile Include="Commons\Localization\IContentLocalizationHandler.cs" />
     <Compile Include="Commons\Exceptions\TechnicalException.cs" />
-    <Compile Include="Commons\Helpers\Extensions\DateRangeExtensions.cs" />
+    <Compile Include="Commons\Extensions\DateRangeExtensions.cs" />
     <Compile Include="Commons\Initializers\AppInitializer.cs" />
     <Compile Include="Commons\Initializers\IInitializer.cs" />
     <Compile Include="Commons\Initializers\IInjectorInitializer.cs" />
@@ -156,12 +156,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.resx</DependentUpon>
     </Compile>
-    <Compile Include="Commons\Helpers\Extensions\ByteArrayExtensions.cs" />
-    <Compile Include="Commons\Helpers\Extensions\CharExtensions.cs" />
-    <Compile Include="Commons\Helpers\Extensions\EnumExtensions.cs" />
-    <Compile Include="Commons\Helpers\Extensions\StringExtensions.cs" />
+    <Compile Include="Commons\Extensions\ByteArrayExtensions.cs" />
+    <Compile Include="Commons\Extensions\CharExtensions.cs" />
+    <Compile Include="Commons\Extensions\EnumExtensions.cs" />
+    <Compile Include="Commons\Extensions\StringExtensions.cs" />
     <Compile Include="Commons\Helpers\Threading\AsyncHelper.cs" />
-    <Compile Include="Commons\Helpers\Threading\TaskExtensions.cs" />
+    <Compile Include="Commons\Extensions\TaskExtensions.cs" />
     <Compile Include="Commons\Initializers\IModuleInitializer.cs" />
     <Compile Include="Commons\Localization\Resources\Contents.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -201,7 +201,7 @@
     <Compile Include="Resources\Exceptions.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commons\Helpers\Attributes\" />
+    <Folder Include="Commons\Attributes\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

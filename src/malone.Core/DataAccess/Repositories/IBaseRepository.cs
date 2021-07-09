@@ -9,24 +9,24 @@ using System.Linq;
 namespace malone.Core.DataAccess.Repositories
 {
     /// <summary>
-    /// Defines the <see cref="IBaseRepository{TEntity}" />.
+    /// Defines the <see cref="IBaseRepository{T}" />.
     /// </summary>
-    /// <typeparam name="TEntity">.</typeparam>
-    public interface IBaseRepository<TEntity>
-        where TEntity : class
+    /// <typeparam name="T">.</typeparam>
+    public interface IBaseRepository<T>
+        where T : class
     {
         /// <summary>
         /// The Get.
         /// </summary>
         /// <typeparam name="TFilter">.</typeparam>
         /// <param name="filter">The filter<see cref="TFilter"/>.</param>
-        /// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
+        /// <param name="orderBy">The orderBy<see cref="Func{IQueryable{T}, IOrderedQueryable{T}}"/>.</param>
         /// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
         /// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
         /// <returns>The <see cref="IEnumerable{TEntity}"/>.</returns>
-        IEnumerable<TEntity> Get<TFilter>(
+        IEnumerable<T> Get<TFilter>(
            TFilter filter = default(TFilter),
-           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+           Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
            bool includeDeleted = false,
            string includeProperties = "")
             where TFilter : class, IFilterExpression;
@@ -34,12 +34,12 @@ namespace malone.Core.DataAccess.Repositories
         /// <summary>
         /// The GetAll.
         /// </summary>
-        /// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
+        /// <param name="orderBy">The orderBy<see cref="Func{IQueryable{T}, IOrderedQueryable{T}}"/>.</param>
         /// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
         /// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
         /// <returns>The <see cref="IEnumerable{TEntity}"/>.</returns>
-        IEnumerable<TEntity> GetAll(
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+        IEnumerable<T> GetAll(
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             bool includeDeleted = false,
             string includeProperties = ""
            );
@@ -49,13 +49,13 @@ namespace malone.Core.DataAccess.Repositories
         /// </summary>
         /// <typeparam name="TFilter">.</typeparam>
         /// <param name="filter">The filter<see cref="TFilter"/>.</param>
-        /// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
+        /// <param name="orderBy">The orderBy<see cref="Func{IQueryable{T}, IOrderedQueryable{T}}"/>.</param>
         /// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
         /// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
-        /// <returns>The <see cref="TEntity"/>.</returns>
-        TEntity GetEntity<TFilter>(
+        /// <returns>The <see cref="T"/>.</returns>
+        T GetEntity<TFilter>(
             TFilter filter = default(TFilter),
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             bool includeDeleted = false,
             string includeProperties = "")
             where TFilter : class, IFilterExpression;
@@ -63,20 +63,20 @@ namespace malone.Core.DataAccess.Repositories
         /// <summary>
         /// The Insert.
         /// </summary>
-        /// <param name="entity">The entity<see cref="TEntity"/>.</param>
-        void Insert(TEntity entity);
+        /// <param name="entity">The entity<see cref="T"/>.</param>
+        void Insert(T entity);
 
         /// <summary>
         /// The Delete.
         /// </summary>
-        /// <param name="entity">The entity<see cref="TEntity"/>.</param>
-        void Delete(TEntity entity);
+        /// <param name="entity">The entity<see cref="T"/>.</param>
+        void Delete(T entity);
 
         /// <summary>
         /// The Update.
         /// </summary>
-        /// <param name="oldValues">The oldValues<see cref="TEntity"/>.</param>
-        /// <param name="newValues">The newValues<see cref="TEntity"/>.</param>
-        void Update(TEntity oldValues, TEntity newValues);
+        /// <param name="oldValues">The oldValues<see cref="T"/>.</param>
+        /// <param name="newValues">The newValues<see cref="T"/>.</param>
+        void Update(T oldValues, T newValues);
     }
 }

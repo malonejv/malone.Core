@@ -1,5 +1,4 @@
-﻿using malone.Core.AdoNet.Attributes;
-using malone.Core.AdoNet.Database;
+﻿using malone.Core.AdoNet.Database;
 using malone.Core.Commons.DI;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.DataAccess.Context;
@@ -19,10 +18,6 @@ namespace malone.Core.AdoNet.Context
 
         protected DatabaseFactory DbFactory { get; private set; }
 
-        protected IDbConnection Connection { get; private set; }
-
-        protected IDbTransaction Transaction { get; private set; }
-
         protected IDatabase Db
         {
             get
@@ -35,6 +30,10 @@ namespace malone.Core.AdoNet.Context
                 return _db;
             }
         }
+
+        public IDbConnection Connection { get; private set; }
+
+        public IDbTransaction Transaction { get; private set; }
 
 
         public CoreDbContext(string connectionStringName)

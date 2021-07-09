@@ -388,9 +388,13 @@
       <Project>{492f80c1-e1f2-4cc9-8dbe-83ba63e7de4c}</Project>
       <Name>malone.Core.AdoNet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\malone.Core.Identity.AdoNet.SqlServer\malone.Core.Identity.AdoNet.SqlServer.csproj">
-      <Project>{765b4548-f6b9-41c9-a640-a12b3f91185b}</Project>
-      <Name>malone.Core.Identity.AdoNet.SqlServer</Name>
+    <ProjectReference Include="..\..\src\malone.Core.Dapper\malone.Core.Dapper.csproj">
+      <Project>{207004dc-e04e-4a6d-97a2-42172836e7d2}</Project>
+      <Name>malone.Core.Dapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\malone.Core.Identity.Dapper\malone.Core.Identity.Dapper.csproj">
+      <Project>{5c683c67-9122-43ed-bd2d-faed83007d78}</Project>
+      <Name>malone.Core.Identity.Dapper</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\malone.Core.Identity\malone.Core.Identity.csproj">
       <Project>{0992b1b6-be12-4b9f-9b15-4d1b03ecd306}</Project>
@@ -405,7 +409,7 @@
       <Name>malone.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\malone.Core.Sample.AdoNet.SqlServer.Middle\malone.Core.Sample.AdoNet.SqlServer.Middle.csproj">
-      <Project>{51926813-c4a1-4616-bdab-0e1b3ff018e4}</Project>
+      <Project>{51926813-C4A1-4616-BDAB-0E1B3FF018E4}</Project>
       <Name>malone.Core.Sample.AdoNet.SqlServer.Middle</Name>
     </ProjectReference>
   </ItemGroup>

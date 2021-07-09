@@ -104,6 +104,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\malone.Core.Unity.IdentityDapperInitializer\malone.Core.Unity.IdentityDapperInitializer.csproj">
+      <Project>{4d280359-094d-41bf-a2cd-5f0090f0ef69}</Project>
+      <Name>malone.Core.Unity.IdentityDapperInitializer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\malone.Core.Unity.IdentityAdoNetSqlServerInitializer\malone.Core.Unity.IdentityAdoNetSqlServerInitializer.csproj">
       <Project>{1c1a8c42-f043-4d14-b522-e501580d3364}</Project>
       <Name>malone.Core.Unity.IdentityAdoNetSqlServerInitializer</Name>

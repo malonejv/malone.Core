@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("malone.Core.Identity.AdoNet.SqlServer")]
+//[assembly: AssemblyTitle("malone.Core.Identity.AdoNet.SqlServer")]
 [assembly: AssemblyDescription("Esta librería provee una estructura de clases que extiende Microsoft.AspNet.Identity.Core.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("malone.Core.Identity.AdoNet.SqlServer")]

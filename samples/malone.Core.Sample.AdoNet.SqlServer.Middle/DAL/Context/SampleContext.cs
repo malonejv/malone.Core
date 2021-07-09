@@ -1,4 +1,4 @@
-﻿using malone.Core.Identity.AdoNet.SqlServer.Context;
+﻿using malone.Core.Identity.Dapper.Context;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.Middle.DAL.Context
 {

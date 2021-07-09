@@ -404,6 +404,10 @@
       <Project>{492f80c1-e1f2-4cc9-8dbe-83ba63e7de4c}</Project>
       <Name>malone.Core.AdoNet</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\malone.Core.Dapper\malone.Core.Dapper.csproj">
+      <Project>{207004dc-e04e-4a6d-97a2-42172836e7d2}</Project>
+      <Name>malone.Core.Dapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\malone.Core.Identity.AdoNet.SqlServer\malone.Core.Identity.AdoNet.SqlServer.csproj">
       <Project>{765B4548-F6B9-41C9-A640-A12B3F91185B}</Project>
       <Name>malone.Core.Identity.AdoNet.SqlServer</Name>

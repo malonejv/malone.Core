@@ -1,6 +1,6 @@
-﻿using malone.Core.AdoNet.Repositories;
-using malone.Core.Commons.Helpers.Extensions;
+﻿using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
+using malone.Core.Dapper.Repositories;
 using malone.Core.DataAccess.Context;
 using malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model;
 using System.Data;
@@ -15,102 +15,102 @@ namespace malone.Core.Sample.AdoNet.SqlServer.Middle.DAL.Repositories
 
         #region Overridden Methods
 
-        #region Crud Operations
+        //#region Crud Operations
 
-        #region Get
+        //#region Get
 
-        protected override void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties)
-        {
-            string query = @"SELECT Id, Name, Date, IsDeleted
-                               FROM TodoLists;";
+        //protected override void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties)
+        //{
+        //    string query = @"SELECT Id, Name, Date, IsDeleted
+        //                       FROM TodoLists;";
 
-            command.CommandText = query;
-            command.CommandType = CommandType.Text;
-        }
+        //    command.CommandText = query;
+        //    command.CommandType = CommandType.Text;
+        //}
 
-        protected override void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties)
-        {
-            string query = @"SELECT Id, Name, Date, IsDeleted
-                               FROM TodoLists
-                              WHERE LOWER(Name) like LOWER('%' + @Name + '%');";
+        //protected override void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties)
+        //{
+        //    string query = @"SELECT Id, Name, Date, IsDeleted
+        //                       FROM TodoLists
+        //                      WHERE LOWER(Name) like LOWER('%' + @Name + '%');";
 
-            command.CommandText = query;
-            command.CommandType = CommandType.Text;
-        }
+        //    command.CommandText = query;
+        //    command.CommandType = CommandType.Text;
+        //}
 
-        protected override void ConfigureCommandForGetById(IDbCommand command, bool includeDeleted, string includeProperties)
-        {
-            string query = @"SELECT Id, Name, Date, IsDeleted
-                               FROM TodoLists
-                              WHERE Id = @Id;";
+        //protected override void ConfigureCommandForGetById(IDbCommand command, bool includeDeleted, string includeProperties)
+        //{
+        //    string query = @"SELECT Id, Name, Date, IsDeleted
+        //                       FROM TodoLists
+        //                      WHERE Id = @Id;";
 
-            command.CommandText = query;
-            command.CommandType = CommandType.Text;
-        }
+        //    command.CommandText = query;
+        //    command.CommandType = CommandType.Text;
+        //}
 
-        protected override void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties)
-        {
-            string query = @"SELECT Id, Name, Date, IsDeleted
-                               FROM TodoLists
-                              WHERE Id = @Id;";
+        //protected override void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties)
+        //{
+        //    string query = @"SELECT Id, Name, Date, IsDeleted
+        //                       FROM TodoLists
+        //                      WHERE Id = @Id;";
 
-            command.CommandText = query;
-            command.CommandType = CommandType.Text;
-        }
+        //    command.CommandText = query;
+        //    command.CommandType = CommandType.Text;
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Add
+        //#region Add
 
-        protected override void ConfigureCommandForInsert(IDbCommand command)
-        {
-            string query = @"INSERT INTO TodoLists (Name, Date, IsDeleted) VALUES ( @Name, @Date, @IsDeleted );";
+        //protected override void ConfigureCommandForInsert(IDbCommand command)
+        //{
+        //    string query = @"INSERT INTO TodoLists (Name, Date, IsDeleted) VALUES ( @Name, @Date, @IsDeleted );";
 
-            command.CommandText = query;
-            command.CommandType = CommandType.Text;
-        }
+        //    command.CommandText = query;
+        //    command.CommandType = CommandType.Text;
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Update
+        //#region Update
 
-        protected override void ConfigureCommandForUpdate(IDbCommand command)
-        {
-            string query = @"UPDATE TodoLists SET 
-                                Name = @Name,
-                                Date = @Date,
-                                IsDeleted = @IsDeleted
-                              WHERE Id = @Id;";
+        //protected override void ConfigureCommandForUpdate(IDbCommand command)
+        //{
+        //    string query = @"UPDATE TodoLists SET 
+        //                        Name = @Name,
+        //                        Date = @Date,
+        //                        IsDeleted = @IsDeleted
+        //                      WHERE Id = @Id;";
 
-            command.CommandText = query;
-            command.CommandType = CommandType.Text;
-        }
+        //    command.CommandText = query;
+        //    command.CommandType = CommandType.Text;
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Delete
+        //#region Delete
 
-        protected override void ConfigureCommandForDelete(IDbCommand command)
-        {
-            string query = "";
-            if (true)
-            {
-                query = @"UPDATE TodoLists SET 
-                                IsDeleted = @IsDeleted
-                           WHERE Id = @Id;";
-            }
-            else
-            {
-                query = $"DELETE FROM TodoLists WHERE Id = @Id;";
-            }
+        //protected override void ConfigureCommandForDelete(IDbCommand command)
+        //{
+        //    string query = "";
+        //    if (true)
+        //    {
+        //        query = @"UPDATE TodoLists SET 
+        //                        IsDeleted = @IsDeleted
+        //                   WHERE Id = @Id;";
+        //    }
+        //    else
+        //    {
+        //        query = $"DELETE FROM TodoLists WHERE Id = @Id;";
+        //    }
 
-            command.CommandText = query;
-            command.CommandType = CommandType.Text;
-        }
+        //    command.CommandText = query;
+        //    command.CommandType = CommandType.Text;
+        //}
 
-        #endregion
+        //#endregion
 
-        #endregion
+        //#endregion
 
         protected override TodoList Map(DataRow row)
         {

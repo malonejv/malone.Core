@@ -95,11 +95,11 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
         public override TUserEntity GetEntity<TFilter>(TFilter filter = null, Func<IQueryable<TUserEntity>, IOrderedQueryable<TUserEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Claims,Roles,Logins")
         {
             TUserEntity user = base.GetEntity(filter, orderBy, includeDeleted, includeProperties);
-            
+
             user.Claims = new List<TUserClaim>();
             user.Roles = new List<TUserRole>();
             user.Logins = new List<TUserLogin>();
-            
+
             return user;
         }
 

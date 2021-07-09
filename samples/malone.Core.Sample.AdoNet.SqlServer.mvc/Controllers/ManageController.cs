@@ -1,4 +1,4 @@
-﻿using malone.Core.Identity.AdoNet.SqlServer.Business;
+﻿using malone.Core.Identity.Dapper.Business;
 using malone.Core.Sample.AdoNet.SqlServer.mvc.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;

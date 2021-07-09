@@ -34,6 +34,11 @@ namespace malone.Core.Commons.Configurations
         /// Defines the IdentityEntityFramework.
         /// </summary>
         [Description("IdentityEntityFramework")]
-        IdentityEntityFramework
+        IdentityEntityFramework,
+        /// <summary>
+        /// Defines the IdentityDapper.
+        /// </summary>
+        [Description("IdentityDapper")]
+        IdentityDapper,
     }
 }

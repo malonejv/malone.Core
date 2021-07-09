@@ -31,7 +31,6 @@ namespace malone.Core.AdoNet.Database
             DatabaseConfiguration = coreSettings.DatabaseConfiguration;
         }
 
-        //TODO: Terminar
         public IDatabase CreateDatabase(string connectionStringName)
         {
             // Verify a DatabaseFactoryConfiguration line exists in the web.config.
