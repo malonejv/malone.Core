@@ -17,7 +17,6 @@ using System.Threading.Tasks;
 namespace malone.Core.Identity.Dapper.Repositories
 {
     public abstract class UserStore<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim> :
-        IUserLoginStore<TUserEntity, TKey>,
         IUserClaimStore<TUserEntity, TKey>,
         IUserRoleStore<TUserEntity, TKey>,
         IUserPasswordStore<TUserEntity, TKey>,
@@ -293,11 +292,13 @@ namespace malone.Core.Identity.Dapper.Repositories
             user.ThrowIfNull(nameof(user));
 
             var userId = user.Id;
-            var query = from userRole in _userRoles.GetAll()
-                        where userRole.UserId.Equals(userId)
-                        join role in _roles.GetAll() on userRole.RoleId equals role.Id
-                        select role.Name;
-            return Task.FromResult(query as IList<string>);
+            var userRoles =_userRoles.Get(new UserRoleGetRequest<TKey>()
+            {
+                UserId = userId
+            }).Select(ur=> ur.RoleId).Distinct();
+            var roles = _roles.GetWhereIdIn(userRoles.ToArray()).Select(r=> r.Name);
+            
+            return Task.FromResult(roles as IList<string>);
         }
 
         public Task<bool> IsInRoleAsync(TUserEntity user, string roleName)

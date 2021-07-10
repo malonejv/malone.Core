@@ -3,6 +3,7 @@ using malone.Core.Dapper.Attributes;
 using malone.Core.Entities.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 
@@ -50,7 +51,7 @@ namespace malone.Core.Dapper.Entities
             PropertyInfo[] properties = entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
             foreach (var prop in properties)
             {
-                if (prop.PropertyType.IsPrimitive 
+                if (prop.PropertyType.IsPrimitive
                  || (prop.PropertyType.IsClass && prop.PropertyType.Name == "String")
                  || (prop.PropertyType.IsGenericType && prop.PropertyType.Name == "Nullable`1"))
                 {
@@ -70,12 +71,12 @@ namespace malone.Core.Dapper.Entities
             ColumnAttribute columnAttribute = null;
 
             string entityName = entityType.Name;
-            bool isBaseEntity = typeof(IBaseEntity<>).IsAssignableFrom(entityType);
+            bool isBaseEntity = entityType.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IBaseEntity<>));
 
             var properties = entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
             foreach (var propertyInfo in properties)
             {
-                if (isBaseEntity)
+                /*if (isBaseEntity)
                 {
                     bool isKey = propertyInfo.PropertyType.IsGenericParameter;
 
@@ -103,24 +104,24 @@ namespace malone.Core.Dapper.Entities
                         columnAttribute.IsKey = isKey;
                     }
                 }
-                else if (propertyInfo.Name.Equals("id", StringComparison.CurrentCultureIgnoreCase) ||
-                         propertyInfo.Name.RemoveSpecialCharacters().Equals($"{entityName}id", StringComparison.CurrentCultureIgnoreCase) ||
-                         propertyInfo.Name.RemoveSpecialCharacters().Equals($"id{entityName}", StringComparison.CurrentCultureIgnoreCase))
+                else*/
+                if (propertyInfo.Name.Equals("id", StringComparison.CurrentCultureIgnoreCase) ||
+                  propertyInfo.Name.RemoveSpecialCharacters().Equals($"{entityName}id", StringComparison.CurrentCultureIgnoreCase) ||
+                  propertyInfo.Name.RemoveSpecialCharacters().Equals($"id{entityName}", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    columnAttribute = new ColumnAttribute();
-
-                    columnAttribute.Name = propertyInfo.Name;
-
-                    object parameterValue = propertyInfo.GetValue(entityType) != propertyInfo.GetType().GetDefault() ? propertyInfo.GetValue(entityType) : DBNull.Value;
-                    columnAttribute.Value = parameterValue;
-
-                    columnAttribute.IsKey = true;
+                    columnAttribute = propertyInfo.GetCustomAttribute<ColumnAttribute>();
+                    if (columnAttribute == null)
+                        columnAttribute = new ColumnAttribute(name: propertyInfo.Name, direction: ParameterDirection.Input, isKey: true);
+                    
+                    break;
                 }
-                else
-                {
-                    //TODO: reemplazar por core errors
-                    throw new Exception("Key field not found.");
-                }
+            }
+
+
+            if (columnAttribute == null)
+            {
+                //TODO: reemplazar por core errors
+                throw new Exception("Key field not found.");
             }
 
             return columnAttribute;

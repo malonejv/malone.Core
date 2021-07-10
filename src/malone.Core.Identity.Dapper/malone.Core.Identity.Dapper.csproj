@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Dapper.2.0.78\lib\net461\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -84,6 +87,7 @@
     <Compile Include="Entities\CoreUserLogin.cs" />
     <Compile Include="Entities\CoreUserRole.cs" />
     <Compile Include="Entities\Filters\RoleGetRequest.cs" />
+    <Compile Include="Entities\Filters\RoleIdsGetRequest.cs" />
     <Compile Include="Entities\Filters\UserClaimGetRequest.cs" />
     <Compile Include="Entities\Filters\UserGetRequest.cs" />
     <Compile Include="Entities\Filters\UserLoginGetRequest.cs" />

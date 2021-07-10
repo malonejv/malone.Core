@@ -113,16 +113,16 @@ namespace malone.Core.Dapper.Repositories
                     whereClause = " WHERE ";
 
                 int i = 0;
-                var ColumnNames = columns.Split(',');
+                var ColumnNames = columns.Split(',').Select(c => c.Trim()).ToList();
                 foreach (var parameterName in parameters.ParameterNames)
                 {
                     var exists = ColumnNames.Contains(parameterName);
                     if (exists)
                     {
                         if (i == 0)
-                            whereClause += $"@{parameterName} = {parameterName}";
+                            whereClause += $"{parameterName} = @{parameterName}";
                         else
-                            whereClause += $" AND @{parameterName} = {parameterName}";
+                            whereClause += $" AND {parameterName} = @{parameterName}";
                     }
                     else
                     {
@@ -132,19 +132,23 @@ namespace malone.Core.Dapper.Repositories
                             if (options.Count() > 1)
                             {
                                 int j = 0;
-                                string optionsQuery = i == 0 ? "(" : "AND (";
+                                string optionsQuery = "(";
+                                if (i != 0) optionsQuery = "AND (";
+
                                 foreach (var option in options)
                                 {
                                     exists = ColumnNames.Contains(option);
                                     if (exists)
                                     {
                                         if (j == 0)
-                                            whereClause += $"@{option} = {option}";
+                                            optionsQuery += $"{option} = @{parameterName}";
                                         else
-                                            whereClause += $" OR @{option} = {option}";
+                                            optionsQuery += $" OR {option} = @{parameterName}";
                                     }
-
+                                    j++;
                                 }
+                                optionsQuery += ")";
+                                whereClause += optionsQuery;
                             }
                         }
                     }

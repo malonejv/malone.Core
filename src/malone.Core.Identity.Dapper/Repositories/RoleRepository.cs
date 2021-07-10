@@ -1,10 +1,18 @@
-﻿using malone.Core.Commons.Helpers.Extensions;
+﻿using Dapper;
+using malone.Core.Commons.Exceptions;
+using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
+using malone.Core.Dapper.Attributes;
+using malone.Core.Dapper.Entities;
+using malone.Core.Dapper.Entities.Filters;
 using malone.Core.Dapper.Repositories;
 using malone.Core.DataAccess.Context;
+using malone.Core.Entities.Filters;
 using malone.Core.Identity.Dapper.Entities;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace malone.Core.Identity.Dapper.Repositories
 {
@@ -81,15 +89,15 @@ namespace malone.Core.Identity.Dapper.Repositories
         //    command.CommandType = CommandType.Text;
         //}
 
-        //public override TRoleEntity GetEntity<TFilter>(TFilter filter = null, Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Users")
+        //public override TRoleEntity GeTRoleEntity<TFilter>(TFilter filter = null, Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Users")
         //{
-        //    TRoleEntity role = base.GetEntity(filter, orderBy, includeDeleted, includeProperties);
+        //    TRoleEntity role = base.GeTRoleEntity(filter, orderBy, includeDeleted, includeProperties);
 
         //    role.Users = new List<TUserRole>();
 
         //    return role;
         //}
-        //protected override void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties)
+        //protected override void ConfigureCommandForGeTRoleEntity(IDbCommand command, bool includeDeleted, string includeProperties)
         //{
         //    string query = @"SELECT Id, Name
         //                       FROM Roles
@@ -152,6 +160,59 @@ namespace malone.Core.Identity.Dapper.Repositories
                 userLogin.Name = row.AsString("Name");
             }
             return userLogin;
+        }
+
+        #endregion
+
+        #region GET BY COLLECTION OF ID
+
+        protected virtual CommandDefinition ConfigureCommandForGetWhereIdIn(TKey[] ids, bool includeDeleted, string includeProperties)
+        {
+            string tableName = TEntityType.GetTableName();
+            string columns = TEntityType.GetColumnNames();
+            string query = string.Format("SELECT {0} FROM {1}", columns, tableName);
+
+            DynamicParameters parameters = new DynamicParameters();
+            var allowSoftDelete = ConfigureParameterIsDelete(query, columns, tableName, parameters, includeDeleted);
+
+            var whereClause = "";
+            var typeInfo = ids.GetType();
+            parameters.Add(typeInfo.Name, ids, direction: ParameterDirection.Input);
+
+            if (allowSoftDelete)
+                whereClause = " AND ";
+            else
+                whereClause = " WHERE ";
+
+
+            query += $"{whereClause};";
+
+            return new CommandDefinition(query, transaction: Context.Transaction, commandType: CommandType.Text, parameters: parameters);
+        }
+
+        public virtual IEnumerable<TRoleEntity> GetWhereIdIn(
+           TKey[] ids,
+           Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null,
+           bool includeDeleted = false,
+           string includeProperties = "")
+        {
+            ThrowIfDisposed();
+            try
+            {
+                IQueryable<TRoleEntity> query;
+
+                var command = ConfigureCommandForGetWhereIdIn(ids, includeDeleted, includeProperties);
+                query = GetQueryable(command, orderBy);
+
+                return query.ToList<TRoleEntity>();
+            }
+            catch (Exception ex)
+            {
+                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, TEntityType.Name);
+                if (Logger != null) Logger.Error(techEx);
+
+                throw techEx;
+            }
         }
 
         #endregion
