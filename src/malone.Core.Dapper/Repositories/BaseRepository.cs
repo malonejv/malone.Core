@@ -94,23 +94,17 @@ namespace malone.Core.Dapper.Repositories
             string query = string.Format("SELECT {0} FROM {1}", columns, tableName);
 
             DynamicParameters parameters = new DynamicParameters();
-            var allowSoftDelete = ConfigureParameterIsDelete(query, columns, tableName, parameters, includeDeleted);
 
-            var whereClause = "";
+            var whereClause = " WHERE ";
             List<ParameterAttribute> parametersInfo;
             if (filter != default(TFilter) && typeof(IFilterExpressionDapper).IsAssignableFrom(typeof(TFilter)))
             {
                 parametersInfo = (filter as IFilterExpressionDapper).GetParameters();
                 foreach (var parameterInfo in parametersInfo)
                 {
-                    int? size = parameterInfo.IsSizeDefined ? new int?(parameterInfo.Size) : null;
-                    parameters.Add(parameterInfo.Name, parameterInfo.Value, parameterInfo.Type, parameterInfo.Direction, size);
+                        int? size = parameterInfo.IsSizeDefined ? new int?(parameterInfo.Size) : null;
+                        parameters.Add(parameterInfo.Name, parameterInfo.Value, parameterInfo.Type, parameterInfo.Direction, size);
                 }
-
-                if (allowSoftDelete)
-                    whereClause = " AND ";
-                else
-                    whereClause = " WHERE ";
 
                 int i = 0;
                 var ColumnNames = columns.Split(',').Select(c => c.Trim()).ToList();
@@ -364,8 +358,6 @@ namespace malone.Core.Dapper.Repositories
                 query = string.Format("SELECT {0} FROM {1}", columns, tableName);
 
                 query += " WHERE IsDeleted = @IsDeleted";
-
-                parameters.Add("@IsDelete", includeDeleted, DbType.Boolean, ParameterDirection.Input);
             }
             return allowSoftDelete;
         }

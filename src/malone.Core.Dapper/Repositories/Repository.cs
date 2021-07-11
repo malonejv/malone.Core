@@ -51,7 +51,7 @@ namespace malone.Core.Dapper.Repositories
                 whereClause = " WHERE ";
 
             int i = 0;
-            var ColumnNames = columns.Split(',').Select(c => c.Trim()).ToList();
+            var ColumnNames = columns.Split(',');
             foreach (var parameterName in parameters.ParameterNames)
             {
                 var exists = ColumnNames.Contains(parameterName);

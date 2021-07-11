@@ -34,21 +34,20 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         #region IQueryableRoleStore
 
-        public IQueryable<TRoleEntity> Roles => _roles.GetAll().AsQueryable<TRoleEntity>();
+        public IQueryable<TRoleEntity> Roles => throw new NotImplementedException();
 
         public async Task<TRoleEntity> FindByIdAsync(TKey roleId)
         {
             ThrowIfDisposed();
-            return _roles.GetById(roleId);
+            TRoleEntity result = _roles.GetRoleById(roleId);
+            return await Task.FromResult<TRoleEntity>(result);
         }
 
         public async Task<TRoleEntity> FindByNameAsync(string roleName)
         {
             ThrowIfDisposed();
-            return _roles.GetEntity(new RoleGetRequest()
-            {
-                Name = roleName
-            });
+            TRoleEntity result = _roles.GetRoleByName(roleName);
+            return await Task.FromResult<TRoleEntity>(result);
         }
 
         public async Task CreateAsync(TRoleEntity role)
@@ -74,7 +73,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             ThrowIfDisposed();
             role.ThrowIfNull(nameof(role));
 
-            _roles.Delete(role);
+            _roles.Delete(role.Id);
             await Task.FromResult(Context.SaveChanges());
         }
 

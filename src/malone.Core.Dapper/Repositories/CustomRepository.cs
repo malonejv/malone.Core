@@ -14,7 +14,7 @@ namespace malone.Core.Dapper.Repositories
     /// <summary>
     /// Creates BaseBaseRepository
     /// </summary>
-    public class CustomRepository<TEntity> : ICustomRepository<TEntity>, IDisposable
+    public abstract class CustomRepository<TEntity> : ICustomRepository<TEntity>, IDisposable
         where TEntity : class
     {
         protected CoreDbContext Context { get; private set; }
@@ -38,6 +38,8 @@ namespace malone.Core.Dapper.Repositories
         #endregion
 
         #region Private And Protected Methods
+
+        protected abstract TEntity Map(DataRow row);
 
         private void CheckLogger(ILogger logger)
         {

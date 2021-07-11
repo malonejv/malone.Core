@@ -1,104 +1,23 @@
-﻿using malone.Core.Commons.Helpers.Extensions;
+﻿using Dapper;
+using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
 using malone.Core.Dapper.Repositories;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.Dapper.Entities;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace malone.Core.Identity.Dapper.Repositories
 {
-    public class UserRoleRepository<TKey, TUserRole> : BaseRepository<TUserRole>, IUserRoleRepository<TKey, TUserRole>
+    public class UserRoleRepository<TKey, TUserRole> : CustomRepository<TUserRole>, IUserRoleRepository<TKey, TUserRole>
         where TKey : IEquatable<TKey>
         where TUserRole : CoreUserRole<TKey>, new()
     {
         public UserRoleRepository(IContext context, ILogger logger) : base(context, logger)
         {
         }
-
-        //#region Overridden Methods
-
-        //#region Crud Operations
-
-        //#region Get
-
-        //protected override void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties)
-        //{
-        //    string query = @"SELECT UserId, RoleId
-        //                       FROM UsersRoles;";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //protected override void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties)
-        //{
-        //    string query = @"SELECT UserId, RoleId
-        //                       FROM UsersRoles
-        //                      WHERE UserId = @UserId;";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //protected override void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties)
-        //{
-        //    string query = @"SELECT UserId, RoleId
-        //                       FROM UsersRoles
-        //                      WHERE UserId = @UserId
-        //                        AND RoleId = @RoleId;";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //#endregion
-
-        //#region Add
-
-        //protected override void ConfigureCommandForInsert(IDbCommand command)
-        //{
-        //    string query = @"INSERT INTO UsersRoles (UserId, RoleId) VALUES ( @UserId, @RoleId );";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //#endregion
-
-        //#region Update
-
-        //protected override void ConfigureCommandForUpdate(IDbCommand command)
-        //{
-        //    string query = @"UPDATE UsersRoles SET 
-        //                             UserId = @UserId,
-        //                             RoleId = @RoleId
-        //                      WHERE UserId = @UserId
-        //                        AND RoleId = @RoleId;";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //#endregion
-
-        //#region Delete
-
-        //protected override void ConfigureCommandForDelete(IDbCommand command)
-        //{
-        //    string query = "";
-
-        //    query = @"DELETE FROM UsersRoles 
-        //                    WHERE UserId = @UserId
-        //                      AND RoleId = @RoleId;";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //#endregion
-
-        //#endregion
 
         protected override TUserRole Map(DataRow row)
         {
@@ -112,7 +31,61 @@ namespace malone.Core.Identity.Dapper.Repositories
             return userLogin;
         }
 
-        //#endregion
+        #region Public Methods
+
+        /// <summary>
+        /// Returns a list of user's roles
+        /// </summary>
+        /// <param name="userId">The user's id</param>
+        /// <returns></returns>
+        public List<string> FindByUserId<TUserKey>(TUserKey userId)
+            where TUserKey : IEquatable<TUserKey>
+        {
+            List<string> roles = new List<string>();
+            string commandText = "Select Roles.Name from UsersRoles, Roles where UsersRoles.UserId = @userId and UsersRoles.RoleId = Roles.Id";
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@userId", userId);
+
+            var result = Connection.Query<string>(commandText, parameters, transaction: Context.Transaction);
+            return result.ToList();
+        }
+
+        /// <summary>
+        /// Deletes all roles from a user in the UserRoles table
+        /// </summary>
+        /// <param name="userId">The user's id</param>
+        /// <returns></returns>
+        public int Delete<TUserKey, TRoleKey>(TUserKey userId, TRoleKey roleId)
+            where TUserKey : IEquatable<TUserKey>
+            where TRoleKey : IEquatable<TRoleKey>
+        {
+            string commandText = "Delete from UsersRoles where UserId = @userId and  RoleId = @roleId";
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("UserId", userId);
+            parameters.Add("RoleId", roleId);
+
+            return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
+        }
+
+        /// <summary>
+        /// Inserts a new role for a user in the UserRoles table
+        /// </summary>
+        /// <param name="user">The User</param>
+        /// <param name="roleId">The Role's id</param>
+        /// <returns></returns>
+        public int Insert<TUserKey, TRoleKey>(TUserKey userId, TRoleKey roleId)
+            where TUserKey : IEquatable<TUserKey>
+            where TRoleKey : IEquatable<TRoleKey>
+        {
+            string commandText = "Insert into UsersRoles (UserId, RoleId) values (@userId, @roleId)";
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("userId", userId);
+            parameters.Add("roleId", roleId);
+
+            return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
+        }
+
+        #endregion
 
     }
 

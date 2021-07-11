@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace malone.Core.Sample.EF.SqlServer.Middle.EL.Model.Extensions
+namespace malone.Core.Sample.AdoNet.SqlServer.Middle.EL.Model.Extensions
 {
     public static class TodoListExtensions
     {

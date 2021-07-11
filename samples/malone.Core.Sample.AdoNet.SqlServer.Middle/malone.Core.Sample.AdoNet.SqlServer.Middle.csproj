@@ -173,6 +173,7 @@
     <Compile Include="DAL\Repositories\TaskItemRepository.cs" />
     <Compile Include="DAL\Repositories\TodoListRepository.cs" />
     <Compile Include="EL\Filters\TodoListGetRequest.cs" />
+    <Compile Include="EL\Model\Extensions\TodoListExtensions.cs" />
     <Compile Include="EL\Model\RoleTypeEnum.cs" />
     <Compile Include="EL\Model\TaskItem.cs" />
     <Compile Include="EL\Model\TodoList.cs" />

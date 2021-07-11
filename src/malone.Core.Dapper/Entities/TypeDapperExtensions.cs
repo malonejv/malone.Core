@@ -51,16 +51,14 @@ namespace malone.Core.Dapper.Entities
             PropertyInfo[] properties = entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
             foreach (var prop in properties)
             {
-                if (prop.PropertyType.IsPrimitive
+                ColumnAttribute columnAttribute = prop.GetCustomAttribute<ColumnAttribute>();
+                if (columnAttribute != null)
+                    columnNames.Add(columnAttribute.Name);
+                else if (prop.PropertyType.IsPrimitive
                  || (prop.PropertyType.IsClass && prop.PropertyType.Name == "String")
                  || (prop.PropertyType.IsGenericType && prop.PropertyType.Name == "Nullable`1"))
-                {
-                    ColumnAttribute columnAttribute = prop.GetCustomAttribute<ColumnAttribute>();
-                    if (columnAttribute != null)
-                        columnNames.Add(columnAttribute.Name);
-                    else
-                        columnNames.Add(prop.Name);
-                }
+                    columnNames.Add(prop.Name);
+
             }
 
             return columnNames.Aggregate((i, j) => $"{i}, {j}");
@@ -112,7 +110,7 @@ namespace malone.Core.Dapper.Entities
                     columnAttribute = propertyInfo.GetCustomAttribute<ColumnAttribute>();
                     if (columnAttribute == null)
                         columnAttribute = new ColumnAttribute(name: propertyInfo.Name, direction: ParameterDirection.Input, isKey: true);
-                    
+
                     break;
                 }
             }

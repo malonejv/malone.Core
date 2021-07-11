@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace malone.Core.Identity.Dapper.Repositories
 {
-    public class RoleRepository<TKey, TRoleEntity, TUserRole> : Repository<TKey, TRoleEntity>, IRoleRepository<TKey, TRoleEntity>
+    public class RoleRepository<TKey, TRoleEntity, TUserRole> : CustomRepository<TRoleEntity>, IRoleRepository<TKey, TRoleEntity>
          where TKey : IEquatable<TKey>
          where TUserRole : CoreUserRole<TKey>, new()
          where TRoleEntity : CoreRole<TKey, TUserRole>, new()
@@ -24,131 +24,6 @@ namespace malone.Core.Identity.Dapper.Repositories
         public RoleRepository(IContext context, ILogger logger) : base(context, logger)
         {
         }
-
-        #region Overridden Methods
-
-        //#region Crud Operations
-
-        //#region Get
-
-        //public override TRoleEntity GetById(TKey id, bool includeDeleted = false, string includeProperties = "Users")
-        //{
-        //    TRoleEntity role = base.GetById(id, includeDeleted, includeProperties);
-
-        //    role.Users = new List<TUserRole>();
-
-        //    return role;
-        //}
-
-        //protected override void ConfigureCommandForGetById(IDbCommand command, bool includeDeleted, string includeProperties)
-        //{
-        //    string query = @"SELECT Id, Name
-        //                       FROM Roles
-        //                      WHERE Id = @Id;";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //public override IEnumerable<TRoleEntity> GetAll(Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Users")
-        //{
-        //    IEnumerable<TRoleEntity> roles = base.GetAll(orderBy, includeDeleted, includeProperties);
-
-        //    foreach (var role in roles)
-        //    {
-        //        role.Users = new List<TUserRole>();
-        //    }
-        //    return roles;
-        //}
-        //protected override void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties)
-        //{
-        //    string query = @"SELECT Id, Name
-        //                       FROM Roles;";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //public override IEnumerable<TRoleEntity> Get<TFilter>(TFilter filter = null, Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Users")
-        //{
-        //    IEnumerable<TRoleEntity> roles = base.Get(filter, orderBy, includeDeleted, includeProperties);
-
-        //    foreach (var role in roles)
-        //    {
-        //        role.Users = new List<TUserRole>();
-        //    }
-        //    return roles;
-        //}
-        //protected override void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties)
-        //{
-        //    string query = @"SELECT Id, Name
-        //                       FROM Roles
-        //                      WHERE UPPER(Name) = UPPER(@Name);";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //public override TRoleEntity GeTRoleEntity<TFilter>(TFilter filter = null, Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Users")
-        //{
-        //    TRoleEntity role = base.GeTRoleEntity(filter, orderBy, includeDeleted, includeProperties);
-
-        //    role.Users = new List<TUserRole>();
-
-        //    return role;
-        //}
-        //protected override void ConfigureCommandForGeTRoleEntity(IDbCommand command, bool includeDeleted, string includeProperties)
-        //{
-        //    string query = @"SELECT Id, Name
-        //                       FROM Roles
-        //                      WHERE Id = @Id;";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //#endregion
-
-        //#region Add
-
-        //protected override void ConfigureCommandForInsert(IDbCommand command)
-        //{
-        //    string query = @"INSERT INTO Roles (Name) VALUES ( @Name );";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //#endregion
-
-        //#region Update
-
-        //protected override void ConfigureCommandForUpdate(IDbCommand command)
-        //{
-        //    string query = @"UPDATE Roles SET  
-        //                             Name = @Name,
-        //                      WHERE Id = @Id;";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //#endregion
-
-        //#region Delete
-
-        //protected override void ConfigureCommandForDelete(IDbCommand command)
-        //{
-        //    string query = @"DELETE FROM Roles 
-        //                      WHERE Id = @Id;";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //#endregion
-
-        //#endregion
 
         protected override TRoleEntity Map(DataRow row)
         {
@@ -162,60 +37,122 @@ namespace malone.Core.Identity.Dapper.Repositories
             return userLogin;
         }
 
-        #endregion
+        #region Public Methods
 
-        #region GET BY COLLECTION OF ID
-
-        protected virtual CommandDefinition ConfigureCommandForGetWhereIdIn(TKey[] ids, bool includeDeleted, string includeProperties)
+        /// <summary>
+        /// Deltes a role from the Roles table
+        /// </summary>
+        /// <param name="roleId">The role Id</param>
+        /// <returns></returns>
+        public int Delete(TKey roleId)
         {
-            string tableName = TEntityType.GetTableName();
-            string columns = TEntityType.GetColumnNames();
-            string query = string.Format("SELECT {0} FROM {1}", columns, tableName);
+            string commandText = "Delete from Roles where Id = @id";
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@id", roleId);
 
-            DynamicParameters parameters = new DynamicParameters();
-            var allowSoftDelete = ConfigureParameterIsDelete(query, columns, tableName, parameters, includeDeleted);
-
-            var whereClause = "";
-            var typeInfo = ids.GetType();
-            parameters.Add(typeInfo.Name, ids, direction: ParameterDirection.Input);
-
-            if (allowSoftDelete)
-                whereClause = " AND ";
-            else
-                whereClause = " WHERE ";
-
-
-            query += $"{whereClause};";
-
-            return new CommandDefinition(query, transaction: Context.Transaction, commandType: CommandType.Text, parameters: parameters);
+            return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-        public virtual IEnumerable<TRoleEntity> GetWhereIdIn(
-           TKey[] ids,
-           Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null,
-           bool includeDeleted = false,
-           string includeProperties = "")
+        /// <summary>
+        /// Inserts a new Role in the Roles table
+        /// </summary>
+        /// <param name="roleName">The role's name</param>
+        /// <returns></returns>
+        public int Insert(TRoleEntity role)
         {
-            ThrowIfDisposed();
-            try
+            string commandText = "Insert into Roles (Id, Name) values (@id, @name)";
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@name", role.Name);
+            parameters.Add("@id", role.Id);
+
+            return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
+        }
+
+        /// <summary>
+        /// Returns a role name given the roleId
+        /// </summary>
+        /// <param name="roleId">The role Id</param>
+        /// <returns>Role name</returns>
+        public string GetRoleName(TKey roleId)
+        {
+            string commandText = "Select Name from Roles where Id = @id";
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@id", roleId);
+
+            return Connection.QueryFirstOrDefault<string>(commandText, parameters, transaction: Context.Transaction);
+        }
+
+        /// <summary>
+        /// Returns the role Id given a role name
+        /// </summary>
+        /// <param name="roleName">Role's name</param>
+        /// <returns>Role's Id</returns>
+        public TKey GetRoleId(string roleName)
+        {
+            string commandText = "Select Id from Roles where Name = @name";
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@name", roleName } };
+
+            return Connection.QueryFirstOrDefault<TKey>(commandText, parameters, transaction: Context.Transaction);
+        }
+
+        /// <summary>
+        /// Gets the TRoleEntity given the role Id
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public TRoleEntity GetRoleById(TKey roleId)
+        {
+            var roleName = GetRoleName(roleId);
+            TRoleEntity role = null;
+
+            if (roleName != null)
             {
-                IQueryable<TRoleEntity> query;
-
-                var command = ConfigureCommandForGetWhereIdIn(ids, includeDeleted, includeProperties);
-                query = GetQueryable(command, orderBy);
-
-                return query.ToList<TRoleEntity>();
+                role = new TRoleEntity()
+                {
+                    Name = roleName,
+                    Id = roleId
+                };
             }
-            catch (Exception ex)
+
+            return role;
+
+        }
+
+        /// <summary>
+        /// Gets the TRoleEntity given the role name
+        /// </summary>
+        /// <param name="roleName"></param>
+        /// <returns></returns>
+        public TRoleEntity GetRoleByName(string roleName)
+        {
+            var roleId = GetRoleId(roleName);
+            TRoleEntity role = null;
+
+            if (roleId != null)
             {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, TEntityType.Name);
-                if (Logger != null) Logger.Error(techEx);
-
-                throw techEx;
+                role = new TRoleEntity()
+                {
+                    Name = roleName,
+                    Id = roleId
+                };
             }
+
+            return role;
+        }
+
+        public int Update(TRoleEntity role)
+        {
+
+            string commandText = "Update Roles set Name = @name where Id = @id";
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@name", role.Name);
+            parameters.Add("@id", role.Id);
+
+            return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
         #endregion
+
 
     }
 

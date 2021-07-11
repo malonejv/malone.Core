@@ -182,6 +182,7 @@
     <Compile Include="Commons\Security\SymCryptoService.cs" />
     <Compile Include="Commons\Security\SymCryptoServiceFactory.cs" />
     <Compile Include="DataAccess\Context\IContext.cs" />
+    <Compile Include="DataAccess\Repositories\ICustomRepository.cs" />
     <Compile Include="DataAccess\Repositories\IRepository.cs" />
     <Compile Include="DataAccess\Repositories\IBaseRepository.cs" />
     <Compile Include="DataAccess\UnitOfWork\IUnitOfWork.cs" />

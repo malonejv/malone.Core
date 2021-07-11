@@ -75,6 +75,14 @@ namespace malone.Core.Commons.Helpers.Extensions
             return !string.IsNullOrEmpty(text);
         }
 
+        public static void ThrowIfNullOrEmpty(this string text, string paramName)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                throw new ArgumentNullException(paramName, $"Parameter {paramName} cannot be null.");
+            }
+        }
+
         /// <summary>
         /// Encodes the text in ISO-8859-8, the encoding of the input text must correspond to the Encoding parameter.
         ///If the initialEncoding parameter is null, by default the ISO-8859-1 encoding is used.

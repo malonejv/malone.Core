@@ -1,107 +1,23 @@
-﻿using malone.Core.Commons.Helpers.Extensions;
+﻿using Dapper;
+using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
 using malone.Core.Dapper.Repositories;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.Dapper.Entities;
+using Microsoft.AspNet.Identity;
 using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace malone.Core.Identity.Dapper.Repositories
 {
-    public class UserLoginRepository<TKey, TUserLogin> : BaseRepository<TUserLogin>, IUserLoginRepository<TKey, TUserLogin>
+    public class UserLoginRepository<TKey, TUserLogin> : CustomRepository<TUserLogin>, IUserLoginRepository<TKey, TUserLogin>
         where TKey : IEquatable<TKey>
         where TUserLogin : CoreUserLogin<TKey>, new()
     {
         public UserLoginRepository(IContext context, ILogger logger) : base(context, logger)
         {
         }
-
-        #region Overridden Methods
-
-        //#region Crud Operations
-
-        //#region Get
-
-        //protected override void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties)
-        //{
-        //    string query = @"SELECT LoginProvider, ProviderKey, UserId
-        //                       FROM UsersLogins;";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //protected override void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties)
-        //{
-        //    string query = @"SELECT LoginProvider, ProviderKey, UserId
-        //                       FROM UsersLogins
-        //                      WHERE UserId = @UserId;";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //protected override void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties)
-        //{
-        //    string query = @"SELECT LoginProvider, ProviderKey, UserId
-        //                       FROM UsersLogins
-        //                      WHERE LoginProvider = @LoginProvider
-        //                        AND ProviderKey = @ProviderKey
-        //                        AND UserId = @UserId;";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //#endregion
-
-        //#region Add
-
-        //protected override void ConfigureCommandForInsert(IDbCommand command)
-        //{
-        //    string query = @"INSERT INTO UsersLogins (LoginProvider, ProviderKey, UserId) VALUES ( @LoginProvider, @ProviderKey, @UserId );";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //#endregion
-
-        //#region Update
-
-        //protected override void ConfigureCommandForUpdate(IDbCommand command)
-        //{
-        //    string query = @"UPDATE UsersLogins SET 
-        //                             LoginProvider = @LoginProvider,
-        //                             ProviderKey = @ProviderKey
-        //                      WHERE LoginProvider = @LoginProvider
-        //                        AND ProviderKey = @ProviderKey 
-        //                        AND UserId = @UserId;";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //#endregion
-
-        //#region Delete
-
-        //protected override void ConfigureCommandForDelete(IDbCommand command)
-        //{
-        //    string query = "";
-
-        //    query = @"DELETE FROM UsersLogins 
-        //                    WHERE LoginProvider = @LoginProvider
-        //                      AND ProviderKey = @ProviderKey
-        //                      AND UserId = @UserId;";
-
-        //    command.CommandText = query;
-        //    command.CommandType = CommandType.Text;
-        //}
-
-        //#endregion
-
-        #endregion
 
         protected override TUserLogin Map(DataRow row)
         {
@@ -116,7 +32,98 @@ namespace malone.Core.Identity.Dapper.Repositories
             return userLogin;
         }
 
-        //#endregion
+        #region Public Methods
+
+        /// <summary>
+        /// Deletes a login from a user in the UsersLogins table
+        /// </summary>
+        /// <param name="user">User to have login deleted</param>
+        /// <param name="login">Login to be deleted from user</param>
+        /// <returns></returns>
+        public int Delete<TUserKey>(TUserKey userId, UserLoginInfo login)
+            where TUserKey : IEquatable<TUserKey>
+        {
+            string commandText = "Delete from UsersLogins where UserId = @userId and LoginProvider = @loginProvider and ProviderKey = @providerKey";
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("UserId", userId);
+            parameters.Add("loginProvider", login.LoginProvider);
+            parameters.Add("providerKey", login.ProviderKey);
+
+            return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
+        }
+
+        /// <summary>
+        /// Deletes all Logins from a user in the UsersLogins table
+        /// </summary>
+        /// <param name="userId">The user's id</param>
+        /// <returns></returns>
+        public int Delete<TUserKey>(TUserKey userId)
+        {
+            string commandText = "Delete from UsersLogins where UserId = @userId";
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("UserId", userId);
+
+            return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
+        }
+
+        /// <summary>
+        /// Inserts a new login in the UsersLogins table
+        /// </summary>
+        /// <param name="user">User to have new login added</param>
+        /// <param name="login">Login to be added</param>
+        /// <returns></returns>
+        public int Insert<TUserKey>(TUserKey userId, UserLoginInfo login)
+            where TUserKey : IEquatable<TUserKey>
+        {
+            string commandText = "Insert into UsersLogins (LoginProvider, ProviderKey, UserId) values (@loginProvider, @providerKey, @userId)";
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("loginProvider", login.LoginProvider);
+            parameters.Add("providerKey", login.ProviderKey);
+            parameters.Add("userId", userId);
+
+            return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
+        }
+
+        /// <summary>
+        /// Return a userId given a user's login
+        /// </summary>
+        /// <param name="userLogin">The user's login info</param>
+        /// <returns></returns>
+        public TUserKey FindUserIdByLogin<TUserKey>(UserLoginInfo userLogin)
+            where TUserKey : IEquatable<TUserKey>
+        {
+            string commandText = "Select UserId from UsersLogins where LoginProvider = @loginProvider and ProviderKey = @providerKey";
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("loginProvider", userLogin.LoginProvider);
+            parameters.Add("providerKey", userLogin.ProviderKey);
+
+            return Connection.QueryFirstOrDefault<TUserKey>(commandText, parameters, transaction: Context.Transaction);
+        }
+
+        /// <summary>
+        /// Returns a list of user's logins
+        /// </summary>
+        /// <param name="userId">The user's id</param>
+        /// <returns></returns>
+        public List<UserLoginInfo> FindByUserId<TUserKey>(TUserKey userId)
+            where TUserKey : IEquatable<TUserKey>
+        {
+            List<UserLoginInfo> logins = new List<UserLoginInfo>();
+            string commandText = "Select * from UsersLogins where UserId = @userId";
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@userId", userId } };
+
+            var rows = Connection.Query<UserLoginInfo>(commandText, parameters, transaction: Context.Transaction);
+            foreach (var row in rows)
+            {
+                var login = new UserLoginInfo(row.LoginProvider, row.ProviderKey);
+                logins.Add(login);
+            }
+
+            return logins;
+        }
+
+        #endregion
+
 
     }
 

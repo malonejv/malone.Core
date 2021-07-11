@@ -15,9 +15,8 @@ namespace malone.Core.Commons.Helpers.Extensions
         /// The IsNull.
         /// </summary>
         /// <typeparam name="T">.</typeparam>
-        /// <param name="@object">The object<see cref="T"/>.</param>
-        /// <param name="paramName">The paramName<see cref="string"/>.</param>
-        internal static bool IsNull<T>(this T @object, string paramName)
+        /// <param name="object">The object<see cref="T"/>.</param>
+        internal static bool IsNull<T>(this T @object)
         {
             return @object == null;
         }
@@ -26,18 +25,27 @@ namespace malone.Core.Commons.Helpers.Extensions
         /// The IsNotNull.
         /// </summary>
         /// <typeparam name="T">.</typeparam>
-        /// <param name="@object">The object<see cref="T"/>.</param>
-        /// <param name="paramName">The paramName<see cref="string"/>.</param>
-        internal static bool IsNotNull<T>(this T @object, string paramName)
+        /// <param name="object">The object<see cref="T"/>.</param>
+        internal static bool IsNotNull<T>(this T @object)
         {
             return @object != null;
+        }
+
+        /// <summary>
+        /// The IsDefault.
+        /// </summary>
+        /// <typeparam name="T">.</typeparam>
+        /// <param name="object">The object of type <c>T</c>"/>.</param>
+        internal static bool IsDefault<T>(this T @object)
+        {
+            return @object.Equals(default(T));
         }
 
         /// <summary>
         /// The ThrowIfNull.
         /// </summary>
         /// <typeparam name="T">.</typeparam>
-        /// <param name="@object">The object<see cref="T"/>.</param>
+        /// <param name="object">The object<see cref="T"/>.</param>
         /// <param name="paramName">The paramName<see cref="string"/>.</param>
         internal static void ThrowIfNull<T>(this T @object, string paramName)
         {

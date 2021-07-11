@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 namespace malone.Core.Identity.Dapper.Repositories
 {
     public abstract class UserStore<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim> :
+        IUserLoginStore<TUserEntity, TKey>,
         IUserClaimStore<TUserEntity, TKey>,
         IUserRoleStore<TUserEntity, TKey>,
         IUserPasswordStore<TUserEntity, TKey>,
@@ -67,25 +68,19 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         #region IQueryableUserStore
 
-        public IQueryable<TUserEntity> Users => _users.GetAll().AsQueryable<TUserEntity>();
+        public IQueryable<TUserEntity> Users => throw new NotImplementedException();
 
         #endregion
 
         #region IUserLoginStore
 
-        public Task AddLoginAsync(TUserEntity user, UserLoginInfo login)
+        public async Task AddLoginAsync(TUserEntity user, UserLoginInfo login)
         {
             ThrowIfDisposed();
             user.ThrowIfNull(nameof(user));
             login.ThrowIfNull(nameof(login));
 
-            _logins.Insert(new TUserLogin
-            {
-                UserId = user.Id,
-                ProviderKey = login.ProviderKey,
-                LoginProvider = login.LoginProvider
-            });
-            return Task.FromResult(0);
+            await Task.Run(() => { _logins.Insert(user.Id, login); }).ConfigureAwait(false);
         }
 
         public async Task RemoveLoginAsync(TUserEntity user, UserLoginInfo login)
@@ -94,17 +89,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             user.ThrowIfNull(nameof(user));
             login.ThrowIfNull(nameof(login));
 
-            await EnsureLoginsLoaded(user);
-
-            var userId = user.Id;
-            var provider = login.LoginProvider;
-            var key = login.ProviderKey;
-            TUserLogin entry = user.Logins.SingleOrDefault(ul => ul.LoginProvider == provider && ul.ProviderKey == key && ul.UserId.Equals(userId));
-
-            if (entry != null)
-            {
-                _logins.Delete(entry);
-            }
+            await Task.Run(() => { _logins.Delete(user.Id, login); }).ConfigureAwait(false);
         }
 
         public async Task<IList<UserLoginInfo>> GetLoginsAsync(TUserEntity user)
@@ -112,8 +97,9 @@ namespace malone.Core.Identity.Dapper.Repositories
             ThrowIfDisposed();
             user.ThrowIfNull(nameof(user));
 
-            await EnsureLoginsLoaded(user);
-            return user.Logins.Select(l => new UserLoginInfo(l.LoginProvider, l.ProviderKey)).ToList();
+            List<UserLoginInfo> logins = _logins.FindByUserId(user.Id);
+
+            return await Task.FromResult<IList<UserLoginInfo>>(logins).ConfigureAwait(false);
         }
 
         public async Task<TUserEntity> FindAsync(UserLoginInfo login)
@@ -121,22 +107,13 @@ namespace malone.Core.Identity.Dapper.Repositories
             ThrowIfDisposed();
             login.ThrowIfNull(nameof(login));
 
-            var provider = login.LoginProvider;
-            var key = login.ProviderKey;
-            var userLogin =
-                _logins.GetEntity(new UserLoginGetRequest<TKey>
-                {
-                    ProviderKey = key,
-                    LoginProvider = provider
-                });
-
-            if (userLogin != null)
+            TKey userId = _logins.FindUserIdByLogin<TKey>(login);
+            TUserEntity user = null;
+            if (!userId.IsDefault())
             {
-                var userId = userLogin.UserId;
-                return await GetUserAggregateAsync(u => u.Id.Equals(userId));
+                user = _users.GetUserById(userId) as TUserEntity;
             }
-
-            return null;
+            return await Task.FromResult<TUserEntity>(user).ConfigureAwait(false);
         }
 
         public async Task CreateAsync(TUserEntity user)
@@ -145,7 +122,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             user.ThrowIfNull(nameof(user));
 
             _users.Insert(user);
-            await SaveChanges();
+            await SaveChangesAsync();
         }
 
         public async Task UpdateAsync(TUserEntity user)
@@ -154,7 +131,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             user.ThrowIfNull(nameof(user));
 
             _users.Update(user);
-            await SaveChanges();
+            await SaveChangesAsync();
         }
 
         public async Task DeleteAsync(TUserEntity user)
@@ -163,19 +140,35 @@ namespace malone.Core.Identity.Dapper.Repositories
             user.ThrowIfNull(nameof(user));
 
             _users.Delete(user);
-            await SaveChanges();
+            await SaveChangesAsync();
         }
 
-        public Task<TUserEntity> FindByIdAsync(TKey userId)
+        public async Task<TUserEntity> FindByIdAsync(TKey userId)
         {
             ThrowIfDisposed();
-            return GetUserAggregateAsync(u => u.Id.Equals(userId));
+            TUserEntity result = _users.GetUserById(userId) as TUserEntity;
+            if (!result.IsDefault())
+            {
+                return await Task.FromResult<TUserEntity>(result).ConfigureAwait(false);
+            }
+
+            return await Task.FromResult<TUserEntity>(null).ConfigureAwait(false);
         }
 
-        public Task<TUserEntity> FindByNameAsync(string userName)
+        public async Task<TUserEntity> FindByNameAsync(string userName)
         {
             ThrowIfDisposed();
-            return GetUserAggregateAsync(u => u.UserName.Equals(userName));
+            userName.ThrowIfNullOrEmpty(nameof(userName));
+
+            List<TUserEntity> result = _users.GetUserByName(userName) as List<TUserEntity>;
+
+            // Should I throw if > 1 user?
+            if (result != null && result.Count == 1)
+            {
+                return await Task.FromResult<TUserEntity>(result[0]).ConfigureAwait(false);
+            }
+
+            return await Task.FromResult<TUserEntity>(null).ConfigureAwait(false);
         }
 
         #endregion
@@ -187,18 +180,21 @@ namespace malone.Core.Identity.Dapper.Repositories
             ThrowIfDisposed();
             user.ThrowIfNull(nameof(user));
 
-            await EnsureClaimsLoaded(user);
-            return user.Claims.Select(c => new Claim(c.ClaimType, c.ClaimValue)).ToList();
+            ClaimsIdentity identity = _userClaims.FindByUserId(user.Id);
+
+            return await Task.FromResult<IList<Claim>>(identity.Claims.ToList()).ConfigureAwait(false);
         }
 
-        public Task AddClaimAsync(TUserEntity user, Claim claim)
+        public async Task AddClaimAsync(TUserEntity user, Claim claim)
         {
             ThrowIfDisposed();
             user.ThrowIfNull(nameof(user));
             claim.ThrowIfNull(nameof(claim));
 
-            _userClaims.Insert(new TUserClaim { UserId = user.Id, ClaimType = claim.Type, ClaimValue = claim.Value });
-            return Task.FromResult(0);
+            await Task.Run(() =>
+            {
+                _userClaims.Insert(user.Id, claim);
+            }).ConfigureAwait(false);
         }
 
         public async Task RemoveClaimAsync(TUserEntity user, Claim claim)
@@ -207,127 +203,80 @@ namespace malone.Core.Identity.Dapper.Repositories
             user.ThrowIfNull(nameof(user));
             claim.ThrowIfNull(nameof(claim));
 
-            IEnumerable<TUserClaim> claims;
-            var claimValue = claim.Value;
-            var claimType = claim.Type;
-            if (AreClaimsLoaded(user))
+            await Task.Run(() =>
             {
-                claims = user.Claims.Where(uc => uc.ClaimValue == claimValue && uc.ClaimType == claimType);
-            }
-            else
-            {
-                await EnsureClaimsLoaded(user);
-                claims = user.Claims.Where(uc => uc.ClaimValue == claimValue && uc.ClaimType == claimType);
-            }
-            foreach (var c in claims)
-            {
-                _userClaims.Delete(c);
-            }
+                _userClaims.Delete(user.Id, claim);
+            }).ConfigureAwait(false);
         }
 
         #endregion
 
         #region IUserRoleStore
 
-        public Task AddToRoleAsync(TUserEntity user, string roleName)
+        public async Task AddToRoleAsync(TUserEntity user, string roleName)
         {
             ThrowIfDisposed();
             user.ThrowIfNull(nameof(user));
-            if (String.IsNullOrWhiteSpace(roleName))
+            roleName.ThrowIfNullOrEmpty(nameof(roleName));
+
+            await Task.Run(() =>
             {
-                throw new ArgumentException("Value cannot be null.", "roleName");
-            }
-
-            var roleEntity = _roles.GetEntity(new RoleGetRequest()
-            {
-                Name = roleName
-            });
-
-            if (roleEntity == null)
-            {
-                throw new InvalidOperationException(String.Format("Role not found: {0}", roleName));
-            }
-
-            var ur = new TUserRole { UserId = user.Id, RoleId = roleEntity.Id };
-            _userRoles.Insert(ur);
-
-            return Task.FromResult(0);
+                var roleId = _roles.GetRoleId(roleName);
+                if (!roleId.IsDefault())
+                {
+                    _userRoles.Insert(user.Id, roleId);
+                }
+            }).ConfigureAwait(false);
         }
 
-        public Task RemoveFromRoleAsync(TUserEntity user, string roleName)
+        public async Task RemoveFromRoleAsync(TUserEntity user, string roleName)
         {
             ThrowIfDisposed();
             user.ThrowIfNull(nameof(user));
-            if (String.IsNullOrWhiteSpace(roleName))
-            {
-                throw new ArgumentException("Value cannot be null.", "roleName");
-            }
+            roleName.ThrowIfNullOrEmpty(nameof(roleName));
 
-            var roleEntity = _roles.GetEntity(new RoleGetRequest()
+            await Task.Run(() =>
             {
-                Name = roleName
-            });
-
-            if (roleEntity != null)
-            {
-                var roleId = roleEntity.Id;
-                var userId = user.Id;
-                var userRole = _userRoles.GetEntity(new UserRoleGetRequest<TKey>()
+                var roleId = _roles.GetRoleId(roleName);
+                if (!roleId.IsDefault())
                 {
-                    UserId = userId,
-                    RoleId = roleId
-                });
+                    _userRoles.Delete(user.Id, roleId);
+                }
+            }).ConfigureAwait(false);
+        }
 
-                if (userRole != null)
+        public async Task<IList<string>> GetRolesAsync(TUserEntity user)
+        {
+            ThrowIfDisposed();
+            user.ThrowIfNull(nameof(user));
+
+
+            List<string> roles = _userRoles.FindByUserId(user.Id);
+            {
+                if (roles != null)
                 {
-                    _userRoles.Delete(userRole);
+                    return await Task.FromResult<IList<string>>(roles).ConfigureAwait(false);
                 }
             }
-            return Task.FromResult(0);
+
+            return await Task.FromResult<IList<string>>(null).ConfigureAwait(false);
         }
 
-        public Task<IList<string>> GetRolesAsync(TUserEntity user)
+        public async Task<bool> IsInRoleAsync(TUserEntity user, string roleName)
         {
             ThrowIfDisposed();
             user.ThrowIfNull(nameof(user));
+            roleName.ThrowIfNullOrEmpty(nameof(roleName));
 
-            var userId = user.Id;
-            var userRoles =_userRoles.Get(new UserRoleGetRequest<TKey>()
+            List<string> roles = _userRoles.FindByUserId(user.Id);
             {
-                UserId = userId
-            }).Select(ur=> ur.RoleId).Distinct();
-            var roles = _roles.GetWhereIdIn(userRoles.ToArray()).Select(r=> r.Name);
-            
-            return Task.FromResult(roles as IList<string>);
-        }
-
-        public Task<bool> IsInRoleAsync(TUserEntity user, string roleName)
-        {
-            ThrowIfDisposed();
-            if (user == null)
-            {
-                throw new ArgumentNullException("user");
-            }
-            if (String.IsNullOrWhiteSpace(roleName))
-            {
-                throw new ArgumentException("Value cannot be null or empty", "roleName");
-            }
-            var role = _roles.GetEntity(new RoleGetRequest()
-            {
-                Name = roleName
-            });
-
-            if (role != null)
-            {
-                var userId = user.Id;
-                var roleId = role.Id;
-                return Task.FromResult(_userRoles.Get(new UserRoleGetRequest<TKey>()
+                if (roles != null && roles.Contains(roleName))
                 {
-                    UserId = userId,
-                    RoleId = roleId
-                }).Any());
+                    return await Task.FromResult<bool>(true);
+                }
             }
-            return Task.FromResult(false);
+
+            return await Task.FromResult<bool>(false);
         }
 
         #endregion
@@ -419,7 +368,15 @@ namespace malone.Core.Identity.Dapper.Repositories
         public Task<TUserEntity> FindByEmailAsync(string email)
         {
             ThrowIfDisposed();
-            return GetUserAggregateAsync(u => u.Email.Equals(email));
+            email.ThrowIfNullOrEmpty(nameof(email));
+
+            TUserEntity result = _users.GetUserByEmail(email) as TUserEntity;
+            if (result != null)
+            {
+                return Task.FromResult<TUserEntity>(result);
+            }
+
+            return Task.FromResult<TUserEntity>(null);
         }
 
         #endregion
@@ -550,39 +507,6 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         #endregion
 
-        #region Protected methods
-
-        /// <summary>
-        /// Used to attach child entities to the User aggregate, i.e. Roles, Logins, and Claims
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        protected virtual async Task<TUserEntity> GetUserAggregateAsync(Expression<Func<TUserEntity, bool>> filter)
-        {
-            TKey id;
-            string usernameOrEmail;
-            TUserEntity user = default(TUserEntity);
-            if (FindByIdFilterParser.TryMatchAndGetId(filter, out id))
-            {
-                user = _users.GetById(id);
-            }
-            if (FindByUserNameOrEmailFilterParser.TryMatchAndGetUserNameOrEmail(filter, out usernameOrEmail))
-            {
-                user = _users.GetEntity(new UserGetRequest()
-                {
-                    UserNameOrEmail = usernameOrEmail
-                });
-            }
-            //else
-            //{
-            //    user = await Users.FirstOrDefaultAsync(filter).WithCurrentCulture();
-            //}
-
-            return await Task.FromResult(user);
-        }
-
-        #endregion
-
         #region Private methods
 
         private void CheckLogger(ILogger logger)
@@ -602,58 +526,15 @@ namespace malone.Core.Identity.Dapper.Repositories
         }
 
         // Only call save changes if AutoSaveChanges is true
-        private async Task SaveChanges()
+        private async Task SaveChangesAsync()
         {
-            if (AutoSaveChanges)
+            await Task.Run(() =>
             {
-                await Task.FromResult(Context.SaveChanges());
-            }
-        }
-
-        private bool AreClaimsLoaded(TUserEntity user)
-        {
-            return user.Claims != null;
-        }
-
-        private async Task EnsureClaimsLoaded(TUserEntity user)
-        {
-            if (!AreClaimsLoaded(user))
-            {
-                var userId = user.Id;
-                user.Claims = _userClaims.Get(new UserClaimGetRequest<TKey>()
+                if (AutoSaveChanges)
                 {
-                    UserId = userId
-                }).ToList();
-            }
-            await Task.FromResult(0);
-        }
-
-        //private async Task EnsureRolesLoaded(TUser user)
-        //{
-        //    if (!Context.Entry(user).Collection(u => u.Roles).IsLoaded)
-        //    {
-        //        var userId = user.Id;
-        //        await _userRoles.Where(uc => uc.UserId.Equals(userId)).LoadAsync().WithCurrentCulture();
-        //        Context.Entry(user).Collection(u => u.Roles).IsLoaded = true;
-        //    }
-        //}
-
-        private bool AreLoginsLoaded(TUserEntity user)
-        {
-            return user.Logins != null;
-        }
-
-        private async Task EnsureLoginsLoaded(TUserEntity user)
-        {
-            if (!AreLoginsLoaded(user))
-            {
-                var userId = user.Id;
-                user.Logins = _logins.Get(new UserLoginGetRequest<TKey>
-                {
-                    UserId = userId
-                }).ToList();
-            }
-            await Task.FromResult(0);
+                    Context.SaveChanges();
+                }
+            }).ConfigureAwait(false);
         }
 
         #endregion

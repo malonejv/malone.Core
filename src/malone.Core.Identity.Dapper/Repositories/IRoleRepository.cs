@@ -6,16 +6,17 @@ using System.Linq;
 
 namespace malone.Core.Identity.Dapper.Repositories
 {
-    public interface IRoleRepository<TKey, TEntity> : IRepository<TKey, TEntity>
+    public interface IRoleRepository<TKey, TEntity> : ICustomRepository<TEntity>
         where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
     {
-        IEnumerable<TEntity> GetWhereIdIn(
-           TKey[] ids,
-           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-           bool includeDeleted = false,
-           string includeProperties = "");
-
+        int Delete(TKey roleId);
+        int Insert(TEntity role);
+        string GetRoleName(TKey roleId);
+        TKey GetRoleId(string roleName);
+        TEntity GetRoleById(TKey roleId);
+        TEntity GetRoleByName(string roleName);
+        int Update(TEntity role);
 
     }
 

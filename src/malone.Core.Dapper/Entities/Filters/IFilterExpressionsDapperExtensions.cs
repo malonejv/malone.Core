@@ -21,23 +21,18 @@ namespace malone.Core.Dapper.Entities.Filters
                 {
                     if (parameterAttribute.Name.IsNullOrEmpty())
                         parameterAttribute.Name = propertyInfo.Name;
-
-                    object parameterValue = propertyInfo.GetValue(filter) != propertyInfo.GetType().GetDefault() ? propertyInfo.GetValue(filter) : DBNull.Value;
-                    parameterAttribute.Value = parameterValue;
-
-                    if (!parameterAttribute.IgnoreDbNull || parameterAttribute.Value != DBNull.Value)
-                        parameters.Add(parameterAttribute);
                 }
                 else
                 {
                     parameterAttribute = new ParameterAttribute();
                     parameterAttribute.Name = propertyInfo.Name;
-
-                    object parameterValue = propertyInfo.GetValue(filter) != propertyInfo.GetType().GetDefault() ? propertyInfo.GetValue(filter) : DBNull.Value;
-                    parameterAttribute.Value = parameterValue;
-
-                    parameters.Add(parameterAttribute);
                 }
+
+                object parameterValue = propertyInfo.GetValue(filter) != propertyInfo.GetType().GetDefault() ? propertyInfo.GetValue(filter) : DBNull.Value;
+                parameterAttribute.Value = parameterValue;
+
+                if (!parameterAttribute.IgnoreDbNull || parameterAttribute.Value != DBNull.Value)
+                    parameters.Add(parameterAttribute);
             }
 
             return parameters;
