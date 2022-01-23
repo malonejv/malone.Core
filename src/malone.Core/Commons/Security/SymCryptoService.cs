@@ -1,27 +1,72 @@
-﻿using System;
+﻿//<author>Javier López Malone</author>
+//<date>25/11/2020 02:48:11</date>
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace malone.Core.Commons.Security
 {
+    /// <summary>
+    /// Defines the <see cref="CryptoService" />.
+    /// </summary>
     public class CryptoService : IDisposable
     {
+        /// <summary>
+        /// Defines the KEY_64.
+        /// </summary>
         private const string KEY_64 = "F)H@McQf";
+
+        /// <summary>
+        /// Defines the KEY_128.
+        /// </summary>
         private const string KEY_128 = "nZq4t7w!z%C*F-Ja";
+
+        /// <summary>
+        /// Defines the KEY_192.
+        /// </summary>
         private const string KEY_192 = "Zr4u7x!A%C*F-aNJ7C*7%u5o";
+
+        /// <summary>
+        /// Defines the KEY_256.
+        /// </summary>
         private const string KEY_256 = "jWnZr4u7x!A%D*G-KaPdRgUkXp2s5v8y";
 
-
+        /// <summary>
+        /// Defines the Plus.
+        /// </summary>
         private const char Plus = '+';
+
+        /// <summary>
+        /// Defines the Minus.
+        /// </summary>
         private const char Minus = '-';
+
+        /// <summary>
+        /// Defines the Slash.
+        /// </summary>
         private const char Slash = '/';
+
+        /// <summary>
+        /// Defines the Underscore.
+        /// </summary>
         private const char Underscore = '_';
+
+        /// <summary>
+        /// Defines the EqualSign.
+        /// </summary>
         private const char EqualSign = '=';
+
+        /// <summary>
+        /// Defines the Pipe.
+        /// </summary>
         private const char Pipe = '|';
+
+        /// <summary>
+        /// Defines the _mapper.
+        /// </summary>
         private readonly Dictionary<char, char> _mapper = new Dictionary<char, char>()
     {
         {
@@ -38,6 +83,10 @@ namespace malone.Core.Commons.Security
         }
     };
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CryptoService"/> class.
+        /// </summary>
+        /// <param name="algorithm">The algorithm<see cref="SymmetricAlgorithm"/>.</param>
         public CryptoService(SymmetricAlgorithm algorithm)
         {
             CryptoAlgorithm = algorithm;
@@ -60,9 +109,19 @@ namespace malone.Core.Commons.Security
             }
         }
 
+        /// <summary>
+        /// Gets or sets the CryptoAlgorithm.
+        /// </summary>
         protected SymmetricAlgorithm CryptoAlgorithm { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Encoder.
+        /// </summary>
         public Encoding Encoder { get; set; }
 
+        /// <summary>
+        /// Gets the Key64.
+        /// </summary>
         public byte[] Key64
         {
             get
@@ -71,6 +130,9 @@ namespace malone.Core.Commons.Security
             }
         }
 
+        /// <summary>
+        /// Gets the Key128.
+        /// </summary>
         public byte[] Key128
         {
             get
@@ -79,6 +141,9 @@ namespace malone.Core.Commons.Security
             }
         }
 
+        /// <summary>
+        /// Gets the Key192.
+        /// </summary>
         public byte[] Key192
         {
             get
@@ -87,6 +152,9 @@ namespace malone.Core.Commons.Security
             }
         }
 
+        /// <summary>
+        /// Gets the Key256.
+        /// </summary>
         public byte[] Key256
         {
             get
@@ -95,6 +163,12 @@ namespace malone.Core.Commons.Security
             }
         }
 
+        /// <summary>
+        /// The Encrypt.
+        /// </summary>
+        /// <param name="plainText">The plainText<see cref="string"/>.</param>
+        /// <param name="escapedOutput">The escapedOutput<see cref="bool"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public string Encrypt(string plainText, bool escapedOutput = true)
         {
             string result = null;
@@ -127,6 +201,12 @@ namespace malone.Core.Commons.Security
             return result;
         }
 
+        /// <summary>
+        /// The Decrypt.
+        /// </summary>
+        /// <param name="base64CipherText">The base64CipherText<see cref="string"/>.</param>
+        /// <param name="escapedInput">The escapedInput<see cref="bool"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public string Decrypt(string base64CipherText, bool escapedInput = true)
         {
             string plaintext = null;
@@ -158,6 +238,11 @@ namespace malone.Core.Commons.Security
             return plaintext;
         }
 
+        /// <summary>
+        /// The EncryptFile.
+        /// </summary>
+        /// <param name="inName">The inName<see cref="string"/>.</param>
+        /// <param name="outName">The outName<see cref="string"/>.</param>
         public void EncryptFile(string inName, string outName)
         {
             byte[] salt = Key256;
@@ -195,6 +280,11 @@ namespace malone.Core.Commons.Security
             }
         }
 
+        /// <summary>
+        /// The DecryptFile.
+        /// </summary>
+        /// <param name="inName">The inName<see cref="string"/>.</param>
+        /// <param name="outName">The outName<see cref="string"/>.</param>
         public void DecryptFile(string inName, string outName)
         {
             byte[] passwordBytes = Key128;
@@ -243,18 +333,33 @@ namespace malone.Core.Commons.Security
             }
         }
 
+        /// <summary>
+        /// The Create3DES.
+        /// </summary>
+        /// <returns>The <see cref="CryptoService"/>.</returns>
         public static CryptoService Create3DES()
         {
             return new CryptoService(new TripleDESCryptoServiceProvider());
         }
 
+        /// <summary>
+        /// The CreateAES.
+        /// </summary>
+        /// <returns>The <see cref="CryptoService"/>.</returns>
         public static CryptoService CreateAES()
         {
             return new CryptoService(new AesCryptoServiceProvider());
         }
 
+        /// <summary>
+        /// Defines the disposedValue.
+        /// </summary>
         private bool disposedValue;
 
+        /// <summary>
+        /// The Dispose.
+        /// </summary>
+        /// <param name="disposing">The disposing<see cref="bool"/>.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -266,10 +371,12 @@ namespace malone.Core.Commons.Security
             disposedValue = true;
         }
 
+        /// <summary>
+        /// The Dispose.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
         }
     }
-
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using malone.Core.AdoNet.Parameters;
 
 namespace malone.Core.AdoNet.Attributes
 {

@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//<author>Javier López Malone</author>
+//<date>25/11/2020 02:48:04</date>
 
 namespace malone.Core.Commons.Localization
 {
+    /// <summary>
+    /// Defines the CoreContents.
+    /// </summary>
     internal enum CoreContents
     {
-
-        #region Logging
-
         /// <summary>
         /// Support Id
         /// </summary>
         Logging_SupportId = 1
-
-        #endregion
     }
 }

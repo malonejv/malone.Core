@@ -1,13 +1,13 @@
-﻿using System.Data;
-using malone.Core.AdoNet.Repositories;
+﻿using malone.Core.AdoNet.Repositories;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.Sample.AdoNet.Firebird.Middle.EL.Model;
+using System.Data;
 
 namespace malone.Core.Sample.AdoNet.Firebird.Middle.DAL.Repositories
 {
-    public class TodoListRepository : AdoNetRepository<TodoList>
+    public class TodoListRepository : Repository<TodoList>
     {
         public TodoListRepository(IContext context, ILogger logger) : base(context, logger)
         {

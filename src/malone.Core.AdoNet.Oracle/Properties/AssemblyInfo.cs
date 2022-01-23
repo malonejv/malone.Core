@@ -1,13 +1,10 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-//[assembly: AssemblyTitle("malone.Core.AdoNet.Oracle")]
 [assembly: AssemblyDescription("Esta librería provee una estructura de clases que extiende malone.Core para implentar el acceso a datos con AdoNet y un cliente Oracle")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("malone.Core.AdoNet.Oracle")]
 [assembly: AssemblyCulture("")]
 

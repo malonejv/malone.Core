@@ -1,5 +1,6 @@
 ﻿using malone.Core.Identity.EntityFramework;
 using malone.Core.Identity.EntityFramework.Entities;
+using malone.Core.Sample.EF.SqlServer.Middle.DAL.Context;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -15,8 +16,8 @@ namespace malone.Core.Sample.EF.SqlServer.mvc
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
-            //app.CreatePerOwinContext(ApplicationDbContext.Create);
-            app.CreatePerOwinContext<UserBusinessComponent>(UserBusinessComponent.Create);
+            app.CreatePerOwinContext(SampleContext.Create);
+            app.CreatePerOwinContext<UserBusinessComponent>(UserBusinessComponent.CreateAndConfigure);
             app.CreatePerOwinContext<SignInBusinessComponent>(SignInBusinessComponent.Create);
 
             // Enable the application to use a cookie to store information for the signed in user
@@ -36,7 +37,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc
                         getUserIdCallback: claims => claims.GetUserId<int>()
                     )
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.

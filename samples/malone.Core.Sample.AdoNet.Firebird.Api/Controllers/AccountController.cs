@@ -1,6 +1,6 @@
-﻿using malone.Core.Identity.EntityFramework;
-using malone.Core.Identity.EntityFramework.Entities;
-using malone.Core.Sample.Api.Models;
+﻿//using malone.Core.Identity.EntityFramework;
+//using malone.Core.Identity.EntityFramework.Entities;
+using malone.Core.Sample.AdoNet.Firebird.Api.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace malone.Core.Sample.Api.Controllers
+namespace malone.Core.Sample.AdoNet.Firebird.Api.Controllers
 {
     [Authorize]
     public class AccountController : Controller
@@ -21,21 +21,13 @@ namespace malone.Core.Sample.Api.Controllers
         {
         }
 
-        public AccountController(UserBusinessComponent userManager, SignInBusinessComponent signInManager )
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
         public SignInBusinessComponent SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<SignInBusinessComponent>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
+                if (_signInManager == null)
+                    _signInManager = HttpContext.GetOwinContext().Get<SignInBusinessComponent>();
+                return _signInManager;
             }
         }
 
@@ -43,11 +35,9 @@ namespace malone.Core.Sample.Api.Controllers
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<UserBusinessComponent>();
-            }
-            private set
-            {
-                _userManager = value;
+                if (_userManager == null)
+                    _userManager = HttpContext.GetOwinContext().Get<UserBusinessComponent>();
+                return _userManager;
             }
         }
 

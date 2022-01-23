@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>malone.Core</RootNamespace>
     <AssemblyName>malone.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -57,35 +57,63 @@
     <PlatformTarget>x64</PlatformTarget>
     <OutputPath>bin\x64\Release\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseNuget|AnyCPU'">
-    <OutputPath>bin\ReleaseNuget\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugNuget|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DebugNuget\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseNuget|x86'">
-    <OutputPath>bin\x86\ReleaseNuget\</OutputPath>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugNuget|x86'">
+    <OutputPath>bin\x86\DebugNuget\</OutputPath>
     <PlatformTarget>x86</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseNuget|x64'">
-    <OutputPath>bin\x64\ReleaseNuget\</OutputPath>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugNuget|x64'">
+    <OutputPath>bin\x64\DebugNuget\</OutputPath>
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugNuget|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DebugNuget\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\Debug\malone.Core.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugNuget|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\DebugNuget\</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugNuget|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\DebugNuget\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.Base, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Configuration.ConfigurationBuilders.Base.2.0.0\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.Environment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Configuration.ConfigurationBuilders.Environment.2.0.0\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.Environment.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -129,13 +157,14 @@
     <Compile Include="Commons\Exceptions\CoreExceptionFactory.cs" />
     <Compile Include="Commons\Exceptions\ExceptionFactory.cs" />
     <Compile Include="Commons\Exceptions\IErrorLocalizationHandler.cs" />
-    <Compile Include="Commons\Helpers\Extensions\DataRowExtensions.cs" />
-    <Compile Include="Commons\Helpers\Extensions\TypeExtensions.cs" />
+    <Compile Include="Commons\Extensions\DataRowExtensions.cs" />
+    <Compile Include="Commons\Extensions\ObjectExtensions.cs" />
+    <Compile Include="Commons\Extensions\TypeExtensions.cs" />
     <Compile Include="Commons\Localization\CoreContents.cs" />
     <Compile Include="Commons\Localization\CoreLocalizationHandler.cs" />
     <Compile Include="Commons\Localization\IContentLocalizationHandler.cs" />
     <Compile Include="Commons\Exceptions\TechnicalException.cs" />
-    <Compile Include="Commons\Helpers\Extensions\DateRangeExtensions.cs" />
+    <Compile Include="Commons\Extensions\DateRangeExtensions.cs" />
     <Compile Include="Commons\Initializers\AppInitializer.cs" />
     <Compile Include="Commons\Initializers\IInitializer.cs" />
     <Compile Include="Commons\Initializers\IInjectorInitializer.cs" />
@@ -149,12 +178,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.resx</DependentUpon>
     </Compile>
-    <Compile Include="Commons\Helpers\Extensions\ByteArrayExtensions.cs" />
-    <Compile Include="Commons\Helpers\Extensions\CharExtensions.cs" />
-    <Compile Include="Commons\Helpers\Extensions\EnumExtensions.cs" />
-    <Compile Include="Commons\Helpers\Extensions\StringExtensions.cs" />
+    <Compile Include="Commons\Extensions\ByteArrayExtensions.cs" />
+    <Compile Include="Commons\Extensions\CharExtensions.cs" />
+    <Compile Include="Commons\Extensions\EnumExtensions.cs" />
+    <Compile Include="Commons\Extensions\StringExtensions.cs" />
     <Compile Include="Commons\Helpers\Threading\AsyncHelper.cs" />
-    <Compile Include="Commons\Helpers\Threading\TaskExtensions.cs" />
+    <Compile Include="Commons\Extensions\TaskExtensions.cs" />
     <Compile Include="Commons\Initializers\IModuleInitializer.cs" />
     <Compile Include="Commons\Localization\Resources\Contents.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -175,7 +204,9 @@
     <Compile Include="Commons\Security\SymCryptoService.cs" />
     <Compile Include="Commons\Security\SymCryptoServiceFactory.cs" />
     <Compile Include="DataAccess\Context\IContext.cs" />
+    <Compile Include="DataAccess\Repositories\ICustomRepository.cs" />
     <Compile Include="DataAccess\Repositories\IRepository.cs" />
+    <Compile Include="DataAccess\Repositories\IBaseRepository.cs" />
     <Compile Include="DataAccess\UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="DataAccess\UnitOfWork\UnitOfWork.cs" />
     <Compile Include="DataAccess\ServiceAgents\IServiceAgent.cs" />
@@ -193,7 +224,7 @@
     <Compile Include="Resources\Exceptions.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commons\Helpers\Attributes\" />
+    <Folder Include="Commons\Attributes\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -219,7 +250,12 @@
     <EmbeddedResource Include="Resources\Exceptions.resx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="capibara.png" />
     <Content Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
+    <Analyzer Include="..\..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GetAssemblyVersion">
@@ -227,18 +263,12 @@
       <Output TaskParameter="Assemblies" ItemName="ProjAssemblyInfo" />
     </GetAssemblyIdentity>
     <PropertyGroup>
-      <Pattern>(\d+)\.(\d+)\.(\d+)</Pattern>
+      <Pattern>(\d+)\.(\d+)\.(\d+).(\d+)</Pattern>
       <In>%(ProjAssemblyInfo.Version)</In>
       <OutVersion>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern)))</OutVersion>
     </PropertyGroup>
-    <PropertyGroup>
-      <Year>$([System.DateTime]::Now.ToString("yy"))</Year>
-      <Month>$([System.DateTime]::Now.ToString("MM"))</Month>
-      <Date>$([System.DateTime]::Now.ToString("dd"))</Date>
-      <Time>$([System.DateTime]::Now.ToString("HHmm"))</Time>
-    </PropertyGroup>
     <ItemGroup>
-      <VersionNumber Include="$(OutVersion).$(Year)$(Month)$(Date)$(Time)" />
+      <VersionNumber Include="$(OutVersion)" />
     </ItemGroup>
   </Target>
   <Target Name="GetSemVer">
@@ -274,10 +304,11 @@
 		echo   MALONE_CORE_VER: @(SemVer)
 	)&gt;"variables"
 	)
-if $(ConfigurationName) == ReleaseNuget (
-	nuget pack "$(ProjectPath)" -Properties Configuration=ReleaseNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-	nuget push -SkipDuplicate -source "github"
-)</PostBuildEvent>
+    if $(ConfigurationName) == DebugNuget (
+    nuget pack "$(ProjectPath)" -Suffix dev -Properties Configuration=DebugNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+    xcopy "$(TargetDir)$(TargetName)*.*nupkg" "..\..\..\..\..\malone.Core.DevLocalNugets" /SY
+	del "$(TargetDir)$(TargetName)*.*nupkg" /Q
+    )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -2,7 +2,7 @@
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
 using Unity;
 
-namespace malone.Core.Sample.DI
+namespace malone.Core.Sample.EF.SqlServer.DI
 {
     public class EntitiesLayerInitializer : IInitializer<IUnityContainer>
     {

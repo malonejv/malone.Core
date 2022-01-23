@@ -352,3 +352,10 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 /src/malone.Core/[Vv]ariables.txt
+/resources/MDB-Free_4.19.1
+
+**/*.bak
+
+# Ignore project
+samples/ErgaOmnes.Api/
+samples/ErgaOmnes.Core/

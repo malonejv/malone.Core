@@ -2,7 +2,7 @@
 using malone.Core.Commons.Initializers;
 using Unity;
 
-namespace malone.Core.Sample.DI
+namespace malone.Core.Sample.EF.SqlServer.DI
 {
     public class SampleInitializer : LayersInitializer<IUnityContainer>
     {
@@ -19,7 +19,8 @@ namespace malone.Core.Sample.DI
                     new CommonLayerInitializer(),
                     new EntitiesLayerInitializer(),
                     new DataAccessLayerInitializer(),
-                    new BusinessLayerInitializer()
+                    new BusinessLayerInitializer(),
+                    new ServiceLayerInitializer()
               };
             }
         }

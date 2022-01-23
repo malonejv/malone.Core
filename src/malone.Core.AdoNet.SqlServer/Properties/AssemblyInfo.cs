@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
@@ -7,7 +6,6 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 //[assembly: AssemblyTitle("malone.Core.AdoNet.SqlServer")]
 [assembly: AssemblyDescription("Esta librería provee una estructura de clases que extiende malone.Core para implentar el acceso a datos con AdoNet y un cliente SqlServer.")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("malone.Core.AdoNet.SqlServer")]
 [assembly: AssemblyCulture("")]
 

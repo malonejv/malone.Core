@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.Entities.Model;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 
 namespace malone.Core.Identity.EntityFramework.Entities
 {
@@ -17,7 +12,7 @@ namespace malone.Core.Identity.EntityFramework.Entities
 
     public class CoreUserRole : CoreUserRole<int>
     {
-        public CoreUserRole():base() { }
+        public CoreUserRole() : base() { }
 
     }
 }

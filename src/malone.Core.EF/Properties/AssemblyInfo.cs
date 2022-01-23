@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
@@ -7,7 +6,6 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 //[assembly: AssemblyTitle("malone.Core.EF")]
 [assembly: AssemblyDescription("Esta librería provee una estructura de clases base para administrar operaciones CRUD e integrar con un repositorio de datos con Entity Framework.")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("malone.Core.EF")]
 [assembly: AssemblyCulture("")]
 

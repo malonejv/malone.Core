@@ -1,14 +1,12 @@
-﻿using System;
+﻿using malone.Core.Identity.Dapper.Business;
+using malone.Core.Sample.AdoNet.SqlServer.mvc.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using malone.Core.Sample.AdoNet.SqlServer.mvc.Models;
-using malone.Core.Identity.EntityFramework;
-using malone.Core.Sample.AdoNet.SqlServer.CL.Exceptions;
 
 namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
 {
@@ -22,21 +20,13 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
         {
         }
 
-        public ManageController(UserBusinessComponent userManager, SignInBusinessComponent signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
         public SignInBusinessComponent SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<SignInBusinessComponent>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
+                if (_signInManager == null)
+                    _signInManager = HttpContext.GetOwinContext().Get<SignInBusinessComponent>();
+                return _signInManager;
             }
         }
 
@@ -44,11 +34,9 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<UserBusinessComponent>();
-            }
-            private set
-            {
-                _userManager = value;
+                if (_userManager == null)
+                    _userManager = HttpContext.GetOwinContext().Get<UserBusinessComponent>();
+                return _userManager;
             }
         }
 
@@ -63,6 +51,7 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.ChangeUserNameSuccess ? "Your username has been set."
                 : "";
 
             var userId = User.Identity.GetUserId<int>();
@@ -216,6 +205,37 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
         }
 
         //
+        // GET: /Manage/ChangeUserName
+        public ActionResult ChangeUserName()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/ChangeUserName
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeUserName(ChangeUserNameViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userId = User.Identity.GetUserId<int>();
+            var user = await UserManager.FindByIdAsync(userId);
+            user.UserName = model.UserName;
+
+            var result = await UserManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangeUserNameSuccess });
+            }
+            AddErrors(result);
+            return View(model);
+        }
+
+        //
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
@@ -335,7 +355,7 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -379,6 +399,7 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
         {
             AddPhoneSuccess,
             ChangePasswordSuccess,
+            ChangeUserNameSuccess,
             SetTwoFactorSuccess,
             SetPasswordSuccess,
             RemoveLoginSuccess,
@@ -386,6 +407,6 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

@@ -1,16 +1,15 @@
 ﻿using System;
+using malone.Core.Entities.Model;
 
 namespace malone.Core.Identity.AdoNet.Entities
 {
-    public class CoreUserClaim<TKey> 
+    public class CoreUserClaim<TKey> : IBaseEntity<TKey>
         where TKey : IEquatable<TKey>
     {
-        public CoreUserClaim() { }
-
         /// <summary>
         ///     Primary key
         /// </summary>
-        public virtual int Id { get; set; }
+        public virtual TKey Id { get; set; }
 
         /// <summary>
         ///     User Id for the user who owns this login
@@ -26,10 +25,11 @@ namespace malone.Core.Identity.AdoNet.Entities
         ///     Claim value
         /// </summary>
         public virtual string ClaimValue { get; set; }
+
     }
 
-    public class CoreUserClaim : CoreUserClaim<int>
+    public class CoreUserClaim : CoreUserClaim<int>, IBaseEntity
     {
-        public CoreUserClaim():base() { }
+        public CoreUserClaim() : base() { }
     }
 }

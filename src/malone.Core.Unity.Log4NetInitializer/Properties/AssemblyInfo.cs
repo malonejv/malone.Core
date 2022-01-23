@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
@@ -7,7 +6,6 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 //[assembly: AssemblyTitle("malone.Core.Unity.Log4NetInitializer")]
 [assembly: AssemblyDescription("Esta librería provee clases inicalización de módulo de malone.Core para Log4Net con Unity")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("malone.Core.Unity.Log4NetInitializer")]
 [assembly: AssemblyCulture("")]
 

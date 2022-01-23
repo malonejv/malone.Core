@@ -1,0 +1,50 @@
+﻿@model malone.Core.Sample.EF.Firebird.Middle.EL.Model.TodoList
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+    <div>
+        <h2>Eliminar&nbsp;<span class="text-muted">lista</span></h2>
+        <hr />
+        <br />
+        <h4>Estas seguro de que quieres eliminar la lista?</h4>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+
+            <dd>
+                @if (Model.Date.HasValue)
+                {
+                    @Html.DisplayFor(model => model.Date);
+                }
+                else
+                {
+                    <span> -- </span>
+                }
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <a href="@Url.Action("Index")" class="btn btn-outline-secondary">Volver</a>
+                    <input type="submit" value="Eliminar" class="btn btn-primary" />
+
+                </div>
+            </div>
+        }
+    </div>

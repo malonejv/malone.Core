@@ -1,5 +1,5 @@
-﻿using malone.Core.Identity;
-using malone.Core.Identity.EntityFramework.Entities;
+﻿using malone.Core.Identity.EntityFramework.Entities;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 
 namespace malone.Core.Identity.EntityFramework.Business
@@ -13,11 +13,10 @@ namespace malone.Core.Identity.EntityFramework.Business
         where TUserEntity : CoreUser<TKey, TUserLogin, TUserRole, TUserClaim>
         where TUserBC : UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>
     {
-        TUserBC UserBC { get; set; }
         IEmailMessageService EmailService { get; set; }
         ISmsMessageService SmsService { get; set; }
 
-        void ConfigureUserManager();
+        void ConfigureUserManager(TUserBC userBusinessComponent, IdentityFactoryOptions<UserBusinessComponent> options);
     }
 
     public interface IUserManagerConfiguration : IUserManagerConfiguration<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim, UserBusinessComponent>

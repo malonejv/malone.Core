@@ -1,9 +1,9 @@
 ﻿using malone.Core.Entities.Model;
+using malone.Core.Identity.EntityFramework.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Resources;
 
 namespace malone.Core.Sample.EF.SqlServer.Middle.EL.Model
 {
@@ -25,5 +25,7 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.EL.Model
 
         [DisplayName("Eliminado")]
         public bool IsDeleted { get; set; }
+
+        public CoreUser User { get; set; }
     }
 }

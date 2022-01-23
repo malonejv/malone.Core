@@ -1,4 +1,5 @@
 ﻿using malone.Core.Commons.Helpers.Threading;
+using malone.Core.Commons.Threading;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System;
@@ -18,7 +19,7 @@ namespace malone.Core.Identity
         /// <returns></returns>
         public static async Task<bool> TwoFactorBrowserRememberedAsync<TKey>(this IAuthenticationManager manager,
             TKey userId)
-            where TKey : IEquatable<TKey>,IConvertible
+            where TKey : IEquatable<TKey>, IConvertible
         {
             if (manager == null)
             {

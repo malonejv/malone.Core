@@ -1,0 +1,81 @@
+﻿@using malone.Core.Sample.EF.Firebird.mvc.Resources;
+@using malone.Core.Sample.EF.Firebird.mvc.Attributes;
+@{
+
+    //var errorMessage = ViewBag.ErrorMessage;
+    var errorMessage = (ErrorMessage)Session["ErrorMessage"];
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Orgnzr</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-blue">
+        @Html.ActionLink("Orgnzr", "Index", "List", new { area = "" }, new { @class = "navbar-brand" })
+        <button class="navbar-toggler font-white" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+            </svg>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarMenu">
+            <ul class="navbar-nav mr-auto">
+                <li class="navbar-item">@Html.ActionLink("Listas", "Index", "List", null, new { @class = "nav-link" })</li>
+            </ul>
+            @Html.Partial("_LoginPartial")
+        </div>
+        @if (errorMessage != null)
+        {
+            <div id="messageWrapper">
+                <div class="alert alert-danger alert-dismissible fade in show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <div class="text-danger text-bold alert-heading">
+                        <strong>@errorMessage.Header</strong>
+                        @if (errorMessage.Paragraphs.Count == 1)
+                        {
+                            <small>@errorMessage.Paragraphs[0]</small>
+                        }
+                    </div>
+                    @if (errorMessage.Paragraphs.Count > 1)
+                    {
+                        <ul>
+                            @foreach (var paragraph in errorMessage.Paragraphs)
+                            {
+                            <li class='text-@errorMessage.Status'>
+                                @paragraph
+                            </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+            Session.Remove("ErrorMessage");
+        }
+        else
+        {
+            <div id="messageWrapper" class="d-none">
+            </div>
+        }
+        <div id="loadingWrapper" class="d-none">
+            <span class="gray-loading"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>&nbsp;@ViewTexts.Layout_Cargando</span>
+        </div>
+    </nav>
+    <div class="body-content pt-1 pb-1 pt-md-2 pb-md-2 pt-lg-3 pb-lg-3 pt-xl-4 pb-xl-4">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </div>
+    <footer>
+        <hr />
+        <p>&copy; @DateTime.Now.Year - Orgnzr</p>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

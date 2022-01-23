@@ -1,34 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace malone.Core.Sample.AdoNet.SqlServer.Middle.CL.Exceptions
+﻿namespace malone.Core.Sample.AdoNet.SqlServer.Middle.CL.Exceptions
 {
-    public enum ErrorCodes
+    public enum ErrorCode
     {
-        #region GeneralErrors 1000 - 1099
-        E1000 = 1000,
-        #endregion
 
-        #region Presentation Errors 1100 - 1199
+        #region Technical Errors 1000 - 2999
 
-        #endregion
-
-        #region ServiceErrors 1200 - 1299
-
-        #endregion
-
-        #region BusinessErrors 1300 - 1399
         /// <summary>
-        /// Nombre Repetido
+        /// Technical error description
         /// </summary>
-        E1300 = 1300
-        #endregion
-
-        #region DataAccessErrors 1400 - 1479
+        TECH1000 = 1,
 
         #endregion
+
+        #region Services Errors 3000 - 3999
+
+        /// <summary>
+        /// Service error description
+        /// </summary>
+        SERVICE3000 = 3000,
+
+        #endregion
+
+        #region Business Errors 4000 - 4999
+        /// <summary>
+        /// Business error description
+        /// </summary>
+        BUSINESS4000 = 4000,
+
+        #endregion
+
+        #region Business Validations Errors 5000 - 5999
+
+        /// <summary>
+        /// ValidarCaracteresEspeciales
+        /// </summary>
+        BUSVAL5000 = 5000,
+
+        /// <summary>
+        /// ValidarNombreRepetido
+        /// </summary>
+        BUSVAL5001 = 5001,
+
+        #endregion
+
+        #region Data Access Errors 6000 - 6999
+
+        /// <summary>
+        /// Data access error description
+        /// </summary>
+        DATAACCESS6000 = 6000,
+
+        #endregion
+
+        #region Service Agent Errors 7000 - 7999
+
+        /// <summary>
+        /// Se produjo un error en la llamada al servicio {0}.
+        /// </summary>
+        SERVAG7000 = 7000
+
+        #endregion
+
+
     }
 }

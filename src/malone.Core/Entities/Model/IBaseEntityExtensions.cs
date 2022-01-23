@@ -1,15 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//<author>Javier López Malone</author>
+//<date>25/11/2020 02:48:17</date>
+
+using System;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace malone.Core.Entities.Model
 {
+    /// <summary>
+    /// Defines the <see cref="IBaseEntityExtensions" />.
+    /// </summary>
     public static class IBaseEntityExtensions
     {
+        /// <summary>
+        /// The Clone.
+        /// </summary>
+        /// <typeparam name="TEntity">.</typeparam>
+        /// <typeparam name="TKey">.</typeparam>
+        /// <param name="entityToClone">The entityToClone<see cref="TEntity"/>.</param>
+        /// <returns>The <see cref="TEntity"/>.</returns>
         public static TEntity Clone<TEntity, TKey>(this TEntity entityToClone)
             where TKey : IEquatable<TKey>
             where TEntity : class, IBaseEntity<TKey>

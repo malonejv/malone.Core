@@ -16,7 +16,7 @@ namespace malone.Core.Sample.AdoNet.Firebird.DI
         public void Initialize(IUnityContainer container)
         {
             //Context
-            container.RegisterType<IContext, SampleAdoNetContext>(new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
+            container.RegisterType<IContext, SampleContext>(new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
             //            container.RegisterType<EFIdentityDbContext, SampleEFContext>(new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
             //            container.RegisterType<IDatabaseInitializer<SampleEFContext>, SampleContextInitializer>();
 
@@ -30,7 +30,7 @@ namespace malone.Core.Sample.AdoNet.Firebird.DI
 
             //Repositories
             container.RegisterType<IRepository<TodoList>, TodoListRepository>();
-            container.RegisterType<IRepository<TaskItem>, AdoNetRepository<TaskItem>>();
+            container.RegisterType<IRepository<TaskItem>, Repository<TaskItem>>();
 
             //container.RegisterType<IRoleStore<CoreRole, int>, RoleRepository<EFIdentityDbContext>>();
             //container.RegisterType<IUserStore<CoreUser, int>, UserRepository<EFIdentityDbContext>>();

@@ -1,5 +1,5 @@
-﻿using malone.Core.Identity.EntityFramework;
-using malone.Core.Identity.EntityFramework.Entities;
+﻿using malone.Core.Identity.Dapper.Business;
+using malone.Core.Identity.Dapper.Entities;
 using malone.Core.Sample.AdoNet.SqlServer.mvc.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -21,21 +21,13 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
         {
         }
 
-        public AccountController(UserBusinessComponent userManager, SignInBusinessComponent signInManager )
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
         public SignInBusinessComponent SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<SignInBusinessComponent>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
+                if (_signInManager == null)
+                    _signInManager = HttpContext.GetOwinContext().Get<SignInBusinessComponent>();
+                return _signInManager;
             }
         }
 
@@ -43,11 +35,9 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<UserBusinessComponent>();
-            }
-            private set
-            {
-                _userManager = value;
+                if (_userManager == null)
+                    _userManager = HttpContext.GetOwinContext().Get<UserBusinessComponent>();
+                return _userManager;
             }
         }
 
@@ -74,7 +64,11 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            SignInStatus result;
+
+            result = await SignInManager.PasswordUserNameOrEmailSignInAsync(model.UserNameOrEmail, model.Password, model.RememberMe, shouldLockout: false);
+
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -119,7 +113,7 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -150,19 +144,22 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new CoreUser { UserName = model.Email, Email = model.Email };
+                var user = new CoreUser { UserName = model.UserName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    //return RedirectToAction("Index", "List");
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    code = HttpUtility.UrlEncode(code);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("SuccessfullRegistration", "Account");
                 }
                 AddErrors(result);
             }
@@ -172,14 +169,23 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
         }
 
         //
+        // GET: /Account/Register
+        [AllowAnonymous]
+        public ActionResult SuccessfullRegistration()
+        {
+            return View();
+        }
+
+        //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(int userId, string code)
         {
-            if (userId == null || code == null)
+            if (userId == default(int) || code == null)
             {
                 return View("Error");
             }
+            code = HttpUtility.UrlDecode(code);
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
@@ -201,7 +207,7 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await UserManager.FindByEmailAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -210,10 +216,11 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                code = HttpUtility.UrlEncode(code);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -247,13 +254,14 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
             {
                 return View(model);
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
+            var user = await UserManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            var code = HttpUtility.UrlDecode(model.Code);
+            var result = await UserManager.ResetPasswordAsync(user.Id, code, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
@@ -391,7 +399,7 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "List");
         }
 
         //
@@ -448,7 +456,7 @@ namespace malone.Core.Sample.AdoNet.SqlServer.mvc.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "List");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

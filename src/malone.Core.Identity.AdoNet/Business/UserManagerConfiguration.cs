@@ -1,5 +1,6 @@
 ﻿using malone.Core.Identity;
-using malone.Core.Identity.AdoNet.Entities;
+using malone.Core.Identity.EntityFramework.Business;
+using malone.Core.Sample.AdoNet.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security.DataProtection;
@@ -17,7 +18,6 @@ namespace malone.Core.Identity.AdoNet.Business
         where TUserBC : UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>
     {
         public UserManagerConfiguration(
-            TUserBC userBusinessComponent,
             IEmailMessageService emailMessageService,
             ISmsMessageService smsMessageService,
             IIdentityValidator<TUserEntity> userValidator,
@@ -25,71 +25,77 @@ namespace malone.Core.Identity.AdoNet.Business
             )
             : base()
         {
-            UserBC = userBusinessComponent;
             EmailService = emailMessageService;
             SmsService = smsMessageService;
             UserValidator = userValidator;
             PasswordValidator = passwordValidator;
         }
 
-        public TUserBC UserBC { get; set; }
         public IEmailMessageService EmailService { get; set; }
         public ISmsMessageService SmsService { get; set; }
         public IIdentityValidator<TUserEntity> UserValidator { get; set; }
         public IIdentityValidator<string> PasswordValidator { get; set; }
 
-        public virtual void ConfigureUserManager()
+        public virtual void ConfigureUserManager(TUserBC userBusinessComponent, IdentityFactoryOptions<UserBusinessComponent> options)
         {
+            if (userBusinessComponent == null) throw new ArgumentNullException(nameof(userBusinessComponent));
 
-            UserBC.EmailService = EmailService;
+            var dataProtectionProvider = options.DataProtectionProvider;
 
-            UserBC.SmsService = SmsService;
+            if (dataProtectionProvider != null)
+            {
+
+                //var provider = new DpapiDataProtectionProvider();
+                //var entropy = "D4151DA419C4691E";
+                //userBusinessComponent.UserTokenProvider = new DataProtectorTokenProvider<TUserEntity, TKey>(provider.Create(entropy))
+                //{
+                //    TokenLifespan = TimeSpan.FromDays(1)
+                //};
+                
+                var tokenProvider = TokenProvider<TKey, TUserEntity, TUserLogin, TUserRole, TUserClaim>.Provider;
+                userBusinessComponent.UserTokenProvider = tokenProvider;
+            }
+
+            userBusinessComponent.EmailService = EmailService;
+            userBusinessComponent.SmsService = SmsService;
 
             //OPTION: Agregar todas estas configuraciones en el web.config
 
             // Configure validation logic for usernames
-            UserBC.UserValidator = UserValidator;
+            userBusinessComponent.UserValidator = UserValidator;
 
             // Configure validation logic for passwords
-            UserBC.PasswordValidator = PasswordValidator;
+            userBusinessComponent.PasswordValidator = PasswordValidator;
 
             // Configure user lockout defaults
-            UserBC.UserLockoutEnabledByDefault = true;
-            UserBC.DefaultAccountLockoutTimeSpan = TimeSpan.FromDays(365 * 100); //Tiempo que queda bloqueado 
-            UserBC.MaxFailedAccessAttemptsBeforeLockout = 5;
+            userBusinessComponent.UserLockoutEnabledByDefault = true;
+            userBusinessComponent.DefaultAccountLockoutTimeSpan = TimeSpan.FromDays(365 * 100); //Tiempo que queda bloqueado 
+            userBusinessComponent.MaxFailedAccessAttemptsBeforeLockout = 5;
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
             // You can write your own provider and plug it in here.
-            UserBC.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<TUserEntity, TKey>
+            userBusinessComponent.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<TUserEntity, TKey>
             {
                 MessageFormat = "Your security code is {0}"
             });
 
-            UserBC.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<TUserEntity, TKey>
+            userBusinessComponent.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<TUserEntity, TKey>
             {
                 Subject = "Security Code",
                 BodyFormat = "Your security code is {0}"
             });
 
-            //TODO: Revisar
-
-            var provider = new DpapiDataProtectionProvider("Sample");
-            var entropy = "D4151DA419C4691E";
-            UserBC.UserTokenProvider = new DataProtectorTokenProvider<TUserEntity, TKey>(provider.Create(entropy))
-            {
-                TokenLifespan = TimeSpan.FromDays(1)
-            };
         }
     }
+
     public class UserManagerConfiguration : UserManagerConfiguration<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim, UserBusinessComponent>, IUserManagerConfiguration
     {
         public UserManagerConfiguration(
-            UserBusinessComponent userBusinessComponent,
             IEmailMessageService emailMessageService,
             ISmsMessageService smsMessageService,
             IIdentityValidator<CoreUser> userValidator,
             IIdentityValidator<string> passwordValidator)
-            : base(userBusinessComponent, emailMessageService, smsMessageService, userValidator, passwordValidator)
+            : base(emailMessageService, smsMessageService, userValidator, passwordValidator)
         {
         }
     }

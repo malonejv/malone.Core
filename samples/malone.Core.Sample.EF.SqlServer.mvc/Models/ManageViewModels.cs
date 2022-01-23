@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace malone.Core.Sample.EF.SqlServer.mvc.Models
 {
@@ -37,6 +37,13 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Models
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class ChangeUserNameViewModel
+    {
+        [Required]
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
     }
 
     public class ChangePasswordViewModel

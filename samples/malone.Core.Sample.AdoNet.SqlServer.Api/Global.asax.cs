@@ -1,24 +1,34 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using malone.Core.Commons.Initializers;
+using malone.Core.Sample.AdoNet.SqlServer.Api;
+using malone.Core.Sample.AdoNet.SqlServer.Middle.Initializers;
+using malone.Core.Unity.WebApi;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Unity;
 
+[assembly: PreApplicationStartMethod(typeof(AppStart), nameof(AppStart.Start))]
 namespace malone.Core.Sample.AdoNet.SqlServer.Api
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public static class AppStart
+    {
+        public static void Start()
+        {
+        }
+    }
+
+    public class WebApiApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            GlobalConfiguration.Configure(WebApiConfig.Register);
-
+            AppInitializer<UnityWebApiActivator, IUnityContainer, SampleInitializer>.Initialize();
         }
     }
 }

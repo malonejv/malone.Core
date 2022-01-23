@@ -1,15 +1,14 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("malone.Core.Sample.AdoNet.SqlServer")]
+[assembly: AssemblyTitle("malone.Core.Sample.AdoNet.SqlServer.Middle")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("malone.Core.Sample.AdoNet.SqlServer")]
+[assembly: AssemblyProduct("malone.Core.Sample.AdoNet.SqlServer.Middle")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -1,19 +1,28 @@
-﻿using malone.Core.Commons.Configurations.Attributes;
+﻿//<author>Javier López Malone</author>
+//<date>25/11/2020 02:47:42</date>
+
+using malone.Core.Commons.Configurations.Attributes;
 using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Log;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace malone.Core.Commons.Configurations
 {
+    /// <summary>
+    /// Defines the <see cref="ConfigurationExtensions" />.
+    /// </summary>
     public static class ConfigurationExtensions
     {
+        /// <summary>
+        /// Defines the logger.
+        /// </summary>
         internal static ILogger logger;
+
+        /// <summary>
+        /// Gets the Logger.
+        /// </summary>
         internal static ILogger Logger
         {
             get
@@ -26,6 +35,11 @@ namespace malone.Core.Commons.Configurations
             }
         }
 
+        /// <summary>
+        /// The SectionName.
+        /// </summary>
+        /// <param name="configurationType">The configurationType<see cref="Type"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         internal static string SectionName(this Type configurationType)
         {
             try

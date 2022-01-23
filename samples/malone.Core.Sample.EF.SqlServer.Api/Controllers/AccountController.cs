@@ -21,21 +21,13 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers
         {
         }
 
-        public AccountController(UserBusinessComponent userManager, SignInBusinessComponent signInManager )
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
         public SignInBusinessComponent SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<SignInBusinessComponent>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
+                if (_signInManager == null)
+                    _signInManager = HttpContext.GetOwinContext().Get<SignInBusinessComponent>();
+                return _signInManager;
             }
         }
 
@@ -43,11 +35,9 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<UserBusinessComponent>();
-            }
-            private set
-            {
-                _userManager = value;
+                if (_userManager == null)
+                    _userManager = HttpContext.GetOwinContext().Get<UserBusinessComponent>();
+                return _userManager;
             }
         }
 

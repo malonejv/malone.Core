@@ -1,50 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.Commons.Exceptions;
+﻿//<author>Javier López Malone</author>
+//<date>25/11/2020 02:48:08</date>
+
+using System;
 
 namespace malone.Core.Commons.Log
 {
+    /// <summary>
+    /// Defines the <see cref="LoggerBase" />.
+    /// </summary>
     public abstract class LoggerBase : ILogger
     {
-
-
         /// <summary>
-        /// The message to log if a null object is logged.
+        /// The message to log if a null object is logged...
         /// </summary>
         private const string NullString = "null";
 
         /// <summary>
+        /// Gets the Name
         /// The name of this logger - typically this is written to the 
-        /// log itself along with the formatted message.
+        /// log itself along with the formatted message...
         /// </summary>
         public string Name { get; private set; }
 
         /// <summary>
-        /// Constructs a logger instance with the given name.
+        /// Initializes a new instance of the <see cref="LoggerBase"/> class.
         /// </summary>
-        /// <param name="name">the logger name</param>
+        /// <param name="name">the logger name.</param>
         protected LoggerBase(string name)
         {
             Name = name;
         }
 
         /// <summary>
-        /// Constructs an un-named logger
+        /// Initializes a new instance of the <see cref="LoggerBase"/> class.
         /// </summary>
         protected LoggerBase()
         {
         }
 
-        #region Debug
-
         /// <summary>
-        /// Logs an arbitrary object with the <see cref="LogLevel.Debug"/> level. 
+        /// Logs an arbitrary object with the <see cref="LogLevel.Debug"/> level.
         /// </summary>
-        /// <param name="obj">The message object to log, which will be converted
-        /// into a string during logging.</param>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
         public void Debug(object obj)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
@@ -52,7 +49,6 @@ namespace malone.Core.Commons.Log
                 Log(LogLevel.Debug, obj != null ? obj.ToString() : NullString);
             }
         }
-
 
         /// <summary>
         /// Logs a debug message (<see cref="LogLevel.Debug"/>).
@@ -66,14 +62,11 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Debug"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Debug"/> level.
         /// </summary>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Debug(string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
@@ -82,16 +75,12 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Debug"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Debug"/> level.
         /// </summary>
-        /// <param name="provider">An <see cref="IFormatProvider"/> which provides
-        /// culture-specific formatting capabilities.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Debug(IFormatProvider provider, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
@@ -99,7 +88,6 @@ namespace malone.Core.Commons.Log
                 Log(LogLevel.Debug, provider, format, args);
             }
         }
-
 
         /// <summary>
         /// Logs an exception with a logging level of <see cref="LogLevel.Debug"/>.
@@ -113,14 +101,12 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
         /// Logs an exception with an additional message with a logging level of
         /// <see cref="LogLevel.Debug"/>.
         /// </summary>
         /// <param name="exception"> The exception to log.</param>
-        /// <param name="message">Additional information regarding the
-        /// logged exception.</param>
+        /// <param name="message">The message<see cref="string"/>.</param>
         public void Debug(Exception exception, string message)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
@@ -129,15 +115,12 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Debug"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Debug"/> level.
         /// </summary>
         /// <param name="exception">The exception to log.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Debug(Exception exception, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
@@ -146,17 +129,13 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Debug"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Debug"/> level.
         /// </summary>
         /// <param name="exception">The exception to log.</param>
-        /// <param name="provider">An <see cref="IFormatProvider"/> which provides
-        /// culture-specific formatting capabilities.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Debug(Exception exception, string format, IFormatProvider provider, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
@@ -165,15 +144,10 @@ namespace malone.Core.Commons.Log
             }
         }
 
-        #endregion
-
-        #region Info
-
         /// <summary>
-        /// Logs an arbitrary object with the <see cref="LogLevel.Info"/> level. 
+        /// Logs an arbitrary object with the <see cref="LogLevel.Info"/> level.
         /// </summary>
-        /// <param name="obj">The message object to log, which will be converted
-        /// into a string during logging.</param>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
         public void Info(object obj)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
@@ -181,7 +155,6 @@ namespace malone.Core.Commons.Log
                 Log(LogLevel.Info, obj != null ? obj.ToString() : NullString);
             }
         }
-
 
         /// <summary>
         /// Logs an informational message (<see cref="LogLevel.Info"/>).
@@ -195,14 +168,11 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Info"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Info"/> level.
         /// </summary>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Info(string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
@@ -211,16 +181,12 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Info"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Info"/> level.
         /// </summary>
-        /// <param name="provider">An <see cref="IFormatProvider"/> which provides
-        /// culture-specific formatting capabilities.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Info(IFormatProvider provider, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
@@ -228,7 +194,6 @@ namespace malone.Core.Commons.Log
                 Log(LogLevel.Info, provider, format, args);
             }
         }
-
 
         /// <summary>
         /// Logs an exception with a logging level of <see cref="LogLevel.Info"/>.
@@ -242,14 +207,12 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
         /// Logs an exception with an additional message with a logging level of
         /// <see cref="LogLevel.Info"/>.
         /// </summary>
         /// <param name="exception"> The exception to log.</param>
-        /// <param name="message">Additional information regarding the
-        /// logged exception.</param>
+        /// <param name="message">The message<see cref="string"/>.</param>
         public void Info(Exception exception, string message)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
@@ -258,15 +221,12 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Info"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Info"/> level.
         /// </summary>
         /// <param name="exception">The exception to log.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Info(Exception exception, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
@@ -275,17 +235,13 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Info"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Info"/> level.
         /// </summary>
         /// <param name="exception">The exception to log.</param>
-        /// <param name="provider">An <see cref="IFormatProvider"/> which provides
-        /// culture-specific formatting capabilities.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Info(Exception exception, string format, IFormatProvider provider, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
@@ -294,15 +250,10 @@ namespace malone.Core.Commons.Log
             }
         }
 
-        #endregion
-
-        #region Warn
-
         /// <summary>
-        /// Logs an arbitrary object with the <see cref="LogLevel.Warn"/> level. 
+        /// Logs an arbitrary object with the <see cref="LogLevel.Warn"/> level.
         /// </summary>
-        /// <param name="obj">The message object to log, which will be converted
-        /// into a string during logging.</param>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
         public void Warn(object obj)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
@@ -310,7 +261,6 @@ namespace malone.Core.Commons.Log
                 Log(LogLevel.Warn, obj != null ? obj.ToString() : NullString);
             }
         }
-
 
         /// <summary>
         /// Logs a warning message (<see cref="LogLevel.Warn"/>).
@@ -324,14 +274,11 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Warn"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Warn"/> level.
         /// </summary>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Warn(string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
@@ -340,16 +287,12 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Warn"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Warn"/> level.
         /// </summary>
-        /// <param name="provider">An <see cref="IFormatProvider"/> which provides
-        /// culture-specific formatting capabilities.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Warn(IFormatProvider provider, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
@@ -357,7 +300,6 @@ namespace malone.Core.Commons.Log
                 Log(LogLevel.Warn, provider, format, args);
             }
         }
-
 
         /// <summary>
         /// Logs an exception with a logging level of <see cref="LogLevel.Warn"/>.
@@ -371,14 +313,12 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
         /// Logs an exception with an additional message with a logging level of
         /// <see cref="LogLevel.Warn"/>.
         /// </summary>
         /// <param name="exception"> The exception to log.</param>
-        /// <param name="message">Additional information regarding the
-        /// logged exception.</param>
+        /// <param name="message">The message<see cref="string"/>.</param>
         public void Warn(Exception exception, string message)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
@@ -387,15 +327,12 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Warn"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Warn"/> level.
         /// </summary>
         /// <param name="exception">The exception to log.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Warn(Exception exception, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
@@ -404,17 +341,13 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Warn"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Warn"/> level.
         /// </summary>
         /// <param name="exception">The exception to log.</param>
-        /// <param name="provider">An <see cref="IFormatProvider"/> which provides
-        /// culture-specific formatting capabilities.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Warn(Exception exception, string format, IFormatProvider provider, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
@@ -423,15 +356,10 @@ namespace malone.Core.Commons.Log
             }
         }
 
-        #endregion
-
-        #region Error
-
         /// <summary>
-        /// Logs an arbitrary object with the <see cref="LogLevel.Error"/> level. 
+        /// Logs an arbitrary object with the <see cref="LogLevel.Error"/> level.
         /// </summary>
-        /// <param name="obj">The message object to log, which will be converted
-        /// into a string during logging.</param>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
         public void Error(object obj)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
@@ -439,7 +367,6 @@ namespace malone.Core.Commons.Log
                 Log(LogLevel.Error, obj != null ? obj.ToString() : NullString);
             }
         }
-
 
         /// <summary>
         /// Logs an error message (<see cref="LogLevel.Error"/>).
@@ -453,14 +380,11 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Error"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Error"/> level.
         /// </summary>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Error(string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
@@ -469,16 +393,12 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Error"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Error"/> level.
         /// </summary>
-        /// <param name="provider">An <see cref="IFormatProvider"/> which provides
-        /// culture-specific formatting capabilities.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Error(IFormatProvider provider, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
@@ -486,7 +406,6 @@ namespace malone.Core.Commons.Log
                 Log(LogLevel.Error, provider, format, args);
             }
         }
-
 
         /// <summary>
         /// Logs an exception with a logging level of <see cref="LogLevel.Error"/>.
@@ -500,14 +419,12 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
         /// Logs an exception with an additional message with a logging level of
         /// <see cref="LogLevel.Error"/>.
         /// </summary>
         /// <param name="exception"> The exception to log.</param>
-        /// <param name="message">Additional information regarding the
-        /// logged exception.</param>
+        /// <param name="message">The message<see cref="string"/>.</param>
         public void Error(Exception exception, string message)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
@@ -516,15 +433,12 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Error"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Error"/> level.
         /// </summary>
         /// <param name="exception">The exception to log.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Error(Exception exception, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
@@ -533,17 +447,13 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Error"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Error"/> level.
         /// </summary>
         /// <param name="exception">The exception to log.</param>
-        /// <param name="provider">An <see cref="IFormatProvider"/> which provides
-        /// culture-specific formatting capabilities.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Error(Exception exception, string format, IFormatProvider provider, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
@@ -552,15 +462,10 @@ namespace malone.Core.Commons.Log
             }
         }
 
-        #endregion
-
-        #region Fatal
-
         /// <summary>
-        /// Logs an arbitrary object with the <see cref="LogLevel.Fatal"/> level. 
+        /// Logs an arbitrary object with the <see cref="LogLevel.Fatal"/> level.
         /// </summary>
-        /// <param name="obj">The message object to log, which will be converted
-        /// into a string during logging.</param>
+        /// <param name="obj">The obj<see cref="object"/>.</param>
         public void Fatal(object obj)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
@@ -568,7 +473,6 @@ namespace malone.Core.Commons.Log
                 Log(LogLevel.Fatal, obj != null ? obj.ToString() : NullString);
             }
         }
-
 
         /// <summary>
         /// Logs a fatal error message (<see cref="LogLevel.Fatal"/>).
@@ -582,14 +486,11 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Fatal"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Fatal"/> level.
         /// </summary>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Fatal(string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
@@ -598,16 +499,12 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Fatal"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Fatal"/> level.
         /// </summary>
-        /// <param name="provider">An <see cref="IFormatProvider"/> which provides
-        /// culture-specific formatting capabilities.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Fatal(IFormatProvider provider, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
@@ -615,7 +512,6 @@ namespace malone.Core.Commons.Log
                 Log(LogLevel.Fatal, provider, format, args);
             }
         }
-
 
         /// <summary>
         /// Logs an exception with a logging level of <see cref="LogLevel.Fatal"/>.
@@ -629,14 +525,12 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
         /// Logs an exception with an additional message with a logging level of
         /// <see cref="LogLevel.Fatal"/>.
         /// </summary>
         /// <param name="exception"> The exception to log.</param>
-        /// <param name="message">Additional information regarding the
-        /// logged exception.</param>
+        /// <param name="message">The message<see cref="string"/>.</param>
         public void Fatal(Exception exception, string message)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
@@ -645,15 +539,12 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Fatal"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Fatal"/> level.
         /// </summary>
         /// <param name="exception">The exception to log.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Fatal(Exception exception, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
@@ -662,17 +553,13 @@ namespace malone.Core.Commons.Log
             }
         }
 
-
         /// <summary>
-        /// Logs a formatted message string with the <see cref="LogLevel.Fatal"/> level. 
+        /// Logs a formatted message string with the <see cref="LogLevel.Fatal"/> level.
         /// </summary>
         /// <param name="exception">The exception to log.</param>
-        /// <param name="provider">An <see cref="IFormatProvider"/> which provides
-        /// culture-specific formatting capabilities.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public void Fatal(Exception exception, string format, IFormatProvider provider, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
@@ -681,47 +568,33 @@ namespace malone.Core.Commons.Log
             }
         }
 
-        #endregion
-
-        #region Log
-
         /// <summary>
-        /// Logs a formatted message on a given logging level. 
+        /// Logs a formatted message on a given logging level.
         /// </summary>
-        /// <param name="level">The logging level which is used to indicate severity,
-        /// or for filtering the information.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="level">The level<see cref="LogLevel"/>.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public virtual void Log(LogLevel level, string format, params object[] args)
         {
             Log(level, String.Format(format, args));
         }
 
-
         /// <summary>
         /// Logs a formatted message on a given logging level.
         /// </summary>
-        /// <param name="level">The logging level which is used to indicate severity,
-        /// or for filtering the information.</param>
-        /// <param name="provider">An <see cref="IFormatProvider"/> which provides
-        /// culture-specific formatting capabilities.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="level">The level<see cref="LogLevel"/>.</param>
+        /// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public virtual void Log(LogLevel level, IFormatProvider provider, string format, params object[] args)
         {
             Log(level, String.Format(provider, format, args));
         }
 
-
         /// <summary>
         /// Logs a message on a given logging level.
         /// </summary>
-        /// <param name="level">The logging level which is used to indicate severity,
-        /// or for filtering the information.</param>
+        /// <param name="level">The level<see cref="LogLevel"/>.</param>
         /// <param name="message"> The message to log.</param>
         public virtual void Log(LogLevel level, string message)
         {
@@ -729,48 +602,37 @@ namespace malone.Core.Commons.Log
             Log(item);
         }
 
-
         /// <summary>
         /// Logs an exception with on a given logging level.
         /// </summary>
-        /// <param name="level">The logging level which is used to indicate severity,
-        /// or for filtering the information.</param>
+        /// <param name="level">The level<see cref="LogLevel"/>.</param>
         /// <param name="exception">The exception to log.</param>
         public virtual void Log(LogLevel level, Exception exception)
         {
             Log(level, exception, String.Empty);
         }
 
-
         /// <summary>
         /// Logs an exception along with a formatted message string on a given logging level.
         /// </summary>
-        /// <param name="level">The logging level which is used to indicate severity,
-        /// or for filtering the information.</param>
+        /// <param name="level">The level<see cref="LogLevel"/>.</param>
         /// <param name="exception">The exception to log.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public virtual void Log(LogLevel level, Exception exception, string format, params object[] args)
         {
             string message = String.Format(format, args);
             Log(level, exception, message);
         }
 
-
         /// <summary>
         /// Logs an exception along with a formatted message string on a given logging level.
         /// </summary>
-        /// <param name="level">The logging level which is used to indicate severity,
-        /// or for filtering the information.</param>
+        /// <param name="level">The level<see cref="LogLevel"/>.</param>
         /// <param name="exception">The exception to log.</param>
-        /// <param name="provider">An <see cref="IFormatProvider"/> which provides
-        /// culture-specific formatting capabilities.</param>
-        /// <param name="format">A composite format string that contains placeholders for the
-        /// arguments.</param>
-        /// <param name="args">An <see cref="object"/> array containing zero or more objects
-        /// to format.</param>
+        /// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+        /// <param name="format">The format<see cref="string"/>.</param>
+        /// <param name="args">The args<see cref="object[]"/>.</param>
         public virtual void Log(LogLevel level, Exception exception, IFormatProvider provider, string format,
                                 params object[] args)
         {
@@ -778,16 +640,12 @@ namespace malone.Core.Commons.Log
             Log(level, exception, message);
         }
 
-
         /// <summary>
         /// Logs an exception along with a message string on a given logging level.
         /// </summary>
-        /// <param name="level">The logging level which is used to indicate severity,
-        /// or for filtering the information.</param>
+        /// <param name="level">The level<see cref="LogLevel"/>.</param>
         /// <param name="exception"> The exception to log.</param>
-        /// <param name="message">Additional information regarding the
-        /// logged exception.</param>
-        /// <typeparam name="Exception">Tipo de Excepcion producida</typeparam>
+        /// <param name="message">The message<see cref="string"/>.</param>
         public virtual void Log(LogLevel level, Exception exception, string message)
         {
             Type exceptionType = typeof(Exception);
@@ -803,26 +661,21 @@ namespace malone.Core.Commons.Log
             Log(item);
         }
 
-        #endregion
-
         /// <summary>
         /// Creates a new log entry based on a given log item.
         /// </summary>
         /// <param name="item">Encapsulates logging information.</param>
-        /// <exception cref="ArgumentNullException">If <paramref name="item"/>
-        /// is a null reference.</exception>
         public abstract void Log(LogItem item);
 
         /// <summary>
         /// Indicates whether the given log level is
         /// enabled in the underlying logging framework.
         /// </summary>
-        /// <param name="level">The log level to query</param>
+        /// <param name="level">The log level to query.</param>
         /// <returns>Whether the given level is enabled.</returns>
         protected virtual bool IsLogLevelEnabled(LogLevel level)
         {
             return true;
         }
-
     }
 }

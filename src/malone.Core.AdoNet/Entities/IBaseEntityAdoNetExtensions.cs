@@ -1,14 +1,12 @@
-﻿using System;
+﻿using malone.Core.AdoNet.Attributes;
+using malone.Core.AdoNet.Database;
+using malone.Core.Commons.Helpers.Extensions;
+using malone.Core.Entities.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using malone.Core.AdoNet.Attributes;
-using malone.Core.AdoNet.Database;
-using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Entities.Model;
 
 namespace malone.Core.AdoNet.Entities
 {
@@ -16,7 +14,7 @@ namespace malone.Core.AdoNet.Entities
     {
         private static readonly string ID = "Id";
 
-        public static IEnumerable<DbParameterWithValue> GetParameters<TKey, TEntity>(this TEntity entity, IDbCommand command)
+        public static IEnumerable<DbParameterWithValue> GetNotKeyParameters<TKey, TEntity>(this TEntity entity)
             where TKey : IEquatable<TKey>
             where TEntity : class, IBaseEntity<TKey>
         {
@@ -40,14 +38,8 @@ namespace malone.Core.AdoNet.Entities
             }
         }
 
-        public static DbParameterWithValue GetParameterForId<TKey>(this Type entityType, IDbCommand command, TKey id) where TKey : IEquatable<TKey>
+        public static DbParameterWithValue GetKeyParameter<TKey>(this Type entityType, TKey id) where TKey : IEquatable<TKey>
         {
-            if (command is null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
-
-
             if (typeof(IBaseEntity<TKey>).IsAssignableFrom(entityType))
             {
                 var interfaceType = entityType.GetInterface(typeof(IBaseEntity<TKey>).Name);

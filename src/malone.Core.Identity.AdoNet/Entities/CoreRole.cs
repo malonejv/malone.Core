@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using malone.Core.Entities.Model;
+using Microsoft.AspNet.Identity;
 
 namespace malone.Core.Identity.AdoNet.Entities
 {
-    public class CoreRole<TKey, TUserRole> : IBaseEntity<TKey>
+    public class CoreRole<TKey, TUserRole> : IRole<TKey>, IBaseEntity<TKey>
         where TKey : IEquatable<TKey>
         where TUserRole : CoreUserRole<TKey>
     {
@@ -33,11 +34,15 @@ namespace malone.Core.Identity.AdoNet.Entities
     }
 
 
-    public class CoreRole: CoreRole<int, CoreUserRole>, IBaseEntity
+    public class CoreRole<TUserRole> : CoreRole<int, TUserRole>, IBaseEntity
+        where TUserRole : CoreUserRole
     {
         public CoreRole()
         {
             Id = this.GetHashCode();
         }
     }
+
+    public class CoreRole : CoreRole<CoreUserRole>
+    { }
 }

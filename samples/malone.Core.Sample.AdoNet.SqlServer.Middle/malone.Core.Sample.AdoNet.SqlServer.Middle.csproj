@@ -53,9 +53,30 @@
     <PlatformTarget>x64</PlatformTarget>
     <OutputPath>bin\x64\Release\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugNuget|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DebugNuget\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugNuget|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\DebugNuget\</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugNuget|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\DebugNuget\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.10.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="Flurl, Version=2.8.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Flurl.2.8.2\lib\net40\Flurl.dll</HintPath>
@@ -63,11 +84,14 @@
     <Reference Include="Flurl.Http, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Flurl.Http.2.4.2\lib\net46\Flurl.Http.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.Base, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Configuration.ConfigurationBuilders.Base.2.0.0\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.Environment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Configuration.ConfigurationBuilders.Environment.2.0.0\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.Environment.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Owin.4.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -80,6 +104,9 @@
     </Reference>
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Owin.Security.OAuth.4.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -95,6 +122,28 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -102,10 +151,16 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="Unity.Abstractions, Version=5.11.6.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Unity.5.11.7\lib\net47\Unity.Abstractions.dll</HintPath>
+      <HintPath>..\..\packages\Unity.Abstractions.5.11.6\lib\net47\Unity.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Container, Version=5.11.8.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Unity.5.11.7\lib\net47\Unity.Container.dll</HintPath>
+      <HintPath>..\..\packages\Unity.Container.5.11.8\lib\net47\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mvc, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.Mvc.5.11.1\lib\net47\Unity.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -116,17 +171,35 @@
     <Compile Include="BL\ITodoListBC.cs" />
     <Compile Include="BL\ITodoListBV.cs" />
     <Compile Include="CL\Exceptions\ErrorCodes.cs" />
+    <Compile Include="CL\Exceptions\ErrorLocalizationHandler.cs" />
+    <Compile Include="CL\Exceptions\Exceptions.Designer.cs">
+      <DependentUpon>Exceptions.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CL\Exceptions\IErrorLocalizationHandler.cs" />
     <Compile Include="CL\Features\Configurations.cs" />
     <Compile Include="CL\Features\Features.cs" />
-    <Compile Include="DAL\Context\SampleAdoNetContext.cs" />
+    <Compile Include="CL\Localization\ContentCodes.cs" />
+    <Compile Include="CL\Localization\ContentLocalizationHandler.cs" />
+    <Compile Include="CL\Localization\Contents.Designer.cs">
+      <DependentUpon>Contents.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CL\Localization\IContentLocalizationHandler.cs" />
+    <Compile Include="DAL\Context\SampleContext.cs" />
     <Compile Include="DAL\Mappers\DataRowTaskItemProfile.cs" />
     <Compile Include="DAL\Mappers\DataRowTodoListProfile.cs" />
     <Compile Include="DAL\Repositories\TaskItemRepository.cs" />
     <Compile Include="DAL\Repositories\TodoListRepository.cs" />
     <Compile Include="EL\Filters\TodoListGetRequest.cs" />
+    <Compile Include="EL\Model\Extensions\TodoListExtensions.cs" />
     <Compile Include="EL\Model\RoleTypeEnum.cs" />
     <Compile Include="EL\Model\TaskItem.cs" />
     <Compile Include="EL\Model\TodoList.cs" />
+    <Compile Include="EL\Profiles\TodoListViewModelProfile.cs" />
+    <Compile Include="EL\RequestParams\TodoListGetRequestParam.cs" />
     <Compile Include="EL\Resource\EntitiesEnum.cs" />
     <Compile Include="EL\Resource\Entities.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -135,6 +208,13 @@
     </Compile>
     <Compile Include="EL\Resource\EntitiesLocalizationHandler.cs" />
     <Compile Include="EL\Resource\IEntitiesLocalizationHandler.cs" />
+    <Compile Include="EL\ViewModel\TodoListViewModel.cs" />
+    <Compile Include="Initializers\BusinessLayerInitializer.cs" />
+    <Compile Include="Initializers\CommonLayerInitializer.cs" />
+    <Compile Include="Initializers\DataAccessLayerInitializer.cs" />
+    <Compile Include="Initializers\EntitiesLayerInitializer.cs" />
+    <Compile Include="Initializers\SampleInitializer.cs" />
+    <Compile Include="Initializers\ServiceLayerInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +222,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CL\Exceptions\Exceptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CL\Localization\Contents.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Contents.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="EL\Resource\Entities.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Entities.Designer.cs</LastGenOutput>
@@ -153,22 +241,34 @@
     <Folder Include="DAL\ServiceAgents\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\malone.Core.AdoNet.SqlServer\malone.Core.AdoNet.SqlServer.csproj">
-      <Project>{54dcb4ef-1475-4c12-aa6c-acb61519b4a9}</Project>
-      <Name>malone.Core.AdoNet.SqlServer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\malone.Core.AdoNet\malone.Core.AdoNet.csproj">
-      <Project>{492f80c1-e1f2-4cc9-8dbe-83ba63e7de4c}</Project>
+      <Project>{492F80C1-E1F2-4CC9-8DBE-83BA63E7DE4C}</Project>
       <Name>malone.Core.AdoNet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\malone.Core.Identity.EntityFramework\malone.Core.Identity.EntityFramework.csproj">
-      <Project>{ECA07D24-2FD5-42E8-A5F7-3FDF54B10DD4}</Project>
-      <Name>malone.Core.Identity.EntityFramework</Name>
+    <ProjectReference Include="..\..\src\malone.Core.Dapper\malone.Core.Dapper.csproj">
+      <Project>{207004DC-E04E-4A6D-97A2-42172836E7D2}</Project>
+      <Name>malone.Core.Dapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\malone.Core.Identity.Dapper\malone.Core.Identity.Dapper.csproj">
+      <Project>{5c683c67-9122-43ed-bd2d-faed83007d78}</Project>
+      <Name>malone.Core.Identity.Dapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\malone.Core.Identity\malone.Core.Identity.csproj">
+      <Project>{0992b1b6-be12-4b9f-9b15-4d1b03ecd306}</Project>
+      <Name>malone.Core.Identity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\malone.Core.WebApi\malone.Core.WebApi.csproj">
+      <Project>{C0B7AE10-F8E3-4177-B937-F1787A7F0DF3}</Project>
+      <Name>malone.Core.WebApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\malone.Core\malone.Core.csproj">
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
       <Name>malone.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
+    <Analyzer Include="..\..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

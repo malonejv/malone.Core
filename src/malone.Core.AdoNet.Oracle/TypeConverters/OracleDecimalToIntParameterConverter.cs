@@ -3,11 +3,11 @@ using Oracle.ManagedDataAccess.Types;
 
 namespace malone.Core.AdoNet.Oracle.Parameters
 {
-	public class OracleDecimalToIntParameterConverter : IParameterConverter
-	{
-		public object Convert(object value)
-		{
-			return ((OracleDecimal)value).ToInt32();
-		}
-	}
+    public class OracleDecimalToIntParameterConverter : IParameterConverter
+    {
+        public object Convert(object value)
+        {
+            return ((OracleDecimal)value).ToInt32();
+        }
+    }
 }

@@ -8,7 +8,7 @@ namespace malone.Core.Sample.AdoNet.Firebird.Api
     {
         public void Configuration(IAppBuilder app)
         {
-            //ConfigureAuth(app);
+            ConfigureAuth(app);
         }
     }
 }

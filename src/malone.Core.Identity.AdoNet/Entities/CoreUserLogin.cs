@@ -5,8 +5,6 @@ namespace malone.Core.Identity.AdoNet.Entities
     public class CoreUserLogin<TKey>
         where TKey : IEquatable<TKey>
     {
-        public CoreUserLogin() { }
-
         /// <summary>
         ///     The login provider for the login (i.e. facebook, google)
         /// </summary>
@@ -25,7 +23,6 @@ namespace malone.Core.Identity.AdoNet.Entities
 
     public class CoreUserLogin : CoreUserLogin<int>
     {
-        public CoreUserLogin() : base() { }
 
     }
 }

@@ -2,11 +2,6 @@
 using malone.Core.Commons.Configurations.Features;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Initializers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Unity;
 
 namespace malone.Core.Unity.ModulesInitializers
