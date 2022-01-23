@@ -8,4 +8,4 @@ using System.Reflection;
 [assembly: AssemblyTitle("malonejv.Core")]
 [assembly: AssemblyCompany("Javier López Malone")]
 [assembly: AssemblyCopyright("Copyright © Javier López Malone 2022")]
-[assembly: AssemblyVersion("2.1.9.*")]
+[assembly: AssemblyVersion("2.1.10.*")]

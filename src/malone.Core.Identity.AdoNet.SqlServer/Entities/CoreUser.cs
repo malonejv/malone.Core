@@ -114,7 +114,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Entities
         where TUserRole : CoreUserRole
         where TUserClaim : CoreUserClaim
     {
-        public CoreUser()
+        public CoreUser() : base()
         {
             Id = this.GetHashCode();
         }
@@ -122,5 +122,8 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Entities
 
     public class CoreUser : CoreUser<CoreUserLogin, CoreUserRole, CoreUserClaim>
     {
+        public CoreUser() : base()
+        { }
+
     }
 }
