@@ -1,4 +1,5 @@
 using malone.Core.Commons.Initializers;
+using malone.Core.Sample.AdoNet.Firebird.Middle.Initializers;
 using malone.Core.Sample.AdoNet.Firebird.mvc;
 using malone.Core.Unity;
 using System.Web;

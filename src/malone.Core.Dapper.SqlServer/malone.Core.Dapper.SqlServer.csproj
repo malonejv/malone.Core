@@ -48,6 +48,10 @@
     <Compile Include="SqlDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\malone.Core.AdoNet\malone.Core.AdoNet.csproj">
+      <Project>{492F80C1-E1F2-4CC9-8DBE-83BA63E7DE4C}</Project>
+      <Name>malone.Core.AdoNet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\malone.Core.Dapper\malone.Core.Dapper.csproj">
       <Project>{207004DC-E04E-4A6D-97A2-42172836E7D2}</Project>
       <Name>malone.Core.Dapper</Name>
