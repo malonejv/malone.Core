@@ -7,7 +7,6 @@ using System.Web.UI;
 // associated with an assembly.
 //[assembly: AssemblyTitle("malone.Core.WebApi")]
 [assembly: AssemblyDescription("Esta librería provee clases especificas para la utilización en un proyecto WebApi")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("malone.Core.WebApi")]
 [assembly: AssemblyCulture("")]
 

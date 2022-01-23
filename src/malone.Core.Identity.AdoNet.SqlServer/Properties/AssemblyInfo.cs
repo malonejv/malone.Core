@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 //[assembly: AssemblyTitle("malone.Core.Identity.AdoNet.SqlServer")]
 [assembly: AssemblyDescription("Esta librería provee una estructura de clases que extiende Microsoft.AspNet.Identity.Core.")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("malone.Core.Identity.AdoNet.SqlServer")]
 [assembly: AssemblyCulture("")]
 

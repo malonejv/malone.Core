@@ -88,10 +88,11 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-      if $(ConfigurationName) == DebugNuget (
-      nuget pack "$(ProjectPath)" -Properties Configuration=DebugNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-      xcopy "$(ProjectPath)*.*nupkg" "..\..\..\..\..\malone.Core.DevLocalNugets" /SY
-      )
+    if $(ConfigurationName) == DebugNuget (
+    nuget pack "$(ProjectPath)" -Suffix dev -Properties Configuration=DebugNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+    xcopy "$(TargetDir)$(TargetName)*.*nupkg" "..\..\..\..\..\malone.Core.DevLocalNugets" /SY
+	del "$(TargetDir)$(TargetName)*.*nupkg" /Q
+    )
     </PostBuildEvent>
   </PropertyGroup>
 </Project>

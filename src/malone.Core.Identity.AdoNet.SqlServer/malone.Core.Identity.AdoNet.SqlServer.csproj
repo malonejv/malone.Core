@@ -11,7 +11,7 @@
     <AssemblyName>malone.Core.Identity.AdoNet.SqlServer</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <Deterministic>false</Deterministic>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -137,13 +137,17 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="capibara.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-      if $(ConfigurationName) == DebugNuget (
-      nuget pack "$(ProjectPath)" -Properties Configuration=DebugNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-      xcopy "$(ProjectPath)*.*nupkg" "..\..\..\..\..\malone.Core.DevLocalNugets" /SY
-      )
+    if $(ConfigurationName) == DebugNuget (
+    nuget pack "$(ProjectPath)" -Suffix dev -Properties Configuration=DebugNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+    xcopy "$(TargetDir)$(TargetName)*.*nupkg" "..\..\..\..\..\malone.Core.DevLocalNugets" /SY
+	del "$(TargetDir)$(TargetName)*.*nupkg" /Q
+    )
     </PostBuildEvent>
   </PropertyGroup>
 </Project>

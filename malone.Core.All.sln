@@ -28,6 +28,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2AFC5CCC-A9FC-4232-9A11-B58385408C56}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		src\DebugNuget-GeneratePackage.bat = src\DebugNuget-GeneratePackage.bat
 		src\GlobalAssemblyInfo.cs = src\GlobalAssemblyInfo.cs
 		Pendientes.md = Pendientes.md
 		README.md = README.md
@@ -131,7 +132,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Dapper", "src\m
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Identity.Dapper", "src\malone.Core.Identity.Dapper\malone.Core.Identity.Dapper.csproj", "{5C683C67-9122-43ED-BD2D-FAED83007D78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Unity.IdentityDapperInitializer", "malone.Core.Unity.IdentityDapperInitializer\malone.Core.Unity.IdentityDapperInitializer.csproj", "{4D280359-094D-41BF-A2CD-5F0090F0EF69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Unity.IdentityDapperInitializer", "src\malone.Core.Unity.IdentityDapperInitializer\malone.Core.Unity.IdentityDapperInitializer.csproj", "{4D280359-094D-41BF-A2CD-5F0090F0EF69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

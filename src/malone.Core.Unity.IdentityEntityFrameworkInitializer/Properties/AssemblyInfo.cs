@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 //[assembly: AssemblyTitle("malone.Core.Unity.IdentityEntityFrameworkInitializer")]
 [assembly: AssemblyDescription("Esta librería provee clases inicalización de módulo de malone.Core para Microsoft Identity Framework con Unity")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("malone.Core.Unity.IdentityEntityFrameworkInitializer")]
 [assembly: AssemblyCulture("")]
 

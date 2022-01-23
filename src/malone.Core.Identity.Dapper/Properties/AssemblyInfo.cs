@@ -6,10 +6,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 //[assembly: AssemblyTitle("malone.Core.Identity.Dapper")]
 [assembly: AssemblyDescription("Esta librería provee una estructura de clases que extiende Microsoft.AspNet.Identity.Core.")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("malone.Core.Identity.Dapper")]
-//[assembly: AssemblyCopyright("Copyright ©  2021")]
-[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

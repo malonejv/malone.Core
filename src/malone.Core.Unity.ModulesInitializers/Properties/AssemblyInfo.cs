@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 //[assembly: AssemblyTitle("malone.Core.Unity.ModulesInitializers")]
 [assembly: AssemblyDescription("Esta librería provee clases inicalización de módulos de malone.Core con Unity")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("malone.Core.Unity.ModulesInitializers")]
 [assembly: AssemblyCulture("")]
 

@@ -6,8 +6,6 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 //[assembly: AssemblyTitle("malone.Core.Log4Net")]
 [assembly: AssemblyDescription("Esta librería provee clases especificas para Logging con Log4Net.")]
-[assembly: AssemblyConfiguration("")]
-
 [assembly: AssemblyProduct("malone.Core.Log4Net")]
 [assembly: AssemblyCulture("")]
 
