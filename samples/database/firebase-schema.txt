@@ -1,0 +1,187 @@
+
+----------------------
+
+-- DROP TABLE "TodoLists";
+
+CREATE TABLE "TodoLists"
+(
+  "Id"        INTEGER NOT NULL,
+  "Name"      VARCHAR(100),
+  "IsDeleted" SMALLINT NOT NULL,
+  "Date"      TIMESTAMP,
+  CONSTRAINT "TodoLists_PK_dbo.TodoLists" PRIMARY KEY ("Id")
+);
+
+CREATE OR ALTER TRIGGER TODOLISTS_SEQ FOR "TodoLists"
+ACTIVE BEFORE INSERT POSITION 0
+AS 
+BEGIN 
+    IF (new."Id" IS NULL) THEN
+        new."Id" = gen_id(SEQ_TODOLISTS_ID,1);
+END
+
+GRANT DELETE, INSERT, REFERENCES, SELECT, UPDATE ON TABLE "TodoLists" TO SYSDBA WITH GRANT OPTION;
+
+----------------------
+
+-- DROP TABLE "TaskItems";
+
+CREATE TABLE "TaskItems"
+(
+  "Id"          INTEGER NOT NULL,
+  "Description" VARCHAR(100),
+  "IsDeleted"   SMALLINT NOT NULL,
+  "TodoList_Id" INTEGER NOT NULL,
+  CONSTRAINT "TaskItems_PK_dbo.TaskItems" PRIMARY KEY ("Id")
+);
+
+ALTER TABLE "TaskItems" ADD CONSTRAINT "FK_dbo.TaskItems_dbo.TodoLists_" FOREIGN KEY ("TodoList_Id") REFERENCES "TodoLists" ("Id") ON UPDATE NO ACTION ON DELETE CASCADE;
+
+CREATE INDEX "TaskItems_IX_TodoList_Id" ON "TaskItems" ("TodoList_Id");
+
+CREATE OR ALTER TRIGGER TASKITEMS_SEQ FOR "TaskItems"
+ACTIVE BEFORE INSERT POSITION 0
+AS
+BEGIN
+    IF (new."Id" IS NULL) THEN
+        new."Id" = gen_id(SEQ_TASKITEMS_ID, 1);
+END
+
+GRANT DELETE, INSERT, REFERENCES, SELECT, UPDATE ON TABLE "TaskItems" TO SYSDBA WITH GRANT OPTION;
+
+----------------------
+
+-- DROP TABLE "Roles";
+
+CREATE TABLE "Roles"
+(
+  "Id"   INTEGER NOT NULL,
+  "Name" VARCHAR(256) NOT NULL,
+  CONSTRAINT "Roles_PK_dbo.Roles" PRIMARY KEY ("Id")
+);
+
+CREATE INDEX "Roles_RoleNameIndex" ON "Roles" ("Name");
+
+CREATE OR ALTER TRIGGER ROLES_SEQ FOR "Roles"
+ACTIVE BEFORE INSERT POSITION 0
+AS
+BEGIN
+    IF (new."Id" IS NULL) THEN
+        new."Id" = gen_id(SEQ_ROLES_ID, 1);
+END
+
+GRANT DELETE, INSERT, REFERENCES, SELECT, UPDATE ON TABLE "Roles" TO SYSDBA WITH GRANT OPTION;
+
+----------------------
+
+-- DROP TABLE "Users";
+
+CREATE TABLE "Users"
+(
+  "Id"                   INTEGER NOT NULL,
+  "Email"                VARCHAR(256),
+  "EmailConfirmed"       SMALLINT NOT NULL,
+  "PasswordHash"         BLOB SUB_TYPE TEXT,
+  "SecurityStamp"        BLOB SUB_TYPE TEXT,
+  "PhoneNumber"          BLOB SUB_TYPE TEXT,
+  "PhoneNumberConfirmed" SMALLINT NOT NULL,
+  "TwoFactorEnabled"     SMALLINT NOT NULL,
+  "LockoutEndDateUtc"    TIMESTAMP,
+  "LockoutEnabled"       SMALLINT NOT NULL,
+  "AccessFailedCount"    INTEGER NOT NULL,
+  "UserName"             VARCHAR(256) NOT NULL,
+  CONSTRAINT "Users_PK_dbo.Users" PRIMARY KEY ("Id")
+);
+
+CREATE INDEX "Users_UserNameIndex" ON "Users" ("UserName");
+
+CREATE OR ALTER TRIGGER USERS_SEQ FOR "Users"
+ACTIVE BEFORE INSERT POSITION 0
+AS
+BEGIN
+    IF (new."Id" IS NULL) THEN
+        new."Id" = gen_id(SEQ_USERS_ID, 1);
+END
+
+GRANT DELETE, INSERT, REFERENCES, SELECT, UPDATE ON TABLE "Users" TO SYSDBA WITH GRANT OPTION;
+
+----------------------
+
+-- DROP TABLE "UsersClaims";
+
+CREATE TABLE "UsersClaims"
+(
+  "Id"         INTEGER NOT NULL,
+  "UserId"     INTEGER NOT NULL,
+  "ClaimType"  BLOB SUB_TYPE TEXT,
+  "ClaimValue" BLOB SUB_TYPE TEXT,
+  CONSTRAINT "UsersClaims_PK_dbo.UsersClaims" PRIMARY KEY ("Id")
+);
+
+ALTER TABLE "UsersClaims" ADD CONSTRAINT "FK_dbo.UsersClaims_dbo.Users_Us" FOREIGN KEY ("UserId") REFERENCES "Users" ("Id") ON UPDATE NO ACTION ON DELETE CASCADE;
+
+CREATE INDEX "UsersClaims_IX_UserId" ON "UsersClaims" ("UserId");
+
+CREATE OR ALTER TRIGGER USERSCLAIMS_SEQ FOR "UsersClaims"
+ACTIVE BEFORE INSERT POSITION 0
+AS
+BEGIN
+    IF (new."Id" IS NULL) THEN
+        new."Id" = gen_id(SEQ_USERSCLAIMS_ID, 1);
+END
+
+GRANT DELETE, INSERT, REFERENCES, SELECT, UPDATE ON TABLE "UsersClaims" TO SYSDBA WITH GRANT OPTION;
+
+----------------------
+
+-- DROP TABLE "UsersLogins";
+
+CREATE TABLE "UsersLogins"
+(
+  "LoginProvider" VARCHAR(128) NOT NULL,
+  "ProviderKey"   VARCHAR(128) NOT NULL,
+  "UserId"        INTEGER NOT NULL,
+  CONSTRAINT "UsersLogins_PK_dbo.UsersLogins" PRIMARY KEY ("LoginProvider", "ProviderKey", "UserId")
+);
+
+ALTER TABLE "UsersLogins" ADD CONSTRAINT "FK_dbo.UsersLogins_dbo.Users_Us" FOREIGN KEY ("UserId") REFERENCES "Users" ("Id") ON UPDATE NO ACTION ON DELETE CASCADE;
+
+CREATE INDEX "UsersLogins_IX_UserId" ON "UsersLogins" ("UserId");
+
+GRANT DELETE, INSERT, REFERENCES, SELECT, UPDATE ON TABLE "UsersLogins" TO SYSDBA WITH GRANT OPTION;
+
+----------------------
+
+
+-- DROP TABLE "UsersRoles";
+
+CREATE TABLE "UsersRoles"
+(
+  "UserId" INTEGER NOT NULL,
+  "RoleId" INTEGER NOT NULL,
+  CONSTRAINT "UsersRoles_PK_dbo.UsersRoles" PRIMARY KEY ("UserId", "RoleId")
+);
+
+ALTER TABLE "UsersRoles" ADD CONSTRAINT "FK_dbo.UsersRoles_dbo.Roles_Rol" FOREIGN KEY ("RoleId") REFERENCES "Roles" ("Id") ON UPDATE NO ACTION ON DELETE CASCADE;
+ALTER TABLE "UsersRoles" ADD CONSTRAINT "FK_dbo.UsersRoles_dbo.Users_Use" FOREIGN KEY ("UserId") REFERENCES "Users" ("Id") ON UPDATE NO ACTION ON DELETE CASCADE;
+
+CREATE INDEX "UsersRoles_IX_RoleId" ON "UsersRoles" ("RoleId");
+CREATE INDEX "UsersRoles_IX_UserId" ON "UsersRoles" ("UserId");
+
+GRANT DELETE, INSERT, REFERENCES, SELECT, UPDATE ON TABLE "UsersRoles" TO SYSDBA WITH GRANT OPTION;
+
+----------------------
+
+
+-- DROP TABLE "__MigrationHistory";
+
+CREATE TABLE "__MigrationHistory"
+(
+  "MigrationId"    VARCHAR(150) NOT NULL,
+  "ContextKey"     VARCHAR(300) NOT NULL,
+  "Model"          BLOB SUB_TYPE BINARY NOT NULL,
+  "ProductVersion" VARCHAR(32) NOT NULL,
+  CONSTRAINT "__MigrationHistory_PK_dbo.__Mig" PRIMARY KEY ("MigrationId", "ContextKey")
+);
+
+GRANT DELETE, INSERT, REFERENCES, SELECT, UPDATE ON TABLE "__MigrationHistory" TO SYSDBA WITH GRANT OPTION;

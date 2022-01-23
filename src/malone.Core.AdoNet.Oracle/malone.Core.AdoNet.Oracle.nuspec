@@ -1,23 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package >
-  <metadata>
-    <id>$id$</id>
-    <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <license type="expression">MIT</license>
-	<description>$description$</description>
-    <copyright>Copyright 2020</copyright>
-    <projectUrl>https://github.com/malonejv/malone.Core</projectUrl>
-	<repository type="git" url="https://github.com/malonejv/malone.Core" branch="development" />
-	<icon>capibara.png</icon>
-    <dependencies>
-      <group targetFramework=".NETFramework4.7.1" />
-    </dependencies>
-  </metadata>
-  <files>
-	<file src="capibara.png" />
-  </files>
+	<metadata>
+		<id>$id$</id>
+		<version>$version$</version>
+		<title>$title$</title>
+		<authors>$author$</authors>
+		<owners>$author$</owners>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<license type="expression">MIT</license>
+		<projectUrl>https://github.com/malonejv/malone.Core</projectUrl>
+		<description>$description$</description>
+		<copyright>Copyright 2020</copyright>
+		<repository type="git" url="https://github.com/malonejv/malone.Core.git" branch="development" />
+		<icon>capibara.png</icon>
+		<dependencies>
+			<group targetFramework=".NETFramework4.5" />
+			<group targetFramework=".NETFramework4.5.1" />
+			<group targetFramework=".NETFramework4.5.2" />
+			<group targetFramework=".NETFramework4.6" />
+			<group targetFramework=".NETFramework4.6.1" />
+			<group targetFramework=".NETFramework4.6.2" />
+			<group targetFramework=".NETFramework4.7" />
+			<group targetFramework=".NETFramework4.7.1" />
+			<group targetFramework=".NETFramework4.7.2" />
+			<group targetFramework=".NETFramework4.8" />
+		</dependencies>
+		<contentFiles>
+			<!-- Include Assets as Content -->
+			<files include="*.png" buildAction="EmbeddedResource" copyToOutput="false" />
+		</contentFiles>
+	</metadata>
+	<files>
+		<file src="bin\$configuration$\**" target="lib/net45" />
+		<file src="bin\$configuration$\**" target="lib/net451" />
+		<file src="bin\$configuration$\**" target="lib/net452" />
+		<file src="bin\$configuration$\**" target="lib/net46" />
+		<file src="bin\$configuration$\**" target="lib/net461" />
+		<file src="bin\$configuration$\**" target="lib/net462" />
+		<file src="bin\$configuration$\**" target="lib/net47" />
+		<file src="bin\$configuration$\**" target="lib/net471" />
+		<file src="bin\$configuration$\**" target="lib/net472" />
+		<file src="bin\$configuration$\**" target="lib/net48" />
+	</files>
 </package>

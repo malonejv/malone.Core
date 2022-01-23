@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Web.Http;
-using AutoMapper;
 using malone.Core.Business.Components;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Entities.Model;
@@ -27,12 +26,10 @@ namespace malone.Core.WebApi
         where TBusinessComponent : IBusinessComponent<TKey, TEntity, TBusinessValidator>
     {
         protected TBusinessComponent BusinessComponent { get; set; }
-        protected IMapper Mapper { get; set; }
 
-        public CoreApiController(TBusinessComponent businessComponent, IMapper mapperInstance)
+        public CoreApiController(TBusinessComponent businessComponent)
         {
             BusinessComponent = businessComponent;
-            Mapper = mapperInstance;
         }
 
         #region GET (GetAll)
@@ -232,7 +229,7 @@ namespace malone.Core.WebApi
        where TBusinessValidator : IBusinessValidator<TEntity>
        where TBusinessComponent : IBusinessComponent<TEntity, TBusinessValidator>
     {
-        public CoreApiController(TBusinessComponent businessComponent, IMapper mapperInstance) : base(businessComponent, mapperInstance)
+        public CoreApiController(TBusinessComponent businessComponent) : base(businessComponent)
         {
         }
 

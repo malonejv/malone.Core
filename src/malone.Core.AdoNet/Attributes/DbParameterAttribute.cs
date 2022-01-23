@@ -12,9 +12,8 @@ namespace malone.Core.AdoNet.Attributes
     {
         private int _size;
 
-        public DbParameterAttribute()
+        public DbParameterAttribute(string name) : base(name)
         {
-            this.BindOnNull = true;
         }
 
         public int Order { get; set; }
@@ -24,8 +23,6 @@ namespace malone.Core.AdoNet.Attributes
         public object Type { get; set; }
 
         public bool IsSizeDefined { get; private set; }
-
-        public bool BindOnNull { get; set; }
 
         public int Size
         {

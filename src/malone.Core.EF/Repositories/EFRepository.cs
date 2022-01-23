@@ -1,6 +1,7 @@
 ﻿using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Log;
+using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.DataAccess.UnitOfWork;
 using malone.Core.EF.Entities.Filters;
@@ -14,26 +15,41 @@ using System.Linq.Expressions;
 
 namespace malone.Core.EF.Repositories.Implementations
 {
-    public class EFRepository<TKey, TEntity> : IRepository<TKey, TEntity>
+    public class EFRepository<TKey, TEntity> : IRepository<TKey, TEntity>, IDisposable
         where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
     {
         protected DbSet<TEntity> _dbSet;
         protected DbContext _context;
-
-        protected IUnitOfWork UnitOfWork { get; }
+        protected bool _disposed;
 
         protected ILogger Logger { get; set; }
 
-        public EFRepository(IUnitOfWork unitOfWork, ILogger logger)
+        public EFRepository(IContext context, ILogger logger)
         {
-            if (unitOfWork == null) throw new ArgumentNullException(nameof(unitOfWork));
+            CheckContext(context);
+            CheckLogger(logger);
 
-            UnitOfWork = unitOfWork;
-            _context = UnitOfWork.Context as DbContext;
+            _context = (DbContext) context;
             _dbSet = _context.Set<TEntity>();
 
             Logger = logger;
+        }
+
+        private void CheckLogger(ILogger logger)
+        {
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+        }
+
+        private void CheckContext(IContext context)
+        {
+            if (context == null) throw new ArgumentNullException(nameof(context));
+
+            if (!(context is DbContext))
+            {
+                //TODO: Implementar excepciones del core
+                throw new ArgumentException();
+            }
         }
 
         protected IQueryable<TEntity> Get(
@@ -248,6 +264,37 @@ namespace malone.Core.EF.Repositories.Implementations
             }
         }
 
+        /// <summary>
+        ///     Dispose the store
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void ThrowIfDisposed()
+        {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().Name);
+            }
+        }
+
+        /// <summary>
+        ///     If disposing, calls dispose on the Context.  Always nulls out the Context
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing && _context != null)
+            {
+                _context.Dispose();
+            }
+            _disposed = true;
+            _context = null;
+        }
+
     }
 
 
@@ -256,7 +303,7 @@ namespace malone.Core.EF.Repositories.Implementations
         IRepository<TEntity>
         where TEntity : class, IBaseEntity
     {
-        public EFRepository(IUnitOfWork unitOfWork, ILogger logger) : base(unitOfWork, logger)
+        public EFRepository(IContext context, ILogger logger) : base(context, logger)
         {
         }
     }

@@ -9,10 +9,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>malone.Core.AdoNet</RootNamespace>
     <AssemblyName>malone.Core.AdoNet</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>false</Deterministic>
     <PackageIcon>capibara.png</PackageIcon>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,9 +45,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -61,15 +61,17 @@
     </Compile>
     <Compile Include="Attributes\DbFieldAttribute.cs" />
     <Compile Include="Attributes\DbParameterAttribute.cs" />
-    <Compile Include="Context\AdoNetContext.cs" />
+    <Compile Include="Context\AdoNetDbContext.cs" />
     <Compile Include="Database\DatabaseFactory.cs" />
     <Compile Include="Database\DatabaseProviderEnum.cs" />
+    <Compile Include="Database\DbParameterWithValue.cs" />
     <Compile Include="Database\IDatabase.cs" />
-    <Compile Include="Extensions\DbParameterAttributeExtensions.cs" />
+    <Compile Include="Attributes\DbFieldAttributeExtensions.cs" />
+    <Compile Include="Entities\Filters\IFilterExpressionsAdoNetExtensions.cs" />
+    <Compile Include="Entities\IBaseEntityAdoNetExtensions.cs" />
     <Compile Include="Parameters\IParameterConverter.cs" />
     <Compile Include="Repositories\AdoNetRepository.cs" />
     <Compile Include="Entities\Filters\IFilterExpressionAdoNet.cs" />
-    <Compile Include="Entities\Filters\IFilterExpressionAdoNetExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -80,8 +82,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
     <None Include="capibara.png" Pack="true" PackagePath="\" />
+    <None Include="malone.Core.AdoNet.nuspec">
+      <TransformOnBuild>true</TransformOnBuild>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

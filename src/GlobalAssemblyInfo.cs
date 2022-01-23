@@ -4,4 +4,4 @@ using System.Reflection;
 [assembly: AssemblyTitle("malonejv.Core")]
 [assembly: AssemblyCompany("Javier López Malone")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
-[assembly: AssemblyVersion("2.1.8.0")]
+[assembly: AssemblyVersion("2.1.9.0")]

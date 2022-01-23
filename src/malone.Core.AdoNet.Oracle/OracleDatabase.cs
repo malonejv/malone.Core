@@ -7,9 +7,6 @@ namespace malone.Core.AdoNet.Oracle
 {
     public class OracleDatabase : IDatabase
     {
-        private const string ID = "Id";
-        private const string IS_DELETED = "IsDeleted";
-
         private string ConnectionString { get; set; }
 
 
@@ -53,34 +50,14 @@ namespace malone.Core.AdoNet.Oracle
             return oracleCommand.CreateParameter();
         }
 
-        public void AddParameter(IDbCommand command, IDbDataParameter parameter, object type)
+        public void AddCommandParameter(IDbCommand command, string parameterName, object value, ParameterDirection parameterdirection, object parameterType)
         {
-            OracleCommand oracleCommand = (OracleCommand)command;
-            OracleParameter oracleParameter = (OracleParameter)parameter;
-            oracleParameter.OracleDbType = (OracleDbType)type;
-
-            oracleCommand.Parameters.Add(oracleParameter);
+            throw new NotImplementedException();
         }
 
-        public void AddParameterId(IDbCommand command, object id)
+        public void AddCommandParameter(IDbCommand command, string parameterName, object value, ParameterDirection parameterdirection, object parameterType, int size)
         {
-            var parameterId = (OracleParameter)CreateParameter(command);
-            parameterId.ParameterName = ID;
-            parameterId.Value = (OracleDbType)id;
-            parameterId.OracleDbType = OracleDbType.Decimal;
-
-            command.Parameters.Add(parameterId);
+            throw new NotImplementedException();
         }
-
-        public void AddParameterIsDeleted(IDbCommand command, object isDeleted)
-        {
-            var parameterIsDeleted = (OracleParameter)CreateParameter(command);
-            parameterIsDeleted.ParameterName = IS_DELETED;
-            parameterIsDeleted.Value = Convert.ToInt32((bool)isDeleted);
-            parameterIsDeleted.OracleDbType = OracleDbType.Int32;
-
-            command.Parameters.Add(parameterIsDeleted);
-        }
-
     }
 }

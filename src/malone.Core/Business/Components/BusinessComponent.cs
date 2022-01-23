@@ -20,17 +20,14 @@ namespace malone.Core.Business.Components
 
         protected IRepository<TKey, TEntity> Repository { get; private set; }
 
-        protected IUnitOfWork UnitOfWork { get; set; }
-
         public TValidator BusinessValidator { get; set; }
 
         public ILogger Logger { get; set; }
 
         #endregion
 
-        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TKey, TEntity> repository, ILogger logger)
+        public BusinessComponent(TValidator businessValidator, IRepository<TKey, TEntity> repository, ILogger logger)
         {
-            UnitOfWork = unitOfWork;
             BusinessValidator = businessValidator;
             Repository = repository;
             Logger = logger;
@@ -133,14 +130,17 @@ namespace malone.Core.Business.Components
         {
             try
             {
-                CheckEntity(entity);
+                using (var uow = UnitOfWork.Create())
+                {
+                    CheckEntity(entity);
 
-                var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteAddValidationRules, BusinessValidator.AddValidationRules);
-                if (!validationResult.IsValid)
-                    throw new BusinessRulesValidationException(validationResult);
+                    var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteAddValidationRules, BusinessValidator.AddValidationRules);
+                    if (!validationResult.IsValid)
+                        throw new BusinessRulesValidationException(validationResult);
 
-                Repository.Insert(entity);
-                UnitOfWork.SaveChanges();
+                    Repository.Insert(entity);
+                    uow.SaveChanges();
+                }
             }
             catch (BusinessRulesValidationException) { throw; }
             catch (TechnicalException) { throw; }
@@ -157,20 +157,23 @@ namespace malone.Core.Business.Components
         {
             try
             {
-                CheckEntity(entity);
-                CheckId(id);
+                using (var uow = UnitOfWork.Create())
+                {
+                    CheckEntity(entity);
+                    CheckId(id);
 
-                var oldEntity = this.GetById(id);
-                if (oldEntity.Equals(default(TEntity)))
-                    throw CoreExceptionFactory.CreateException<EntityNotFoundException>(CoreErrors.BUSVAL500, typeof(TEntity), id);
+                    var oldEntity = this.GetById(id);
+                    if (oldEntity.Equals(default(TEntity)))
+                        throw CoreExceptionFactory.CreateException<EntityNotFoundException>(CoreErrors.BUSVAL500, typeof(TEntity), id);
 
-                var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteUpdateValidationRules, BusinessValidator.UpdateValidationRules);
-                if (!validationResult.IsValid)
-                    throw new BusinessRulesValidationException(validationResult);
+                    var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteUpdateValidationRules, BusinessValidator.UpdateValidationRules);
+                    if (!validationResult.IsValid)
+                        throw new BusinessRulesValidationException(validationResult);
 
-                entity.Id = id;
-                Repository.Update(oldEntity, entity);
-                UnitOfWork.SaveChanges();
+                    entity.Id = id;
+                    Repository.Update(oldEntity, entity);
+                    uow.SaveChanges();
+                }
             }
             catch (EntityNotFoundException ex)
             {
@@ -198,28 +201,31 @@ namespace malone.Core.Business.Components
         {
             try
             {
-                CheckId(id);
-
-
-                var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteDeleteValidationRules, BusinessValidator.DeleteValidationRules);
-                if (!validationResult.IsValid)
-                    throw new BusinessRulesValidationException(validationResult);
-
-                var entityToDelete = this.GetById(id);
-                if (entityToDelete == default(TEntity))
-                    throw CoreExceptionFactory.CreateException<EntityNotFoundException>(CoreErrors.BUSVAL500, typeof(TEntity), id);
-
-                if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
+                using (var uow = UnitOfWork.Create())
                 {
-                    var softDelete = entityToDelete as ISoftDelete;
-                    softDelete.IsDeleted = true;
-                    Repository.Update(entityToDelete, softDelete as TEntity);
+                    CheckId(id);
+
+
+                    var validationResult = BusinessValidator.Validate(BusinessValidator.ExecuteDeleteValidationRules, BusinessValidator.DeleteValidationRules);
+                    if (!validationResult.IsValid)
+                        throw new BusinessRulesValidationException(validationResult);
+
+                    var entityToDelete = this.GetById(id);
+                    if (entityToDelete == default(TEntity))
+                        throw CoreExceptionFactory.CreateException<EntityNotFoundException>(CoreErrors.BUSVAL500, typeof(TEntity), id);
+
+                    if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
+                    {
+                        var softDelete = entityToDelete as ISoftDelete;
+                        softDelete.IsDeleted = true;
+                        Repository.Update(entityToDelete, softDelete as TEntity);
+                    }
+                    else
+                    {
+                        Repository.Delete(entityToDelete);
+                    }
+                    uow.SaveChanges();
                 }
-                else
-                {
-                    Repository.Delete(entityToDelete);
-                }
-                UnitOfWork.SaveChanges();
             }
             catch (BusinessRulesValidationException) { throw; }
             catch (TechnicalException) { throw; }
@@ -254,8 +260,8 @@ namespace malone.Core.Business.Components
         where TValidator : IBusinessValidator<TEntity>
     {
 
-        public BusinessComponent(IUnitOfWork unitOfWork, TValidator businessValidator, IRepository<TEntity> repository, ILogger logger)
-            : base(unitOfWork, businessValidator, repository, logger)
+        public BusinessComponent(TValidator businessValidator, IRepository<TEntity> repository, ILogger logger)
+            : base(businessValidator, repository, logger)
         {
         }
     }

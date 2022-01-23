@@ -8,9 +8,6 @@ on:
   push:
     branches:
       - master
-  pull_request:
-    branches: 
-      - master
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -31,9 +28,7 @@ jobs:
         uses: NuGet/setup-nuget@v1.0.2
 
       - name: Add GitHub Source
-        run: |
-              nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ secrets.GITHUB_TOKEN }}
-              nuget sources add -name "github-nbn" -Source https://nuget.pkg.github.com/nbn-code/index.json -Username malonejv -Password ${{ secrets.GITHUB_TOKEN }}
+        run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ secrets.GITHUB_TOKEN }}
     
       - name: Nuget Restore Core Packages
         run:  nuget restore src/malone.Core.sln
@@ -66,9 +61,7 @@ jobs:
               nuget pack src/malone.Core.Identity.EntityFramework/malone.Core.Identity.EntityFramework.csproj -Properties Configuration=Release -Version ${{ env.MALONE_CORE_VER }} -IncludeReferencedProjects
                         
       - name: Push Packages
-        run:  |
-              nuget push *.nupkg -SkipDuplicate -source "github"
-              nuget push *.nupkg -SkipDuplicate -source "github-nbn"
+        run:  nuget push *.nupkg -SkipDuplicate -source "github"
         
       - name: Create Release
         id: create_release

@@ -18,8 +18,9 @@ namespace ErgaOmnes.Api.Controllers.v2
     [RoutePrefix("v{version:apiVersion}/Ejemplo")]
     public class EjemploController : CoreApiController<EjemploGetRequestParam, Ejemplo, IEjemploBC, IEjemploBV>
     {
+        public Mapper Mapper { get; set; }
 
-        public EjemploController(IEjemploBC businessComponent, Mapper mapperInstance) : base(businessComponent, mapperInstance)
+        public EjemploController(IEjemploBC businessComponent, Mapper mapperInstance) : base(businessComponent)
         {
         }
 
