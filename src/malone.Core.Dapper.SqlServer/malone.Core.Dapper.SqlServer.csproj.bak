@@ -4,18 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DA87FBBB-48F4-46D4-90EF-AF4230A97088}</ProjectGuid>
+    <ProjectGuid>{EE8184F9-2C69-4AE4-8D17-2078E43EED40}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>malone.Core.AdoNet.Oracle</RootNamespace>
-    <AssemblyName>malone.Core.AdoNet.Oracle</AssemblyName>
+    <RootNamespace>malone.Core.Dapper.SqlServer</RootNamespace>
+    <AssemblyName>malone.Core.Dapper.SqlServer</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>false</Deterministic>
-    <PackageIcon>capibara.png</PackageIcon>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,11 +38,10 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Oracle.ManagedDataAccess.19.8.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Dapper.2.0.78\lib\net461\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -58,39 +53,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs">
-      <Link>Properties\GlobalAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="Attributes\OracleResultSetAttribute.cs" />
-    <Compile Include="OracleDatabase.cs" />
-    <Compile Include="TypeConverters\OracleDecimalToIntParameterConverter.cs" />
-    <Compile Include="TypeConverters\OracleNumberToDecimalConverter.cs" />
-    <Compile Include="TypeConverters\OracleNumberToFloatConverter.cs" />
-    <Compile Include="TypeConverters\OracleStringToStringParameterConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TypeConverters\OracleVarcharToSecureString.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="capibara.png" Pack="true" PackagePath="\" />
-    <None Include="malone.Core.AdoNet.Oracle.nuspec">
-      <TransformOnBuild>true</TransformOnBuild>
-    </None>
-    <None Include="packages.config" />
+    <Compile Include="SqlDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\malone.Core.AdoNet\malone.Core.AdoNet.csproj">
       <Project>{492F80C1-E1F2-4CC9-8DBE-83BA63E7DE4C}</Project>
       <Name>malone.Core.AdoNet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\malone.Core\malone.Core.csproj">
-      <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
-      <Name>malone.Core</Name>
+    <ProjectReference Include="..\malone.Core.Dapper\malone.Core.Dapper.csproj">
+      <Project>{207004DC-E04E-4A6D-97A2-42172836E7D2}</Project>
+      <Name>malone.Core.Dapper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
-    <Analyzer Include="..\..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

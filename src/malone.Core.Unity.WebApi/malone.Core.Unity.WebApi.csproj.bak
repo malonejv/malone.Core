@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E76A146E-3EF3-427F-B496-054CF5946CE0}</ProjectGuid>
+    <ProjectGuid>{DD776491-CE90-473C-B361-51E0F476DCA7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>malone.Core.Unity</RootNamespace>
-    <AssemblyName>malone.Core.Unity</AssemblyName>
+    <RootNamespace>malone.Core.Unity.WebApi</RootNamespace>
+    <AssemblyName>malone.Core.Unity.WebApi</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>false</Deterministic>
@@ -42,15 +42,19 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -58,23 +62,11 @@
       <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -85,11 +77,11 @@
     <Reference Include="Unity.Abstractions, Version=5.11.6.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Unity.Abstractions.5.11.6\lib\net47\Unity.Abstractions.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.AspNet.WebApi, Version=5.11.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.AspNet.WebApi.5.11.2\lib\net47\Unity.AspNet.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Container, Version=5.11.8.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Unity.Container.5.11.8\lib\net47\Unity.Container.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Mvc, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Unity.Mvc.5.11.1\lib\net47\Unity.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
@@ -100,43 +92,24 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnityActivator.cs" />
-    <Compile Include="UnityConfig.cs" />
-    <Compile Include="UnityMvcActivator.cs" />
-    <Compile Include="UnityServiceLocator.cs" />
+    <Compile Include="UnityWebApiActivator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="capibara.png" Pack="true" PackagePath="\" />
-    <None Include="malone.Core.Unity.nuspec">
+    <None Include="malone.Core.Unity.WebApi.nuspec">
       <TransformOnBuild>true</TransformOnBuild>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\malone.Core.Unity.IdentityDapperInitializer\malone.Core.Unity.IdentityDapperInitializer.csproj">
-      <Project>{4d280359-094d-41bf-a2cd-5f0090f0ef69}</Project>
-      <Name>malone.Core.Unity.IdentityDapperInitializer</Name>
+    <ProjectReference Include="..\malone.Core.Unity\malone.Core.Unity.csproj">
+      <Project>{e76a146e-3ef3-427f-b496-054cf5946ce0}</Project>
+      <Name>malone.Core.Unity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\malone.Core.Unity.IdentityAdoNetSqlServerInitializer\malone.Core.Unity.IdentityAdoNetSqlServerInitializer.csproj">
-      <Project>{1c1a8c42-f043-4d14-b522-e501580d3364}</Project>
-      <Name>malone.Core.Unity.IdentityAdoNetSqlServerInitializer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\malone.Core.Unity.IdentityEntityFrameworkInitializer\malone.Core.Unity.IdentityEntityFrameworkInitializer.csproj">
-      <Project>{AEF2E9DC-848A-42C9-9EB9-9A6F4CA1EB7D}</Project>
-      <Name>malone.Core.Unity.IdentityEntityFrameworkInitializer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\malone.Core.Unity.Log4NetInitializer\malone.Core.Unity.Log4NetInitializer.csproj">
-      <Project>{E3F7C799-234E-471C-A12B-B9BE04DA1B40}</Project>
-      <Name>malone.Core.Unity.Log4NetInitializer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\malone.Core.Unity.ModulesInitializers\malone.Core.Unity.ModulesInitializers.csproj">
-      <Project>{87C16AD7-E22F-4118-BD34-A34041076975}</Project>
-      <Name>malone.Core.Unity.ModulesInitializers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\malone.Core\malone.Core.csproj">
-      <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
-      <Name>malone.Core</Name>
+    <ProjectReference Include="..\malone.Core.WebApi\malone.Core.WebApi.csproj">
+      <Project>{C0B7AE10-F8E3-4177-B937-F1787A7F0DF3}</Project>
+      <Name>malone.Core.WebApi</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

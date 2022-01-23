@@ -28,7 +28,7 @@
 		<contentFiles>
 			<!-- Include Assets as Content -->
 			<files include="*.png" buildAction="None" copyToOutput="false" />
-			<files include="*.xsd" buildAction="None" copyToOutput="false" />
+			<files include="*.xsd" buildAction="EmbeddedResource" copyToOutput="false" />
 		</contentFiles>
 	</metadata>
 	<files>
