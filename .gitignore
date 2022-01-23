@@ -354,6 +354,7 @@ MigrationBackup/
 /src/malone.Core/[Vv]ariables.txt
 /resources/MDB-Free_4.19.1
 
+**/*.bak
 
 # Ignore project
 samples/ErgaOmnes.Api/
