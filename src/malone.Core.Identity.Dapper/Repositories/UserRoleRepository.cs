@@ -33,12 +33,7 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         #region Public Methods
 
-        /// <summary>
-        /// Returns a list of user's roles
-        /// </summary>
-        /// <param name="userId">The user's id</param>
-        /// <returns></returns>
-        public List<string> FindByUserId<TUserKey>(TUserKey userId)
+                                                public List<string> FindByUserId<TUserKey>(TUserKey userId)
             where TUserKey : IEquatable<TUserKey>
         {
             List<string> roles = new List<string>();
@@ -50,12 +45,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return result.ToList();
         }
 
-        /// <summary>
-        /// Deletes all roles from a user in the UserRoles table
-        /// </summary>
-        /// <param name="userId">The user's id</param>
-        /// <returns></returns>
-        public int Delete<TUserKey, TRoleKey>(TUserKey userId, TRoleKey roleId)
+                                                public int Delete<TUserKey, TRoleKey>(TUserKey userId, TRoleKey roleId)
             where TUserKey : IEquatable<TUserKey>
             where TRoleKey : IEquatable<TRoleKey>
         {
@@ -67,13 +57,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-        /// <summary>
-        /// Inserts a new role for a user in the UserRoles table
-        /// </summary>
-        /// <param name="user">The User</param>
-        /// <param name="roleId">The Role's id</param>
-        /// <returns></returns>
-        public int Insert<TUserKey, TRoleKey>(TUserKey userId, TRoleKey roleId)
+                                                        public int Insert<TUserKey, TRoleKey>(TUserKey userId, TRoleKey roleId)
             where TUserKey : IEquatable<TUserKey>
             where TRoleKey : IEquatable<TRoleKey>
         {

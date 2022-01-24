@@ -6,29 +6,14 @@ using System;
 //http://lourenco.co.za/blog/2013/07/audit-trails-concurrency-and-soft-deletion-with-entity-framework/
 namespace malone.Core.Entities.Model
 {
-    /// <summary>
-    /// Defines the <see cref="IAuditable" />.
-    /// </summary>
-    public interface IAuditable
+                public interface IAuditable
     {
-        /// <summary>
-        /// Gets or sets the CreatedById.
-        /// </summary>
-        Guid CreatedById { get; set; }
+                                Guid CreatedById { get; set; }
 
-        /// <summary>
-        /// Gets or sets the CreatedDateTime.
-        /// </summary>
-        DateTime CreatedDateTime { get; set; }
+                                DateTime CreatedDateTime { get; set; }
 
-        /// <summary>
-        /// Gets or sets the EditedById.
-        /// </summary>
-        Guid EditedById { get; set; }
+                                Guid EditedById { get; set; }
 
-        /// <summary>
-        /// Gets or sets the EditedDateTime.
-        /// </summary>
-        DateTime EditedDateTime { get; set; }
+                                DateTime EditedDateTime { get; set; }
     }
 }

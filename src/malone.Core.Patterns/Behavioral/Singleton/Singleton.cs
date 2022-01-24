@@ -22,13 +22,7 @@ namespace malone.Core.Patterns.Behavioral.Singleton
             return ctor.Invoke(new object[] { }) as T;
         }, LazyThreadSafetyMode.ExecutionAndPublication);
 
-        /// <summary>
-        ///     Singleton instance access property.
-        /// </summary>
-        /// <value>
-        ///     The instance.
-        /// </value>
-        public static T Instance
+                                                        public static T Instance
         {
             get { return instance.Value; }
         }

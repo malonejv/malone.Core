@@ -34,13 +34,7 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         #region Public Methods
 
-        /// <summary>
-        /// Deletes a login from a user in the UsersLogins table
-        /// </summary>
-        /// <param name="user">User to have login deleted</param>
-        /// <param name="login">Login to be deleted from user</param>
-        /// <returns></returns>
-        public int Delete<TUserKey>(TUserKey userId, UserLoginInfo login)
+                                                        public int Delete<TUserKey>(TUserKey userId, UserLoginInfo login)
             where TUserKey : IEquatable<TUserKey>
         {
             string commandText = "Delete from UsersLogins where UserId = @userId and LoginProvider = @loginProvider and ProviderKey = @providerKey";
@@ -52,12 +46,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-        /// <summary>
-        /// Deletes all Logins from a user in the UsersLogins table
-        /// </summary>
-        /// <param name="userId">The user's id</param>
-        /// <returns></returns>
-        public int Delete<TUserKey>(TUserKey userId)
+                                                public int Delete<TUserKey>(TUserKey userId)
         {
             string commandText = "Delete from UsersLogins where UserId = @userId";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -66,13 +55,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-        /// <summary>
-        /// Inserts a new login in the UsersLogins table
-        /// </summary>
-        /// <param name="user">User to have new login added</param>
-        /// <param name="login">Login to be added</param>
-        /// <returns></returns>
-        public int Insert<TUserKey>(TUserKey userId, UserLoginInfo login)
+                                                        public int Insert<TUserKey>(TUserKey userId, UserLoginInfo login)
             where TUserKey : IEquatable<TUserKey>
         {
             string commandText = "Insert into UsersLogins (LoginProvider, ProviderKey, UserId) values (@loginProvider, @providerKey, @userId)";
@@ -84,12 +67,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-        /// <summary>
-        /// Return a userId given a user's login
-        /// </summary>
-        /// <param name="userLogin">The user's login info</param>
-        /// <returns></returns>
-        public TUserKey FindUserIdByLogin<TUserKey>(UserLoginInfo userLogin)
+                                                public TUserKey FindUserIdByLogin<TUserKey>(UserLoginInfo userLogin)
             where TUserKey : IEquatable<TUserKey>
         {
             string commandText = "Select UserId from UsersLogins where LoginProvider = @loginProvider and ProviderKey = @providerKey";
@@ -100,12 +78,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.QueryFirstOrDefault<TUserKey>(commandText, parameters, transaction: Context.Transaction);
         }
 
-        /// <summary>
-        /// Returns a list of user's logins
-        /// </summary>
-        /// <param name="userId">The user's id</param>
-        /// <returns></returns>
-        public List<UserLoginInfo> FindByUserId<TUserKey>(TUserKey userId)
+                                                public List<UserLoginInfo> FindByUserId<TUserKey>(TUserKey userId)
             where TUserKey : IEquatable<TUserKey>
         {
             List<UserLoginInfo> logins = new List<UserLoginInfo>();

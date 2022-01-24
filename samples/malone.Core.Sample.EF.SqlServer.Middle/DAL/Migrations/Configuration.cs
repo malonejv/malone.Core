@@ -25,10 +25,7 @@ using Unity.Injection;
 
 namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Migrations
 {
-    /// <summary>
-    /// Se ejecuta cuando se ejecuta el comando update-database
-    /// </summary>
-    internal sealed class Configuration : DbMigrationsConfiguration<SampleContext>
+                internal sealed class Configuration : DbMigrationsConfiguration<SampleContext>
     {
         public Configuration()
         {

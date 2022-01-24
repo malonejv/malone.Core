@@ -5,17 +5,9 @@ using System.Security.Cryptography;
 
 namespace malone.Core.Commons.Security
 {
-    /// <summary>
-    /// Defines the <see cref="CryptoServiceFactory" />.
-    /// </summary>
-    public class CryptoServiceFactory
+                public class CryptoServiceFactory
     {
-        /// <summary>
-        /// The Create.
-        /// </summary>
-        /// <param name="algorithm">The algorithm<see cref="SymmetricAlgorithm"/>.</param>
-        /// <returns>The <see cref="CryptoService"/>.</returns>
-        public static CryptoService Create(SymmetricAlgorithm algorithm = null)
+                                                public static CryptoService Create(SymmetricAlgorithm algorithm = null)
         {
             if (algorithm == null)
                 return CryptoService.CreateAES();

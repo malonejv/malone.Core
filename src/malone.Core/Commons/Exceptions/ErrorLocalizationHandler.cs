@@ -6,14 +6,8 @@ using System.Resources;
 
 namespace malone.Core.Commons.Exceptions
 {
-    /// <summary>
-    /// Defines the <see cref="ErrorLocalizationHandler" />.
-    /// </summary>
-    internal class ErrorLocalizationHandler : LocalizationHandler<CoreErrors>, IErrorLocalizationHandler
+                internal class ErrorLocalizationHandler : LocalizationHandler<CoreErrors>, IErrorLocalizationHandler
     {
-        /// <summary>
-        /// Gets the ResourceManager.
-        /// </summary>
-        public override ResourceManager ResourceManager => Resources.Exceptions.ResourceManager;
+                                public override ResourceManager ResourceManager => Resources.Exceptions.ResourceManager;
     }
 }

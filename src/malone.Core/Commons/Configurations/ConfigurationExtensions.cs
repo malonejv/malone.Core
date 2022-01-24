@@ -10,20 +10,11 @@ using System.Configuration;
 
 namespace malone.Core.Commons.Configurations
 {
-    /// <summary>
-    /// Defines the <see cref="ConfigurationExtensions" />.
-    /// </summary>
-    public static class ConfigurationExtensions
+                public static class ConfigurationExtensions
     {
-        /// <summary>
-        /// Defines the logger.
-        /// </summary>
-        internal static ILogger logger;
+                                internal static ILogger logger;
 
-        /// <summary>
-        /// Gets the Logger.
-        /// </summary>
-        internal static ILogger Logger
+                                internal static ILogger Logger
         {
             get
             {
@@ -35,12 +26,7 @@ namespace malone.Core.Commons.Configurations
             }
         }
 
-        /// <summary>
-        /// The SectionName.
-        /// </summary>
-        /// <param name="configurationType">The configurationType<see cref="Type"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
-        internal static string SectionName(this Type configurationType)
+                                                internal static string SectionName(this Type configurationType)
         {
             try
             {

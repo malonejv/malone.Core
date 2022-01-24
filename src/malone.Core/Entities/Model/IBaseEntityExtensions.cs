@@ -7,19 +7,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace malone.Core.Entities.Model
 {
-    /// <summary>
-    /// Defines the <see cref="IBaseEntityExtensions" />.
-    /// </summary>
-    public static class IBaseEntityExtensions
+                public static class IBaseEntityExtensions
     {
-        /// <summary>
-        /// The Clone.
-        /// </summary>
-        /// <typeparam name="TEntity">.</typeparam>
-        /// <typeparam name="TKey">.</typeparam>
-        /// <param name="entityToClone">The entityToClone<see cref="TEntity"/>.</param>
-        /// <returns>The <see cref="TEntity"/>.</returns>
-        public static TEntity Clone<TEntity, TKey>(this TEntity entityToClone)
+                                                                public static TEntity Clone<TEntity, TKey>(this TEntity entityToClone)
             where TKey : IEquatable<TKey>
             where TEntity : class, IBaseEntity<TKey>
         {

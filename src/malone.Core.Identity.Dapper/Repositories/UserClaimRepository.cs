@@ -35,12 +35,7 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         #region Public Methods
 
-        /// <summary>
-        /// Returns a ClaimsIdentity instance given a userId
-        /// </summary>
-        /// <param name="userId">The user's id</param>
-        /// <returns></returns>
-        public ClaimsIdentity FindByUserId<TUserKey>(TUserKey userId)
+                                                public ClaimsIdentity FindByUserId<TUserKey>(TUserKey userId)
             where TUserKey : IEquatable<TUserKey>
         {
             ClaimsIdentity claims = new ClaimsIdentity();
@@ -58,12 +53,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return claims;
         }
 
-        /// <summary>
-        /// Deletes all claims from a user given a userId
-        /// </summary>
-        /// <param name="userId">The user's id</param>
-        /// <returns></returns>
-        public int Delete<TUserKey>(TUserKey userId)
+                                                public int Delete<TUserKey>(TUserKey userId)
             where TUserKey : IEquatable<TUserKey>
         {
             string commandText = "Delete from UsersClaims where UserId = @userId";
@@ -73,13 +63,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-        /// <summary>
-        /// Inserts a new claim in UserClaims table
-        /// </summary>
-        /// <param name="userClaim">User's claim to be added</param>
-        /// <param name="userId">User's id</param>
-        /// <returns></returns>
-        public int Insert<TUserKey>(TUserKey userId, Claim userClaim)
+                                                        public int Insert<TUserKey>(TUserKey userId, Claim userClaim)
             where TUserKey : IEquatable<TUserKey>
         {
             string commandText = "Insert into UsersClaims (ClaimValue, ClaimType, UserId) values (@value, @type, @userId)";
@@ -91,13 +75,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-        /// <summary>
-        /// Deletes a claim from a user 
-        /// </summary>
-        /// <param name="user">The user to have a claim deleted</param>
-        /// <param name="claim">A claim to be deleted from user</param>
-        /// <returns></returns>
-        public int Delete<TUserKey>(TUserKey userId, Claim claim)
+                                                        public int Delete<TUserKey>(TUserKey userId, Claim claim)
             where TUserKey : IEquatable<TUserKey>
         {
             string commandText = "Delete from UsersClaims where UserId = @userId and @ClaimValue = @value and ClaimType = @type";

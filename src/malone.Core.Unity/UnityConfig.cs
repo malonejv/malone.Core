@@ -34,16 +34,12 @@ namespace malone.Core.Unity
 
               RegisterCoreTypes(container);
 
-              ////OPTION: Uncomment if you want to use PerRequestLifetimeManager
-              //DynamicModuleUtility.RegisterModule(typeof(UnityPerRequestHttpModule));
+                            //DynamicModuleUtility.RegisterModule(typeof(UnityPerRequestHttpModule));
 
               return container;
           });
 
-        /// <summary>
-        /// Configured Unity Container.
-        /// </summary>
-        public static IUnityContainer Container => container.Value;
+                                public static IUnityContainer Container => container.Value;
 
         #endregion
 
@@ -51,17 +47,7 @@ namespace malone.Core.Unity
         {
         }
 
-        /// <summary>
-        /// Registers the type mappings with the Unity container.
-        /// </summary>
-        /// <param name="container">The unity container to configure.</param>
-        /// <remarks>
-        /// There is no need to register concrete types such as controllers or
-        /// API controllers (unless you want to change the defaults), as Unity
-        /// allows resolving a concrete type even if it was not previously
-        /// registered.
-        /// </remarks>
-        public static void RegisterCoreTypes(IUnityContainer container)
+                                                                                        public static void RegisterCoreTypes(IUnityContainer container)
         {
             //Inicialización de módulos base del core
             var basicModules = new BasicModulesInitializer();

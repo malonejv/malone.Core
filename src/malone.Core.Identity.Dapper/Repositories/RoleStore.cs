@@ -103,10 +103,7 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         protected bool _disposed;
 
-        /// <summary>
-        ///     Dispose the store
-        /// </summary>
-        public void Dispose()
+                                public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -120,11 +117,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             }
         }
 
-        /// <summary>
-        ///     If disposing, calls dispose on the Context.  Always nulls out the Context
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
+                                        protected virtual void Dispose(bool disposing)
         {
             if (disposing && Context != null)
             {

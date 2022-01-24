@@ -45,10 +45,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected ILogger Logger { get; }
 
-        /// <summary>
-        ///     If true will call SaveChanges after Create/Update/Delete
-        /// </summary>
-        public bool AutoSaveChanges { get; set; }
+                                public bool AutoSaveChanges { get; set; }
 
         public UserStore(IUserLoginRepository<TKey, TUserLogin> logins, IUserClaimRepository<TKey, TUserClaim> userClaims, IUserRoleRepository<TKey, TUserRole> userRoles, IRoleRepository<TKey, TRoleEntity> roles, IUserRepository<TKey, TUserEntity> users, IContext context, ILogger logger)
         {
@@ -551,12 +548,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         #region Protected methods
 
-        /// <summary>
-        /// Used to attach child entities to the User aggregate, i.e. Roles, Logins, and Claims
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        protected virtual async Task<TUserEntity> GetUserAggregateAsync(Expression<Func<TUserEntity, bool>> filter)
+                                                protected virtual async Task<TUserEntity> GetUserAggregateAsync(Expression<Func<TUserEntity, bool>> filter)
         {
             TKey id;
             string usernameOrEmail;
@@ -661,10 +653,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected bool _disposed;
 
-        /// <summary>
-        ///     Dispose the store
-        /// </summary>
-        public void Dispose()
+                                public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -678,11 +667,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
             }
         }
 
-        /// <summary>
-        ///     If disposing, calls dispose on the Context.  Always nulls out the Context
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
+                                        protected virtual void Dispose(bool disposing)
         {
             if (disposing && Context != null)
             {

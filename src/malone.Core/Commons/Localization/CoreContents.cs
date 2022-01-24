@@ -3,14 +3,8 @@
 
 namespace malone.Core.Commons.Localization
 {
-    /// <summary>
-    /// Defines the CoreContents.
-    /// </summary>
-    internal enum CoreContents
+                internal enum CoreContents
     {
-        /// <summary>
-        /// Support Id
-        /// </summary>
-        Logging_SupportId = 1
+                                Logging_SupportId = 1
     }
 }

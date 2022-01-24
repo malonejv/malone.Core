@@ -13,51 +13,24 @@ using System.Linq;
 
 namespace malone.Core.Business.Components
 {
-    /// <summary>
-    /// Defines the <see cref="BaseBusinessComponent{TEntity, TValidator}" />.
-    /// </summary>
-    /// <typeparam name="TEntity">.</typeparam>
-    /// <typeparam name="TValidator">.</typeparam>
-    public abstract class BaseBusinessComponent<TEntity, TValidator> : IBaseBusinessComponent<TEntity, TValidator>
+                        public abstract class BaseBusinessComponent<TEntity, TValidator> : IBaseBusinessComponent<TEntity, TValidator>
         where TEntity : class
         where TValidator : IBaseBusinessValidator<TEntity>
     {
-        /// <summary>
-        /// Gets or sets the Repository.
-        /// </summary>
-        public IBaseRepository<TEntity> Repository { get; set; }
+                                public IBaseRepository<TEntity> Repository { get; set; }
 
-        /// <summary>
-        /// Gets or sets the BusinessValidator.
-        /// </summary>
-        public TValidator BusinessValidator { get; set; }
+                                public TValidator BusinessValidator { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Logger.
-        /// </summary>
-        public ILogger Logger { get; set; }
+                                public ILogger Logger { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BaseBusinessComponent{TEntity, TValidator}"/> class.
-        /// </summary>
-        /// <param name="businessValidator">The businessValidator<see cref="TValidator"/>.</param>
-        /// <param name="repository">The repository<see cref="IBaseRepository{TEntity}"/>.</param>
-        /// <param name="logger">The logger<see cref="ILogger"/>.</param>
-        public BaseBusinessComponent(TValidator businessValidator, IBaseRepository<TEntity> repository, ILogger logger)
+                                                        public BaseBusinessComponent(TValidator businessValidator, IBaseRepository<TEntity> repository, ILogger logger)
         {
             BusinessValidator = businessValidator;
             Repository = repository;
             Logger = logger;
         }
 
-        /// <summary>
-        /// The GetAll.
-        /// </summary>
-        /// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
-        /// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-        /// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
-        /// <returns>The <see cref="IEnumerable{TEntity}"/>.</returns>
-        public virtual IEnumerable<TEntity> GetAll(
+                                                                public virtual IEnumerable<TEntity> GetAll(
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             bool includeDeleted = false,
             string includeProperties = ""
@@ -79,16 +52,7 @@ namespace malone.Core.Business.Components
             }
         }
 
-        /// <summary>
-        /// The Get.
-        /// </summary>
-        /// <typeparam name="TFilter">.</typeparam>
-        /// <param name="filter">The filter<see cref="TFilter"/>.</param>
-        /// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
-        /// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-        /// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
-        /// <returns>The <see cref="IEnumerable{TEntity}"/>.</returns>
-        public virtual IEnumerable<TEntity> Get<TFilter>(
+                                                                                public virtual IEnumerable<TEntity> Get<TFilter>(
         TFilter filter = default(TFilter),
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
         bool includeDeleted = false,
@@ -111,16 +75,7 @@ namespace malone.Core.Business.Components
             }
         }
 
-        /// <summary>
-        /// The GetEntity.
-        /// </summary>
-        /// <typeparam name="TFilter">.</typeparam>
-        /// <param name="filter">The filter<see cref="TFilter"/>.</param>
-        /// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
-        /// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-        /// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
-        /// <returns>The <see cref="TEntity"/>.</returns>
-        public TEntity GetEntity<TFilter>(
+                                                                                public TEntity GetEntity<TFilter>(
             TFilter filter = default(TFilter),
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             bool includeDeleted = false,
@@ -143,13 +98,7 @@ namespace malone.Core.Business.Components
             }
         }
 
-        /// <summary>
-        /// The Add.
-        /// </summary>
-        /// <param name="entity">The entity<see cref="TEntity"/>.</param>
-        /// <param name="saveChanges">The saveChanges<see cref="bool"/>.</param>
-        /// <param name="disposeUoW">The disposeUoW<see cref="bool"/>.</param>
-        public virtual void Add(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
+                                                        public virtual void Add(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
         {
             try
             {
@@ -179,14 +128,7 @@ namespace malone.Core.Business.Components
             }
         }
 
-        /// <summary>
-        /// The Update.
-        /// </summary>
-        /// <param name="oldValues">The oldValues<see cref="TEntity"/>.</param>
-        /// <param name="newValues">The newValues<see cref="TEntity"/>.</param>
-        /// <param name="saveChanges">The saveChanges<see cref="bool"/>.</param>
-        /// <param name="disposeUoW">The disposeUoW<see cref="bool"/>.</param>
-        public virtual void Update(TEntity oldValues, TEntity newValues, bool saveChanges = true, bool disposeUoW = true)
+                                                                public virtual void Update(TEntity oldValues, TEntity newValues, bool saveChanges = true, bool disposeUoW = true)
         {
             try
             {
@@ -228,13 +170,7 @@ namespace malone.Core.Business.Components
             }
         }
 
-        /// <summary>
-        /// The Delete.
-        /// </summary>
-        /// <param name="entity">The entity<see cref="TEntity"/>.</param>
-        /// <param name="saveChanges">The saveChanges<see cref="bool"/>.</param>
-        /// <param name="disposeUoW">The disposeUoW<see cref="bool"/>.</param>
-        public virtual void Delete(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
+                                                        public virtual void Delete(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
         {
             try
             {
@@ -273,75 +209,35 @@ namespace malone.Core.Business.Components
             }
         }
 
-        /// <summary>
-        /// The CheckEntity.
-        /// </summary>
-        /// <param name="entity">The entity<see cref="TEntity"/>.</param>
-        protected void CheckEntity(TEntity entity)
+                                        protected void CheckEntity(TEntity entity)
         {
             if (entity == default(TEntity)) throw new ArgumentException(nameof(entity));
         }
 
-        /// <summary>
-        /// The CheckEntityId.
-        /// </summary>
-        /// <param name="entity">The entity<see cref="TEntity"/>.</param>
-        protected abstract void CheckEntityId(TEntity entity);
+                                        protected abstract void CheckEntityId(TEntity entity);
 
-        /// <summary>
-        /// The CheckId.
-        /// </summary>
-        /// <param name="args">The args<see cref="object[]"/>.</param>
-        protected abstract void CheckId(params object[] args);
+                                        protected abstract void CheckId(params object[] args);
     }
 
-    /// <summary>
-    /// Defines the <see cref="BusinessComponent{TKey, TEntity, TValidator}" />.
-    /// </summary>
-    /// <typeparam name="TKey">.</typeparam>
-    /// <typeparam name="TEntity">.</typeparam>
-    /// <typeparam name="TValidator">.</typeparam>
-    public abstract class BusinessComponent<TKey, TEntity, TValidator> : BaseBusinessComponent<TEntity, TValidator>, IBusinessComponent<TKey, TEntity, TValidator>
+                            public abstract class BusinessComponent<TKey, TEntity, TValidator> : BaseBusinessComponent<TEntity, TValidator>, IBusinessComponent<TKey, TEntity, TValidator>
         where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
         where TValidator : IBusinessValidator<TKey, TEntity>
     {
-        /// <summary>
-        /// Gets or sets the Repository.
-        /// </summary>
-        public IRepository<TKey, TEntity> Repository { get; set; }
+                                public IRepository<TKey, TEntity> Repository { get; set; }
 
-        /// <summary>
-        /// Gets or sets the BusinessValidator.
-        /// </summary>
-        public TValidator BusinessValidator { get; set; }
+                                public TValidator BusinessValidator { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Logger.
-        /// </summary>
-        public ILogger Logger { get; set; }
+                                public ILogger Logger { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BusinessComponent{TKey, TEntity, TValidator}"/> class.
-        /// </summary>
-        /// <param name="businessValidator">The businessValidator<see cref="TValidator"/>.</param>
-        /// <param name="repository">The repository<see cref="IRepository{TKey, TEntity}"/>.</param>
-        /// <param name="logger">The logger<see cref="ILogger"/>.</param>
-        public BusinessComponent(TValidator businessValidator, IRepository<TKey, TEntity> repository, ILogger logger) : base(businessValidator, repository, logger)
+                                                        public BusinessComponent(TValidator businessValidator, IRepository<TKey, TEntity> repository, ILogger logger) : base(businessValidator, repository, logger)
         {
             BusinessValidator = businessValidator;
             Repository = repository;
             Logger = logger;
         }
 
-        /// <summary>
-        /// The GetById.
-        /// </summary>
-        /// <param name="id">The id<see cref="TKey"/>.</param>
-        /// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-        /// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
-        /// <returns>The <see cref="TEntity"/>.</returns>
-        public virtual TEntity GetById(
+                                                                public virtual TEntity GetById(
             TKey id,
             bool includeDeleted = false,
             string includeProperties = "")
@@ -364,13 +260,7 @@ namespace malone.Core.Business.Components
             }
         }
 
-        /// <summary>
-        /// The Update.
-        /// </summary>
-        /// <param name="entity">The entity<see cref="TEntity"/>.</param>
-        /// <param name="saveChanges">The saveChanges<see cref="bool"/>.</param>
-        /// <param name="disposeUoW">The disposeUoW<see cref="bool"/>.</param>
-        public virtual void Update(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
+                                                        public virtual void Update(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
         {
             try
             {
@@ -411,13 +301,7 @@ namespace malone.Core.Business.Components
             }
         }
 
-        /// <summary>
-        /// The Delete.
-        /// </summary>
-        /// <param name="id">The id<see cref="TKey"/>.</param>
-        /// <param name="saveChanges">The saveChanges<see cref="bool"/>.</param>
-        /// <param name="disposeUoW">The disposeUoW<see cref="bool"/>.</param>
-        public virtual void Delete(TKey id, bool saveChanges = true, bool disposeUoW = true)
+                                                        public virtual void Delete(TKey id, bool saveChanges = true, bool disposeUoW = true)
         {
             try
             {
@@ -441,38 +325,22 @@ namespace malone.Core.Business.Components
             }
         }
 
-        /// <summary>
-        /// The CheckEntity.
-        /// </summary>
-        /// <param name="entity">The entity<see cref="TEntity"/>.</param>
-        protected void CheckEntity(TEntity entity)
+                                        protected void CheckEntity(TEntity entity)
         {
             if (entity == default(TEntity)) throw new ArgumentException(nameof(entity));
         }
 
-        /// <summary>
-        /// The CheckEntityId.
-        /// </summary>
-        /// <param name="entity">The entity<see cref="TEntity"/>.</param>
-        protected override void CheckEntityId(TEntity entity)
+                                        protected override void CheckEntityId(TEntity entity)
         {
             if (entity.Id.Equals(default(TKey))) throw new ArgumentException(nameof(entity.Id));
         }
 
-        /// <summary>
-        /// The CheckId.
-        /// </summary>
-        /// <param name="id">The id<see cref="TKey"/>.</param>
-        protected void CheckId(TKey id)
+                                        protected void CheckId(TKey id)
         {
             if (id.Equals(default(TKey))) throw new ArgumentException(nameof(id));
         }
 
-        /// <summary>
-        /// The CheckId.
-        /// </summary>
-        /// <param name="args">The args<see cref="object[]"/>.</param>
-        protected override void CheckId(params object[] args)
+                                        protected override void CheckId(params object[] args)
         {
             if (args == null) throw new ArgumentNullException(nameof(args));
             if (args.Length == 0) throw new ArgumentException(nameof(args));
@@ -483,22 +351,11 @@ namespace malone.Core.Business.Components
         }
     }
 
-    /// <summary>
-    /// Defines the <see cref="BusinessComponent{TEntity, TValidator}" />.
-    /// </summary>
-    /// <typeparam name="TEntity">.</typeparam>
-    /// <typeparam name="TValidator">.</typeparam>
-    public abstract class BusinessComponent<TEntity, TValidator> : BusinessComponent<int, TEntity, TValidator>, IBusinessComponent<TEntity, TValidator>
+                        public abstract class BusinessComponent<TEntity, TValidator> : BusinessComponent<int, TEntity, TValidator>, IBusinessComponent<TEntity, TValidator>
         where TEntity : class, IBaseEntity
         where TValidator : IBusinessValidator<TEntity>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BusinessComponent{TEntity, TValidator}"/> class.
-        /// </summary>
-        /// <param name="businessValidator">The businessValidator<see cref="TValidator"/>.</param>
-        /// <param name="repository">The repository<see cref="IRepository{TEntity}"/>.</param>
-        /// <param name="logger">The logger<see cref="ILogger"/>.</param>
-        public BusinessComponent(TValidator businessValidator, IRepository<TEntity> repository, ILogger logger)
+                                                        public BusinessComponent(TValidator businessValidator, IRepository<TEntity> repository, ILogger logger)
             : base(businessValidator, repository, logger)
         {
         }

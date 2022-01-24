@@ -10,37 +10,21 @@
 
 namespace malone.Core.Commons.Exceptions.Resources
 {
-    /// <summary>
-    /// A strongly-typed resource class, for looking up localized strings, etc.
-    /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Exceptions
     {
-        /// <summary>
-        /// Defines the resourceMan.
-        /// </summary>
-        private static global::System.Resources.ResourceManager resourceMan;
+                                private static global::System.Resources.ResourceManager resourceMan;
 
-        /// <summary>
-        /// Defines the resourceCulture.
-        /// </summary>
-        private static global::System.Globalization.CultureInfo resourceCulture;
+                                private static global::System.Globalization.CultureInfo resourceCulture;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Exceptions"/> class.
-        /// </summary>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+                                [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Exceptions()
         {
         }
 
-        /// <summary>
-        /// Gets the ResourceManager
-        /// Returns the cached ResourceManager instance used by this class...
-        /// </summary>
-        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+                                        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Resources.ResourceManager ResourceManager
         {
             get
@@ -54,12 +38,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets or sets the Culture
-        /// Overrides the current thread's CurrentUICulture property for all
-        ///   resource lookups using this strongly typed resource class...
-        /// </summary>
-        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+                                                [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture
         {
             get
@@ -72,11 +51,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the BUSINESS400
-        /// Looks up a localized string similar to Se produjo un error al intentar obtener los datos solicitados....
-        /// </summary>
-        internal static string BUSINESS400
+                                        internal static string BUSINESS400
         {
             get
             {
@@ -84,11 +59,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the BUSINESS401
-        /// Looks up a localized string similar to Se produjo un error al intentar guardar los datos solicitados....
-        /// </summary>
-        internal static string BUSINESS401
+                                        internal static string BUSINESS401
         {
             get
             {
@@ -96,11 +67,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the BUSINESS402
-        /// Looks up a localized string similar to Se produjo un error al intentar eliminar el dato solicitado....
-        /// </summary>
-        internal static string BUSINESS402
+                                        internal static string BUSINESS402
         {
             get
             {
@@ -108,11 +75,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the BUSINESS403
-        /// Looks up a localized string similar to Se produjo un error al intentar actualizar los datos solicitados....
-        /// </summary>
-        internal static string BUSINESS403
+                                        internal static string BUSINESS403
         {
             get
             {
@@ -120,11 +83,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the BUSINESS404
-        /// Looks up a localized string similar to No se encontraron resultados para la consulta realizada....
-        /// </summary>
-        internal static string BUSINESS404
+                                        internal static string BUSINESS404
         {
             get
             {
@@ -132,11 +91,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the BUSINESS405
-        /// Looks up a localized string similar to Nombre de usuario o contraseña invalido....
-        /// </summary>
-        internal static string BUSINESS405
+                                        internal static string BUSINESS405
         {
             get
             {
@@ -144,11 +99,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the BUSINESS406
-        /// Looks up a localized string similar to Debes confirmar el email primero....
-        /// </summary>
-        internal static string BUSINESS406
+                                        internal static string BUSINESS406
         {
             get
             {
@@ -156,11 +107,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the BUSVAL500
-        /// Looks up a localized string similar to La consulta para obtener una entidad de tipo {0}, por id {1} no devolvió resultados....
-        /// </summary>
-        internal static string BUSVAL500
+                                        internal static string BUSVAL500
         {
             get
             {
@@ -168,11 +115,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the CONF1
-        /// Looks up a localized string similar to Ocurrió un error al tratar de obtener el nombre de seccion del tipo {0}...
-        /// </summary>
-        internal static string CONF1
+                                        internal static string CONF1
         {
             get
             {
@@ -180,11 +123,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the CONF2
-        /// Looks up a localized string similar to No se encuentra configurada la sección para el tipo {0}....
-        /// </summary>
-        internal static string CONF2
+                                        internal static string CONF2
         {
             get
             {
@@ -192,11 +131,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the DATAACCESS600
-        /// Looks up a localized string similar to Error al obtener una lista ordenada de tipo {0}....
-        /// </summary>
-        internal static string DATAACCESS600
+                                        internal static string DATAACCESS600
         {
             get
             {
@@ -204,11 +139,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the DATAACCESS601
-        /// Looks up a localized string similar to Error al obtener una entidad de tipo {0}....
-        /// </summary>
-        internal static string DATAACCESS601
+                                        internal static string DATAACCESS601
         {
             get
             {
@@ -216,11 +147,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the DATAACCESS602
-        /// Looks up a localized string similar to Error al insertar una entidad de tipo {0}....
-        /// </summary>
-        internal static string DATAACCESS602
+                                        internal static string DATAACCESS602
         {
             get
             {
@@ -228,11 +155,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the DATAACCESS603
-        /// Looks up a localized string similar to Error al eliminar una entidad de tipo {0}....
-        /// </summary>
-        internal static string DATAACCESS603
+                                        internal static string DATAACCESS603
         {
             get
             {
@@ -240,11 +163,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the DATAACCESS604
-        /// Looks up a localized string similar to Error al actualizar una entidad de tipo {0}....
-        /// </summary>
-        internal static string DATAACCESS604
+                                        internal static string DATAACCESS604
         {
             get
             {
@@ -252,11 +171,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the DATAACCESS605
-        /// Looks up a localized string similar to Error en la validación de CommandText {0}....
-        /// </summary>
-        internal static string DATAACCESS605
+                                        internal static string DATAACCESS605
         {
             get
             {
@@ -264,11 +179,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the SERVAG700
-        /// Looks up a localized string similar to Se produjo un error en la llamada al servicio {0}....
-        /// </summary>
-        internal static string SERVAG700
+                                        internal static string SERVAG700
         {
             get
             {
@@ -276,11 +187,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the SERVICE300
-        /// Looks up a localized string similar to Usuario no autorizado....
-        /// </summary>
-        internal static string SERVICE300
+                                        internal static string SERVICE300
         {
             get
             {
@@ -288,12 +195,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the TECH200
-        /// Looks up a localized string similar to Perdón, algo salió mal.
-        ///{0}: {1}...
-        /// </summary>
-        internal static string TECH200
+                                                internal static string TECH200
         {
             get
             {
@@ -301,11 +203,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the TECH201
-        /// Looks up a localized string similar to Se produjo un error inesperado....
-        /// </summary>
-        internal static string TECH201
+                                        internal static string TECH201
         {
             get
             {
@@ -313,11 +211,7 @@ namespace malone.Core.Commons.Exceptions.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the TECH202
-        /// Looks up a localized string similar to El método {0} de la clase {1} no se encuentra implementado....
-        /// </summary>
-        internal static string TECH202
+                                        internal static string TECH202
         {
             get
             {

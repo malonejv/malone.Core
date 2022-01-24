@@ -5,40 +5,19 @@ using System.ComponentModel;
 
 namespace malone.Core.Commons.Configurations
 {
-    /// <summary>
-    /// Defines the CoreModules.
-    /// </summary>
-    public enum CoreModules
+                public enum CoreModules
     {
-        /// <summary>
-        /// Defines the Basics.
-        /// </summary>
-        [Description("Basics")]
+                                [Description("Basics")]
         Basics,
-        /// <summary>
-        /// Defines the Log4NetLogger.
-        /// </summary>
-        [Description("Log4NetLogger")]
+                                [Description("Log4NetLogger")]
         Log4NetLogger,
-        /// <summary>
-        /// Defines the Features.
-        /// </summary>
-        [Description("Features")]
+                                [Description("Features")]
         Features,
-        /// <summary>
-        /// Defines the IdentityAdoNetSqlServer.
-        /// </summary>
-        [Description("IdentityAdoNetSqlServer")]
+                                [Description("IdentityAdoNetSqlServer")]
         IdentityAdoNetSqlServer,
-        /// <summary>
-        /// Defines the IdentityEntityFramework.
-        /// </summary>
-        [Description("IdentityEntityFramework")]
+                                [Description("IdentityEntityFramework")]
         IdentityEntityFramework,
-        /// <summary>
-        /// Defines the IdentityDapper.
-        /// </summary>
-        [Description("IdentityDapper")]
+                                [Description("IdentityDapper")]
         IdentityDapper,
     }
 }

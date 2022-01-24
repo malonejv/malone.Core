@@ -5,19 +5,10 @@ using System;
 
 namespace malone.Core.Entities.Model
 {
-    /// <summary>
-    /// Defines the <see cref="IDateRange" />.
-    /// </summary>
-    public interface IDateRange
+                public interface IDateRange
     {
-        /// <summary>
-        /// Gets or sets the FromDate.
-        /// </summary>
-        DateTime? FromDate { get; set; }
+                                DateTime? FromDate { get; set; }
 
-        /// <summary>
-        /// Gets or sets the ToDate.
-        /// </summary>
-        DateTime? ToDate { get; set; }
+                                DateTime? ToDate { get; set; }
     }
 }

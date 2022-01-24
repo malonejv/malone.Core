@@ -9,17 +9,9 @@ using System.Text.RegularExpressions;
 
 namespace malone.Core.Commons.Helpers.Extensions
 {
-    /// <summary>
-    /// Defines the <see cref="StringExtensions" />.
-    /// </summary>
-    public static class StringExtensions
+                public static class StringExtensions
     {
-        /// <summary>
-        /// The ToByteArray.
-        /// </summary>
-        /// <param name="hex">The hex<see cref="string"/>.</param>
-        /// <returns>The <see cref="byte[]"/>.</returns>
-        public static byte[] ToByteArray(this string hex)
+                                                public static byte[] ToByteArray(this string hex)
         {
             int NumberChars = hex.Length;
             byte[] bytes = new byte[NumberChars / 2];
@@ -28,12 +20,7 @@ namespace malone.Core.Commons.Helpers.Extensions
             return bytes;
         }
 
-        /// <summary>
-        /// The ToSecureString.
-        /// </summary>
-        /// <param name="source">The source<see cref="string"/>.</param>
-        /// <returns>The <see cref="SecureString"/>.</returns>
-        public static SecureString ToSecureString(this string source)
+                                                public static SecureString ToSecureString(this string source)
         {
             if (string.IsNullOrWhiteSpace(source))
                 return (SecureString)null;
@@ -43,12 +30,7 @@ namespace malone.Core.Commons.Helpers.Extensions
             return secureString;
         }
 
-        /// <summary>
-        /// The SecureStringToString.
-        /// </summary>
-        /// <param name="value">The value<see cref="SecureString"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
-        public static string SecureStringToString(this SecureString value)
+                                                public static string SecureStringToString(this SecureString value)
         {
             if (value == null)
                 return (string)null;
@@ -83,14 +65,7 @@ namespace malone.Core.Commons.Helpers.Extensions
             }
         }
 
-        /// <summary>
-        /// Encodes the text in ISO-8859-8, the encoding of the input text must correspond to the Encoding parameter.
-        ///If the initialEncoding parameter is null, by default the ISO-8859-1 encoding is used.
-        /// </summary>
-        /// <param name="inputText">The inputText<see cref="string"/>.</param>
-        /// <param name="initialEncoding">The initialEncoding<see cref="Encoding"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
-        public static string EncodeToISO88598(this string inputText, Encoding initialEncoding = null)
+                                                                public static string EncodeToISO88598(this string inputText, Encoding initialEncoding = null)
         {
             Encoding iso88598 = Encoding.GetEncoding("iso-8859-8");
             if (initialEncoding == null)
@@ -106,16 +81,7 @@ namespace malone.Core.Commons.Helpers.Extensions
             return result;
         }
 
-        /// <summary>
-        /// Encodes text in ISO-8859-8 and removes special characters.
-        ///If the initialEncoding parameter is null, by default the ISO-8859-1 encoding is used.
-        ///The input text must correspond to the Encoding parameter.
-        /// </summary>
-        /// <param name="inputText">The inputText<see cref="string"/>.</param>
-        /// <param name="initialEncoding">The initialEncoding<see cref="Encoding"/>.</param>
-        /// <param name="replacementChar">The replacementChar<see cref="char"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
-        public static string EncodeAndRemoveSpecialCharacters(this string inputText, Encoding initialEncoding = null, char replacementChar = ' ')
+                                                                                public static string EncodeAndRemoveSpecialCharacters(this string inputText, Encoding initialEncoding = null, char replacementChar = ' ')
         {
             string result = inputText.EncodeToISO88598(initialEncoding);
 
@@ -124,13 +90,7 @@ namespace malone.Core.Commons.Helpers.Extensions
             return result;
         }
 
-        /// <summary>
-        /// Removes special characters.
-        /// </summary>
-        /// <param name="inputText">The inputText<see cref="string"/>.</param>
-        /// <param name="replacementChar">The replacementChar<see cref="char"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
-        public static string RemoveSpecialCharacters(this string inputText, char replacementChar = ' ')
+                                                        public static string RemoveSpecialCharacters(this string inputText, char replacementChar = ' ')
         {
             inputText = inputText.Trim();
 
@@ -143,12 +103,7 @@ namespace malone.Core.Commons.Helpers.Extensions
             return inputText;
         }
 
-        /// <summary>
-        /// Validates whether an input text has special characters.
-        /// </summary>
-        /// <param name="inputText">The inputText<see cref="string"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
-        public static bool HasSpecialCharacters(this string inputText)
+                                                public static bool HasSpecialCharacters(this string inputText)
         {
             inputText = inputText.Trim();
 

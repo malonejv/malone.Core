@@ -5,17 +5,9 @@ using System;
 
 namespace malone.Core.Commons.Helpers.Extensions
 {
-    /// <summary>
-    /// Defines the <see cref="TypeExtensions" />.
-    /// </summary>
-    public static class TypeExtensions
+                public static class TypeExtensions
     {
-        /// <summary>
-        /// The GetDefault.
-        /// </summary>
-        /// <param name="type">The type<see cref="Type"/>.</param>
-        /// <returns>The <see cref="object"/>.</returns>
-        public static object GetDefault(this Type type)
+                                                public static object GetDefault(this Type type)
         {
             return type == (Type)null || !type.IsValueType || Nullable.GetUnderlyingType(type) != (Type)null ? (object)null : Activator.CreateInstance(type);
         }

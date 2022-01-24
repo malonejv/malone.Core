@@ -6,91 +6,44 @@ using System.Linq;
 
 namespace malone.Core.Business.Components
 {
-    /// <summary>
-    /// The ValidationRuleDelegate.
-    /// </summary>
-    /// <param name="arguments">The arguments<see cref="object[]"/>.</param>
-    /// <returns>The <see cref="ValidationResult"/>.</returns>
-    public delegate ValidationResult ValidationRuleDelegate(params object[] arguments);
+                        public delegate ValidationResult ValidationRuleDelegate(params object[] arguments);
 
-    /// <summary>
-    /// Defines the <see cref="ValidationRule" />.
-    /// </summary>
-    public class ValidationRule
+                public class ValidationRule
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ValidationRule"/> class.
-        /// </summary>
-        public ValidationRule()
+                                public ValidationRule()
         {
             Arguments = new List<object>();
         }
 
-        /// <summary>
-        /// Gets or sets the Method.
-        /// </summary>
-        public ValidationRuleDelegate Method { get; set; }
+                                public ValidationRuleDelegate Method { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Arguments.
-        /// </summary>
-        public List<object> Arguments { get; set; }
+                                public List<object> Arguments { get; set; }
     }
 
-    /// <summary>
-    /// Defines the <see cref="ValidationResult" />.
-    /// </summary>
-    public class ValidationResult
+                public class ValidationResult
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ValidationResult"/> class.
-        /// </summary>
-        /// <param name="errorCode">The errorCode<see cref="string"/>.</param>
-        /// <param name="message">The message<see cref="string"/>.</param>
-        public ValidationResult(string errorCode, string message)
+                                                public ValidationResult(string errorCode, string message)
         {
             ErrorCode = errorCode;
             Message = message;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ValidationResult"/> class.
-        /// </summary>
-        /// <param name="errorCode">The errorCode<see cref="string"/>.</param>
-        public ValidationResult(string errorCode) : this(errorCode, null)
+                                        public ValidationResult(string errorCode) : this(errorCode, null)
         {
         }
 
-        /// <summary>
-        /// Gets or sets the Return.
-        /// </summary>
-        public object Return { get; set; }
+                                public object Return { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether IsValid.
-        /// </summary>
-        public bool IsValid { get; set; }
+                                public bool IsValid { get; set; }
 
-        /// <summary>
-        /// Gets or sets the ErrorCode.
-        /// </summary>
-        public string ErrorCode { get; set; }
+                                public string ErrorCode { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Message.
-        /// </summary>
-        public string Message { get; internal protected set; }
+                                public string Message { get; internal protected set; }
     }
 
-    /// <summary>
-    /// Defines the <see cref="ValidationResultList" />.
-    /// </summary>
-    public class ValidationResultList : List<ValidationResult>
+                public class ValidationResultList : List<ValidationResult>
     {
-        /// <summary>
-        /// Gets a value indicating whether IsValid.
-        /// </summary>
-        public bool IsValid
+                                public bool IsValid
         {
             get
             {
@@ -101,10 +54,7 @@ namespace malone.Core.Business.Components
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ValidationResultList"/> class.
-        /// </summary>
-        public ValidationResultList()
+                                public ValidationResultList()
         {
         }
     }

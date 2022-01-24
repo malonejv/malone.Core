@@ -5,27 +5,15 @@ using System.Configuration;
 
 namespace malone.Core.Commons.Configurations.DbFactory
 {
-    /// <summary>
-    /// Defines the <see cref="DatabaseProviderElementCollection" />.
-    /// </summary>
-    [ConfigurationCollection(typeof(DatabaseProviderElement))]
+                [ConfigurationCollection(typeof(DatabaseProviderElement))]
     public class DatabaseProviderElementCollection : ConfigurationElementCollection
     {
-        /// <summary>
-        /// The CreateNewElement.
-        /// </summary>
-        /// <returns>The <see cref="ConfigurationElement"/>.</returns>
-        protected override ConfigurationElement CreateNewElement()
+                                        protected override ConfigurationElement CreateNewElement()
         {
             return new DatabaseProviderElement();
         }
 
-        /// <summary>
-        /// The GetElementKey.
-        /// </summary>
-        /// <param name="element">The element<see cref="ConfigurationElement"/>.</param>
-        /// <returns>The <see cref="object"/>.</returns>
-        protected override object GetElementKey(ConfigurationElement element)
+                                                protected override object GetElementKey(ConfigurationElement element)
         {
             return ((DatabaseProviderElement)element).Name;
         }

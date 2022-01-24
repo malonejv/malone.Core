@@ -5,10 +5,7 @@ using malone.Core.Commons.Localization;
 
 namespace malone.Core.Commons.Exceptions
 {
-    /// <summary>
-    /// Defines the <see cref="IErrorLocalizationHandler" />.
-    /// </summary>
-    internal interface IErrorLocalizationHandler : ILocalizationHandler<CoreErrors>
+                internal interface IErrorLocalizationHandler : ILocalizationHandler<CoreErrors>
     {
     }
 }

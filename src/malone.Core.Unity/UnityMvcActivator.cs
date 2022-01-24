@@ -8,10 +8,7 @@ namespace malone.Core.Unity
 {
     public class UnityMvcActivator : IInjectorInitializer<IUnityContainer>
     {
-        /// <summary>
-        /// Integrates Unity when the application starts.
-        /// </summary>
-        public virtual IUnityContainer Initialize()
+                                public virtual IUnityContainer Initialize()
         {
             FilterProviders.Providers.Remove(FilterProviders.Providers.OfType<FilterAttributeFilterProvider>().First());
             FilterProviders.Providers.Add(new UnityFilterAttributeFilterProvider(UnityConfig.Container));
@@ -24,10 +21,7 @@ namespace malone.Core.Unity
             return UnityConfig.Container;
         }
 
-        /// <summary>
-        /// Disposes the Unity container when the application is shut down.
-        /// </summary>
-        public virtual void Terminate()
+                                public virtual void Terminate()
         {
             UnityConfig.Container.Dispose();
         }

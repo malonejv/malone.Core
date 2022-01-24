@@ -8,24 +8,12 @@ using System.Threading.Tasks;
 
 namespace malone.Core.Commons.Helpers.Threading
 {
-    /// <summary>
-    /// Defines the <see cref="AsyncHelper" />.
-    /// </summary>
-    public static class AsyncHelper
+                public static class AsyncHelper
     {
-        /// <summary>
-        /// Defines the _myTaskFactory.
-        /// </summary>
-        private static readonly TaskFactory _myTaskFactory = new TaskFactory(CancellationToken.None,
+                                private static readonly TaskFactory _myTaskFactory = new TaskFactory(CancellationToken.None,
             TaskCreationOptions.None, TaskContinuationOptions.None, TaskScheduler.Default);
 
-        /// <summary>
-        /// The RunSync.
-        /// </summary>
-        /// <typeparam name="TResult">.</typeparam>
-        /// <param name="func">The func<see cref="Func{Task{TResult}}"/>.</param>
-        /// <returns>The <see cref="TResult"/>.</returns>
-        public static TResult RunSync<TResult>(Func<Task<TResult>> func)
+                                                        public static TResult RunSync<TResult>(Func<Task<TResult>> func)
         {
             var cultureUi = CultureInfo.CurrentUICulture;
             var culture = CultureInfo.CurrentCulture;
@@ -37,11 +25,7 @@ namespace malone.Core.Commons.Helpers.Threading
             }).Unwrap().GetAwaiter().GetResult();
         }
 
-        /// <summary>
-        /// The RunSync.
-        /// </summary>
-        /// <param name="func">The func<see cref="Func{Task}"/>.</param>
-        public static void RunSync(Func<Task> func)
+                                        public static void RunSync(Func<Task> func)
         {
             var cultureUi = CultureInfo.CurrentUICulture;
             var culture = CultureInfo.CurrentCulture;

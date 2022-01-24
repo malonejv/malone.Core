@@ -5,10 +5,7 @@
 
         #region General
 
-        /// <summary>
-        /// Element
-        /// </summary>
-        Element = 1,
+                                Element = 1,
 
         #endregion
 

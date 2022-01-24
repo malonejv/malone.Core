@@ -3,10 +3,7 @@
 
 namespace malone.Core.Entities.Filters
 {
-    /// <summary>
-    /// Defines the <see cref="IFilterExpression" />.
-    /// </summary>
-    public interface IFilterExpression
+                public interface IFilterExpression
     {
     }
 }

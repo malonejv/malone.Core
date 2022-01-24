@@ -23,47 +23,27 @@ using System.Web.Http;
 
 namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
 {
-    /// <summary>
-    /// Defines the <see cref="AccountController" />.
-    /// </summary>
-    [Authorize]
+                [Authorize]
     [ApiVersion("1.0")]
     [RoutePrefix("v{version:apiVersion}/Account")]
     public class AccountController : ApiController
     {
-        /// <summary>
-        /// Defines the LocalLoginProvider.
-        /// </summary>
-        private const string LocalLoginProvider = "Local";
+                                private const string LocalLoginProvider = "Local";
 
-        /// <summary>
-        /// Defines the _userManager.
-        /// </summary>
-        private UserBusinessComponent _userManager;
+                                private UserBusinessComponent _userManager;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AccountController"/> class.
-        /// </summary>
-        public AccountController()
+                                public AccountController()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AccountController"/> class.
-        /// </summary>
-        /// <param name="userManager">The userManager<see cref="UserBusinessComponent"/>.</param>
-        /// <param name="accessTokenFormat">The accessTokenFormat<see cref="ISecureDataFormat{AuthenticationTicket}"/>.</param>
-        public AccountController(UserBusinessComponent userManager,
+                                                public AccountController(UserBusinessComponent userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
         }
 
-        /// <summary>
-        /// Gets the UserManager.
-        /// </summary>
-        public UserBusinessComponent UserManager
+                                public UserBusinessComponent UserManager
         {
             get
             {
@@ -75,17 +55,10 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
             }
         }
 
-        /// <summary>
-        /// Gets the AccessTokenFormat.
-        /// </summary>
-        public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
+                                public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         // GET Account/UserInfo
-        /// <summary>
-        /// The GetUserInfo.
-        /// </summary>
-        /// <returns>The <see cref="UserInfoViewModel"/>.</returns>
-        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+                                        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
         public UserInfoViewModel GetUserInfo()
         {
@@ -100,11 +73,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // POST Account/Logout
-        /// <summary>
-        /// The Logout.
-        /// </summary>
-        /// <returns>The <see cref="IHttpActionResult"/>.</returns>
-        [Route("Logout")]
+                                        [Route("Logout")]
         public IHttpActionResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
@@ -112,13 +81,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // GET Account/ManageInfo?returnUrl=%2F&generateState=true
-        /// <summary>
-        /// The GetManageInfo.
-        /// </summary>
-        /// <param name="returnUrl">The returnUrl<see cref="string"/>.</param>
-        /// <param name="generateState">The generateState<see cref="bool"/>.</param>
-        /// <returns>The <see cref="Task{ManageInfoViewModel}"/>.</returns>
-        [Route("ManageInfo")]
+                                                        [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
         {
             CoreUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
@@ -158,12 +121,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // POST Account/ChangePassword
-        /// <summary>
-        /// The ChangePassword.
-        /// </summary>
-        /// <param name="model">The model<see cref="ChangePasswordBindingModel"/>.</param>
-        /// <returns>The <see cref="Task{IHttpActionResult}"/>.</returns>
-        [Route("ChangePassword")]
+                                                [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -183,12 +141,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // POST Account/SetPassword
-        /// <summary>
-        /// The SetPassword.
-        /// </summary>
-        /// <param name="model">The model<see cref="SetPasswordBindingModel"/>.</param>
-        /// <returns>The <see cref="Task{IHttpActionResult}"/>.</returns>
-        [Route("SetPassword")]
+                                                [Route("SetPassword")]
         public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -207,12 +160,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // POST Account/AddExternalLogin
-        /// <summary>
-        /// The AddExternalLogin.
-        /// </summary>
-        /// <param name="model">The model<see cref="AddExternalLoginBindingModel"/>.</param>
-        /// <returns>The <see cref="Task{IHttpActionResult}"/>.</returns>
-        [Route("AddExternalLogin")]
+                                                [Route("AddExternalLogin")]
         public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -250,12 +198,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // POST Account/RemoveLogin
-        /// <summary>
-        /// The RemoveLogin.
-        /// </summary>
-        /// <param name="model">The model<see cref="RemoveLoginBindingModel"/>.</param>
-        /// <returns>The <see cref="Task{IHttpActionResult}"/>.</returns>
-        [Route("RemoveLogin")]
+                                                [Route("RemoveLogin")]
         public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -284,13 +227,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // GET Account/ExternalLogin
-        /// <summary>
-        /// The GetExternalLogin.
-        /// </summary>
-        /// <param name="provider">The provider<see cref="string"/>.</param>
-        /// <param name="error">The error<see cref="string"/>.</param>
-        /// <returns>The <see cref="Task{IHttpActionResult}"/>.</returns>
-        [OverrideAuthentication]
+                                                        [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
         [AllowAnonymous]
         [Route("ExternalLogin", Name = "ExternalLogin")]
@@ -347,13 +284,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // GET Account/ExternalLogins?returnUrl=%2F&generateState=true
-        /// <summary>
-        /// The GetExternalLogins.
-        /// </summary>
-        /// <param name="returnUrl">The returnUrl<see cref="string"/>.</param>
-        /// <param name="generateState">The generateState<see cref="bool"/>.</param>
-        /// <returns>The <see cref="IEnumerable{ExternalLoginViewModel}"/>.</returns>
-        [AllowAnonymous]
+                                                        [AllowAnonymous]
         [Route("ExternalLogins")]
         public IEnumerable<ExternalLoginViewModel> GetExternalLogins(string returnUrl, bool generateState = false)
         {
@@ -394,12 +325,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // POST Account/Register
-        /// <summary>
-        /// The Register.
-        /// </summary>
-        /// <param name="model">The model<see cref="RegisterBindingModel"/>.</param>
-        /// <returns>The <see cref="Task{IHttpActionResult}"/>.</returns>
-        [AllowAnonymous]
+                                                [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
@@ -421,11 +347,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // POST Account/RegisterExternal
-        /// <summary>
-        /// The RegisterExternal.
-        /// </summary>
-        /// <returns>The <see cref="Task{IHttpActionResult}"/>.</returns>
-        [OverrideAuthentication]
+                                        [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("RegisterExternal")]
         public async Task<IHttpActionResult> RegisterExternal()//(RegisterExternalBindingModel model)
@@ -458,11 +380,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
             return Ok();
         }
 
-        /// <summary>
-        /// The Dispose.
-        /// </summary>
-        /// <param name="disposing">The disposing<see cref="bool"/>.</param>
-        protected override void Dispose(bool disposing)
+                                        protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
             {
@@ -473,20 +391,12 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
             base.Dispose(disposing);
         }
 
-        /// <summary>
-        /// Gets the Authentication.
-        /// </summary>
-        private IAuthenticationManager Authentication
+                                private IAuthenticationManager Authentication
         {
             get { return Request.GetOwinContext().Authentication; }
         }
 
-        /// <summary>
-        /// The GetErrorResult.
-        /// </summary>
-        /// <param name="result">The result<see cref="IdentityResult"/>.</param>
-        /// <returns>The <see cref="IHttpActionResult"/>.</returns>
-        private IHttpActionResult GetErrorResult(IdentityResult result)
+                                                private IHttpActionResult GetErrorResult(IdentityResult result)
         {
             if (result == null)
             {
@@ -515,31 +425,15 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
             return null;
         }
 
-        /// <summary>
-        /// Defines the <see cref="ExternalLoginData" />.
-        /// </summary>
-        private class ExternalLoginData
+                                private class ExternalLoginData
         {
-            /// <summary>
-            /// Gets or sets the LoginProvider.
-            /// </summary>
-            public string LoginProvider { get; set; }
+                                                public string LoginProvider { get; set; }
 
-            /// <summary>
-            /// Gets or sets the ProviderKey.
-            /// </summary>
-            public string ProviderKey { get; set; }
+                                                public string ProviderKey { get; set; }
 
-            /// <summary>
-            /// Gets or sets the UserName.
-            /// </summary>
-            public string UserName { get; set; }
+                                                public string UserName { get; set; }
 
-            /// <summary>
-            /// The GetClaims.
-            /// </summary>
-            /// <returns>The <see cref="IList{Claim}"/>.</returns>
-            public IList<Claim> GetClaims()
+                                                            public IList<Claim> GetClaims()
             {
                 IList<Claim> claims = new List<Claim>();
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, ProviderKey, null, LoginProvider));
@@ -552,12 +446,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
                 return claims;
             }
 
-            /// <summary>
-            /// The FromIdentity.
-            /// </summary>
-            /// <param name="identity">The identity<see cref="ClaimsIdentity"/>.</param>
-            /// <returns>The <see cref="ExternalLoginData"/>.</returns>
-            public static ExternalLoginData FromIdentity(ClaimsIdentity identity)
+                                                                        public static ExternalLoginData FromIdentity(ClaimsIdentity identity)
             {
                 if (identity == null)
                 {
@@ -586,22 +475,11 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
             }
         }
 
-        /// <summary>
-        /// Defines the <see cref="RandomOAuthStateGenerator" />.
-        /// </summary>
-        private static class RandomOAuthStateGenerator
+                                private static class RandomOAuthStateGenerator
         {
-            /// <summary>
-            /// Defines the _random.
-            /// </summary>
-            private static RandomNumberGenerator _random = new RNGCryptoServiceProvider();
+                                                private static RandomNumberGenerator _random = new RNGCryptoServiceProvider();
 
-            /// <summary>
-            /// The Generate.
-            /// </summary>
-            /// <param name="strengthInBits">The strengthInBits<see cref="int"/>.</param>
-            /// <returns>The <see cref="string"/>.</returns>
-            public static string Generate(int strengthInBits)
+                                                                        public static string Generate(int strengthInBits)
             {
                 const int bitsPerByte = 8;
 

@@ -5,23 +5,13 @@ using System;
 
 namespace malone.Core.Commons.Configurations.Attributes
 {
-    /// <summary>
-    /// Defines the <see cref="SectionNameAttribute" />.
-    /// </summary>
-    public class SectionNameAttribute : Attribute
+                public class SectionNameAttribute : Attribute
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SectionNameAttribute"/> class.
-        /// </summary>
-        /// <param name="name">The name<see cref="string"/>.</param>
-        public SectionNameAttribute(string name)
+                                        public SectionNameAttribute(string name)
         {
             Name = name;
         }
 
-        /// <summary>
-        /// Gets the Name.
-        /// </summary>
-        public string Name { get; private set; }
+                                public string Name { get; private set; }
     }
 }

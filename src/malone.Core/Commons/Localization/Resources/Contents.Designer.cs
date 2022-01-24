@@ -10,37 +10,21 @@
 
 namespace malone.Core.Commons.Localization.Resources
 {
-    /// <summary>
-    /// A strongly-typed resource class, for looking up localized strings, etc.
-    /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Contents
     {
-        /// <summary>
-        /// Defines the resourceMan.
-        /// </summary>
-        private static global::System.Resources.ResourceManager resourceMan;
+                                private static global::System.Resources.ResourceManager resourceMan;
 
-        /// <summary>
-        /// Defines the resourceCulture.
-        /// </summary>
-        private static global::System.Globalization.CultureInfo resourceCulture;
+                                private static global::System.Globalization.CultureInfo resourceCulture;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Contents"/> class.
-        /// </summary>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+                                [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Contents()
         {
         }
 
-        /// <summary>
-        /// Gets the ResourceManager
-        /// Returns the cached ResourceManager instance used by this class...
-        /// </summary>
-        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+                                        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Resources.ResourceManager ResourceManager
         {
             get
@@ -54,12 +38,7 @@ namespace malone.Core.Commons.Localization.Resources
             }
         }
 
-        /// <summary>
-        /// Gets or sets the Culture
-        /// Overrides the current thread's CurrentUICulture property for all
-        ///   resource lookups using this strongly typed resource class...
-        /// </summary>
-        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+                                                [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture
         {
             get
@@ -72,11 +51,7 @@ namespace malone.Core.Commons.Localization.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the Logging_SupportId
-        /// Looks up a localized string similar to Id de Soporte...
-        /// </summary>
-        internal static string Logging_SupportId
+                                        internal static string Logging_SupportId
         {
             get
             {

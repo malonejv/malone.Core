@@ -10,37 +10,21 @@
 
 namespace malone.Core.Resources
 {
-    /// <summary>
-    /// A strongly-typed resource class, for looking up localized strings, etc.
-    /// </summary>
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+                [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Exceptions
     {
-        /// <summary>
-        /// Defines the resourceMan.
-        /// </summary>
-        private static global::System.Resources.ResourceManager resourceMan;
+                                private static global::System.Resources.ResourceManager resourceMan;
 
-        /// <summary>
-        /// Defines the resourceCulture.
-        /// </summary>
-        private static global::System.Globalization.CultureInfo resourceCulture;
+                                private static global::System.Globalization.CultureInfo resourceCulture;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Exceptions"/> class.
-        /// </summary>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+                                [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Exceptions()
         {
         }
 
-        /// <summary>
-        /// Gets the ResourceManager
-        /// Returns the cached ResourceManager instance used by this class...
-        /// </summary>
-        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+                                        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Resources.ResourceManager ResourceManager
         {
             get
@@ -54,12 +38,7 @@ namespace malone.Core.Resources
             }
         }
 
-        /// <summary>
-        /// Gets or sets the Culture
-        /// Overrides the current thread's CurrentUICulture property for all
-        ///   resource lookups using this strongly typed resource class...
-        /// </summary>
-        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+                                                [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture
         {
             get
@@ -72,11 +51,7 @@ namespace malone.Core.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the E300
-        /// Looks up a localized string similar to Se produjo un error al intentar obtener los datos solicitados....
-        /// </summary>
-        internal static string E300
+                                        internal static string E300
         {
             get
             {
@@ -84,11 +59,7 @@ namespace malone.Core.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the E301
-        /// Looks up a localized string similar to Se produjo un error al intentar guardar los datos solicitados....
-        /// </summary>
-        internal static string E301
+                                        internal static string E301
         {
             get
             {
@@ -96,11 +67,7 @@ namespace malone.Core.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the E302
-        /// Looks up a localized string similar to Se produjo un error al intentar eliminar el dato solicitado....
-        /// </summary>
-        internal static string E302
+                                        internal static string E302
         {
             get
             {
@@ -108,11 +75,7 @@ namespace malone.Core.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the E303
-        /// Looks up a localized string similar to Se produjo un error al intentar actualizar los datos solicitados....
-        /// </summary>
-        internal static string E303
+                                        internal static string E303
         {
             get
             {
@@ -120,11 +83,7 @@ namespace malone.Core.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the E304
-        /// Looks up a localized string similar to No se encontraron resultados para la consulta realizada....
-        /// </summary>
-        internal static string E304
+                                        internal static string E304
         {
             get
             {
@@ -132,11 +91,7 @@ namespace malone.Core.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the E305
-        /// Looks up a localized string similar to Nombre de usuario o contraseña invalido....
-        /// </summary>
-        internal static string E305
+                                        internal static string E305
         {
             get
             {
@@ -144,11 +99,7 @@ namespace malone.Core.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the E306
-        /// Looks up a localized string similar to Debes confirmar el email primero....
-        /// </summary>
-        internal static string E306
+                                        internal static string E306
         {
             get
             {
@@ -156,11 +107,7 @@ namespace malone.Core.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the E307
-        /// Looks up a localized string similar to Usuario no autorizado....
-        /// </summary>
-        internal static string E307
+                                        internal static string E307
         {
             get
             {
@@ -168,11 +115,7 @@ namespace malone.Core.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the E400
-        /// Looks up a localized string similar to Error al obtener una lista ordenada de tipo {0}....
-        /// </summary>
-        internal static string E400
+                                        internal static string E400
         {
             get
             {
@@ -180,11 +123,7 @@ namespace malone.Core.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the E401
-        /// Looks up a localized string similar to Error al obtener una entidad de tipo {0}....
-        /// </summary>
-        internal static string E401
+                                        internal static string E401
         {
             get
             {
@@ -192,11 +131,7 @@ namespace malone.Core.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the E402
-        /// Looks up a localized string similar to Error al insertar una entidad de tipo {0}....
-        /// </summary>
-        internal static string E402
+                                        internal static string E402
         {
             get
             {
@@ -204,11 +139,7 @@ namespace malone.Core.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the E403
-        /// Looks up a localized string similar to Error al eliminar una entidad de tipo {0}....
-        /// </summary>
-        internal static string E403
+                                        internal static string E403
         {
             get
             {
@@ -216,11 +147,7 @@ namespace malone.Core.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the E404
-        /// Looks up a localized string similar to Error al actualizar una entidad de tipo {0}....
-        /// </summary>
-        internal static string E404
+                                        internal static string E404
         {
             get
             {
@@ -228,11 +155,7 @@ namespace malone.Core.Resources
             }
         }
 
-        /// <summary>
-        /// Gets the E480
-        /// Looks up a localized string similar to Se produjo un error en la llamada al servicio {0}....
-        /// </summary>
-        internal static string E480
+                                        internal static string E480
         {
             get
             {

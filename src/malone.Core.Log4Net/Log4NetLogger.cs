@@ -6,30 +6,14 @@ namespace malone.Core.Log4Net
 {
     public class Log4netLogger : LoggerBase
     {
-        /// <summary>
-        /// The log4net logger which this class wraps.
-        /// </summary>
-        private readonly ILog logger;
+                                private readonly ILog logger;
 
-        /// <summary>
-        /// Constructs an instance of <see cref="Log4netLogger"/>
-        /// by wrapping a log4net logger
-        /// </summary>
-        /// <param name="logger">The log4net logger to wrap</param>
-        public Log4netLogger(ILog logger) : base()
+                                                public Log4netLogger(ILog logger) : base()
         {
             this.logger = logger;
         }
 
-        /// <summary>
-        /// Logs the given message. Output depends on the associated
-        /// log4net configuration.
-        /// </summary>
-        /// <param name="item">A <see cref="LogItem"/> which encapsulates
-        /// information to be logged.</param>
-        /// <exception cref="ArgumentNullException">If <paramref name="item"/>
-        /// is a null reference.</exception>
-        public override void Log(LogItem item)
+                                                                        public override void Log(LogItem item)
         {
             if (item == null) throw new ArgumentNullException("item");
 
@@ -63,11 +47,7 @@ namespace malone.Core.Log4Net
             }
         }
 
-        /// <summary>
-        /// Overriden to delegate to the log4net IsXxxEnabled
-        /// properties.
-        /// </summary>
-        protected override bool IsLogLevelEnabled(LogLevel level)
+                                        protected override bool IsLogLevelEnabled(LogLevel level)
         {
             switch (level)
             {

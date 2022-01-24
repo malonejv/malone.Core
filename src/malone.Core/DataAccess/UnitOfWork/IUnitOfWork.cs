@@ -6,25 +6,12 @@ using System;
 
 namespace malone.Core.DataAccess.UnitOfWork
 {
-    /// <summary>
-    /// Defines the <see cref="IUnitOfWork" />.
-    /// </summary>
-    public interface IUnitOfWork : IDisposable
+                public interface IUnitOfWork : IDisposable
     {
-        /// <summary>
-        /// Gets the Context.
-        /// </summary>
-        IContext Context { get; }
+                                IContext Context { get; }
 
-        /// <summary>
-        /// The SaveChanges.
-        /// </summary>
-        /// <returns>The <see cref="int"/>.</returns>
-        int SaveChanges();
+                                        int SaveChanges();
 
-        /// <summary>
-        /// The Dispose.
-        /// </summary>
-        void Dispose();
+                                void Dispose();
     }
 }

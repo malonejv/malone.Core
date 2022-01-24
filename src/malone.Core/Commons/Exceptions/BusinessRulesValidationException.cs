@@ -7,25 +7,13 @@ using System.Text;
 
 namespace malone.Core.Commons.Exceptions
 {
-    /// <summary>
-    /// Encapsulates funcional validation exceptions in Business Layer.
-    /// </summary>
-    public class BusinessRulesValidationException : Exception
+                public class BusinessRulesValidationException : Exception
     {
-        /// <summary>
-        /// Gets the Results.
-        /// </summary>
-        public ValidationResultList Results { get; private set; }
+                                public ValidationResultList Results { get; private set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether HideErrorCodes.
-        /// </summary>
-        public bool HideErrorCodes { get; protected set; }
+                                public bool HideErrorCodes { get; protected set; }
 
-        /// <summary>
-        /// Gets the Message.
-        /// </summary>
-        public new string Message
+                                public new string Message
         {
             get
             {
@@ -41,11 +29,7 @@ namespace malone.Core.Commons.Exceptions
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BusinessRulesValidationException"/> class.
-        /// </summary>
-        /// <param name="results">The results<see cref="ValidationResultList"/>.</param>
-        public BusinessRulesValidationException(ValidationResultList results)
+                                        public BusinessRulesValidationException(ValidationResultList results)
             : base()
         {
             Results = results;

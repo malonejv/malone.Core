@@ -46,12 +46,7 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         #region Public Methods
 
-        /// <summary>
-        /// Returns the user's name given a user id
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public string GetUserName(TKey userId)
+                                                public string GetUserName(TKey userId)
         {
             string commandText = "Select Name from Users where Id = @id";
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@id", userId } };
@@ -59,12 +54,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.QueryFirstOrDefault<string>(commandText, parameters, transaction: Context.Transaction);
         }
 
-        /// <summary>
-        /// Returns a User ID given a user name
-        /// </summary>
-        /// <param name="userName">The user's name</param>
-        /// <returns></returns>
-        public string GetUserId(string userName)
+                                                public string GetUserId(string userName)
         {
             string commandText = "Select Id from Users where UserName = @name";
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@name", userName } };
@@ -72,12 +62,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.QueryFirstOrDefault<string>(commandText, parameters, transaction: Context.Transaction);
         }
 
-        /// <summary>
-        /// Returns an TUser given the user's id
-        /// </summary>
-        /// <param name="userId">The user's id</param>
-        /// <returns></returns>
-        public TUserEntity GetUserById(TKey userId)
+                                                public TUserEntity GetUserById(TKey userId)
         {
             TUserEntity user = null;
             string commandText = "Select * from Users where Id = @id";
@@ -105,12 +90,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.QueryFirstOrDefault<TUserEntity>(commandText, parameters, transaction: Context.Transaction);
         }
 
-        /// <summary>
-        /// Returns a list of TUser instances given a user name
-        /// </summary>
-        /// <param name="userName">User's name</param>
-        /// <returns></returns>
-        public List<TUserEntity> GetUserByName(string userName)
+                                                public List<TUserEntity> GetUserByName(string userName)
         {
             List<TUserEntity> users = new List<TUserEntity>();
             string commandText = "Select * from Users where UserName = @name";
@@ -167,12 +147,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return rows.ToList();
         }
 
-        /// <summary>
-        /// Return the user's password hash
-        /// </summary>
-        /// <param name="userId">The user's id</param>
-        /// <returns></returns>
-        public string GetPasswordHash(TKey userId)
+                                                public string GetPasswordHash(TKey userId)
         {
             string commandText = "Select PasswordHash from Users where Id = @id";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -187,13 +162,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return passHash;
         }
 
-        /// <summary>
-        /// Sets the user's password hash
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="passwordHash"></param>
-        /// <returns></returns>
-        public int SetPasswordHash(TKey userId, string passwordHash)
+                                                        public int SetPasswordHash(TKey userId, string passwordHash)
         {
             string commandText = "Update Users set PasswordHash = @pwdHash where Id = @id";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -203,12 +172,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-        /// <summary>
-        /// Returns the user's security stamp
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public string GetSecurityStamp(TKey userId)
+                                                public string GetSecurityStamp(TKey userId)
         {
             string commandText = "Select SecurityStamp from Users where Id = @id";
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@id", userId } };
@@ -217,12 +181,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return result;
         }
 
-        /// <summary>
-        /// Inserts a new user in the Users table
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public int Insert(TUserEntity user)
+                                                public int Insert(TUserEntity user)
         {
             string commandText = @"Insert into Users (UserName, Id, PasswordHash, SecurityStamp,Email,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed, AccessFailedCount,LockoutEnabled,LockoutEndDateUtc,TwoFactorEnabled)
                 values (@name, @id, @pwdHash, @SecStamp,@email,@emailconfirmed,@phonenumber,@phonenumberconfirmed,@accesscount,@lockoutenabled,@lockoutenddate,@twofactorenabled)";
@@ -243,12 +202,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-        /// <summary>
-        /// Deletes a user from the Users table
-        /// </summary>
-        /// <param name="userId">The user's id</param>
-        /// <returns></returns>
-        private int Delete(TKey userId)
+                                                private int Delete(TKey userId)
         {
             string commandText = "Delete from Users where Id = @userId";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -257,22 +211,12 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-        /// <summary>
-        /// Deletes a user from the Users table
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public int Delete(TUserEntity user)
+                                                public int Delete(TUserEntity user)
         {
             return Delete(user.Id);
         }
 
-        /// <summary>
-        /// Updates a user in the Users table
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public int Update(TUserEntity user)
+                                                public int Update(TUserEntity user)
         {
             string commandText = @"Update Users set UserName = @userName, PasswordHash = @pswHash, SecurityStamp = @secStamp, 
                 Email=@email, EmailConfirmed=@emailconfirmed, PhoneNumber=@phonenumber, PhoneNumberConfirmed=@phonenumberconfirmed,

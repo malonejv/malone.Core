@@ -8,16 +8,10 @@ namespace malone.Core.Identity.Dapper.Entities
     public class CoreUserRole<TKey>
         where TKey : IEquatable<TKey>
     {
-        /// <summary>
-        ///     UserId for the user that is in the role
-        /// </summary>
-        [Column("UserId", type: DbType.Int32, Direction = ParameterDirection.Input)]
+                                [Column("UserId", type: DbType.Int32, Direction = ParameterDirection.Input)]
         public virtual TKey UserId { get; set; }
 
-        /// <summary>
-        ///     RoleId for the role
-        /// </summary>
-        [Column("RoleId", type: DbType.Int32, Direction = ParameterDirection.Input)]
+                                [Column("RoleId", type: DbType.Int32, Direction = ParameterDirection.Input)]
         public virtual TKey RoleId { get; set; }
 
     }

@@ -11,30 +11,18 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Entities
         where TKey : IEquatable<TKey>
         where TUserRole : CoreUserRole<TKey>
     {
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        public CoreRole()
+                                public CoreRole()
         {
             Users = new List<TUserRole>();
         }
 
-        /// <summary>
-        ///     Role id
-        /// </summary>
-        [DbParameter("@Id", Type = SqlDbType.Int, Direction = ParameterDirection.Input)]
+                                [DbParameter("@Id", Type = SqlDbType.Int, Direction = ParameterDirection.Input)]
         public TKey Id { get; set; }
 
-        /// <summary>
-        ///     Role name
-        /// </summary>
-        [DbParameter("@Name", Type = SqlDbType.NVarChar, Size = 256, Direction = ParameterDirection.Input)]
+                                [DbParameter("@Name", Type = SqlDbType.NVarChar, Size = 256, Direction = ParameterDirection.Input)]
         public string Name { get; set; }
 
-        /// <summary>
-        ///     Navigation property for users in the role
-        /// </summary>
-        public virtual ICollection<TUserRole> Users { get; internal set; }
+                                public virtual ICollection<TUserRole> Users { get; internal set; }
 
     }
 

@@ -6,15 +6,9 @@ using System.Configuration;
 
 namespace malone.Core.Commons.Configurations.Features
 {
-    /// <summary>
-    /// Defines the <see cref="FeatureSettingsSection" />.
-    /// </summary>
-    public class FeatureSettingsSection : ConfigurationSection
+                public class FeatureSettingsSection : ConfigurationSection
     {
-        /// <summary>
-        /// Gets the Xmlns.
-        /// </summary>
-        [ConfigurationProperty("xmlns", IsRequired = false)]
+                                [ConfigurationProperty("xmlns", IsRequired = false)]
         public String Xmlns
         {
             get
@@ -23,10 +17,7 @@ namespace malone.Core.Commons.Configurations.Features
             }
         }
 
-        /// <summary>
-        /// Gets the Features.
-        /// </summary>
-        [ConfigurationProperty("features")]
+                                [ConfigurationProperty("features")]
         public FeaturesElementCollection Features
         {
             get { return (FeaturesElementCollection)this["features"]; }

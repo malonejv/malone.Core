@@ -7,20 +7,11 @@ using System.Reflection;
 
 namespace malone.Core.Commons.Exceptions
 {
-    /// <summary>
-    /// Defines the <see cref="CoreExceptionFactory" />.
-    /// </summary>
-    internal static class CoreExceptionFactory
+                internal static class CoreExceptionFactory
     {
-        /// <summary>
-        /// Defines the errorLocalizationHandler.
-        /// </summary>
-        internal static IErrorLocalizationHandler errorLocalizationHandler;
+                                internal static IErrorLocalizationHandler errorLocalizationHandler;
 
-        /// <summary>
-        /// Gets the ErrorLocalizationHandler.
-        /// </summary>
-        internal static IErrorLocalizationHandler ErrorLocalizationHandler
+                                internal static IErrorLocalizationHandler ErrorLocalizationHandler
         {
             get
             {
@@ -32,14 +23,7 @@ namespace malone.Core.Commons.Exceptions
             }
         }
 
-        /// <summary>
-        /// The CreateException.
-        /// </summary>
-        /// <typeparam name="TException">.</typeparam>
-        /// <param name="code">The code<see cref="CoreErrors"/>.</param>
-        /// <param name="args">The args<see cref="object[]"/>.</param>
-        /// <returns>The <see cref="TException"/>.</returns>
-        internal static TException CreateException<TException>(CoreErrors code, params object[] args) where TException : BaseException
+                                                                internal static TException CreateException<TException>(CoreErrors code, params object[] args) where TException : BaseException
         {
             var suportId = Guid.NewGuid();
             string message = ErrorLocalizationHandler.GetString(code, args);
@@ -61,15 +45,7 @@ namespace malone.Core.Commons.Exceptions
             return baseException;
         }
 
-        /// <summary>
-        /// The CreateException.
-        /// </summary>
-        /// <typeparam name="TException">.</typeparam>
-        /// <param name="innerException">The innerException<see cref="Exception"/>.</param>
-        /// <param name="code">The code<see cref="CoreErrors"/>.</param>
-        /// <param name="args">The args<see cref="object[]"/>.</param>
-        /// <returns>The <see cref="TException"/>.</returns>
-        internal static TException CreateException<TException>(Exception innerException, CoreErrors code, params object[] args) where TException : BaseException
+                                                                        internal static TException CreateException<TException>(Exception innerException, CoreErrors code, params object[] args) where TException : BaseException
         {
             var suportId = Guid.NewGuid();
             string message = ErrorLocalizationHandler.GetString(code, args);

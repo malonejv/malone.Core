@@ -17,8 +17,7 @@ namespace malone.Core.Sample.AdoNet.SqlServer.Middle.Initializers
             //Context
             container.RegisterType<IContext, SampleContext>(new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
 
-            ////Agrego esta configuración por la siguiente configuracion: container.RegisterType<IRoleStore<CoreRole, int>, RoleRepository<AdoNetIdentityDbContext>>();
-            //var context = ServiceLocator.Current.Get<IContext>();
+                        //var context = ServiceLocator.Current.Get<IContext>();
             //container.RegisterInstance(context as DbContext);
 
             //Repositories

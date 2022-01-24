@@ -5,9 +5,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Context.Conventions
 {
     // <summary>
-    /// Provides a convention for fixing the independent association (IA) foreign key column names.
-    /// </summary>
-    public class ForeignKeyNamingConvention : IStoreModelConvention<AssociationType>
+            public class ForeignKeyNamingConvention : IStoreModelConvention<AssociationType>
     {
 
         public void Apply(AssociationType association, DbModel model)

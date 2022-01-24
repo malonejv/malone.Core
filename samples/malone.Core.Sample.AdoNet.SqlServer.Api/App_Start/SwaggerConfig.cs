@@ -279,8 +279,7 @@ namespace malone.Core.Sample.AdoNet.SqlServer.Api
                         //    clientSecret: "iUnWoCASXx3TOsDFN3e0Q1Zc",
                         //    realm: "test-realm",
                         //    appName: "Swagger UI"
-                        ////additionalQueryStringParams: new Dictionary<string, string>() { { "foo", "bar" } }
-                        //);
+                                                //);
 
                         // If your API supports ApiKey, you can override the default values.
                         // "apiKeyIn" can either be "query" or "header"
@@ -291,20 +290,9 @@ namespace malone.Core.Sample.AdoNet.SqlServer.Api
         }
     }
 
-    /// <summary>
-    /// Represents the Swagger/Swashbuckle operation filter used to provide default values.
-    /// </summary>
-    /// <remarks>This <see cref="IOperationFilter"/> is only required due to bugs in the <see cref="SwaggerGenerator"/>.
-    /// Once they are fixed and published, this class can be removed.</remarks>
-    public class SwaggerDefaultValues : IOperationFilter
+                        public class SwaggerDefaultValues : IOperationFilter
     {
-        /// <summary>
-        /// Applies the filter to the specified operation using the given context.
-        /// </summary>
-        /// <param name="operation">The operation to apply the filter to.</param>
-        /// <param name="schemaRegistry">The API schema registry.</param>
-        /// <param name="apiDescription">The API description being filtered.</param>
-        public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
+                                                        public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
         {
             operation.deprecated |= apiDescription.IsDeprecated();
 

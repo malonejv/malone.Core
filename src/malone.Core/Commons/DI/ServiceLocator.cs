@@ -5,46 +5,23 @@ using System;
 
 namespace malone.Core.Commons.DI
 {
-    /// <summary>
-    /// Defines the <see cref="IServiceLocator" />.
-    /// </summary>
-    public interface IServiceLocator
+                public interface IServiceLocator
     {
-        /// <summary>
-        /// The Get.
-        /// </summary>
-        /// <typeparam name="T">.</typeparam>
-        /// <returns>The <see cref="T"/>.</returns>
-        T Get<T>();
+                                                T Get<T>();
     }
 
-    /// <summary>
-    /// Defines the <see cref="ServiceLocator" />.
-    /// </summary>
-    public class ServiceLocator
+                public class ServiceLocator
     {
-        /// <summary>
-        /// Defines the _serviceLocator.
-        /// </summary>
-        private static ServiceLocator _serviceLocator = new ServiceLocator();
+                                private static ServiceLocator _serviceLocator = new ServiceLocator();
 
-        /// <summary>
-        /// Defines the _current.
-        /// </summary>
-        protected IServiceLocator _current;
+                                protected IServiceLocator _current;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceLocator"/> class.
-        /// </summary>
-        public ServiceLocator()
+                                public ServiceLocator()
         {
             InnerSetResolver(new DefaultServiceLocator());
         }
 
-        /// <summary>
-        /// Gets the Current.
-        /// </summary>
-        public static IServiceLocator Current
+                                public static IServiceLocator Current
         {
             get
             {
@@ -52,29 +29,17 @@ namespace malone.Core.Commons.DI
             }
         }
 
-        /// <summary>
-        /// The SetResolver.
-        /// </summary>
-        /// <param name="resolver">The resolver<see cref="IServiceLocator"/>.</param>
-        public static void SetResolver(IServiceLocator resolver)
+                                        public static void SetResolver(IServiceLocator resolver)
         {
             _serviceLocator.InnerSetResolver(resolver);
         }
 
-        /// <summary>
-        /// The SetResolver.
-        /// </summary>
-        /// <param name="commonServiceLocator">The commonServiceLocator<see cref="object"/>.</param>
-        public static void SetResolver(object commonServiceLocator)
+                                        public static void SetResolver(object commonServiceLocator)
         {
             _serviceLocator.InnerSetResolver(commonServiceLocator);
         }
 
-        /// <summary>
-        /// The InnerSetResolver.
-        /// </summary>
-        /// <param name="resolver">The resolver<see cref="IServiceLocator"/>.</param>
-        public void InnerSetResolver(IServiceLocator resolver)
+                                        public void InnerSetResolver(IServiceLocator resolver)
         {
             if (resolver == null)
             {
@@ -84,11 +49,7 @@ namespace malone.Core.Commons.DI
             _current = resolver;
         }
 
-        /// <summary>
-        /// The InnerSetResolver.
-        /// </summary>
-        /// <param name="commonServiceLocator">The commonServiceLocator<see cref="object"/>.</param>
-        public void InnerSetResolver(object commonServiceLocator)
+                                        public void InnerSetResolver(object commonServiceLocator)
         {
             if (commonServiceLocator == null)
             {
@@ -105,17 +66,9 @@ namespace malone.Core.Commons.DI
         }
     }
 
-    /// <summary>
-    /// Defines the <see cref="DefaultServiceLocator" />.
-    /// </summary>
-    internal class DefaultServiceLocator : IServiceLocator
+                internal class DefaultServiceLocator : IServiceLocator
     {
-        /// <summary>
-        /// The Get.
-        /// </summary>
-        /// <typeparam name="T">.</typeparam>
-        /// <returns>The <see cref="T"/>.</returns>
-        public T Get<T>()
+                                                public T Get<T>()
         {
             Type type = typeof(T);
             // Since attempting to create an instance of an interface or an abstract type results in an exception, immediately return null

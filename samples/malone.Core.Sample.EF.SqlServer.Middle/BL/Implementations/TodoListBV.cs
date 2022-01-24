@@ -26,12 +26,7 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.BL.Implementations
             Logger = logger;
         }
 
-        /// <summary>
-        /// Valida que el texto de la entidad Ejemplo no tenga caracteres especiales
-        /// </summary>
-        /// <param name="args">Recibe una instancia de la clase Ejemplo</param>
-        /// <returns></returns>
-        public ValidationResult ValidarCaracteresEspeciales(params object[] args)
+                                                public ValidationResult ValidarCaracteresEspeciales(params object[] args)
         {
             try
             {

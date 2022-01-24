@@ -9,16 +9,10 @@ using System.Configuration;
 
 namespace malone.Core.Commons.Configurations
 {
-    /// <summary>
-    /// Defines the <see cref="CoreSettingsSection" />.
-    /// </summary>
-    [SectionName("coreSettings")]
+                [SectionName("coreSettings")]
     public class CoreSettingsSection : ConfigurationSection
     {
-        /// <summary>
-        /// Gets the Xmlns.
-        /// </summary>
-        [ConfigurationProperty("xmlns", IsRequired = false)]
+                                [ConfigurationProperty("xmlns", IsRequired = false)]
         public String Xmlns
         {
             get
@@ -27,20 +21,14 @@ namespace malone.Core.Commons.Configurations
             }
         }
 
-        /// <summary>
-        /// Gets or sets the DatabaseConfiguration.
-        /// </summary>
-        [ConfigurationProperty("databaseConfiguration", IsDefaultCollection = true)]
+                                [ConfigurationProperty("databaseConfiguration", IsDefaultCollection = true)]
         public DatabaseConfigurationElement DatabaseConfiguration
         {
             get { return (DatabaseConfigurationElement)this["databaseConfiguration"]; }
             set { this["databaseConfiguration"] = value; }
         }
 
-        /// <summary>
-        /// Gets the Modules.
-        /// </summary>
-        [ConfigurationProperty("modules", IsRequired = false)]
+                                [ConfigurationProperty("modules", IsRequired = false)]
         public ModulesElementCollection Modules
         {
             get

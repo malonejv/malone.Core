@@ -5,14 +5,8 @@ using System.Resources;
 
 namespace malone.Core.Commons.Localization
 {
-    /// <summary>
-    /// Defines the <see cref="ContentLocalizationHandler" />.
-    /// </summary>
-    internal class ContentLocalizationHandler : LocalizationHandler<CoreContents>, IContentLocalizationHandler
+                internal class ContentLocalizationHandler : LocalizationHandler<CoreContents>, IContentLocalizationHandler
     {
-        /// <summary>
-        /// Gets the ResourceManager.
-        /// </summary>
-        public override ResourceManager ResourceManager => Resources.Contents.ResourceManager;
+                                public override ResourceManager ResourceManager => Resources.Contents.ResourceManager;
     }
 }

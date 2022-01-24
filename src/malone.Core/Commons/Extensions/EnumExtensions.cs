@@ -8,17 +8,9 @@ using System.Reflection;
 
 namespace malone.Core.Commons.Helpers.Extensions
 {
-    /// <summary>
-    /// Defines the <see cref="EnumExtensions" />.
-    /// </summary>
-    public static class EnumExtensions
+                public static class EnumExtensions
     {
-        /// <summary>
-        /// The GetDescription.
-        /// </summary>
-        /// <param name="value">The value<see cref="Enum"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
-        public static string GetDescription(this Enum value)
+                                                public static string GetDescription(this Enum value)
         {
             // Get the type
             Type type = value.GetType();
@@ -33,12 +25,7 @@ namespace malone.Core.Commons.Helpers.Extensions
             return attribs.Length > 0 ? attribs[0].Description : null;
         }
 
-        /// <summary>
-        /// The GetDescriptions.
-        /// </summary>
-        /// <param name="value">The value<see cref="Type"/>.</param>
-        /// <returns>The <see cref="List{string}"/>.</returns>
-        public static List<string> GetDescriptions(this Type value)
+                                                public static List<string> GetDescriptions(this Type value)
         {
             List<string> values = new List<string>();
             Array enumValues = Enum.GetValues(value);
@@ -51,13 +38,7 @@ namespace malone.Core.Commons.Helpers.Extensions
             return values;
         }
 
-        /// <summary>
-        /// The GetEnumFromAttribute.
-        /// </summary>
-        /// <param name="enType">The enType<see cref="Type"/>.</param>
-        /// <param name="attribute">The attribute<see cref="string"/>.</param>
-        /// <returns>The <see cref="Enum"/>.</returns>
-        public static Enum GetEnumFromAttribute(Type enType, string attribute)
+                                                        public static Enum GetEnumFromAttribute(Type enType, string attribute)
         {
             Enum eRet = null;
 

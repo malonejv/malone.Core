@@ -7,30 +7,17 @@ using System.Reflection;
 
 namespace malone.Core.Commons.Initializers
 {
-    /// <summary>
-    /// Defines the <see cref="AppInitializer{TInjectorInitializer, TContainer, TLayersInitializer}" />.
-    /// </summary>
-    /// <typeparam name="TInjectorInitializer">.</typeparam>
-    /// <typeparam name="TContainer">.</typeparam>
-    /// <typeparam name="TLayersInitializer">.</typeparam>
-    public class AppInitializer<TInjectorInitializer, TContainer, TLayersInitializer>
+                            public class AppInitializer<TInjectorInitializer, TContainer, TLayersInitializer>
         where TInjectorInitializer : IInjectorInitializer<TContainer>, new()
         where TLayersInitializer : class, ILayerInitializer<TContainer>, new()
     {
-        /// <summary>
-        /// The Initialize.
-        /// </summary>
-        public static void Initialize()
+                                public static void Initialize()
         {
             TContainer container = InitializeInjector();
             InitializeLayers(container);
         }
 
-        /// <summary>
-        /// The InitializeInjector.
-        /// </summary>
-        /// <returns>The <see cref="TContainer"/>.</returns>
-        private static TContainer InitializeInjector()
+                                        private static TContainer InitializeInjector()
         {
             TInjectorInitializer instance = new TInjectorInitializer();
 
@@ -44,11 +31,7 @@ namespace malone.Core.Commons.Initializers
             return default(TContainer);
         }
 
-        /// <summary>
-        /// The FindInjectorInitializerInitializeMethod.
-        /// </summary>
-        /// <returns>The <see cref="MethodInfo"/>.</returns>
-        private static MethodInfo FindInjectorInitializerInitializeMethod()
+                                        private static MethodInfo FindInjectorInitializerInitializeMethod()
         {
 
             MethodInfo methodInfo = null;
@@ -66,11 +49,7 @@ namespace malone.Core.Commons.Initializers
             return methodInfo;
         }
 
-        /// <summary>
-        /// The InitializeLayers.
-        /// </summary>
-        /// <param name="container">The container<see cref="TContainer"/>.</param>
-        private static void InitializeLayers(TContainer container)
+                                        private static void InitializeLayers(TContainer container)
         {
             if (container.Equals(default(TContainer))) throw new ArgumentNullException(nameof(container));
 
@@ -80,11 +59,7 @@ namespace malone.Core.Commons.Initializers
             methodInitialize.Invoke(instance, new object[] { container });
         }
 
-        /// <summary>
-        /// The FindLayersInitializerInitializeMethod.
-        /// </summary>
-        /// <returns>The <see cref="MethodInfo"/>.</returns>
-        private static MethodInfo FindLayersInitializerInitializeMethod()
+                                        private static MethodInfo FindLayersInitializerInitializeMethod()
         {
 
             MethodInfo methodInfo = null;

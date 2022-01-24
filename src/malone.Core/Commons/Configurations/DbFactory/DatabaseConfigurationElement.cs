@@ -5,15 +5,9 @@ using System.Configuration;
 
 namespace malone.Core.Commons.Configurations.DbFactory
 {
-    /// <summary>
-    /// Defines the <see cref="DatabaseConfigurationElement" />.
-    /// </summary>
-    public class DatabaseConfigurationElement : ConfigurationElement
+                public class DatabaseConfigurationElement : ConfigurationElement
     {
-        /// <summary>
-        /// Gets the Providers.
-        /// </summary>
-        [ConfigurationProperty("providers", IsRequired = true, IsKey = true)]
+                                [ConfigurationProperty("providers", IsRequired = true, IsKey = true)]
         public DatabaseProviderElementCollection Providers
         {
             get { return (DatabaseProviderElementCollection)this["providers"]; }

@@ -7,39 +7,20 @@ using System.Linq;
 
 namespace malone.Core.Commons.Configurations.Features
 {
-    /// <summary>
-    /// Defines the <see cref="FeatureSettings" />.
-    /// </summary>
-    public class FeatureSettings
+                public class FeatureSettings
     {
-        /// <summary>
-        /// Gets or sets the Instance.
-        /// </summary>
-        private static FeatureSettings Instance { get; set; }
+                                private static FeatureSettings Instance { get; set; }
 
-        /// <summary>
-        /// Defines the Configuration.
-        /// </summary>
-        private ICoreConfiguration Configuration;
+                                private ICoreConfiguration Configuration;
 
-        /// <summary>
-        /// Defines the FeatureSettingsSection.
-        /// </summary>
-        private FeatureSettingsSection FeatureSettingsSection;
+                                private FeatureSettingsSection FeatureSettingsSection;
 
-        /// <summary>
-        /// Gets the Features.
-        /// </summary>
-        public IEnumerable<FeatureElement> Features
+                                public IEnumerable<FeatureElement> Features
         {
             get { return FeatureSettingsSection.Features.Cast<FeatureElement>(); }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FeatureSettings"/> class.
-        /// </summary>
-        /// <param name="configuration">The configuration<see cref="ICoreConfiguration"/>.</param>
-        public FeatureSettings(ICoreConfiguration configuration)
+                                        public FeatureSettings(ICoreConfiguration configuration)
         {
             if (configuration == null) throw new ArgumentNullException(nameof(configuration));
 
@@ -49,12 +30,7 @@ namespace malone.Core.Commons.Configurations.Features
             Instance = this;
         }
 
-        /// <summary>
-        /// The IsEnabled.
-        /// </summary>
-        /// <param name="featureName">The featureName<see cref="string"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
-        public static bool IsEnabled(string featureName)
+                                                public static bool IsEnabled(string featureName)
         {
             if (featureName == null) throw new ArgumentNullException(nameof(featureName));
             if (featureName == string.Empty) throw new ArgumentException(nameof(featureName));
@@ -65,13 +41,7 @@ namespace malone.Core.Commons.Configurations.Features
             return feature.AllEnabled;
         }
 
-        /// <summary>
-        /// The IsEnabled.
-        /// </summary>
-        /// <param name="featureName">The featureName<see cref="string"/>.</param>
-        /// <param name="behaviourName">The behaviourName<see cref="string"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
-        public static bool IsEnabled(string featureName, string behaviourName)
+                                                        public static bool IsEnabled(string featureName, string behaviourName)
         {
             bool result = IsEnabled(featureName);
 

@@ -5,17 +5,9 @@ using System.Reflection;
 
 namespace malone.Core.Commons.Configurations.Features
 {
-    /// <summary>
-    /// Defines the <see cref="FeatureExtensions" />.
-    /// </summary>
-    public static class FeatureExtensions
+                public static class FeatureExtensions
     {
-        /// <summary>
-        /// The IsEnabled.
-        /// </summary>
-        /// <param name="method">The method<see cref="MethodBase"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
-        public static bool IsEnabled(this MethodBase method)
+                                                public static bool IsEnabled(this MethodBase method)
         {
             FeatureDescriptionAttribute attr = (FeatureDescriptionAttribute)method.GetCustomAttributes(typeof(FeatureDescriptionAttribute), true)[0];
 

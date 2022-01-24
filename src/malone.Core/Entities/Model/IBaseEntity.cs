@@ -5,27 +5,14 @@ using System;
 
 namespace malone.Core.Entities.Model
 {
-    /// <summary>
-    /// Defines the <see cref="IBaseEntity{TKey}" />.
-    /// </summary>
-    /// <typeparam name="TKey">.</typeparam>
-    public interface IBaseEntity<TKey>
+                    public interface IBaseEntity<TKey>
         where TKey : IEquatable<TKey>
     {
-        /// <summary>
-        /// Gets or sets the Id.
-        /// </summary>
-        TKey Id { get; set; }
+                                TKey Id { get; set; }
     }
 
-    /// <summary>
-    /// Defines the <see cref="IBaseEntity" />.
-    /// </summary>
-    public interface IBaseEntity : IBaseEntity<int>
+                public interface IBaseEntity : IBaseEntity<int>
     {
-        /// <summary>
-        /// Gets or sets the Id.
-        /// </summary>
-        new int Id { get; set; }
+                                new int Id { get; set; }
     }
 }

@@ -8,13 +8,7 @@ using System.Reflection;
 
 namespace malone.Core.AdoNet.Database
 {
-    /// <summary>
-    /// Crea una base de datos Ado.Net de acuerdo a la seccion de configuracion.
-    /// </summary>
-    /// <![CDATA[
-    /// 
-    /// ]]>
-    public class DatabaseFactory
+                            public class DatabaseFactory
     {
         private ICoreConfiguration Configuration { get; set; }
         private DatabaseConfigurationElement DatabaseConfiguration { get; set; }

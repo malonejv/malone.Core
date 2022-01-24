@@ -6,15 +6,8 @@ using System.Collections.Generic;
 
 namespace malone.Core.Commons.DI
 {
-    /// <summary>
-    /// Defines the <see cref="ILayerInitializer{TContainer}" />.
-    /// </summary>
-    /// <typeparam name="TContainer">.</typeparam>
-    public interface ILayerInitializer<TContainer> : IInitializer<TContainer>
+                    public interface ILayerInitializer<TContainer> : IInitializer<TContainer>
     {
-        /// <summary>
-        /// Gets the Layers.
-        /// </summary>
-        IEnumerable<IInitializer<TContainer>> Layers { get; }
+                                IEnumerable<IInitializer<TContainer>> Layers { get; }
     }
 }
