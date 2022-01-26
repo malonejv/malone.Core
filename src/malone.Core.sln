@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.32112.339
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core", "malone.Core\malone.Core.csproj", "{B59A92F9-ABDC-4200-A80D-58A5AB936591}"
 EndProject
@@ -104,8 +104,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.AdoNet.Firebird", "malone.Core.AdoNet.Firebird\malone.Core.AdoNet.Firebird.csproj", "{E6DCA648-55B4-4411-BC4D-52D5F69D0612}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Identity.AdoNet", "malone.Core.Identity.AdoNet\malone.Core.Identity.AdoNet.csproj", "{0893A634-DFA0-42EB-BC53-93EC05930CF8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Dapper", "malone.Core.Dapper\malone.Core.Dapper.csproj", "{207004DC-E04E-4A6D-97A2-42172836E7D2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dapper", "Dapper", "{1C805D94-BC1F-4C5E-A940-6BE1401EA3AB}"
@@ -117,6 +115,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Unity.IdentityAdoNetSqlServerInitializer", "malone.Core.Unity.IdentityAdoNetSqlServerInitializer\malone.Core.Unity.IdentityAdoNetSqlServerInitializer.csproj", "{1C1A8C42-F043-4D14-B522-E501580D3364}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Identity.Dapper", "malone.Core.Identity.Dapper\malone.Core.Identity.Dapper.csproj", "{5C683C67-9122-43ED-BD2D-FAED83007D78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Identity.AdoNet.SqlServer", "malone.Core.Identity.AdoNet.SqlServer\malone.Core.Identity.AdoNet.SqlServer.csproj", "{765B4548-F6B9-41C9-A640-A12B3F91185B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -638,30 +638,6 @@ Global
 		{E6DCA648-55B4-4411-BC4D-52D5F69D0612}.ReleaseNuget|x64.Build.0 = Release|Any CPU
 		{E6DCA648-55B4-4411-BC4D-52D5F69D0612}.ReleaseNuget|x86.ActiveCfg = Release|Any CPU
 		{E6DCA648-55B4-4411-BC4D-52D5F69D0612}.ReleaseNuget|x86.Build.0 = Release|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.Debug|x64.Build.0 = Debug|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.Debug|x86.Build.0 = Debug|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.DebugNuget|Any CPU.ActiveCfg = DebugNuget|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.DebugNuget|Any CPU.Build.0 = DebugNuget|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.DebugNuget|x64.ActiveCfg = DebugNuget|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.DebugNuget|x64.Build.0 = DebugNuget|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.DebugNuget|x86.ActiveCfg = DebugNuget|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.DebugNuget|x86.Build.0 = DebugNuget|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.Release|x64.ActiveCfg = Release|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.Release|x64.Build.0 = Release|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.Release|x86.ActiveCfg = Release|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.Release|x86.Build.0 = Release|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.ReleaseNuget|Any CPU.ActiveCfg = Release|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.ReleaseNuget|Any CPU.Build.0 = Release|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.ReleaseNuget|x64.ActiveCfg = Release|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.ReleaseNuget|x64.Build.0 = Release|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.ReleaseNuget|x86.ActiveCfg = Release|Any CPU
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8}.ReleaseNuget|x86.Build.0 = Release|Any CPU
 		{207004DC-E04E-4A6D-97A2-42172836E7D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{207004DC-E04E-4A6D-97A2-42172836E7D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{207004DC-E04E-4A6D-97A2-42172836E7D2}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -782,6 +758,30 @@ Global
 		{5C683C67-9122-43ED-BD2D-FAED83007D78}.ReleaseNuget|x64.Build.0 = Release|Any CPU
 		{5C683C67-9122-43ED-BD2D-FAED83007D78}.ReleaseNuget|x86.ActiveCfg = Release|Any CPU
 		{5C683C67-9122-43ED-BD2D-FAED83007D78}.ReleaseNuget|x86.Build.0 = Release|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.Debug|x64.Build.0 = Debug|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.Debug|x86.Build.0 = Debug|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.DebugNuget|Any CPU.ActiveCfg = DebugNuget|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.DebugNuget|Any CPU.Build.0 = DebugNuget|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.DebugNuget|x64.ActiveCfg = DebugNuget|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.DebugNuget|x64.Build.0 = DebugNuget|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.DebugNuget|x86.ActiveCfg = DebugNuget|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.DebugNuget|x86.Build.0 = DebugNuget|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.Release|x64.ActiveCfg = Release|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.Release|x64.Build.0 = Release|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.Release|x86.ActiveCfg = Release|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.Release|x86.Build.0 = Release|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.ReleaseNuget|Any CPU.ActiveCfg = Release|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.ReleaseNuget|Any CPU.Build.0 = Release|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.ReleaseNuget|x64.ActiveCfg = Release|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.ReleaseNuget|x64.Build.0 = Release|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.ReleaseNuget|x86.ActiveCfg = Release|Any CPU
+		{765B4548-F6B9-41C9-A640-A12B3F91185B}.ReleaseNuget|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -823,16 +823,16 @@ Global
 		{740BD134-AB9F-4503-9F86-4642B151FECB} = {F1CDC7E0-7E87-49EB-92A8-3BDB08950ACC}
 		{68758EB3-E0F4-469F-A63D-8B8592414B1D} = {2AFC5CCC-A9FC-4232-9A11-B58385408C56}
 		{E6DCA648-55B4-4411-BC4D-52D5F69D0612} = {C36AE08A-5202-43C9-8D1B-95ABF1FCD145}
-		{0893A634-DFA0-42EB-BC53-93EC05930CF8} = {1D50ED78-FBF6-490B-95ED-3A9CA0858936}
 		{207004DC-E04E-4A6D-97A2-42172836E7D2} = {E026EE7B-0B86-4A1C-95DE-779A9484AAA7}
 		{1C805D94-BC1F-4C5E-A940-6BE1401EA3AB} = {CC3622BA-6F50-4F82-ADCF-31143468A9CA}
 		{EE8184F9-2C69-4AE4-8D17-2078E43EED40} = {1C805D94-BC1F-4C5E-A940-6BE1401EA3AB}
 		{4D280359-094D-41BF-A2CD-5F0090F0EF69} = {E5356607-D590-492B-B93C-49488EDD2207}
 		{1C1A8C42-F043-4D14-B522-E501580D3364} = {E5356607-D590-492B-B93C-49488EDD2207}
 		{5C683C67-9122-43ED-BD2D-FAED83007D78} = {1D50ED78-FBF6-490B-95ED-3A9CA0858936}
+		{765B4548-F6B9-41C9-A640-A12B3F91185B} = {1D50ED78-FBF6-490B-95ED-3A9CA0858936}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {BF840011-B60A-44FF-9D38-4CB15C4C9C8A}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
+		SolutionGuid = {BF840011-B60A-44FF-9D38-4CB15C4C9C8A}
 	EndGlobalSection
 EndGlobal
