@@ -36,14 +36,12 @@ jobs:
       - name: Build malone.Core
         run:  msbuild src/malone.Core.sln /t:Build /p:Configuration=Debug -verbosity:detailed
       
-      - name: Get Environment Variables
-        uses: mrllama123/env-mapper@1.0.0
-        with:
-          envMapperFile: src/malone.Core/bin/Debug/Variables
-          envMapperKey: Var
-        
+      - name: Get Data & Set Environment Variables
+        shell: pwsh
+        run: Write-Host "MALONE_CORE_VER=$($(Get-Content .\variables | Out-String |ConvertFrom-Json).MALONE_CORE_VER)" >> $GITHUB_ENV
+      
       - name: Echo Version Number
-        run: echo $MALONE_CORE_VER
+        run: Write-Host ${{ env.MALONE_CORE_VER }}
 
       - name: Prepare Packages
         run:  |
