@@ -291,24 +291,26 @@
 	  GetSemVer;
     </PostBuildEventDependsOn>
     <PostBuildEvent>
-	if $(ConfigurationName) == Debug (
-	(
-		echo Var:
-		echo   MALONE_CORE_VER: @(VersionNumber)
-	)&gt;"variables"
-	)
-	
-	if $(ConfigurationName) == Release (
-	(
-		echo Var:
-		echo   MALONE_CORE_VER: @(SemVer)
-	)&gt;"variables"
-	)
-    if $(ConfigurationName) == DebugNuget (
-    nuget pack "$(ProjectPath)" -Suffix dev -Properties Configuration=DebugNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-    xcopy "$(TargetDir)$(TargetName)*.*nupkg" "..\..\..\..\..\malone.Core.DevLocalNugets" /SY
-	del "$(TargetDir)$(TargetName)*.*nupkg" /Q
-    )</PostBuildEvent>
+      if $(ConfigurationName) == Debug (
+      (
+      echo {
+      echo   "MALONE_CORE_VER": "@(VersionNumber)"
+      echo }
+      )&gt;"variables"
+      )
+
+      if $(ConfigurationName) == Release (
+      (
+      echo {
+      echo   "MALONE_CORE_VER": "@(SemVer)"
+      echo }
+      )&gt;"variables"
+      )
+      if $(ConfigurationName) == DebugNuget (
+      nuget pack "$(ProjectPath)" -Suffix dev -Properties Configuration=DebugNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+      xcopy "$(TargetDir)$(TargetName)*.*nupkg" "..\..\..\..\..\malone.Core.DevLocalNugets" /SY
+      del "$(TargetDir)$(TargetName)*.*nupkg" /Q
+      )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
