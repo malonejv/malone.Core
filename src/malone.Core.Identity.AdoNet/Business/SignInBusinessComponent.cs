@@ -1,7 +1,7 @@
 ﻿using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Log;
-using malone.Core.Sample.AdoNet.Entities;
+using malone.Core.Identity.AdoNet.Entities;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
@@ -45,7 +45,7 @@ namespace malone.Core.Identity.AdoNet.Business
                 if (userNameOrEmail.Contains("@"))
                 {
                     var user = await UserManager.FindByEmailAsync(userNameOrEmail);
-                    return await PasswordSignInAsync(user.UserNameOrEmail, password, isPersistent, shouldLockout);
+                    return await PasswordSignInAsync(user.UserName, password, isPersistent, shouldLockout);
                 }
                 else
                 {

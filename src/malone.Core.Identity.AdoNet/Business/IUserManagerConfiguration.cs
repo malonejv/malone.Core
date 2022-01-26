@@ -1,5 +1,4 @@
-﻿using malone.Core.Identity;
-using malone.Core.Sample.AdoNet.Entities;
+﻿using malone.Core.Identity.AdoNet.Entities;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 

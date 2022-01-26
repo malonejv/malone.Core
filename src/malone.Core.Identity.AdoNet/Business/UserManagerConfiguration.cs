@@ -1,9 +1,6 @@
-﻿using malone.Core.Identity;
-using malone.Core.Identity.EntityFramework.Business;
-using malone.Core.Sample.AdoNet.Entities;
+﻿using malone.Core.Identity.AdoNet.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security.DataProtection;
 using System;
 
 namespace malone.Core.Identity.AdoNet.Business

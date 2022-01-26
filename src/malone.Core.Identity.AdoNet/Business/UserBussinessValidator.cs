@@ -1,5 +1,5 @@
 ﻿using malone.Core.Business.Components;
-using malone.Core.Sample.AdoNet.Entities;
+using malone.Core.Identity.AdoNet.Entities;
 using System;
 
 namespace malone.Core.Identity.AdoNet.Business

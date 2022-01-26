@@ -1,7 +1,6 @@
 ﻿using System;
 using malone.Core.Commons.DI;
-using malone.Core.Sample.AdoNet.Business;
-using malone.Core.Sample.AdoNet.Entities;
+using malone.Core.Identity.AdoNet.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
