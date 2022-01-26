@@ -38,7 +38,7 @@ jobs:
       
       - name: Get Data & Set Environment Variables
         shell: pwsh
-        run: Write-Host "MALONE_CORE_VER=$($(Get-Content .\variables | Out-String |ConvertFrom-Json).MALONE_CORE_VER)" >> $GITHUB_ENV
+        run: Write-Host "MALONE_CORE_VER=$($(Get-Content src/malone.Core/bin/Debug/Variables | Out-String |ConvertFrom-Json).MALONE_CORE_VER)" >> $GITHUB_ENV
       
       - name: Echo Version Number
         run: Write-Host ${{ env.MALONE_CORE_VER }}
