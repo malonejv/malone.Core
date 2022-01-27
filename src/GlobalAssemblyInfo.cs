@@ -8,4 +8,12 @@ using System.Reflection;
 [assembly: AssemblyTitle("malonejv.Core")]
 [assembly: AssemblyCompany("Javier López Malone")]
 [assembly: AssemblyCopyright("Copyright © Javier López Malone 2022")]
+
+#if DEBUG
+[assembly: AssemblyConfiguration("Debug")]
 [assembly: AssemblyVersion("2.1.10.*")]
+#else
+[assembly: AssemblyConfiguration("Release")]
+[assembly: AssemblyVersion("2.1.10")]
+[assembly: AssemblyInformationalVersion("2.1.10")]
+#endif

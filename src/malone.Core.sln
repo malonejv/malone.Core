@@ -50,7 +50,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2AFC5CCC-A9FC-4232-9A11-B58385408C56}"
 	ProjectSection(SolutionItems) = preProject
 		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
-		..\Pendientes.txt = ..\Pendientes.txt
+		..\Pendientes.md = ..\Pendientes.md
 		..\README.md = ..\README.md
 		web.config.transform = web.config.transform
 	EndProjectSection
@@ -98,6 +98,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{
 	ProjectSection(SolutionItems) = preProject
 		..\azure-pipelines.yml = ..\azure-pipelines.yml
 		..\.github\workflows\development.yml = ..\.github\workflows\development.yml
+		..\.github\workflows\feature.yml = ..\.github\workflows\feature.yml
 		..\.github\workflows\master.yml = ..\.github\workflows\master.yml
 		..\.github\workflows\release.yml = ..\.github\workflows\release.yml
 	EndProjectSection
