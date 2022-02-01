@@ -75,7 +75,13 @@ jobs:
       runs-on: windows-latest
 
       # Steps represent a sequence of tasks that will be executed as part of the job
-      steps:  
+      steps: 
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.0.5
+
+      - name: Add GitHub Source
+        run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ secrets.GITHUB_TOKEN }}
+    
       - name: Push Packages
         run: | 
               nuget push *-dev.nupkg -SkipDuplicate -source "github"
