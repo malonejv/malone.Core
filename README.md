@@ -16,3 +16,10 @@ nuget sources Add -Name
 Ese Token queda guardado en:
 
 %userprofile%\AppData\Roaming\NuGet\NuGet.Config
+
+
+## Información
+
+https://desarrollowp.com/blog/tutoriales/aprende-git-de-manera-sencilla-git-flow/
+https://itnext.io/automate-your-releases-versioning-and-release-notes-with-semantic-release-d5575b73d986
+https://docs.microsoft.com/es-es/dotnet/standard/library-guidance/sourcelink

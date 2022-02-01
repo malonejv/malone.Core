@@ -66,7 +66,6 @@
     <None Include="malone.Core.AdoNet.SqlServer.nuspec">
       <TransformOnBuild>true</TransformOnBuild>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\malone.Core.AdoNet\malone.Core.AdoNet.csproj">
@@ -80,10 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TypeConverters\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
-    <Analyzer Include="..\..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

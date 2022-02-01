@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: DEVELOPMENT
+name: Integration to Development
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -35,7 +35,7 @@ jobs:
         
       - name: Build malone.Core
         run:  msbuild src/malone.Core.sln /t:Build /p:Configuration=Debug -verbosity:detailed
-      
+        
       - name: Get Data & Set Environment Variables
         shell: pwsh
         run: |
@@ -44,32 +44,38 @@ jobs:
       
       - name: Echo Version Number
         run: echo "${env:MALONE_CORE_VER}"
-
+        
       - name: Prepare Packages
         run:  |
-              nuget pack src/malone.Core/malone.Core.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.AdoNet/malone.Core.AdoNet.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Dapper/malone.Core.Dapper.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.EF/malone.Core.EF.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Patterns/malone.Core.Patterns.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.WebApi/malone.Core.WebApi.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.AdoNet.Firebird/malone.Core.AdoNet.Firebird.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.AdoNet.Oracle/malone.Core.AdoNet.Oracle.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.AdoNet.SqlServer/malone.Core.AdoNet.SqlServer.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Dapper.SqlServer/malone.Core.Dapper.SqlServer.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity.IdentityAdoNetSqlServerInitializer/malone.Core.Unity.IdentityAdoNetSqlServerInitializer.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity.IdentityDapperSqlServerInitializer/malone.Core.Unity.IdentityDapperSqlServerInitializer.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity.IdentityEntityFrameworkInitializer/malone.Core.Unity.IdentityEntityFrameworkInitializer.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity.Log4NetInitializer/malone.Core.Unity.Log4NetInitializer.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity.ModulesInitializers/malone.Core.Unity.ModulesInitializers.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity/malone.Core.Unity.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Unity.WebApi/malone.Core.Unity.WebApi.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Log4Net/malone.Core.Log4Net.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Identity/malone.Core.Identity.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Identity.AdoNet.SqlServer/malone.Core.Identity.AdoNet.SqlServer.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Dapper/malone.Core.Dapper.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-              nuget pack src/malone.Core.Identity.EntityFramework/malone.Core.Identity.EntityFramework.csproj -Properties Configuration=Debug -Version ${env:MALONE_CORE_VER} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-                               
+              nuget pack src/malone.Core/malone.Core.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.AdoNet/malone.Core.AdoNet.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Dapper/malone.Core.Dapper.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.EF/malone.Core.EF.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Patterns/malone.Core.Patterns.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.WebApi/malone.Core.WebApi.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.AdoNet.Firebird/malone.Core.AdoNet.Firebird.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.AdoNet.Oracle/malone.Core.AdoNet.Oracle.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.AdoNet.SqlServer/malone.Core.AdoNet.SqlServer.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Dapper.SqlServer/malone.Core.Dapper.SqlServer.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Unity.IdentityAdoNetSqlServerInitializer/malone.Core.Unity.IdentityAdoNetSqlServerInitializer.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Unity.IdentityDapperSqlServerInitializer/malone.Core.Unity.IdentityDapperSqlServerInitializer.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Unity.IdentityEntityFrameworkInitializer/malone.Core.Unity.IdentityEntityFrameworkInitializer.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Unity.Log4NetInitializer/malone.Core.Unity.Log4NetInitializer.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Unity.ModulesInitializers/malone.Core.Unity.ModulesInitializers.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Unity/malone.Core.Unity.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Unity.WebApi/malone.Core.Unity.WebApi.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Log4Net/malone.Core.Log4Net.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Identity/malone.Core.Identity.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Identity.AdoNet.SqlServer/malone.Core.Identity.AdoNet.SqlServer.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Dapper/malone.Core.Dapper.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+              nuget pack src/malone.Core.Identity.EntityFramework/malone.Core.Identity.EntityFramework.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+             
+  deploy:
+      # The type of runner that the job will run on
+      runs-on: windows-latest
+
+      # Steps represent a sequence of tasks that will be executed as part of the job
+      steps:  
       - name: Push Packages
         run: | 
               nuget push *-dev.nupkg -SkipDuplicate -source "github"

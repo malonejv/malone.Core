@@ -4,6 +4,7 @@
 
 ## PENDIENTES
 
+- [ ] Cambiar BD a localdb con scripts de inicialización
 - [ ] Agregar archivos de transformación a los proyectos que lo requieran
 - [ ] Validar como agregar el archivo xsd para que muestre el intellisense en los web.config
 - [ ] Evaluar sacar TValidator de las clases business y dejarlo solo en el constructor como interfaz
