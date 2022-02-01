@@ -35,7 +35,7 @@ jobs:
         
       - name: Build malone.Core
         run:  msbuild src/malone.Core.sln /t:Build /p:Configuration=Debug -verbosity:detailed
-      
+        
       - name: Get Data & Set Environment Variables
         shell: pwsh
         run: |
@@ -44,7 +44,7 @@ jobs:
       
       - name: Echo Version Number
         run: echo "${env:MALONE_CORE_VER}"
-
+        
       - name: Prepare Packages
         run:  |
               nuget pack src/malone.Core/malone.Core.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
@@ -69,7 +69,13 @@ jobs:
               nuget pack src/malone.Core.Identity.AdoNet.SqlServer/malone.Core.Identity.AdoNet.SqlServer.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
               nuget pack src/malone.Core.Dapper/malone.Core.Dapper.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
               nuget pack src/malone.Core.Identity.EntityFramework/malone.Core.Identity.EntityFramework.csproj -Properties Configuration=Debug -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-               
+             
+  deploy:
+      # The type of runner that the job will run on
+      runs-on: windows-latest
+
+      # Steps represent a sequence of tasks that will be executed as part of the job
+      steps:  
       - name: Push Packages
         run: | 
               nuget push *-dev.nupkg -SkipDuplicate -source "github"

@@ -69,7 +69,14 @@ jobs:
               nuget pack src/malone.Core.Identity.AdoNet.SqlServer/malone.Core.Identity.AdoNet.SqlServer.csproj -Properties Configuration=Release-IncludeReferencedProjects
               nuget pack src/malone.Core.Dapper/malone.Core.Dapper.csproj -Properties Configuration=Release-IncludeReferencedProjects
               nuget pack src/malone.Core.Identity.EntityFramework/malone.Core.Identity.EntityFramework.csproj -Properties Configuration=Release-IncludeReferencedProjects
-                        
+
+  # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+  deploy:
+      # The type of runner that the job will run on
+      runs-on: windows-latest
+
+      # Steps represent a sequence of tasks that will be executed as part of the job
+      steps:                        
       - name: Push Packages
         run:  nuget push *.nupkg -SkipDuplicate -source "github"
         
