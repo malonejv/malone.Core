@@ -15,16 +15,16 @@ on:
       artifacs_path:
         required: true
         type: string
+      allow_push:
+        required: true
+        type: string
   
-env:
-  ALLOW_PUSH_PACKAGES: "${{ github.event_name == 'push' && github.ref == 'refs/heads/${{ inputs.branch }}' }}"
-        
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   deploy:
       name: Deploy
       needs: build-and-pack
-      if: $env:ALLOW_PUSH_PACKAGES
+      if: ${{ inputs.allow_push }}
       
       # The type of runner that the job will run on
       runs-on: windows-latest

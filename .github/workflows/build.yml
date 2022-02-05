@@ -5,9 +5,6 @@ name: Build Workflow
 on:
   workflow_call:
     inputs:
-      branch:
-        required: true
-        type: string
       configuration:
         required: true
         type: string
@@ -18,10 +15,10 @@ on:
       artifacts_path:
         required: true
         type: string
+      allow_push:
+        required: true
+        type: string
 
-env:
-  ALLOW_PUSH_PACKAGES: "${{ github.event_name == 'push' && github.ref == 'refs/heads/${{ inputs.branch }}' }}"
-  
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
@@ -53,14 +50,14 @@ jobs:
         run: msbuild ${{ inputs.soluntion_path }} /t:Build /p:Configuration=${{ inputs.configuration }}
             
       - name: Prepare Packages
-        if: $env:ALLOW_PUSH_PACKAGES
+        if: ${{ inputs.allow_push }}
         run:
              |
               $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.soluntion_path }} -Type NonTestProjects
               $projects | foreach{ nuget pack $_ -Properties Configuration=${{ inputs.configuration }} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg -OutputDirectory "${{ inputs.artifacts_path }}" }
               
       - name: Upload artifacts
-        if: $env:ALLOW_PUSH_PACKAGES
+        if: ${{ inputs.allow_push }}
         uses: actions/upload-artifact@v2
         with:
           name: nuget-packages

@@ -39,6 +39,7 @@ jobs:
               configuration: ${env:CONFIGURATION}
               soluntion_path: 'src\malone.Core.sln'
               artifacts_path: ${ env:NUGET_ARTIFACTS_DIR }
+              allow_push: ${ env:ALLOW_PUSH_PACKAGES }
            
       - name: Version Number
         id: version_number
@@ -52,7 +53,7 @@ jobs:
       runs-on: windows-latest
       environment: development
       needs: build-and-pack
-      if: $env:ALLOW_PUSH_PACKAGES
+      if: ${ env:ALLOW_PUSH_PACKAGES }
       
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps: 
@@ -62,3 +63,4 @@ jobs:
               branch: ${{ github.ref_name }}
               configuration: ${env:CONFIGURATION}
               artifacts_path: ${ env:NUGET_ARTIFACTS_DIR }
+              allow_push: ${ env:ALLOW_PUSH_PACKAGES }
