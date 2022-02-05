@@ -53,14 +53,14 @@ jobs:
         run: msbuild ${{ inputs.soluntion_path }} /t:Build /p:Configuration=${{ inputs.configuration }}
             
       - name: Prepare Packages
-        if: ${ env:ALLOW_PUSH_PACKAGES }
+        if: $env:ALLOW_PUSH_PACKAGES
         run:
              |
               $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.soluntion_path }} -Type NonTestProjects
               $projects | foreach{ nuget pack $_ -Properties Configuration=${{ inputs.configuration }} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg -OutputDirectory "${{ inputs.artifacts_path }}" }
               
       - name: Upload artifacts
-        if: ${{ env:ALLOW_PUSH_PACKAGES }}
+        if: $env:ALLOW_PUSH_PACKAGES
         uses: actions/upload-artifact@v2
         with:
           name: nuget-packages

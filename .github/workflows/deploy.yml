@@ -24,7 +24,7 @@ jobs:
   deploy:
       name: Deploy
       needs: build-and-pack
-      if: ${ env:ALLOW_PUSH_PACKAGES }
+      if: $env:ALLOW_PUSH_PACKAGES
       
       # The type of runner that the job will run on
       runs-on: windows-latest
