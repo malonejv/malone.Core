@@ -21,7 +21,6 @@ on:
       - hotfix/**
 
 env:
-  IS_MASTER: "${{ github.ref == 'refs/heads/master'}}"
   ALLOW_PUSH_PACKAGES: "${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/development')}}"
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -32,7 +31,7 @@ jobs:
       runs-on: windows-latest
 
       outputs:
-        Configuration: ${{ steps.set-configuration.configuration }}
+        Configuration: ${{ steps.set_configuration.configuration }}
 
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
@@ -42,7 +41,7 @@ jobs:
         
       # Defines configuration
       - name: Define Configuration
-        id: set-configuration
+        id: set_configuration
         run: |
              echo "CONFIGURATION='Release'" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
              echo ::set-output name=Configuration::$CONFIGURATION
@@ -58,7 +57,7 @@ jobs:
       steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Build
-        run: echo Build ${{ needs.setup.set-configuration.configuration }}
+        run: echo Build ${{ needs.setup.set_configuration.configuration }}
 
   nuget-pack:
       name: "Preparing Nuget Packages"
