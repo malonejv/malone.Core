@@ -96,8 +96,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.WebApi.Test", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{68758EB3-E0F4-469F-A63D-8B8592414B1D}"
 	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\build.yml = ..\.github\workflows\build.yml
+		..\.github\workflows\deploy.yml = ..\.github\workflows\deploy.yml
 		..\.github\workflows\development.yml = ..\.github\workflows\development.yml
-		..\Get-ProjectsInSolution.ps1 = ..\Get-ProjectsInSolution.ps1
 		..\.github\workflows\production.yml = ..\.github\workflows\production.yml
 	EndProjectSection
 EndProject
@@ -837,7 +838,7 @@ Global
 		{FD11AED8-C9FC-4948-B282-BDF67A7BD621} = {2AFC5CCC-A9FC-4232-9A11-B58385408C56}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 		SolutionGuid = {BF840011-B60A-44FF-9D38-4CB15C4C9C8A}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal
