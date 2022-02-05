@@ -7,22 +7,25 @@ name: Integration to Development
 on:
   push:
     branches:
-      - development
-      - feature/**
+      - master
+      - release/**
+      - hotfix/**
   pull_request:
     # Sequence of patterns matched against refs/heads
     branches:
-      - development
+      - master
+      - release/**
+      - hotfix/**
 
 env:
-  CONFIGURATION: "Debug"
-  ALLOW_PUSH_PACKAGES: "${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}"
+  CONFIGURATION: "Release"
+  ALLOW_PUSH_PACKAGES: "${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}"
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   setup:
       name: Setup
-      
+
       # The type of runner that the job will run on
       runs-on: windows-latest
       
@@ -32,7 +35,7 @@ jobs:
       # Steps represent a sequence of tasks that will be executed as part of the job
       - name: Setup
         run: echo Setup
-         
+        
   build:
       name: Build
       needs: setup
@@ -50,7 +53,7 @@ jobs:
   nuget-pack:
       name: Preparing Nuget Packages
       needs: [setup,build]
-      if: ${{ github.event_name == 'push' }} #&& github.ref == 'refs/heads/development'
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
       
       # The type of runner that the job will run on
       runs-on: windows-latest
@@ -63,7 +66,7 @@ jobs:
   deploy:
       name: Deploy
       needs: [setup,nuget-pack]
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development'}}
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
       
       # The type of runner that the job will run on
       runs-on: windows-latest
