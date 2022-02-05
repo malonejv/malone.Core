@@ -32,8 +32,7 @@ jobs:
 
      # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
-      - uses: actions/checkout@v1
-      - uses: ./.github/actions/build@${{ github.ref }}
+      - uses: ./.github/actions/build
         with:
               branch: ${{ github.ref_name }}
               configuration: ${env:CONFIGURATION}
@@ -56,8 +55,7 @@ jobs:
       
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps: 
-      - uses: actions/checkout@v1
-      - uses: ./.github/actions/deploy@${{ github.ref }}
+      - uses: ./.github/actions/deploy
         with:
               branch: ${{ github.ref_name }}
               configuration: ${env:CONFIGURATION}
