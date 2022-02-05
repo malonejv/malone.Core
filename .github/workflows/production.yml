@@ -20,14 +20,15 @@ on:
 env:
   CONFIGURATION: "Release"
   ALLOW_PUSH_PACKAGES: "${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}"
-
+  VARIABLES_DIR: 'src\malone.Core\bin\${env:CONFIGURATION}\Variables'
+  NUGET_ARTIFACTS_DIR: ${{ github.workspace }}\nuget-artifacts
+  
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build-and-pack:
       name: Build & Pack
-      
-      # The type of runner that the job will run on
       runs-on: windows-latest
+      environment: development
       
       outputs:
         version_number: ${{ steps.version_number.outputs.version_number }}
@@ -35,76 +36,49 @@ jobs:
      # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
 
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      
-      # Steps represent a sequence of tasks that will be executed as part of the job
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.1
-
-      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1.0.5
-
-      - name: Add GitHub Source
-        run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Nuget Restore Core Packages
-        run:  nuget restore src/malone.Core.sln
-        
-      - name: Build malone.Core
-        run: msbuild src/malone.Core.sln /t:Build /p:Configuration=${env:CONFIGURATION} -verbosity:detailed
-              
+      -  uses: ./.github/actions/build
+         with:
+              branch: '${{ github.ref_name }}'
+              configuration: '${env:CONFIGURATION}'
+              soluntion_path: 'src\malone.Core.sln'
+              artifacts_path: '${{ env.NUGET_ARTIFACTS_DIR }}'
+           
       - name: Version Number
         id: version_number
         run: |
-              $version = (Get-Content src/malone.Core/bin/${env:CONFIGURATION}/Variables | Out-String |ConvertFrom-Json).MALONE_CORE_VER
+              $version = (Get-Content ${env:VARIABLES_DIR} | Out-String |ConvertFrom-Json).MALONE_CORE_VER
               echo "MALONE_CORE_VER=$version"
               echo "::set-output name=version_number::$version"
-
-      - name: Prepare Packages
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master'}} 
-        run:
-             |
-              $projects = .\Get-ProjectsInSolution.ps1 src/malone.Core.sln -Type NonTestProjects
-              $projects | foreach{ nuget pack $_.FullName  -Properties Configuration=${env:CONFIGURATION} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg -OutputDirectory ${{ env.NUGET_PACKAGES_DIR }} }
-      
-      - name: Upload artifacts
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master'}} 
-        uses: actions/upload-artifact@v2
-        with:
-          name: nuget-packages
-          path: ${{ env.NUGET_PACKAGES_DIR }}/*
-          if-no-files-found: error
-          retention-days: 10
-
+    
   deploy:
       name: Deploy
-      needs: build-and-pack
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master'}}
-      
-      # The type of runner that the job will run on
       runs-on: windows-latest
-
+      environment: development
+      needs: build-and-pack
+      if: ${{ env.ALLOW_PUSH_PACKAGES }}
+      
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps: 
 
-      - name: Download artifacts
-        uses: actions/download-artifact@v2
+      - uses: ./.github/actions/deploy
         with:
-            name: nuget-packages
-            path: ${{ env.NUGET_PACKAGES_DIR }}
+              branch: '${{ github.ref_name }}'
+              configuration: '${env:CONFIGURATION}'
+              artifacts_path: '${{ env.NUGET_ARTIFACTS_DIR }}'
 
-      - name: "Pushing Nuget Packages"
-        run: | 
-              nuget push *-dev.nupkg -SkipDuplicate -source "github"
-              
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: v${{needs.build-and-pack.outputs.version_number}}
-          release_name: v${{ env.MALONE_CORE_VER }}
-          draft: false
-          prerelease: false
+  create-release:            
+        name: Create Release
+        runs-on: windows-latest
+        environment: development
+        if: ${{ env.ALLOW_PUSH_PACKAGES }}
+
+        steps:
+            - name: Create Release
+              uses: actions/create-release@v1
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+              with:
+                tag_name: v${{needs.build-and-pack.outputs.version_number}}
+                release_name: v${{ needs.build-and-pack.outputs.version_number }}
+                draft: false
+                prerelease: false

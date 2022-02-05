@@ -1,0 +1,44 @@
+name: Deploy Workflow
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the development branch
+on:
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
+      configuration:
+        required: true
+        type: string
+        default: 'Debug'
+      artifacs_path:
+        required: true
+        type: string
+  
+env:
+  ALLOW_PUSH_PACKAGES: "${{ github.event_name == 'push' && github.ref == 'refs/heads/${{ inputs.branch }}' }}"
+        
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  deploy:
+      name: Deploy
+      needs: build-and-pack
+      if: ${{ env.ALLOW_PUSH_PACKAGES }} 
+      
+      # The type of runner that the job will run on
+      runs-on: windows-latest
+
+      # Steps represent a sequence of tasks that will be executed as part of the job
+      steps: 
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+            name: nuget-packages
+            path: ${{ inputs.artifacts_path }}
+
+      - name: "Pushing Nuget Packages"
+        run: | 
+              nuget push *-dev.nupkg -SkipDuplicate -source "github"
+              nuget push *-dev.snupkg -SkipDuplicate -source "github"
