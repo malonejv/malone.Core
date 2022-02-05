@@ -1,7 +1,7 @@
-﻿using malone.Core.Commons.Helpers.Threading;
+﻿using System;
+using malone.Core.Commons.Helpers.Threading;
 using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity.Owin;
-using System;
 
 namespace malone.Core.Identity.EntityFramework.Business
 {
@@ -16,14 +16,20 @@ namespace malone.Core.Identity.EntityFramework.Business
             where TUserEntity : CoreUser<TKey, TUserLogin, TUserRole, TUserClaim>, new()
             where TUserManager : UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>
         {
-            if (signInManager == null) throw new ArgumentNullException(nameof(signInManager));
+            if (signInManager == null)
+            {
+                throw new ArgumentNullException(nameof(signInManager));
+            }
 
             return AsyncHelper.RunSync(() => signInManager.PasswordUserNameOrEmailSignInAsync(email, password, isPersistent, shouldLockout));
         }
 
         public static SignInStatus PasswordUserNameOrEmailSignIn(this SignInBusinessComponent signInManager, string email, string password, bool isPersistent, bool shouldLockout)
         {
-            if (signInManager == null) throw new ArgumentNullException(nameof(signInManager));
+            if (signInManager == null)
+            {
+                throw new ArgumentNullException(nameof(signInManager));
+            }
 
             return AsyncHelper.RunSync(() => signInManager.PasswordUserNameOrEmailSignInAsync(email, password, isPersistent, shouldLockout));
         }

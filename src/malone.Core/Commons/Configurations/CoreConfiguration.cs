@@ -1,31 +1,31 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:47:43</date>
 
-using malone.Core.Commons.DI;
-using malone.Core.Commons.Exceptions;
 using System;
 using System.Configuration;
+using malone.Core.Commons.DI;
+using malone.Core.Commons.Exceptions;
 
 namespace malone.Core.Commons.Configurations
 {
-                public class CoreConfiguration : ICoreConfiguration
+    public class CoreConfiguration : ICoreConfiguration
     {
-                                internal IErrorLocalizationHandler ErrorLocalizationHandler { get; set; }
+        internal IErrorLocalizationHandler ErrorLocalizationHandler { get; set; }
 
-                                public CoreConfiguration()//(ILogger logger)
+        public CoreConfiguration()//(ILogger logger)
         {
             ErrorLocalizationHandler = ServiceLocator.Current.Get<IErrorLocalizationHandler>();
         }
 
-                                                public string GetConnectionString(string connectionStringName)
+        public string GetConnectionString(string connectionStringName)
         {
             var connectionString = ConfigurationManager.ConnectionStrings[connectionStringName];
 
             return connectionString.ConnectionString;
         }
 
-                                                public T GetSection<T>()
-            where T : ConfigurationSection
+        public T GetSection<T>()
+where T : ConfigurationSection
         {
             try
             {
@@ -54,12 +54,15 @@ namespace malone.Core.Commons.Configurations
             }
         }
 
-                                                        public T GetSection<T>(string sectionName)
-            where T : ConfigurationSection
+        public T GetSection<T>(string sectionName)
+where T : ConfigurationSection
         {
             try
             {
-                if (sectionName == null) throw new ArgumentNullException(nameof(sectionName));
+                if (sectionName == null)
+                {
+                    throw new ArgumentNullException(nameof(sectionName));
+                }
 
                 var section = ConfigurationManager.GetSection(sectionName);
 

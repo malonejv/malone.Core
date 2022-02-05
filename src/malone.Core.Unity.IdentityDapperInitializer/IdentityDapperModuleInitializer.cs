@@ -32,7 +32,7 @@ namespace malone.Core.Unity.IdentityDapperInitializer
             container.RegisterType<IRoleStore<CoreRole, int>, RoleStore<CoreRole, CoreUserRole>>();
             container.RegisterType<IUserStore<CoreUser, int>, UserStore<CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim>>();
 
-                        container.RegisterType<IEmailMessageService, EmailService>();
+            container.RegisterType<IEmailMessageService, EmailService>();
             container.RegisterType<ISmsMessageService, SmsService>();
 
             container.RegisterType<IIdentityValidator<CoreUser>, UserValidator<CoreUser, int>>();

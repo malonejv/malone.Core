@@ -1,23 +1,23 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:48:01</date>
 
-using malone.Core.Commons.DI;
 using System;
 using System.Reflection;
+using malone.Core.Commons.DI;
 
 namespace malone.Core.Commons.Initializers
 {
-                            public class AppInitializer<TInjectorInitializer, TContainer, TLayersInitializer>
+    public class AppInitializer<TInjectorInitializer, TContainer, TLayersInitializer>
         where TInjectorInitializer : IInjectorInitializer<TContainer>, new()
         where TLayersInitializer : class, ILayerInitializer<TContainer>, new()
     {
-                                public static void Initialize()
+        public static void Initialize()
         {
             TContainer container = InitializeInjector();
             InitializeLayers(container);
         }
 
-                                        private static TContainer InitializeInjector()
+        private static TContainer InitializeInjector()
         {
             TInjectorInitializer instance = new TInjectorInitializer();
 
@@ -31,7 +31,7 @@ namespace malone.Core.Commons.Initializers
             return default(TContainer);
         }
 
-                                        private static MethodInfo FindInjectorInitializerInitializeMethod()
+        private static MethodInfo FindInjectorInitializerInitializeMethod()
         {
 
             MethodInfo methodInfo = null;
@@ -49,9 +49,12 @@ namespace malone.Core.Commons.Initializers
             return methodInfo;
         }
 
-                                        private static void InitializeLayers(TContainer container)
+        private static void InitializeLayers(TContainer container)
         {
-            if (container.Equals(default(TContainer))) throw new ArgumentNullException(nameof(container));
+            if (container.Equals(default(TContainer)))
+            {
+                throw new ArgumentNullException(nameof(container));
+            }
 
             TLayersInitializer instance = new TLayersInitializer();
 
@@ -59,7 +62,7 @@ namespace malone.Core.Commons.Initializers
             methodInitialize.Invoke(instance, new object[] { container });
         }
 
-                                        private static MethodInfo FindLayersInitializerInitializeMethod()
+        private static MethodInfo FindLayersInitializerInitializeMethod()
         {
 
             MethodInfo methodInfo = null;

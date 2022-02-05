@@ -1,17 +1,13 @@
-﻿using malone.Core.AdoNet.Context;
+﻿using System;
+using System.Data;
+using malone.Core.AdoNet.Context;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace malone.Core.Dapper.Repositories
 {
-                public abstract class CustomRepository<TEntity> : ICustomRepository<TEntity>, IDisposable
+    public abstract class CustomRepository<TEntity> : ICustomRepository<TEntity>, IDisposable
         where TEntity : class
     {
         protected CoreDbContext Context { get; private set; }
@@ -40,12 +36,18 @@ namespace malone.Core.Dapper.Repositories
 
         private void CheckLogger(ILogger logger)
         {
-            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (logger == null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
         }
 
         private void CheckContext(IContext context)
         {
-            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
 
             if (!(context is CoreDbContext))
             {
@@ -60,7 +62,7 @@ namespace malone.Core.Dapper.Repositories
 
         protected bool _disposed;
 
-                                public void Dispose()
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -74,7 +76,7 @@ namespace malone.Core.Dapper.Repositories
             }
         }
 
-                                        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (disposing && Context != null)
             {

@@ -1,5 +1,5 @@
-﻿using malone.Core.Commons.DI;
-using System;
+﻿using System;
+using malone.Core.Commons.DI;
 using Unity;
 
 namespace malone.Core.Unity

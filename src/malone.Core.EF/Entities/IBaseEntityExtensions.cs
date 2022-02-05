@@ -1,6 +1,6 @@
-﻿using malone.Core.Entities.Model;
-using System;
+﻿using System;
 using System.Data.Entity;
+using malone.Core.Entities.Model;
 
 namespace malone.Core.EF.Entities
 {

@@ -5,15 +5,15 @@ using System.Configuration;
 
 namespace malone.Core.Commons.Configurations.DbFactory
 {
-                [ConfigurationCollection(typeof(DatabaseProviderElement))]
+    [ConfigurationCollection(typeof(DatabaseProviderElement))]
     public class DatabaseProviderElementCollection : ConfigurationElementCollection
     {
-                                        protected override ConfigurationElement CreateNewElement()
+        protected override ConfigurationElement CreateNewElement()
         {
             return new DatabaseProviderElement();
         }
 
-                                                protected override object GetElementKey(ConfigurationElement element)
+        protected override object GetElementKey(ConfigurationElement element)
         {
             return ((DatabaseProviderElement)element).Name;
         }

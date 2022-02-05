@@ -1,6 +1,6 @@
-﻿using malone.Core.Identity.Dapper.Entities;
+﻿using System;
+using malone.Core.Identity.Dapper.Entities;
 using Microsoft.AspNet.Identity;
-using System;
 
 namespace malone.Core.Identity.Dapper.Business
 {

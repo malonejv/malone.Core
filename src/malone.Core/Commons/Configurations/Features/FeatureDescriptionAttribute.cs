@@ -5,15 +5,15 @@ using System;
 
 namespace malone.Core.Commons.Configurations.Features
 {
-                [AttributeUsage(AttributeTargets.Method, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Method, Inherited = false)]
 
     public class FeatureDescriptionAttribute : System.Attribute
     {
-                                public string Feature { get; private set; }
+        public string Feature { get; private set; }
 
-                                public string Behavior { get; private set; }
+        public string Behavior { get; private set; }
 
-                                                public FeatureDescriptionAttribute(string feature, string behavior = null)
+        public FeatureDescriptionAttribute(string feature, string behavior = null)
         {
 
             Feature = feature;

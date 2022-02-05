@@ -8,9 +8,9 @@ using System.Reflection;
 
 namespace malone.Core.Commons.Helpers.Extensions
 {
-                public static class EnumExtensions
+    public static class EnumExtensions
     {
-                                                public static string GetDescription(this Enum value)
+        public static string GetDescription(this Enum value)
         {
             // Get the type
             Type type = value.GetType();
@@ -25,7 +25,7 @@ namespace malone.Core.Commons.Helpers.Extensions
             return attribs.Length > 0 ? attribs[0].Description : null;
         }
 
-                                                public static List<string> GetDescriptions(this Type value)
+        public static List<string> GetDescriptions(this Type value)
         {
             List<string> values = new List<string>();
             Array enumValues = Enum.GetValues(value);
@@ -38,7 +38,7 @@ namespace malone.Core.Commons.Helpers.Extensions
             return values;
         }
 
-                                                        public static Enum GetEnumFromAttribute(Type enType, string attribute)
+        public static Enum GetEnumFromAttribute(Type enType, string attribute)
         {
             Enum eRet = null;
 

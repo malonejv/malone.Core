@@ -1,7 +1,7 @@
-﻿using malone.Core.Identity.AdoNet.SqlServer.Business;
-using System;
+﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using malone.Core.Identity.AdoNet.SqlServer.Business;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Entities
 {

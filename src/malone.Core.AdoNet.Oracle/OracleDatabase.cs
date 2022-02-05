@@ -1,7 +1,7 @@
-﻿using malone.Core.AdoNet.Database;
-using Oracle.ManagedDataAccess.Client;
-using System;
+﻿using System;
 using System.Data;
+using malone.Core.AdoNet.Database;
+using Oracle.ManagedDataAccess.Client;
 
 namespace malone.Core.AdoNet.Oracle
 {

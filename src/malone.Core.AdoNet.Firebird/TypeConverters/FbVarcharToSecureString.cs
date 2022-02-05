@@ -7,7 +7,7 @@ namespace malone.Core.AdoNet.Oracle.TypeConverters
     {
         public object Convert(object value)
         {
-            return value != null ? (object)value.ToString().ToSecureString() : (object)null;
+            return value != null ? value.ToString().ToSecureString() : null;
         }
     }
 }

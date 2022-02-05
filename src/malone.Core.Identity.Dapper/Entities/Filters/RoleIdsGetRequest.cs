@@ -1,11 +1,7 @@
-﻿using malone.Core.Dapper.Attributes;
-using malone.Core.Dapper.Entities.Filters;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using malone.Core.Dapper.Attributes;
+using malone.Core.Dapper.Entities.Filters;
 
 namespace malone.Core.Identity.Dapper.Entities.Filters
 {

@@ -3,12 +3,12 @@
 
 namespace malone.Core.Resources.Admin
 {
-                public interface IResourceAdmin
+    public interface IResourceAdmin
     {
-                                                string GetText(string clave);
+        string GetText(string clave);
 
-                                                        string GetText(string clave, params string[] parametros);
+        string GetText(string clave, params string[] parametros);
 
-                                                string GetResource(string clave);
+        string GetResource(string clave);
     }
 }

@@ -1,4 +1,8 @@
-﻿using Dapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using Dapper;
 using malone.Core.AdoNet.Context;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Helpers.Extensions;
@@ -10,10 +14,6 @@ using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.Entities.Filters;
 using malone.Core.Entities.Model;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 
 namespace malone.Core.Dapper.Repositories
 {
@@ -77,7 +77,10 @@ namespace malone.Core.Dapper.Repositories
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }
@@ -102,8 +105,8 @@ namespace malone.Core.Dapper.Repositories
                 parametersInfo = (filter as IFilterExpressionDapper).GetParameters();
                 foreach (var parameterInfo in parametersInfo)
                 {
-                        int? size = parameterInfo.IsSizeDefined ? new int?(parameterInfo.Size) : null;
-                        parameters.Add(parameterInfo.Name, parameterInfo.Value, parameterInfo.Type, parameterInfo.Direction, size);
+                    int? size = parameterInfo.IsSizeDefined ? new int?(parameterInfo.Size) : null;
+                    parameters.Add(parameterInfo.Name, parameterInfo.Value, parameterInfo.Type, parameterInfo.Direction, size);
                 }
 
                 int i = 0;
@@ -114,9 +117,13 @@ namespace malone.Core.Dapper.Repositories
                     if (exists)
                     {
                         if (i == 0)
+                        {
                             whereClause += $"{parameterName} = @{parameterName}";
+                        }
                         else
+                        {
                             whereClause += $" AND {parameterName} = @{parameterName}";
+                        }
                     }
                     else
                     {
@@ -127,7 +134,10 @@ namespace malone.Core.Dapper.Repositories
                             {
                                 int j = 0;
                                 string optionsQuery = "(";
-                                if (i != 0) optionsQuery = "AND (";
+                                if (i != 0)
+                                {
+                                    optionsQuery = "AND (";
+                                }
 
                                 foreach (var option in options)
                                 {
@@ -135,9 +145,13 @@ namespace malone.Core.Dapper.Repositories
                                     if (exists)
                                     {
                                         if (j == 0)
+                                        {
                                             optionsQuery += $"{option} = @{parameterName}";
+                                        }
                                         else
+                                        {
                                             optionsQuery += $" OR {option} = @{parameterName}";
+                                        }
                                     }
                                     j++;
                                 }
@@ -181,7 +195,10 @@ namespace malone.Core.Dapper.Repositories
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, TEntityType.Name);
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }
@@ -216,7 +233,10 @@ namespace malone.Core.Dapper.Repositories
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, TEntityType.Name);
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }
@@ -335,12 +355,18 @@ namespace malone.Core.Dapper.Repositories
 
         private void CheckLogger(ILogger logger)
         {
-            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (logger == null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
         }
 
         private void CheckContext(IContext context)
         {
-            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
 
             if (!(context is CoreDbContext))
             {
@@ -384,7 +410,10 @@ namespace malone.Core.Dapper.Repositories
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }
@@ -398,7 +427,7 @@ namespace malone.Core.Dapper.Repositories
 
         protected bool _disposed;
 
-                                public void Dispose()
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -412,7 +441,7 @@ namespace malone.Core.Dapper.Repositories
             }
         }
 
-                                        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (disposing && Context != null)
             {

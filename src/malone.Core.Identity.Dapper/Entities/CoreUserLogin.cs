@@ -1,6 +1,6 @@
-﻿using malone.Core.Dapper.Attributes;
-using System;
+﻿using System;
 using System.Data;
+using malone.Core.Dapper.Attributes;
 
 namespace malone.Core.Identity.Dapper.Entities
 {
@@ -8,13 +8,13 @@ namespace malone.Core.Identity.Dapper.Entities
     public class CoreUserLogin<TKey>
         where TKey : IEquatable<TKey>
     {
-                                [Column("LoginProvider", type: DbType.String, Size = 128, Direction = ParameterDirection.Input)]
+        [Column("LoginProvider", type: DbType.String, Size = 128, Direction = ParameterDirection.Input)]
         public virtual string LoginProvider { get; set; }
 
-                                [Column("ProviderKey", type: DbType.String, Size = 128, Direction = ParameterDirection.Input)]
+        [Column("ProviderKey", type: DbType.String, Size = 128, Direction = ParameterDirection.Input)]
         public virtual string ProviderKey { get; set; }
 
-                                [Column("UserId", type: DbType.Int32, Direction = ParameterDirection.Input)]
+        [Column("UserId", type: DbType.Int32, Direction = ParameterDirection.Input)]
         public virtual TKey UserId { get; set; }
     }
 

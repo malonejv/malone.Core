@@ -5,21 +5,21 @@ using System;
 
 namespace malone.Core.Commons.Exceptions
 {
-                public abstract class BaseException : Exception
+    public abstract class BaseException : Exception
     {
-                                public const string SUPPORT_ID = "SupportId";
+        public const string SUPPORT_ID = "SupportId";
 
-                                public const string ERROR_CODE = "ErrorCode";
+        public const string ERROR_CODE = "ErrorCode";
 
-                                public BaseException() : base()
+        public BaseException() : base()
         {
         }
 
-                                        public BaseException(string message) : base(message)
+        public BaseException(string message) : base(message)
         {
         }
 
-                                                public BaseException(string message, Exception innerException) : base(message, innerException)
+        public BaseException(string message, Exception innerException) : base(message, innerException)
         {
         }
     }

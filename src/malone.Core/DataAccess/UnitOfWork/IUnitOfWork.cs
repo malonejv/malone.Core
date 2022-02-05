@@ -1,17 +1,17 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:48:14</date>
 
-using malone.Core.DataAccess.Context;
 using System;
+using malone.Core.DataAccess.Context;
 
 namespace malone.Core.DataAccess.UnitOfWork
 {
-                public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
-                                IContext Context { get; }
+        IContext Context { get; }
 
-                                        int SaveChanges();
+        int SaveChanges();
 
-                                void Dispose();
+        void Dispose();
     }
 }

@@ -1,7 +1,7 @@
-﻿using malone.Core.AdoNet.Database;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using malone.Core.AdoNet.Database;
 
 namespace malone.Core.AdoNet.SqlServer
 {
@@ -53,7 +53,7 @@ namespace malone.Core.AdoNet.SqlServer
             else
             {
                 //TODO: manejar con errores del core.
-                throw new InvalidOperationException(string.Format("SqlType unrecognized: {0}", (object)parameterName));
+                throw new InvalidOperationException(string.Format("SqlType unrecognized: {0}", parameterName));
             }
         }
 
@@ -70,14 +70,16 @@ namespace malone.Core.AdoNet.SqlServer
             else
             {
                 //TODO: manejar con errores del core.
-                throw new InvalidOperationException(string.Format("SqlType unrecognized: {0}", (object)parameterName));
+                throw new InvalidOperationException(string.Format("SqlType unrecognized: {0}", parameterName));
             }
         }
 
         private static SqlCommand ValidateCommand(IDbCommand command)
         {
             if (!(command is SqlCommand sqlCommand))
+            {
                 throw new InvalidOperationException("Error");
+            }
             //TODO: manejar con errores del core.
             //string.Format((IFormatProvider)CultureInfo.CurrentCulture, Resources.SqlCommandExpected, (object)command.GetType().FullName))
             return sqlCommand;

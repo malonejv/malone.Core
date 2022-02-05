@@ -22,7 +22,7 @@ namespace malone.Core.Patterns.Behavioral.Singleton
             return ctor.Invoke(new object[] { }) as T;
         }, LazyThreadSafetyMode.ExecutionAndPublication);
 
-                                                        public static T Instance
+        public static T Instance
         {
             get { return instance.Value; }
         }

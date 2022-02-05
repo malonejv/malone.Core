@@ -1,20 +1,20 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:47:54</date>
 
-using malone.Core.Commons.DI;
-using malone.Core.Commons.Localization;
 using System;
 using System.Reflection;
+using malone.Core.Commons.DI;
+using malone.Core.Commons.Localization;
 
 namespace malone.Core.Commons.Exceptions
 {
-                        public static class ExceptionFactory<TCode, TErrorLocalizationHandler>
+    public static class ExceptionFactory<TCode, TErrorLocalizationHandler>
         where TCode : Enum
         where TErrorLocalizationHandler : ILocalizationHandler<TCode>
     {
-                                internal static TErrorLocalizationHandler errorLocalizationHandler;
+        internal static TErrorLocalizationHandler errorLocalizationHandler;
 
-                                internal static TErrorLocalizationHandler ErrorLocalizationHandler
+        internal static TErrorLocalizationHandler ErrorLocalizationHandler
         {
             get
             {
@@ -26,7 +26,7 @@ namespace malone.Core.Commons.Exceptions
             }
         }
 
-                                                                public static TException CreateException<TException>(TCode code, params object[] args) where TException : BaseException
+        public static TException CreateException<TException>(TCode code, params object[] args) where TException : BaseException
         {
             var suportId = Guid.NewGuid();
             string message = ErrorLocalizationHandler.GetString(code, args);
@@ -48,7 +48,7 @@ namespace malone.Core.Commons.Exceptions
             return baseException;
         }
 
-                                                                        public static TException CreateException<TException>(Exception innerException, TCode code, params object[] args) where TException : BaseException
+        public static TException CreateException<TException>(Exception innerException, TCode code, params object[] args) where TException : BaseException
         {
             var suportId = Guid.NewGuid();
             string message = ErrorLocalizationHandler.GetString(code, args);

@@ -3,11 +3,11 @@
 
 namespace malone.Core.Commons.Helpers.Extensions
 {
-                public static class CharExtensions
+    public static class CharExtensions
     {
-                                public const char DefaultSeparator = ';';
+        public const char DefaultSeparator = ';';
 
-                                                        public static string Concat(this char separator, params string[] parameters)
+        public static string Concat(this char separator, params string[] parameters)
         {
             var result = "";
 
@@ -21,7 +21,7 @@ namespace malone.Core.Commons.Helpers.Extensions
             return result;
         }
 
-                                                        public static string[] Split(this char separator, string value)
+        public static string[] Split(this char separator, string value)
         {
             string[] result = value.Split(separator);
 

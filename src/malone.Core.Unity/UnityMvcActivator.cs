@@ -1,6 +1,6 @@
-﻿using malone.Core.Commons.Initializers;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
+using malone.Core.Commons.Initializers;
 using Unity;
 using Unity.AspNet.Mvc;
 
@@ -8,7 +8,7 @@ namespace malone.Core.Unity
 {
     public class UnityMvcActivator : IInjectorInitializer<IUnityContainer>
     {
-                                public virtual IUnityContainer Initialize()
+        public virtual IUnityContainer Initialize()
         {
             FilterProviders.Providers.Remove(FilterProviders.Providers.OfType<FilterAttributeFilterProvider>().First());
             FilterProviders.Providers.Add(new UnityFilterAttributeFilterProvider(UnityConfig.Container));
@@ -21,7 +21,7 @@ namespace malone.Core.Unity
             return UnityConfig.Container;
         }
 
-                                public virtual void Terminate()
+        public virtual void Terminate()
         {
             UnityConfig.Container.Dispose();
         }

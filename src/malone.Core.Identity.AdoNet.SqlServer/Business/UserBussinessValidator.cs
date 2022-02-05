@@ -1,6 +1,6 @@
-﻿using malone.Core.Business.Components;
+﻿using System;
+using malone.Core.Business.Components;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
-using System;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Business
 {

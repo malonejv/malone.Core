@@ -1,13 +1,13 @@
-﻿using malone.Core.AdoNet.Context;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using malone.Core.AdoNet.Context;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using malone.Core.Identity.AdoNet.SqlServer.Entities.Filters;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 {
@@ -84,12 +84,18 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         private void CheckLogger(ILogger logger)
         {
-            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (logger == null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
         }
 
         private void CheckContext(IContext context)
         {
-            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
 
             if (!(context is CoreDbContext))
             {
@@ -104,7 +110,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected bool _disposed;
 
-                                public void Dispose()
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -118,7 +124,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
             }
         }
 
-                                        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (disposing && Context != null)
             {

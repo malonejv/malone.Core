@@ -1,10 +1,9 @@
-﻿using malone.Core.Identity.EntityFramework.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
 using System.Data.Entity.ModelConfiguration.Configuration;
+using malone.Core.Identity.EntityFramework.Entities;
 
 namespace malone.Core.Identity.EntityFramework.DAL.Mappings
 {
@@ -22,7 +21,7 @@ namespace malone.Core.Identity.EntityFramework.DAL.Mappings
             indexRolaNameAttribute.IsUnique = true;
             indexRoleName.HasColumnAnnotation(roleNameIndexColumnName, new IndexAnnotation(indexRolaNameAttribute));
 
-            entityRoleConfiguration.HasMany<TUserRole>((TRoleEntity r) => (ICollection<TUserRole>)r.Users).WithRequired().HasForeignKey<TKey>((TUserRole ur) => ur.RoleId);
+            entityRoleConfiguration.HasMany<TUserRole>((TRoleEntity r) => r.Users).WithRequired().HasForeignKey<TKey>((TUserRole ur) => ur.RoleId);
 
         }
 

@@ -1,11 +1,11 @@
-﻿using malone.Core.Commons.DI;
+﻿using System;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using malone.Core.Commons.DI;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.EntityFramework.DAL.Mappings;
 using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace malone.Core.Identity.EntityFramework.Context
 {

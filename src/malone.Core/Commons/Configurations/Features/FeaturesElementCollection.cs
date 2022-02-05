@@ -6,7 +6,7 @@ using System.Configuration;
 
 namespace malone.Core.Commons.Configurations.Features
 {
-                [ConfigurationCollection(typeof(FeatureElement), AddItemName = "feature", CollectionType = ConfigurationElementCollectionType.BasicMap)]
+    [ConfigurationCollection(typeof(FeatureElement), AddItemName = "feature", CollectionType = ConfigurationElementCollectionType.BasicMap)]
     public class FeaturesElementCollection : ConfigurationElementCollection
     {
 
@@ -19,42 +19,44 @@ namespace malone.Core.Commons.Configurations.Features
             set
             {
                 if (BaseGet(index) != null)
+                {
                     BaseRemoveAt(index);
+                }
 
                 BaseAdd(index, value);
             }
         }
-                                        public void Add(FeatureElement element)
+        public void Add(FeatureElement element)
         {
             BaseAdd(element);
         }
 
-                                public void Clear()
+        public void Clear()
         {
             BaseClear();
         }
 
-                                        public void Remove(FeatureElement element)
+        public void Remove(FeatureElement element)
         {
             BaseRemove(element.Name);
         }
 
-                                        public void RemoveAt(int index)
+        public void RemoveAt(int index)
         {
             BaseRemoveAt(index);
         }
 
-                                        public void Remove(String name)
+        public void Remove(String name)
         {
             BaseRemove(name);
         }
 
-                                        protected override ConfigurationElement CreateNewElement()
+        protected override ConfigurationElement CreateNewElement()
         {
             return new FeatureElement();
         }
 
-                                                protected override object GetElementKey(ConfigurationElement element)
+        protected override object GetElementKey(ConfigurationElement element)
         {
             return ((FeatureElement)element).Name;
         }

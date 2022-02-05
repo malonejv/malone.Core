@@ -1,6 +1,6 @@
-﻿using malone.Core.Identity.EntityFramework.Entities;
-using System;
+﻿using System;
 using System.Data.Entity.ModelConfiguration;
+using malone.Core.Identity.EntityFramework.Entities;
 
 namespace malone.Core.Identity.EntityFramework.DAL.Mappings
 {

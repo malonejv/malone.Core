@@ -3,8 +3,8 @@
 
 namespace malone.Core.Commons.Initializers
 {
-                    public interface IInitializer<TContainer>
+    public interface IInitializer<TContainer>
     {
-                                        void Initialize(TContainer container);
+        void Initialize(TContainer container);
     }
 }

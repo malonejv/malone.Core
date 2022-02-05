@@ -3,10 +3,10 @@
 
 namespace malone.Core.Commons.Initializers
 {
-                    public interface IInjectorInitializer<TContainer>
+    public interface IInjectorInitializer<TContainer>
     {
-                                        TContainer Initialize();
+        TContainer Initialize();
 
-                                void Terminate();
+        void Terminate();
     }
 }

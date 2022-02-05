@@ -5,23 +5,23 @@ using System;
 
 namespace malone.Core.Commons.DI
 {
-                public interface IServiceLocator
+    public interface IServiceLocator
     {
-                                                T Get<T>();
+        T Get<T>();
     }
 
-                public class ServiceLocator
+    public class ServiceLocator
     {
-                                private static ServiceLocator _serviceLocator = new ServiceLocator();
+        private static ServiceLocator _serviceLocator = new ServiceLocator();
 
-                                protected IServiceLocator _current;
+        protected IServiceLocator _current;
 
-                                public ServiceLocator()
+        public ServiceLocator()
         {
             InnerSetResolver(new DefaultServiceLocator());
         }
 
-                                public static IServiceLocator Current
+        public static IServiceLocator Current
         {
             get
             {
@@ -29,17 +29,17 @@ namespace malone.Core.Commons.DI
             }
         }
 
-                                        public static void SetResolver(IServiceLocator resolver)
+        public static void SetResolver(IServiceLocator resolver)
         {
             _serviceLocator.InnerSetResolver(resolver);
         }
 
-                                        public static void SetResolver(object commonServiceLocator)
+        public static void SetResolver(object commonServiceLocator)
         {
             _serviceLocator.InnerSetResolver(commonServiceLocator);
         }
 
-                                        public void InnerSetResolver(IServiceLocator resolver)
+        public void InnerSetResolver(IServiceLocator resolver)
         {
             if (resolver == null)
             {
@@ -49,7 +49,7 @@ namespace malone.Core.Commons.DI
             _current = resolver;
         }
 
-                                        public void InnerSetResolver(object commonServiceLocator)
+        public void InnerSetResolver(object commonServiceLocator)
         {
             if (commonServiceLocator == null)
             {
@@ -66,9 +66,9 @@ namespace malone.Core.Commons.DI
         }
     }
 
-                internal class DefaultServiceLocator : IServiceLocator
+    internal class DefaultServiceLocator : IServiceLocator
     {
-                                                public T Get<T>()
+        public T Get<T>()
         {
             Type type = typeof(T);
             // Since attempting to create an instance of an interface or an abstract type results in an exception, immediately return null

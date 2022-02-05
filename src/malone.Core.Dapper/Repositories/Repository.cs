@@ -1,4 +1,7 @@
-﻿using Dapper;
+﻿using System;
+using System.Data;
+using System.Linq;
+using Dapper;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
@@ -7,9 +10,6 @@ using malone.Core.Dapper.Entities;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.Entities.Model;
-using System;
-using System.Data;
-using System.Linq;
 
 namespace malone.Core.Dapper.Repositories
 {
@@ -46,9 +46,13 @@ namespace malone.Core.Dapper.Repositories
             parameters.Add(IdColumnAttribute.Name, IdColumnAttribute.Value, IdColumnAttribute.Type, IdColumnAttribute.Direction, size);
 
             if (allowSoftDelete)
+            {
                 whereClause = " AND ";
+            }
             else
+            {
                 whereClause = " WHERE ";
+            }
 
             int i = 0;
             var ColumnNames = columns.Split(',');
@@ -58,9 +62,13 @@ namespace malone.Core.Dapper.Repositories
                 if (exists)
                 {
                     if (i == 0)
+                    {
                         whereClause += $"@{parameterName} = {parameterName}";
+                    }
                     else
+                    {
                         whereClause += $" AND @{parameterName} = {parameterName}";
+                    }
                 }
 
                 i++;
@@ -88,7 +96,10 @@ namespace malone.Core.Dapper.Repositories
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }

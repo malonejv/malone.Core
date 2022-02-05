@@ -7,22 +7,25 @@ using System.Linq;
 
 namespace malone.Core.Commons.Configurations.Features
 {
-                public class FeatureSettings
+    public class FeatureSettings
     {
-                                private static FeatureSettings Instance { get; set; }
+        private static FeatureSettings Instance { get; set; }
 
-                                private ICoreConfiguration Configuration;
+        private ICoreConfiguration Configuration;
 
-                                private FeatureSettingsSection FeatureSettingsSection;
+        private FeatureSettingsSection FeatureSettingsSection;
 
-                                public IEnumerable<FeatureElement> Features
+        public IEnumerable<FeatureElement> Features
         {
             get { return FeatureSettingsSection.Features.Cast<FeatureElement>(); }
         }
 
-                                        public FeatureSettings(ICoreConfiguration configuration)
+        public FeatureSettings(ICoreConfiguration configuration)
         {
-            if (configuration == null) throw new ArgumentNullException(nameof(configuration));
+            if (configuration == null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
 
             Configuration = configuration;
             FeatureSettingsSection = Configuration.GetSection<FeatureSettingsSection>("featureSettings");
@@ -30,18 +33,24 @@ namespace malone.Core.Commons.Configurations.Features
             Instance = this;
         }
 
-                                                public static bool IsEnabled(string featureName)
+        public static bool IsEnabled(string featureName)
         {
-            if (featureName == null) throw new ArgumentNullException(nameof(featureName));
-            if (featureName == string.Empty) throw new ArgumentException(nameof(featureName));
+            if (featureName == null)
+            {
+                throw new ArgumentNullException(nameof(featureName));
+            }
 
+            if (featureName == string.Empty)
+            {
+                throw new ArgumentException(nameof(featureName));
+            }
 
             var feature = FeatureSettings.Instance.Features.FirstOrDefault(ft => ft.Name == featureName);
 
             return feature.AllEnabled;
         }
 
-                                                        public static bool IsEnabled(string featureName, string behaviourName)
+        public static bool IsEnabled(string featureName, string behaviourName)
         {
             bool result = IsEnabled(featureName);
 

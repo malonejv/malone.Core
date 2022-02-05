@@ -3,7 +3,7 @@
 
 namespace malone.Core.DataAccess.ServiceAgents
 {
-                public interface IServiceAgent
+    public interface IServiceAgent
     {
     }
 }

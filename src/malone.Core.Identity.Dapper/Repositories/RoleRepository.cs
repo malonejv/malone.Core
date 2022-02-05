@@ -1,18 +1,12 @@
-﻿using Dapper;
-using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Commons.Log;
-using malone.Core.Dapper.Attributes;
-using malone.Core.Dapper.Entities;
-using malone.Core.Dapper.Entities.Filters;
-using malone.Core.Dapper.Repositories;
-using malone.Core.DataAccess.Context;
-using malone.Core.Entities.Filters;
-using malone.Core.Identity.Dapper.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
+using Dapper;
+using malone.Core.Commons.Helpers.Extensions;
+using malone.Core.Commons.Log;
+using malone.Core.Dapper.Repositories;
+using malone.Core.DataAccess.Context;
+using malone.Core.Identity.Dapper.Entities;
 
 namespace malone.Core.Identity.Dapper.Repositories
 {
@@ -39,7 +33,7 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         #region Public Methods
 
-                                                public int Delete(TKey roleId)
+        public int Delete(TKey roleId)
         {
             string commandText = "Delete from Roles where Id = @id";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -48,7 +42,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-                                                public int Insert(TRoleEntity role)
+        public int Insert(TRoleEntity role)
         {
             string commandText = "Insert into Roles (Id, Name) values (@id, @name)";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -58,7 +52,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-                                                public string GetRoleName(TKey roleId)
+        public string GetRoleName(TKey roleId)
         {
             string commandText = "Select Name from Roles where Id = @id";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -67,7 +61,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.QueryFirstOrDefault<string>(commandText, parameters, transaction: Context.Transaction);
         }
 
-                                                public TKey GetRoleId(string roleName)
+        public TKey GetRoleId(string roleName)
         {
             string commandText = "Select Id from Roles where Name = @name";
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@name", roleName } };
@@ -75,7 +69,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.QueryFirstOrDefault<TKey>(commandText, parameters, transaction: Context.Transaction);
         }
 
-                                                public TRoleEntity GetRoleById(TKey roleId)
+        public TRoleEntity GetRoleById(TKey roleId)
         {
             var roleName = GetRoleName(roleId);
             TRoleEntity role = null;
@@ -93,7 +87,7 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         }
 
-                                                public TRoleEntity GetRoleByName(string roleName)
+        public TRoleEntity GetRoleByName(string roleName)
         {
             var roleId = GetRoleId(roleName);
             TRoleEntity role = null;

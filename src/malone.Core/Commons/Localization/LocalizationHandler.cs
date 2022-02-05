@@ -6,16 +6,16 @@ using System.Resources;
 
 namespace malone.Core.Commons.Localization
 {
-                    public abstract class LocalizationHandler<TCode> : ILocalizationHandler<TCode>
+    public abstract class LocalizationHandler<TCode> : ILocalizationHandler<TCode>
         where TCode : Enum
     {
-                                public abstract ResourceManager ResourceManager { get; }
+        public abstract ResourceManager ResourceManager { get; }
 
-                                public LocalizationHandler()
+        public LocalizationHandler()
         {
         }
 
-                                                        public string GetString(TCode code, params object[] args)
+        public string GetString(TCode code, params object[] args)
         {
             string message = "";
 

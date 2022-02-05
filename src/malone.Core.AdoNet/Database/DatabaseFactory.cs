@@ -1,26 +1,32 @@
-﻿using malone.Core.Commons.Configurations;
-using malone.Core.Commons.Configurations.DbFactory;
-using malone.Core.Commons.Helpers.Extensions;
-using System;
+﻿using System;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
+using malone.Core.Commons.Configurations;
+using malone.Core.Commons.Configurations.DbFactory;
+using malone.Core.Commons.Helpers.Extensions;
 
 namespace malone.Core.AdoNet.Database
 {
-                            public class DatabaseFactory
+    public class DatabaseFactory
     {
         private ICoreConfiguration Configuration { get; set; }
         private DatabaseConfigurationElement DatabaseConfiguration { get; set; }
 
         public DatabaseFactory(ICoreConfiguration configuration)
         {
-            if (configuration == null) throw new ArgumentNullException(nameof(configuration));
+            if (configuration == null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
 
             Configuration = configuration;
 
             var coreSettings = Configuration.GetSection<CoreSettingsSection>();
-            if (coreSettings == null) throw new ConfigurationErrorsException(nameof(coreSettings));
+            if (coreSettings == null)
+            {
+                throw new ConfigurationErrorsException(nameof(coreSettings));
+            }
 
             DatabaseConfiguration = coreSettings.DatabaseConfiguration;
         }
