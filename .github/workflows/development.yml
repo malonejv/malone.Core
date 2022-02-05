@@ -39,7 +39,7 @@ jobs:
         run: echo Setup
       # Defines configuration
       - name: Define Configuration
-        if: ${{ github.ref == 'refs/heads/feature/**'}}
+        if: ${{ startsWith(github.ref, 'refs/heads/feature/') }}
         run: |
              $configuration = "Release"
              echo "CONFIGURATION=$configuration" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
