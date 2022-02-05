@@ -37,7 +37,7 @@ jobs:
         if: ${{ startsWith(github.ref, 'refs/heads/feature/') }}
         run: |
              $configuration = "Release"
-             $allowPushPkg = ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/development')}}
+             $allowPushPkg = "${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/development')}}"
              echo "CONFIGURATION=$configuration" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
              echo "ALLOW_PUSH_PACKAGES=$allowPushPkg" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
 
