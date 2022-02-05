@@ -38,10 +38,10 @@ jobs:
 
       -  uses: ./.github/actions/build
          with:
-              branch: '${{ github.ref_name }}'
-              configuration: '${env:CONFIGURATION}'
+              branch: ${{ github.ref_name }}
+              configuration: ${env:CONFIGURATION}
               soluntion_path: 'src\malone.Core.sln'
-              artifacts_path: '${{ env:NUGET_ARTIFACTS_DIR }}'
+              artifacts_path: ${ env:NUGET_ARTIFACTS_DIR }
            
       - name: Version Number
         id: version_number

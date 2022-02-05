@@ -38,7 +38,7 @@ jobs:
               branch: ${{ github.ref_name }}
               configuration: ${env:CONFIGURATION}
               soluntion_path: 'src\malone.Core.sln'
-              artifacts_path: ${{ env:NUGET_ARTIFACTS_DIR }}
+              artifacts_path: ${ env:NUGET_ARTIFACTS_DIR }
            
       - name: Version Number
         id: version_number
@@ -59,6 +59,6 @@ jobs:
 
       - uses: ./.github/actions/deploy
         with:
-              branch: '${{ github.ref_name }}'
-              configuration: '${env:CONFIGURATION}'
-              artifacts_path: '${{ env:NUGET_ARTIFACTS_DIR }}'
+              branch: ${{ github.ref_name }}
+              configuration: ${env:CONFIGURATION}
+              artifacts_path: ${ env:NUGET_ARTIFACTS_DIR }
