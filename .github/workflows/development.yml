@@ -72,7 +72,7 @@ jobs:
   deploy:
       name: "Pushing Nuget Packages"
       needs: nuget-pack
-      if: $env:ALLOW_PUSH_PACKAGES
+      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/development')}}
       
       # The type of runner that the job will run on
       runs-on: windows-latest
