@@ -3,7 +3,7 @@
 name: CI/CD to Development
 
 # Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
+# events but only for the development branch
 on:
   push:
     branches:
@@ -17,15 +17,19 @@ on:
 env:
   CONFIGURATION: "Debug"
   ALLOW_PUSH_PACKAGES: "${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}"
+  NUGET_PACKAGES_DIR: ${{ github.workspace }}/artifacts-nuget-packages
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  setup:
-      name: Setup
+  build-and-pack:
+      name: Build & Pack
       
       # The type of runner that the job will run on
       runs-on: windows-latest
       
+      outputs:
+        version_number: ${{ steps.version_number.outputs.version_number }}
+
      # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
 
@@ -41,20 +45,7 @@ jobs:
 
       - name: Add GitHub Source
         run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ secrets.GITHUB_TOKEN }}
-         
-  build:
-      name: Build
-      needs: setup
-
-      # The type of runner that the job will run on
-      runs-on: windows-latest
-      
-      outputs:
-        version_number: ${{ steps.version_number.outputs.version_number }}
-
-      # Steps represent a sequence of tasks that will be executed as part of the job
-      steps:
-              
+          
       - name: Nuget Restore Core Packages
         run:  nuget restore src/malone.Core.sln
         
@@ -68,24 +59,24 @@ jobs:
               echo "MALONE_CORE_VER=$version"
               echo "::set-output name=version_number::$version"
 
-  nuget-pack:
-      name: Preparing Nuget Packages
-      needs: [setup,build]
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development'}} 
-      
-      # The type of runner that the job will run on
-      runs-on: windows-latest
-
-      steps:
       - name: Prepare Packages
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development'}} 
         run:
              |
               $projects = .\Get-ProjectsInSolution.ps1 src/malone.Core.sln -Type NonTestProjects
-              $projects | foreach{ nuget pack $_.FullName  -Properties Configuration=${env:CONFIGURATION} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg }
+              $projects | foreach{ nuget pack $_.FullName  -Properties Configuration=${env:CONFIGURATION} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg -OutputDirectory ${{ env.NUGET_PACKAGES_DIR }} }
       
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: nuget-packages
+          path: ${{ env.NUGET_PACKAGES_DIR }}/*
+          if-no-files-found: error
+          retention-days: 10
+
   deploy:
       name: Deploy
-      needs: [setup,nuget-pack]
+      needs: build-and-pack
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development'}}
       
       # The type of runner that the job will run on
@@ -93,7 +84,13 @@ jobs:
 
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps: 
-      
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+            name: nuget-packages
+            path: ${{ env.NUGET_PACKAGES_DIR }}
+
       - name: "Pushing Nuget Packages"
         run: | 
               nuget push *-dev.nupkg -SkipDuplicate -source "github"
