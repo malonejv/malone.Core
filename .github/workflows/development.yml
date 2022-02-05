@@ -64,9 +64,8 @@ jobs:
         run:
              |
               $projects = .\Get-ProjectsInSolution.ps1 src\malone.Core.sln -Type NonTestProjects
-              $projects | foreach{ nuget pack $_.FullName  -Properties Configuration=${env:CONFIGURATION} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg -OutputDirectory ${{ env.NUGET_PACKAGES_DIR }} }
-              Get-ChildItem ${{ env.NUGET_PACKAGES_DIR }}\
-      
+              $projects | foreach{ nuget pack $_ -Properties Configuration=${env:CONFIGURATION} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg -OutputDirectory "${{ env.NUGET_PACKAGES_DIR }}" }
+              
       - name: Upload artifacts
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development'}} 
         uses: actions/upload-artifact@v2
@@ -74,7 +73,7 @@ jobs:
           name: nuget-packages
           path: ${{ env.NUGET_PACKAGES_DIR }}\*
           if-no-files-found: error
-          retention-days: 10
+          retention-days: 1
 
   deploy:
       name: Deploy

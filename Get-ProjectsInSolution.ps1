@@ -18,6 +18,7 @@ $Path = ($Path | Resolve-Path).ProviderPath
  
 $SolutionRoot = $Path | Split-Path
  
+$result = @()
 
 
 if ($Type -eq "NonTestProjects") 
@@ -54,6 +55,8 @@ Get-Content -Path $Path |
         if ($_ -match $SolutionProjectPattern) {
             $ProjectPath = $SolutionRoot | Join-Path -ChildPath $Matches['path']
             $ProjectPath = ($ProjectPath | Resolve-Path).ProviderPath
-			Write-Host $ProjectPath
+			$result += $ProjectPath
         }
     }
+
+return $result
