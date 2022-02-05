@@ -69,6 +69,7 @@ jobs:
               $projects | foreach{ nuget pack $_.FullName  -Properties Configuration=${env:CONFIGURATION} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg -OutputDirectory ${{ env.NUGET_PACKAGES_DIR }} }
       
       - name: Upload artifacts
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master'}} 
         uses: actions/upload-artifact@v2
         with:
           name: nuget-packages
