@@ -46,7 +46,7 @@ jobs:
         run: |
              $configuration = "Release"
              echo "CONFIGURATION=$configuration" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
-             echo ::set-output name=Configuration::${env:CONFIGURATION}
+             echo ::set-output name=Configuration::$configuration
              
   build:
       name: Build
