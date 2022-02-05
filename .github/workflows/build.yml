@@ -53,7 +53,7 @@ jobs:
         run: msbuild ${{ inputs.soluntion_path }} /t:Build /p:Configuration=${{ inputs.configuration }}
             
       - name: Prepare Packages
-        if: ${{ env:ALLOW_PUSH_PACKAGES }} 
+        if: ${ env:ALLOW_PUSH_PACKAGES }
         run:
              |
               $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.soluntion_path }} -Type NonTestProjects
