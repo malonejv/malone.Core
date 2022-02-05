@@ -3,9 +3,9 @@
 
 namespace malone.Core.DataAccess.ServiceAgents
 {
-                public abstract class ServiceAgent : IServiceAgent
+    public abstract class ServiceAgent : IServiceAgent
     {
-                                public ServiceAgent()
+        public ServiceAgent()
         {
         }
     }

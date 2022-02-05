@@ -1,9 +1,9 @@
-﻿using malone.Core.AdoNet.Attributes;
-using malone.Core.Entities.Model;
-using Microsoft.AspNet.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using malone.Core.AdoNet.Attributes;
+using malone.Core.Entities.Model;
+using Microsoft.AspNet.Identity;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Entities
 {
@@ -13,50 +13,50 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Entities
         where TUserRole : CoreUserRole<TKey>
         where TUserClaim : CoreUserClaim<TKey>
     {
-                                public CoreUser()
+        public CoreUser()
         {
             Logins = null;
             Roles = null;
             Claims = null;
         }
 
-                                [DbParameter("@Email", Type = SqlDbType.NVarChar, Size = 256, Direction = ParameterDirection.Input)]
+        [DbParameter("@Email", Type = SqlDbType.NVarChar, Size = 256, Direction = ParameterDirection.Input)]
         public virtual string Email { get; set; }
 
-                                [DbParameter("@EmailConfirmed", Type = SqlDbType.Bit, Direction = ParameterDirection.Input)]
+        [DbParameter("@EmailConfirmed", Type = SqlDbType.Bit, Direction = ParameterDirection.Input)]
         public virtual bool EmailConfirmed { get; set; }
 
-                                [DbParameter("@PasswordHash", Type = SqlDbType.NVarChar, Size = 4000, Direction = ParameterDirection.Input)]
+        [DbParameter("@PasswordHash", Type = SqlDbType.NVarChar, Size = 4000, Direction = ParameterDirection.Input)]
         public virtual string PasswordHash { get; set; }
 
-                                [DbParameter("@SecurityStamp", Type = SqlDbType.NVarChar, Size = 4000, Direction = ParameterDirection.Input)]
+        [DbParameter("@SecurityStamp", Type = SqlDbType.NVarChar, Size = 4000, Direction = ParameterDirection.Input)]
         public virtual string SecurityStamp { get; set; }
 
-                                [DbParameter("@PhoneNumber", Type = SqlDbType.NVarChar, Size = 4000, Direction = ParameterDirection.Input)]
+        [DbParameter("@PhoneNumber", Type = SqlDbType.NVarChar, Size = 4000, Direction = ParameterDirection.Input)]
         public virtual string PhoneNumber { get; set; }
 
-                                [DbParameter("@PhoneNumberConfirmed", Type = SqlDbType.Bit, Direction = ParameterDirection.Input)]
+        [DbParameter("@PhoneNumberConfirmed", Type = SqlDbType.Bit, Direction = ParameterDirection.Input)]
         public virtual bool PhoneNumberConfirmed { get; set; }
 
-                                [DbParameter("@TwoFactorEnabled", Type = SqlDbType.Bit, Direction = ParameterDirection.Input)]
+        [DbParameter("@TwoFactorEnabled", Type = SqlDbType.Bit, Direction = ParameterDirection.Input)]
         public virtual bool TwoFactorEnabled { get; set; }
 
-                                [DbParameter("@LockoutEndDateUtc", Type = SqlDbType.DateTime, Direction = ParameterDirection.Input)]
+        [DbParameter("@LockoutEndDateUtc", Type = SqlDbType.DateTime, Direction = ParameterDirection.Input)]
         public virtual DateTime? LockoutEndDateUtc { get; set; }
 
-                                [DbParameter("@LockoutEnabled", Type = SqlDbType.Bit, Direction = ParameterDirection.Input)]
+        [DbParameter("@LockoutEnabled", Type = SqlDbType.Bit, Direction = ParameterDirection.Input)]
         public virtual bool LockoutEnabled { get; set; }
 
-                                [DbParameter("@AccessFailedCount", Type = SqlDbType.Int, Direction = ParameterDirection.Input)]
+        [DbParameter("@AccessFailedCount", Type = SqlDbType.Int, Direction = ParameterDirection.Input)]
         public virtual int AccessFailedCount { get; set; }
 
-                                public virtual ICollection<TUserRole> Roles { get; internal set; }
+        public virtual ICollection<TUserRole> Roles { get; internal set; }
 
-                                public virtual ICollection<TUserClaim> Claims { get; internal set; }
+        public virtual ICollection<TUserClaim> Claims { get; internal set; }
 
-                                public virtual ICollection<TUserLogin> Logins { get; internal set; }
+        public virtual ICollection<TUserLogin> Logins { get; internal set; }
 
-                                [DbParameter("@Id", Type = SqlDbType.Int, Direction = ParameterDirection.Input)]
+        [DbParameter("@Id", Type = SqlDbType.Int, Direction = ParameterDirection.Input)]
         public virtual TKey Id { get; set; }
 
         [DbParameter("@UserName", Type = SqlDbType.NVarChar, Size = 256, Direction = ParameterDirection.Input)]

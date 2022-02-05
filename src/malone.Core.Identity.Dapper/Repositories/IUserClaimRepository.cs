@@ -1,8 +1,8 @@
-﻿using malone.Core.DataAccess.Repositories;
+﻿using System;
+using System.Security.Claims;
+using malone.Core.DataAccess.Repositories;
 using malone.Core.Entities.Model;
 using malone.Core.Identity.Dapper.Entities;
-using System;
-using System.Security.Claims;
 
 namespace malone.Core.Identity.Dapper.Repositories
 {

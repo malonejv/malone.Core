@@ -5,20 +5,20 @@ using System;
 
 namespace malone.Core.Commons.Exceptions
 {
-                public class BusinessValidationException : BaseException
+    public class BusinessValidationException : BaseException
     {
-                                public BusinessValidationException()
-            : base()
+        public BusinessValidationException()
+: base()
         {
         }
 
-                                        public BusinessValidationException(string message)
-            : base(message)
+        public BusinessValidationException(string message)
+: base(message)
         {
         }
 
-                                                public BusinessValidationException(string message, Exception innerException)
-            : base(message, innerException)
+        public BusinessValidationException(string message, Exception innerException)
+: base(message, innerException)
         {
         }
     }

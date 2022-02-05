@@ -1,7 +1,7 @@
-﻿using malone.Core.Identity.Dapper.Entities;
+﻿using System;
+using malone.Core.Identity.Dapper.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using System;
 
 namespace malone.Core.Identity.Dapper.Business
 {
@@ -35,7 +35,10 @@ namespace malone.Core.Identity.Dapper.Business
 
         public virtual void ConfigureUserManager(TUserBC userBusinessComponent, IdentityFactoryOptions<UserBusinessComponent> options)
         {
-            if (userBusinessComponent == null) throw new ArgumentNullException(nameof(userBusinessComponent));
+            if (userBusinessComponent == null)
+            {
+                throw new ArgumentNullException(nameof(userBusinessComponent));
+            }
 
             var dataProtectionProvider = options.DataProtectionProvider;
 

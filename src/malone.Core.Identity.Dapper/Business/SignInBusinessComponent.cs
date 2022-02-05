@@ -1,12 +1,12 @@
-﻿using malone.Core.Commons.DI;
+﻿using System;
+using System.Threading.Tasks;
+using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Log;
 using malone.Core.Identity.Dapper.Entities;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using System;
-using System.Threading.Tasks;
 
 namespace malone.Core.Identity.Dapper.Business
 {
@@ -38,7 +38,10 @@ namespace malone.Core.Identity.Dapper.Business
 
         public async Task<SignInStatus> PasswordUserNameOrEmailSignInAsync(string userNameOrEmail, string password, bool isPersistent, bool shouldLockout)
         {
-            if (string.IsNullOrEmpty(userNameOrEmail)) throw new ArgumentNullException(nameof(userNameOrEmail));
+            if (string.IsNullOrEmpty(userNameOrEmail))
+            {
+                throw new ArgumentNullException(nameof(userNameOrEmail));
+            }
 
             try
             {
@@ -56,7 +59,10 @@ namespace malone.Core.Identity.Dapper.Business
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.TECH201);
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }

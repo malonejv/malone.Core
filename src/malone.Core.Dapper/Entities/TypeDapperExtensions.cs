@@ -1,11 +1,11 @@
-﻿using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Dapper.Attributes;
-using malone.Core.Entities.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using malone.Core.Commons.Helpers.Extensions;
+using malone.Core.Dapper.Attributes;
+using malone.Core.Entities.Model;
 
 namespace malone.Core.Dapper.Entities
 {
@@ -23,7 +23,9 @@ namespace malone.Core.Dapper.Entities
                 if (columnAttribute != null)
                 {
                     if (columnAttribute.Name.IsNullOrEmpty())
+                    {
                         columnAttribute.Name = propertyInfo.Name;
+                    }
 
                     object parameterValue = propertyInfo.GetValue(entityType) != propertyInfo.GetType().GetDefault() ? propertyInfo.GetValue(entityType) : DBNull.Value;
                     columnAttribute.Value = parameterValue;
@@ -53,12 +55,15 @@ namespace malone.Core.Dapper.Entities
             {
                 ColumnAttribute columnAttribute = prop.GetCustomAttribute<ColumnAttribute>();
                 if (columnAttribute != null)
+                {
                     columnNames.Add(columnAttribute.Name);
+                }
                 else if (prop.PropertyType.IsPrimitive
                  || (prop.PropertyType.IsClass && prop.PropertyType.Name == "String")
                  || (prop.PropertyType.IsGenericType && prop.PropertyType.Name == "Nullable`1"))
+                {
                     columnNames.Add(prop.Name);
-
+                }
             }
 
             return columnNames.Aggregate((i, j) => $"{i}, {j}");
@@ -109,7 +114,9 @@ namespace malone.Core.Dapper.Entities
                 {
                     columnAttribute = propertyInfo.GetCustomAttribute<ColumnAttribute>();
                     if (columnAttribute == null)
+                    {
                         columnAttribute = new ColumnAttribute(name: propertyInfo.Name, direction: ParameterDirection.Input, isKey: true);
+                    }
 
                     break;
                 }
@@ -131,7 +138,9 @@ namespace malone.Core.Dapper.Entities
 
             TableAttribute tableAttribute = entityType.GetCustomAttribute<TableAttribute>();
             if (tableAttribute != null)
+            {
                 tableName = tableAttribute.Name;
+            }
 
             return tableName;
         }

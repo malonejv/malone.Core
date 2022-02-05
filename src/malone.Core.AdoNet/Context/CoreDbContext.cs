@@ -1,11 +1,11 @@
-﻿using malone.Core.AdoNet.Database;
-using malone.Core.Commons.DI;
-using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.DataAccess.Context;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using malone.Core.AdoNet.Database;
+using malone.Core.Commons.DI;
+using malone.Core.Commons.Helpers.Extensions;
+using malone.Core.DataAccess.Context;
 
 namespace malone.Core.AdoNet.Context
 {
@@ -70,10 +70,13 @@ namespace malone.Core.AdoNet.Context
                 parameter.ThrowIfNull("DbParameter");
 
                 if (parameter.DbParameter.IsSizeDefined)
+                {
                     Db.AddCommandParameter(command, parameter.DbParameter.Name, parameter.Value, parameter.DbParameter.Direction, parameter.DbParameter.Type, parameter.DbParameter.Size);
+                }
                 else
+                {
                     Db.AddCommandParameter(command, parameter.DbParameter.Name, parameter.Value, parameter.DbParameter.Direction, parameter.DbParameter.Type);
-
+                }
             }
         }
 
@@ -97,7 +100,10 @@ namespace malone.Core.AdoNet.Context
 
         protected virtual void Dispose(bool disposing)
         {
-            if (_isDisposed) return;
+            if (_isDisposed)
+            {
+                return;
+            }
 
             if (disposing)
             {

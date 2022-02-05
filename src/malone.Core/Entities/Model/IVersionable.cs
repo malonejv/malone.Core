@@ -6,8 +6,8 @@
 
 namespace malone.Core.Entities.Model
 {
-                public interface IVersionable
+    public interface IVersionable
     {
-                                int Version { get; set; }
+        int Version { get; set; }
     }
 }

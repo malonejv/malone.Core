@@ -1,19 +1,19 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:47:51</date>
 
-using malone.Core.Business.Components;
 using System;
 using System.Text;
+using malone.Core.Business.Components;
 
 namespace malone.Core.Commons.Exceptions
 {
-                public class BusinessRulesValidationException : Exception
+    public class BusinessRulesValidationException : Exception
     {
-                                public ValidationResultList Results { get; private set; }
+        public ValidationResultList Results { get; private set; }
 
-                                public bool HideErrorCodes { get; protected set; }
+        public bool HideErrorCodes { get; protected set; }
 
-                                public new string Message
+        public new string Message
         {
             get
             {
@@ -29,8 +29,8 @@ namespace malone.Core.Commons.Exceptions
             }
         }
 
-                                        public BusinessRulesValidationException(ValidationResultList results)
-            : base()
+        public BusinessRulesValidationException(ValidationResultList results)
+: base()
         {
             Results = results;
             //TODO: Configurar desde web.config

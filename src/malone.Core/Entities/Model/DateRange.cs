@@ -5,10 +5,10 @@ using System;
 
 namespace malone.Core.Entities.Model
 {
-                public class DateRange : IDateRange
+    public class DateRange : IDateRange
     {
-                                public DateTime? FromDate { get; set; }
+        public DateTime? FromDate { get; set; }
 
-                                public DateTime? ToDate { get; set; }
+        public DateTime? ToDate { get; set; }
     }
 }

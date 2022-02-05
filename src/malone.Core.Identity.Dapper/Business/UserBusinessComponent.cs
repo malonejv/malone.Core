@@ -1,9 +1,9 @@
-﻿using malone.Core.Commons.DI;
+﻿using System;
+using malone.Core.Commons.DI;
 using malone.Core.Identity.Dapper.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using System;
 
 namespace malone.Core.Identity.Dapper.Business
 {

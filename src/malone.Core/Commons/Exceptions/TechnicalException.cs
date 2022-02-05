@@ -5,20 +5,20 @@ using System;
 
 namespace malone.Core.Commons.Exceptions
 {
-                public class TechnicalException : BaseException
+    public class TechnicalException : BaseException
     {
-                                public TechnicalException()
-            : base()
+        public TechnicalException()
+: base()
         {
         }
 
-                                        public TechnicalException(string message)
-            : base(message)
+        public TechnicalException(string message)
+: base(message)
         {
         }
 
-                                                public TechnicalException(string message, Exception innerException)
-            : base(message, innerException)
+        public TechnicalException(string message, Exception innerException)
+: base(message, innerException)
         {
         }
     }

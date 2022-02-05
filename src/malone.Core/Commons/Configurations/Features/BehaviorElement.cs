@@ -5,16 +5,16 @@ using System.Configuration;
 
 namespace malone.Core.Commons.Configurations.Features
 {
-                public class BehaviorElement : ConfigurationElement
+    public class BehaviorElement : ConfigurationElement
     {
-                                [ConfigurationProperty("name", IsRequired = true, IsKey = true)]
+        [ConfigurationProperty("name", IsRequired = true, IsKey = true)]
         public string Name
         {
             get { return (string)this["name"]; }
             set { this["name"] = value; }
         }
 
-                                [ConfigurationProperty("isEnabled", IsRequired = true)]
+        [ConfigurationProperty("isEnabled", IsRequired = true)]
         public bool IsEnabled
         {
             get { return (bool)this["isEnabled"]; }

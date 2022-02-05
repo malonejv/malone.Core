@@ -1,13 +1,13 @@
-﻿using malone.Core.Commons.Exceptions;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.EF.Entities;
 using malone.Core.Entities.Model;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 
 namespace malone.Core.EF.Repositories.Implementations
 {
@@ -57,7 +57,10 @@ namespace malone.Core.EF.Repositories.Implementations
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS601, typeof(TEntity));
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }
@@ -200,14 +203,19 @@ namespace malone.Core.EF.Repositories.Implementations
                 var oldValues = GetById(entity.Id);
 
                 if (oldValues.Equals(default(TEntity)))
+                {
                     throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.DATAACCESS601, typeof(TEntity));
+                }
 
                 Context.Entry(entity).State = EntityState.Modified;
             }
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }
@@ -316,7 +324,7 @@ namespace malone.Core.EF.Repositories.Implementations
 
         //#region Dispose
 
-                                //public void Dispose()
+        //public void Dispose()
         //{
         //    Dispose(true);
         //    GC.SuppressFinalize(this);
@@ -330,7 +338,7 @@ namespace malone.Core.EF.Repositories.Implementations
         //    }
         //}
 
-                                        //protected virtual void Dispose(bool disposing)
+        //protected virtual void Dispose(bool disposing)
         //{
         //    if (disposing && _context != null)
         //    {

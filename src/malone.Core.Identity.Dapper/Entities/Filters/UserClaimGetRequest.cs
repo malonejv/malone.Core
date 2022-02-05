@@ -1,7 +1,7 @@
-﻿using malone.Core.Dapper.Attributes;
-using malone.Core.Dapper.Entities.Filters;
-using System;
+﻿using System;
 using System.Data;
+using malone.Core.Dapper.Attributes;
+using malone.Core.Dapper.Entities.Filters;
 
 namespace malone.Core.Identity.Dapper.Entities.Filters
 {

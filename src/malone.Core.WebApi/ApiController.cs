@@ -1,13 +1,13 @@
-﻿using malone.Core.Business.Components;
-using malone.Core.Commons.Exceptions;
-using malone.Core.Entities.Model;
-using System;
+﻿using System;
 using System.Collections;
 using System.Web.Http;
+using malone.Core.Business.Components;
+using malone.Core.Commons.Exceptions;
+using malone.Core.Entities.Model;
 
 namespace malone.Core.WebApi
 {
-                                                public abstract class ApiController<TKey, TParam, TEntity, TBusinessComponent, TBusinessValidator> : ApiController
+    public abstract class ApiController<TKey, TParam, TEntity, TBusinessComponent, TBusinessValidator> : ApiController
         where TKey : IEquatable<TKey>
         where TParam : class, IGetRequestParam
         where TEntity : class, IBaseEntity<TKey>
@@ -23,14 +23,14 @@ namespace malone.Core.WebApi
 
         #region GET (GetAll)
 
-                                                                        public virtual IHttpActionResult Get()
+        public virtual IHttpActionResult Get()
         {
             IEnumerable list = GetList(null);
 
             return Ok(list);
         }
 
-                                                                                protected virtual IEnumerable GetList(TParam parameters = null)
+        protected virtual IEnumerable GetList(TParam parameters = null)
         {
             IEnumerable list = null;
 
@@ -45,18 +45,18 @@ namespace malone.Core.WebApi
             return AsViewModelList(list);
         }
 
-                                        protected virtual IEnumerable GetAll()
+        protected virtual IEnumerable GetAll()
         {
             return BusinessComponent.GetAll();
         }
 
 
-                                                protected virtual IEnumerable GetFiltered(TParam parameters)
+        protected virtual IEnumerable GetFiltered(TParam parameters)
         {
             throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.TECH202, "GetFiltered", this.GetType().Name);
         }
 
-                                                                        protected virtual IEnumerable AsViewModelList(IEnumerable list)
+        protected virtual IEnumerable AsViewModelList(IEnumerable list)
         {
             return list;
         }
@@ -65,25 +65,29 @@ namespace malone.Core.WebApi
 
         #region GET (GetById)
 
-                                                                                        [HttpGet, HttpHead]
+        [HttpGet, HttpHead]
         public virtual IHttpActionResult Get(TKey id)
         {
             object entity = GetById(id);
 
             if (entity != null)
+            {
                 return Ok(entity);
+            }
             else
+            {
                 return NotFound();
+            }
         }
 
 
-                                                                                protected virtual object GetById(TKey id)
+        protected virtual object GetById(TKey id)
         {
             TEntity entity = BusinessComponent.GetById(id);
             return AsViewModel(entity);
         }
 
-                                                                        protected virtual object AsViewModel(TEntity entity)
+        protected virtual object AsViewModel(TEntity entity)
         {
             return entity;
         }
@@ -92,7 +96,7 @@ namespace malone.Core.WebApi
 
         #region POST (Add)
 
-                                                                public virtual IHttpActionResult Post([FromBody] TEntity entity)
+        public virtual IHttpActionResult Post([FromBody] TEntity entity)
         {
             BusinessComponent.Add(entity);
 
@@ -105,7 +109,7 @@ namespace malone.Core.WebApi
 
         #region PUT (Update)
 
-                                                                                public virtual IHttpActionResult Put(TKey id, [FromBody] TEntity entity)
+        public virtual IHttpActionResult Put(TKey id, [FromBody] TEntity entity)
         {
             BusinessComponent.Update(entity);
             return Ok();
@@ -115,7 +119,7 @@ namespace malone.Core.WebApi
 
         #region DELETE (Delete)
 
-                                                                                public virtual IHttpActionResult Delete(TKey id)
+        public virtual IHttpActionResult Delete(TKey id)
         {
             BusinessComponent.Delete(id);
             return Ok();
@@ -124,12 +128,12 @@ namespace malone.Core.WebApi
         #endregion
     }
 
-        public abstract class ApiController<TParam, TEntity, TBusinessComponent, TBusinessValidator>
-        : ApiController<int, TParam, TEntity, TBusinessComponent, TBusinessValidator>
-       where TParam : class, IGetRequestParam
-       where TEntity : class, IBaseEntity
-       where TBusinessValidator : IBusinessValidator<TEntity>
-       where TBusinessComponent : IBusinessComponent<TEntity, TBusinessValidator>
+    public abstract class ApiController<TParam, TEntity, TBusinessComponent, TBusinessValidator>
+    : ApiController<int, TParam, TEntity, TBusinessComponent, TBusinessValidator>
+   where TParam : class, IGetRequestParam
+   where TEntity : class, IBaseEntity
+   where TBusinessValidator : IBusinessValidator<TEntity>
+   where TBusinessComponent : IBusinessComponent<TEntity, TBusinessValidator>
     {
         public ApiController(TBusinessComponent businessComponent) : base(businessComponent)
         {

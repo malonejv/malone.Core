@@ -5,22 +5,22 @@ using System;
 
 namespace malone.Core.Commons.Log
 {
-                public abstract class LoggerBase : ILogger
+    public abstract class LoggerBase : ILogger
     {
-                                private const string NullString = "null";
+        private const string NullString = "null";
 
-                                                public string Name { get; private set; }
+        public string Name { get; private set; }
 
-                                        protected LoggerBase(string name)
+        protected LoggerBase(string name)
         {
             Name = name;
         }
 
-                                protected LoggerBase()
+        protected LoggerBase()
         {
         }
 
-                                        public void Debug(object obj)
+        public void Debug(object obj)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
             {
@@ -28,7 +28,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                        public void Debug(string message)
+        public void Debug(string message)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
             {
@@ -36,7 +36,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                public void Debug(string format, params object[] args)
+        public void Debug(string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
             {
@@ -44,7 +44,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public void Debug(IFormatProvider provider, string format, params object[] args)
+        public void Debug(IFormatProvider provider, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
             {
@@ -52,7 +52,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                        public void Debug(Exception exception)
+        public void Debug(Exception exception)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
             {
@@ -60,7 +60,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public void Debug(Exception exception, string message)
+        public void Debug(Exception exception, string message)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
             {
@@ -68,7 +68,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public void Debug(Exception exception, string format, params object[] args)
+        public void Debug(Exception exception, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
             {
@@ -76,7 +76,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                                public void Debug(Exception exception, string format, IFormatProvider provider, params object[] args)
+        public void Debug(Exception exception, string format, IFormatProvider provider, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Debug))
             {
@@ -84,7 +84,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                        public void Info(object obj)
+        public void Info(object obj)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
             {
@@ -92,7 +92,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                        public void Info(string message)
+        public void Info(string message)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
             {
@@ -100,7 +100,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                public void Info(string format, params object[] args)
+        public void Info(string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
             {
@@ -108,7 +108,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public void Info(IFormatProvider provider, string format, params object[] args)
+        public void Info(IFormatProvider provider, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
             {
@@ -116,7 +116,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                        public void Info(Exception exception)
+        public void Info(Exception exception)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
             {
@@ -124,7 +124,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public void Info(Exception exception, string message)
+        public void Info(Exception exception, string message)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
             {
@@ -132,7 +132,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public void Info(Exception exception, string format, params object[] args)
+        public void Info(Exception exception, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
             {
@@ -140,7 +140,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                                public void Info(Exception exception, string format, IFormatProvider provider, params object[] args)
+        public void Info(Exception exception, string format, IFormatProvider provider, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Info))
             {
@@ -148,7 +148,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                        public void Warn(object obj)
+        public void Warn(object obj)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
             {
@@ -156,7 +156,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                        public void Warn(string message)
+        public void Warn(string message)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
             {
@@ -164,7 +164,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                public void Warn(string format, params object[] args)
+        public void Warn(string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
             {
@@ -172,7 +172,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public void Warn(IFormatProvider provider, string format, params object[] args)
+        public void Warn(IFormatProvider provider, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
             {
@@ -180,7 +180,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                        public void Warn(Exception exception)
+        public void Warn(Exception exception)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
             {
@@ -188,7 +188,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public void Warn(Exception exception, string message)
+        public void Warn(Exception exception, string message)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
             {
@@ -196,7 +196,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public void Warn(Exception exception, string format, params object[] args)
+        public void Warn(Exception exception, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
             {
@@ -204,7 +204,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                                public void Warn(Exception exception, string format, IFormatProvider provider, params object[] args)
+        public void Warn(Exception exception, string format, IFormatProvider provider, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Warn))
             {
@@ -212,7 +212,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                        public void Error(object obj)
+        public void Error(object obj)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
             {
@@ -220,7 +220,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                        public void Error(string message)
+        public void Error(string message)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
             {
@@ -228,7 +228,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                public void Error(string format, params object[] args)
+        public void Error(string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
             {
@@ -236,7 +236,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public void Error(IFormatProvider provider, string format, params object[] args)
+        public void Error(IFormatProvider provider, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
             {
@@ -244,7 +244,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                        public void Error(Exception exception)
+        public void Error(Exception exception)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
             {
@@ -252,7 +252,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public void Error(Exception exception, string message)
+        public void Error(Exception exception, string message)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
             {
@@ -260,7 +260,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public void Error(Exception exception, string format, params object[] args)
+        public void Error(Exception exception, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
             {
@@ -268,7 +268,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                                public void Error(Exception exception, string format, IFormatProvider provider, params object[] args)
+        public void Error(Exception exception, string format, IFormatProvider provider, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Error))
             {
@@ -276,7 +276,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                        public void Fatal(object obj)
+        public void Fatal(object obj)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
             {
@@ -284,7 +284,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                        public void Fatal(string message)
+        public void Fatal(string message)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
             {
@@ -292,7 +292,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                public void Fatal(string format, params object[] args)
+        public void Fatal(string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
             {
@@ -300,7 +300,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public void Fatal(IFormatProvider provider, string format, params object[] args)
+        public void Fatal(IFormatProvider provider, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
             {
@@ -308,7 +308,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                        public void Fatal(Exception exception)
+        public void Fatal(Exception exception)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
             {
@@ -316,7 +316,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public void Fatal(Exception exception, string message)
+        public void Fatal(Exception exception, string message)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
             {
@@ -324,7 +324,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public void Fatal(Exception exception, string format, params object[] args)
+        public void Fatal(Exception exception, string format, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
             {
@@ -332,7 +332,7 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                                public void Fatal(Exception exception, string format, IFormatProvider provider, params object[] args)
+        public void Fatal(Exception exception, string format, IFormatProvider provider, params object[] args)
         {
             if (IsLogLevelEnabled(LogLevel.Fatal))
             {
@@ -340,41 +340,41 @@ namespace malone.Core.Commons.Log
             }
         }
 
-                                                        public virtual void Log(LogLevel level, string format, params object[] args)
+        public virtual void Log(LogLevel level, string format, params object[] args)
         {
             Log(level, String.Format(format, args));
         }
 
-                                                                public virtual void Log(LogLevel level, IFormatProvider provider, string format, params object[] args)
+        public virtual void Log(LogLevel level, IFormatProvider provider, string format, params object[] args)
         {
             Log(level, String.Format(provider, format, args));
         }
 
-                                                public virtual void Log(LogLevel level, string message)
+        public virtual void Log(LogLevel level, string message)
         {
             LogItem item = new LogItem { LogLevel = level, Message = message, LoggerName = Name };
             Log(item);
         }
 
-                                                public virtual void Log(LogLevel level, Exception exception)
+        public virtual void Log(LogLevel level, Exception exception)
         {
             Log(level, exception, String.Empty);
         }
 
-                                                                public virtual void Log(LogLevel level, Exception exception, string format, params object[] args)
+        public virtual void Log(LogLevel level, Exception exception, string format, params object[] args)
         {
             string message = String.Format(format, args);
             Log(level, exception, message);
         }
 
-                                                                        public virtual void Log(LogLevel level, Exception exception, IFormatProvider provider, string format,
-                                params object[] args)
+        public virtual void Log(LogLevel level, Exception exception, IFormatProvider provider, string format,
+params object[] args)
         {
             string message = String.Format(provider, format, args);
             Log(level, exception, message);
         }
 
-                                                        public virtual void Log(LogLevel level, Exception exception, string message)
+        public virtual void Log(LogLevel level, Exception exception, string message)
         {
             Type exceptionType = typeof(Exception);
             var errorMessagePropertyInfo = exceptionType.GetProperty("ErrorMessage");
@@ -389,9 +389,9 @@ namespace malone.Core.Commons.Log
             Log(item);
         }
 
-                                        public abstract void Log(LogItem item);
+        public abstract void Log(LogItem item);
 
-                                                        protected virtual bool IsLogLevelEnabled(LogLevel level)
+        protected virtual bool IsLogLevelEnabled(LogLevel level)
         {
             return true;
         }

@@ -1,9 +1,9 @@
-﻿using malone.Core.Dapper.Attributes;
-using malone.Core.Entities.Model;
-using Microsoft.AspNet.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using malone.Core.Dapper.Attributes;
+using malone.Core.Entities.Model;
+using Microsoft.AspNet.Identity;
 
 namespace malone.Core.Identity.Dapper.Entities
 {
@@ -12,18 +12,18 @@ namespace malone.Core.Identity.Dapper.Entities
         where TKey : IEquatable<TKey>
         where TUserRole : CoreUserRole<TKey>
     {
-                                public CoreRole()
+        public CoreRole()
         {
             Users = new List<TUserRole>();
         }
 
-                                [Column("Id", type: DbType.Int32, Direction = ParameterDirection.Input)]
+        [Column("Id", type: DbType.Int32, Direction = ParameterDirection.Input)]
         public TKey Id { get; set; }
 
-                                [Column("Name", type: DbType.String, Size = 256, Direction = ParameterDirection.Input)]
+        [Column("Name", type: DbType.String, Size = 256, Direction = ParameterDirection.Input)]
         public string Name { get; set; }
 
-                                public virtual ICollection<TUserRole> Users { get; internal set; }
+        public virtual ICollection<TUserRole> Users { get; internal set; }
 
     }
 

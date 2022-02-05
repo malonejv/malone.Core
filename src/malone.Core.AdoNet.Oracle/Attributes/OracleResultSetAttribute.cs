@@ -1,6 +1,6 @@
-﻿using malone.Core.AdoNet.Attributes;
-using System;
+﻿using System;
 using System.Data;
+using malone.Core.AdoNet.Attributes;
 
 namespace malone.Core.AdoNet.Oracle.Attributes
 {

@@ -1,13 +1,13 @@
-﻿using Dapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using Dapper;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
 using malone.Core.Dapper.Repositories;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.Dapper.Entities;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 
 namespace malone.Core.Identity.Dapper.Repositories
 {
@@ -33,8 +33,8 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         #region Public Methods
 
-                                                public List<string> FindByUserId<TUserKey>(TUserKey userId)
-            where TUserKey : IEquatable<TUserKey>
+        public List<string> FindByUserId<TUserKey>(TUserKey userId)
+where TUserKey : IEquatable<TUserKey>
         {
             List<string> roles = new List<string>();
             string commandText = "Select Roles.Name from UsersRoles, Roles where UsersRoles.UserId = @userId and UsersRoles.RoleId = Roles.Id";
@@ -45,9 +45,9 @@ namespace malone.Core.Identity.Dapper.Repositories
             return result.ToList();
         }
 
-                                                public int Delete<TUserKey, TRoleKey>(TUserKey userId, TRoleKey roleId)
-            where TUserKey : IEquatable<TUserKey>
-            where TRoleKey : IEquatable<TRoleKey>
+        public int Delete<TUserKey, TRoleKey>(TUserKey userId, TRoleKey roleId)
+where TUserKey : IEquatable<TUserKey>
+where TRoleKey : IEquatable<TRoleKey>
         {
             string commandText = "Delete from UsersRoles where UserId = @userId and  RoleId = @roleId";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -57,9 +57,9 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-                                                        public int Insert<TUserKey, TRoleKey>(TUserKey userId, TRoleKey roleId)
-            where TUserKey : IEquatable<TUserKey>
-            where TRoleKey : IEquatable<TRoleKey>
+        public int Insert<TUserKey, TRoleKey>(TUserKey userId, TRoleKey roleId)
+where TUserKey : IEquatable<TUserKey>
+where TRoleKey : IEquatable<TRoleKey>
         {
             string commandText = "Insert into UsersRoles (UserId, RoleId) values (@userId, @roleId)";
             Dictionary<string, object> parameters = new Dictionary<string, object>();

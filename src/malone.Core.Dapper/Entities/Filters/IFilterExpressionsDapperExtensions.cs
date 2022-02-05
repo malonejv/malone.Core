@@ -1,8 +1,8 @@
-﻿using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Dapper.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using malone.Core.Commons.Helpers.Extensions;
+using malone.Core.Dapper.Attributes;
 
 namespace malone.Core.Dapper.Entities.Filters
 {
@@ -20,7 +20,9 @@ namespace malone.Core.Dapper.Entities.Filters
                 if (parameterAttribute != null)
                 {
                     if (parameterAttribute.Name.IsNullOrEmpty())
+                    {
                         parameterAttribute.Name = propertyInfo.Name;
+                    }
                 }
                 else
                 {
@@ -32,7 +34,9 @@ namespace malone.Core.Dapper.Entities.Filters
                 parameterAttribute.Value = parameterValue;
 
                 if (!parameterAttribute.IgnoreDbNull || parameterAttribute.Value != DBNull.Value)
+                {
                     parameters.Add(parameterAttribute);
+                }
             }
 
             return parameters;

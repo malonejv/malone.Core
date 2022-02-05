@@ -1,6 +1,6 @@
-﻿using malone.Core.AdoNet.Parameters;
-using System;
+﻿using System;
 using System.Globalization;
+using malone.Core.AdoNet.Parameters;
 
 namespace malone.Core.AdoNet.Oracle.Parameters
 {

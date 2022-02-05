@@ -6,24 +6,24 @@ using System.Xml.Serialization;
 
 namespace malone.Core.Commons.Log
 {
-                public class LogItem
+    public class LogItem
     {
-                                        public LogLevel LogLevel { get; set; }
+        public LogLevel LogLevel { get; set; }
 
-                                                        public DateTimeOffset Timestamp { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
 
-                                                public string Title { get; set; }
+        public string Title { get; set; }
 
-                                                public string Message { get; set; }
+        public string Message { get; set; }
 
-                                        public string LoggerName { get; set; }
+        public string LoggerName { get; set; }
 
-                                                [XmlIgnore]
+        [XmlIgnore]
         public Exception Exception { get; set; }
 
-                                        public int? EventId { get; set; }
+        public int? EventId { get; set; }
 
-                                public LogItem()
+        public LogItem()
         {
             Title = string.Empty;
             Message = string.Empty;
@@ -33,7 +33,7 @@ namespace malone.Core.Commons.Log
             Timestamp = DateTimeOffset.Now;
         }
 
-                                        public LogItem Clone()
+        public LogItem Clone()
         {
             LogItem clone = new LogItem
             {

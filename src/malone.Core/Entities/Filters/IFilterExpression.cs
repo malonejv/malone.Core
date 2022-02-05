@@ -3,7 +3,7 @@
 
 namespace malone.Core.Entities.Filters
 {
-                public interface IFilterExpression
+    public interface IFilterExpression
     {
     }
 }

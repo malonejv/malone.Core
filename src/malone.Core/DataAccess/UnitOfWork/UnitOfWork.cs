@@ -1,42 +1,42 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:48:15</date>
 
+using System;
 using malone.Core.Commons.DI;
 using malone.Core.DataAccess.Context;
-using System;
 
 namespace malone.Core.DataAccess.UnitOfWork
 {
-                public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
-                                public IContext Context { get; protected set; }
+        public IContext Context { get; protected set; }
 
-                                        public UnitOfWork(IContext context)
+        public UnitOfWork(IContext context)
         {
             Context = context;
         }
 
-                                        public static IUnitOfWork Create()
+        public static IUnitOfWork Create()
         {
             var context = ServiceLocator.Current.Get<IContext>();
             return new UnitOfWork(context);
         }
 
-                                        public int SaveChanges()
+        public int SaveChanges()
         {
             this.ThrowIfDisposed();
             return Context.SaveChanges();
         }
 
-                                private bool _disposed = false;
+        private bool _disposed = false;
 
-                                public void Dispose()
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-                                protected void ThrowIfDisposed()
+        protected void ThrowIfDisposed()
         {
             if (_disposed)
             {
@@ -44,7 +44,7 @@ namespace malone.Core.DataAccess.UnitOfWork
             }
         }
 
-                                        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (disposing && Context != null)
             {

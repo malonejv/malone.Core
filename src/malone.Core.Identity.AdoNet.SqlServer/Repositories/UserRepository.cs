@@ -1,12 +1,12 @@
-﻿using malone.Core.AdoNet.Repositories;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using malone.Core.AdoNet.Repositories;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 {

@@ -5,9 +5,9 @@ using System.Security.Cryptography;
 
 namespace malone.Core.Commons.Security
 {
-                public static class SecurityExtensionMethods
+    public static class SecurityExtensionMethods
     {
-                                                                public static string Hash(this string value, HashAlgorithm algorithm = null, bool escapedOutput = true)
+        public static string Hash(this string value, HashAlgorithm algorithm = null, bool escapedOutput = true)
         {
             string result = null;
 
@@ -17,7 +17,7 @@ namespace malone.Core.Commons.Security
             return result;
         }
 
-                                                                public static string Encrypt(this string value, SymmetricAlgorithm algorithm = null, bool escapedOutput = true)
+        public static string Encrypt(this string value, SymmetricAlgorithm algorithm = null, bool escapedOutput = true)
         {
             string result = null;
 
@@ -27,7 +27,7 @@ namespace malone.Core.Commons.Security
             return result;
         }
 
-                                                                public static string Decrypt(this string value, SymmetricAlgorithm algorithm = null, bool escapedInput = true)
+        public static string Decrypt(this string value, SymmetricAlgorithm algorithm = null, bool escapedInput = true)
         {
             string result = null;
 

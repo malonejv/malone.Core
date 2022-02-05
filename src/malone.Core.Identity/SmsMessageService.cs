@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 
 namespace malone.Core.Identity
 {

@@ -3,10 +3,10 @@
 
 namespace malone.Core.Commons.Log
 {
-                public abstract class LoggerFactory
+    public abstract class LoggerFactory
     {
-                                        public abstract ILogger GetLogger();
+        public abstract ILogger GetLogger();
 
-                                                public abstract ILogger GetLogger(string name);
+        public abstract ILogger GetLogger(string name);
     }
 }

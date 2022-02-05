@@ -1,5 +1,5 @@
-﻿using malone.Core.DataAccess.Context;
-using System.Data.Entity;
+﻿using System.Data.Entity;
+using malone.Core.DataAccess.Context;
 
 namespace malone.Core.EF.Context
 {

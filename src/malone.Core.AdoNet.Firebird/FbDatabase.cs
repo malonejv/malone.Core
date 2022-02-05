@@ -1,7 +1,7 @@
-﻿using FirebirdSql.Data.FirebirdClient;
-using malone.Core.AdoNet.Database;
-using System;
+﻿using System;
 using System.Data;
+using FirebirdSql.Data.FirebirdClient;
+using malone.Core.AdoNet.Database;
 
 namespace malone.Core.AdoNet.Firebird
 {
@@ -52,7 +52,7 @@ namespace malone.Core.AdoNet.Firebird
             else
             {
                 //TODO: manejar con errores del core.
-                throw new InvalidOperationException(string.Format("FbType unrecognized: {0}", (object)parameterName));
+                throw new InvalidOperationException(string.Format("FbType unrecognized: {0}", parameterName));
             }
         }
 
@@ -69,14 +69,16 @@ namespace malone.Core.AdoNet.Firebird
             else
             {
                 //TODO: manejar con errores del core.
-                throw new InvalidOperationException(string.Format("FbType unrecognized: {0}", (object)parameterName));
+                throw new InvalidOperationException(string.Format("FbType unrecognized: {0}", parameterName));
             }
         }
 
         private static FbCommand ValidateCommand(IDbCommand command)
         {
             if (!(command is FbCommand fbCommand))
+            {
                 throw new InvalidOperationException("Error");
+            }
             //TODO: manejar con errores del core.
             //string.Format((IFormatProvider)CultureInfo.CurrentCulture, Resources.FbCommandExpected, (object)command.GetType().FullName))
             return fbCommand;

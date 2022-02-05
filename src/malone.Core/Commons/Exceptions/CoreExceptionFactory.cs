@@ -1,17 +1,17 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:47:53</date>
 
-using malone.Core.Commons.DI;
 using System;
 using System.Reflection;
+using malone.Core.Commons.DI;
 
 namespace malone.Core.Commons.Exceptions
 {
-                internal static class CoreExceptionFactory
+    internal static class CoreExceptionFactory
     {
-                                internal static IErrorLocalizationHandler errorLocalizationHandler;
+        internal static IErrorLocalizationHandler errorLocalizationHandler;
 
-                                internal static IErrorLocalizationHandler ErrorLocalizationHandler
+        internal static IErrorLocalizationHandler ErrorLocalizationHandler
         {
             get
             {
@@ -23,7 +23,7 @@ namespace malone.Core.Commons.Exceptions
             }
         }
 
-                                                                internal static TException CreateException<TException>(CoreErrors code, params object[] args) where TException : BaseException
+        internal static TException CreateException<TException>(CoreErrors code, params object[] args) where TException : BaseException
         {
             var suportId = Guid.NewGuid();
             string message = ErrorLocalizationHandler.GetString(code, args);
@@ -45,7 +45,7 @@ namespace malone.Core.Commons.Exceptions
             return baseException;
         }
 
-                                                                        internal static TException CreateException<TException>(Exception innerException, CoreErrors code, params object[] args) where TException : BaseException
+        internal static TException CreateException<TException>(Exception innerException, CoreErrors code, params object[] args) where TException : BaseException
         {
             var suportId = Guid.NewGuid();
             string message = ErrorLocalizationHandler.GetString(code, args);

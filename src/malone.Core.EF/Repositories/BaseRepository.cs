@@ -1,15 +1,15 @@
-﻿using malone.Core.Commons.Exceptions;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
+using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.EF.Entities.Filters;
 using malone.Core.Entities.Filters;
 using malone.Core.Entities.Model;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace malone.Core.EF.Repositories
 {
@@ -57,7 +57,10 @@ namespace malone.Core.EF.Repositories
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }
@@ -98,7 +101,10 @@ namespace malone.Core.EF.Repositories
             {
 
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }
@@ -137,7 +143,10 @@ namespace malone.Core.EF.Repositories
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS601, typeof(TEntity));
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }
@@ -156,7 +165,10 @@ namespace malone.Core.EF.Repositories
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS602, typeof(TEntity));
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }
@@ -176,7 +188,10 @@ namespace malone.Core.EF.Repositories
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }
@@ -199,7 +214,10 @@ namespace malone.Core.EF.Repositories
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS603, typeof(TEntity));
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }
@@ -213,12 +231,18 @@ namespace malone.Core.EF.Repositories
 
         private void CheckLogger(ILogger logger)
         {
-            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (logger == null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
         }
 
         private void CheckContext(IContext context)
         {
-            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
 
             if (!(context is DbContext))
             {
@@ -265,7 +289,10 @@ namespace malone.Core.EF.Repositories
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }
@@ -277,7 +304,7 @@ namespace malone.Core.EF.Repositories
 
         protected bool _disposed;
 
-                                public void Dispose()
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -291,7 +318,7 @@ namespace malone.Core.EF.Repositories
             }
         }
 
-                                        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (disposing && Context != null)
             {

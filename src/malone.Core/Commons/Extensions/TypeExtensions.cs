@@ -5,11 +5,11 @@ using System;
 
 namespace malone.Core.Commons.Helpers.Extensions
 {
-                public static class TypeExtensions
+    public static class TypeExtensions
     {
-                                                public static object GetDefault(this Type type)
+        public static object GetDefault(this Type type)
         {
-            return type == (Type)null || !type.IsValueType || Nullable.GetUnderlyingType(type) != (Type)null ? (object)null : Activator.CreateInstance(type);
+            return type == null || !type.IsValueType || Nullable.GetUnderlyingType(type) != null ? null : Activator.CreateInstance(type);
         }
     }
 }

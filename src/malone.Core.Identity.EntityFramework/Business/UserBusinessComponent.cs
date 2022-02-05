@@ -1,10 +1,10 @@
-﻿using malone.Core.Commons.DI;
+﻿using System;
+using malone.Core.Commons.DI;
 using malone.Core.Identity.EntityFramework.Business;
 using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using System;
 
 namespace malone.Core.Identity.EntityFramework
 {

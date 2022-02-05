@@ -5,14 +5,14 @@ using System;
 
 namespace malone.Core.Entities.Model
 {
-                    public interface IBaseEntity<TKey>
+    public interface IBaseEntity<TKey>
         where TKey : IEquatable<TKey>
     {
-                                TKey Id { get; set; }
+        TKey Id { get; set; }
     }
 
-                public interface IBaseEntity : IBaseEntity<int>
+    public interface IBaseEntity : IBaseEntity<int>
     {
-                                new int Id { get; set; }
+        new int Id { get; set; }
     }
 }

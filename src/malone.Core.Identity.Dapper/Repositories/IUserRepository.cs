@@ -1,7 +1,7 @@
-﻿using malone.Core.DataAccess.Repositories;
-using malone.Core.Entities.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using malone.Core.DataAccess.Repositories;
+using malone.Core.Entities.Model;
 
 namespace malone.Core.Identity.Dapper.Repositories
 {
