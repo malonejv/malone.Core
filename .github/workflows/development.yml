@@ -22,7 +22,7 @@ on:
 
 
 env:
-    ALLOW_PUSH_PACKAGES: echo "ALLOW_PUSH_PACKAGES=${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/development')}} | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+    ALLOW_PUSH_PACKAGES: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/development')}}
     CONFIGURATION: Debug
     
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -60,7 +60,7 @@ jobs:
   nuget-pack:
       name: "Preparing Nuget Packages"
       needs: build
-      if: $env:ALLOW_PUSH_PACKAGES
+      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/development')}}
       
       # The type of runner that the job will run on
       runs-on: windows-latest
