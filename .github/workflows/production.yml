@@ -62,9 +62,9 @@ jobs:
 
       - uses: ./.github/actions/deploy
         with:
-              branch: '${{ github.ref_name }}'
-              configuration: '${env:CONFIGURATION}'
-              artifacts_path: '${{ env:NUGET_ARTIFACTS_DIR }}'
+              branch: ${{ github.ref_name }}
+              configuration: ${env:CONFIGURATION}
+              artifacts_path: ${{ env:NUGET_ARTIFACTS_DIR }}
 
   create-release:            
         name: Create Release
