@@ -37,7 +37,7 @@ jobs:
       steps:
 
       - uses: actions/checkout@v1
-      - uses: ./.github/actions/build
+      - uses: ./.github/actions/build@master
         with:
               branch: ${{ github.ref_name }}
               configuration: ${env:CONFIGURATION}
@@ -62,7 +62,7 @@ jobs:
       steps: 
 
       - uses: actions/checkout@v1
-      - uses: ./.github/actions/deploy
+      - uses: ./.github/actions/deploy@master
         with:
               branch: ${{ github.ref_name }}
               configuration: ${env:CONFIGURATION}
