@@ -1,22 +1,25 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI/CD to Development
+name: CI/CD to Production
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   push:
     branches:
-      - development
-      - feature/**
+      - master
+      - release/**
+      - hotfix/**
   pull_request:
     # Sequence of patterns matched against refs/heads
     branches:
-      - development
+      - master
+      - release/**
+      - hotfix/**
 
 env:
-  CONFIGURATION: "Debug"
-  ALLOW_PUSH_PACKAGES: "${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}"
+  CONFIGURATION: "Release"
+  ALLOW_PUSH_PACKAGES: "${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}"
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -71,7 +74,7 @@ jobs:
   nuget-pack:
       name: Preparing Nuget Packages
       needs: [setup,build]
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development'}} 
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master'}} 
       
       # The type of runner that the job will run on
       runs-on: windows-latest
@@ -86,7 +89,7 @@ jobs:
   deploy:
       name: Deploy
       needs: [setup,nuget-pack]
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development'}}
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master'}}
       
       # The type of runner that the job will run on
       runs-on: windows-latest
