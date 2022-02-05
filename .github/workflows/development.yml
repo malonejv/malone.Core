@@ -60,7 +60,7 @@ jobs:
   nuget-pack:
       name: "Preparing Nuget Packages"
       needs: build
-      if: ${{env:ALLOW_PUSH_PACKAGES}}== true
+      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/development')}}
       
       # The type of runner that the job will run on
       runs-on: windows-latest
