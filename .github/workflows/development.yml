@@ -17,7 +17,7 @@ on:
 env:
   CONFIGURATION: "Debug"
   ALLOW_PUSH_PACKAGES: "${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}"
-  NUGET_PACKAGES_DIR: ${{ github.workspace }}/artifacts-nuget-packages
+  NUGET_PACKAGES_DIR: ${{ github.workspace }}\artifacts-nuget-packages
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -50,12 +50,12 @@ jobs:
         run:  nuget restore src/malone.Core.sln
         
       - name: Build malone.Core
-        run: msbuild src/malone.Core.sln /t:Build /p:Configuration=${env:CONFIGURATION} -verbosity:detailed
+        run: msbuild src\malone.Core.sln /t:Build /p:Configuration=${env:CONFIGURATION} -verbosity:detailed
               
       - name: Version Number
         id: version_number
         run: |
-              $version = (Get-Content src/malone.Core/bin/${env:CONFIGURATION}/Variables | Out-String |ConvertFrom-Json).MALONE_CORE_VER
+              $version = (Get-Content src\malone.Core\bin\${env:CONFIGURATION}\Variables | Out-String |ConvertFrom-Json).MALONE_CORE_VER
               echo "MALONE_CORE_VER=$version"
               echo "::set-output name=version_number::$version"
 
@@ -63,15 +63,16 @@ jobs:
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development'}} 
         run:
              |
-              $projects = .\Get-ProjectsInSolution.ps1 src/malone.Core.sln -Type NonTestProjects
+              $projects = .\Get-ProjectsInSolution.ps1 src\malone.Core.sln -Type NonTestProjects
               $projects | foreach{ nuget pack $_.FullName  -Properties Configuration=${env:CONFIGURATION} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg -OutputDirectory ${{ env.NUGET_PACKAGES_DIR }} }
+              Get-ChildItem .\${{ env.NUGET_PACKAGES_DIR }}\*
       
       - name: Upload artifacts
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development'}} 
         uses: actions/upload-artifact@v2
         with:
           name: nuget-packages
-          path: ${{ env.NUGET_PACKAGES_DIR }}/*
+          path: ${{ env.NUGET_PACKAGES_DIR }}\*
           if-no-files-found: error
           retention-days: 10
 
