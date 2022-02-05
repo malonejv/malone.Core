@@ -60,7 +60,7 @@ jobs:
   nuget-pack:
       name: "Preparing Nuget Packages"
       needs: build
-      if: ${{env:ALLOW_PUSH_PACKAGES}}
+      if: $env:ALLOW_PUSH_PACKAGES
       
       # The type of runner that the job will run on
       runs-on: windows-latest
@@ -72,7 +72,7 @@ jobs:
   deploy:
       name: "Pushing Nuget Packages"
       needs: nuget-pack
-      if: ${{env:ALLOW_PUSH_PACKAGES}}
+      if: $env:ALLOW_PUSH_PACKAGES
       
       # The type of runner that the job will run on
       runs-on: windows-latest
