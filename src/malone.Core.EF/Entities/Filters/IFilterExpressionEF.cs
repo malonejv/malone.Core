@@ -1,6 +1,6 @@
-﻿using malone.Core.Entities.Filters;
-using System;
+﻿using System;
 using System.Linq.Expressions;
+using malone.Core.Entities.Filters;
 
 namespace malone.Core.EF.Entities.Filters
 {

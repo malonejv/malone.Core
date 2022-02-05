@@ -9,29 +9,29 @@ using System.Text;
 
 namespace malone.Core.Commons.Security
 {
-                public class CryptoService : IDisposable
+    public class CryptoService : IDisposable
     {
-                                private const string KEY_64 = "F)H@McQf";
+        private const string KEY_64 = "F)H@McQf";
 
-                                private const string KEY_128 = "nZq4t7w!z%C*F-Ja";
+        private const string KEY_128 = "nZq4t7w!z%C*F-Ja";
 
-                                private const string KEY_192 = "Zr4u7x!A%C*F-aNJ7C*7%u5o";
+        private const string KEY_192 = "Zr4u7x!A%C*F-aNJ7C*7%u5o";
 
-                                private const string KEY_256 = "jWnZr4u7x!A%D*G-KaPdRgUkXp2s5v8y";
+        private const string KEY_256 = "jWnZr4u7x!A%D*G-KaPdRgUkXp2s5v8y";
 
-                                private const char Plus = '+';
+        private const char Plus = '+';
 
-                                private const char Minus = '-';
+        private const char Minus = '-';
 
-                                private const char Slash = '/';
+        private const char Slash = '/';
 
-                                private const char Underscore = '_';
+        private const char Underscore = '_';
 
-                                private const char EqualSign = '=';
+        private const char EqualSign = '=';
 
-                                private const char Pipe = '|';
+        private const char Pipe = '|';
 
-                                private readonly Dictionary<char, char> _mapper = new Dictionary<char, char>()
+        private readonly Dictionary<char, char> _mapper = new Dictionary<char, char>()
     {
         {
             Plus,
@@ -47,7 +47,7 @@ namespace malone.Core.Commons.Security
         }
     };
 
-                                        public CryptoService(SymmetricAlgorithm algorithm)
+        public CryptoService(SymmetricAlgorithm algorithm)
         {
             CryptoAlgorithm = algorithm;
             Encoder = Encoding.UTF8;
@@ -69,11 +69,11 @@ namespace malone.Core.Commons.Security
             }
         }
 
-                                protected SymmetricAlgorithm CryptoAlgorithm { get; set; }
+        protected SymmetricAlgorithm CryptoAlgorithm { get; set; }
 
-                                public Encoding Encoder { get; set; }
+        public Encoding Encoder { get; set; }
 
-                                public byte[] Key64
+        public byte[] Key64
         {
             get
             {
@@ -81,7 +81,7 @@ namespace malone.Core.Commons.Security
             }
         }
 
-                                public byte[] Key128
+        public byte[] Key128
         {
             get
             {
@@ -89,7 +89,7 @@ namespace malone.Core.Commons.Security
             }
         }
 
-                                public byte[] Key192
+        public byte[] Key192
         {
             get
             {
@@ -97,7 +97,7 @@ namespace malone.Core.Commons.Security
             }
         }
 
-                                public byte[] Key256
+        public byte[] Key256
         {
             get
             {
@@ -105,7 +105,7 @@ namespace malone.Core.Commons.Security
             }
         }
 
-                                                        public string Encrypt(string plainText, bool escapedOutput = true)
+        public string Encrypt(string plainText, bool escapedOutput = true)
         {
             string result = null;
             byte[] encrypted;
@@ -127,29 +127,41 @@ namespace malone.Core.Commons.Security
             string base64EncryptedValue = Convert.ToBase64String(encrypted);
 
             foreach (KeyValuePair<char, char> pair in _mapper)
+            {
                 base64EncryptedValue = base64EncryptedValue.Replace(pair.Key, pair.Value);
+            }
 
             if (escapedOutput)
+            {
                 result = Uri.EscapeDataString(base64EncryptedValue);
+            }
             else
+            {
                 result = base64EncryptedValue;
+            }
 
             return result;
         }
 
-                                                        public string Decrypt(string base64CipherText, bool escapedInput = true)
+        public string Decrypt(string base64CipherText, bool escapedInput = true)
         {
             string plaintext = null;
             string base64EncryptedValue = null;
 
 
             foreach (KeyValuePair<char, char> pair in _mapper)
+            {
                 base64CipherText = base64CipherText.Replace(pair.Value, pair.Key);
+            }
 
             if (escapedInput)
+            {
                 base64EncryptedValue = Uri.UnescapeDataString(base64CipherText);
+            }
             else
+            {
                 base64EncryptedValue = base64CipherText;
+            }
 
             byte[] cipherBytes = Convert.FromBase64String(base64EncryptedValue);
             ICryptoTransform decryptor = CryptoAlgorithm.CreateDecryptor(CryptoAlgorithm.Key, CryptoAlgorithm.IV);
@@ -168,7 +180,7 @@ namespace malone.Core.Commons.Security
             return plaintext;
         }
 
-                                                public void EncryptFile(string inName, string outName)
+        public void EncryptFile(string inName, string outName)
         {
             byte[] salt = Key256;
             FileStream fsCrypt = new FileStream(inName + ".aes", FileMode.Create);
@@ -190,7 +202,9 @@ namespace malone.Core.Commons.Security
             try
             {
                 while (System.Convert.ToInt32((read = fsIn.Read(buffer, 0, buffer.Length))) > 0)
+                {
                     cs.Write(buffer, 0, read);
+                }
 
                 fsIn.Close();
             }
@@ -205,7 +219,7 @@ namespace malone.Core.Commons.Security
             }
         }
 
-                                                public void DecryptFile(string inName, string outName)
+        public void DecryptFile(string inName, string outName)
         {
             byte[] passwordBytes = Key128;
             byte[] salt = new byte[32];
@@ -227,7 +241,9 @@ namespace malone.Core.Commons.Security
             try
             {
                 while (System.Convert.ToInt32((read = cs.Read(buffer, 0, buffer.Length))) > 0)
+                {
                     fsOut.Write(buffer, 0, read);
+                }
             }
             catch (CryptographicException ex_CryptographicException)
             {
@@ -253,30 +269,32 @@ namespace malone.Core.Commons.Security
             }
         }
 
-                                        public static CryptoService Create3DES()
+        public static CryptoService Create3DES()
         {
             return new CryptoService(new TripleDESCryptoServiceProvider());
         }
 
-                                        public static CryptoService CreateAES()
+        public static CryptoService CreateAES()
         {
             return new CryptoService(new AesCryptoServiceProvider());
         }
 
-                                private bool disposedValue;
+        private bool disposedValue;
 
-                                        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
             {
                 if (disposing)
+                {
                     CryptoAlgorithm.Dispose();
+                }
             }
 
             disposedValue = true;
         }
 
-                                public void Dispose()
+        public void Dispose()
         {
             Dispose(true);
         }

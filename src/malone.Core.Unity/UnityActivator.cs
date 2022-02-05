@@ -5,12 +5,12 @@ namespace malone.Core.Unity
 {
     public class UnityActivator : IInjectorInitializer<IUnityContainer>
     {
-                                public virtual IUnityContainer Initialize()
+        public virtual IUnityContainer Initialize()
         {
             return UnityConfig.Container;
         }
 
-                                public virtual void Terminate()
+        public virtual void Terminate()
         {
             UnityConfig.Container.Dispose();
         }

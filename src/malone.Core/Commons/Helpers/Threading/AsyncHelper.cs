@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace malone.Core.Commons.Helpers.Threading
 {
-                public static class AsyncHelper
+    public static class AsyncHelper
     {
-                                private static readonly TaskFactory _myTaskFactory = new TaskFactory(CancellationToken.None,
-            TaskCreationOptions.None, TaskContinuationOptions.None, TaskScheduler.Default);
+        private static readonly TaskFactory _myTaskFactory = new TaskFactory(CancellationToken.None,
+TaskCreationOptions.None, TaskContinuationOptions.None, TaskScheduler.Default);
 
-                                                        public static TResult RunSync<TResult>(Func<Task<TResult>> func)
+        public static TResult RunSync<TResult>(Func<Task<TResult>> func)
         {
             var cultureUi = CultureInfo.CurrentUICulture;
             var culture = CultureInfo.CurrentCulture;
@@ -25,7 +25,7 @@ namespace malone.Core.Commons.Helpers.Threading
             }).Unwrap().GetAwaiter().GetResult();
         }
 
-                                        public static void RunSync(Func<Task> func)
+        public static void RunSync(Func<Task> func)
         {
             var cultureUi = CultureInfo.CurrentUICulture;
             var culture = CultureInfo.CurrentCulture;

@@ -1,4 +1,7 @@
-﻿using malone.Core.Commons.Configurations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using malone.Core.Commons.Configurations;
 using malone.Core.Commons.Configurations.Modules;
 using malone.Core.Commons.DI;
 using malone.Core.Commons.Initializers;
@@ -7,9 +10,6 @@ using malone.Core.Unity.IdentityDapperInitializer;
 using malone.Core.Unity.IdentityEntityFramworkInitializer;
 using malone.Core.Unity.Log4NetInitializer;
 using malone.Core.Unity.ModulesInitializers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Unity;
 using Unity.Injection;
 
@@ -34,12 +34,12 @@ namespace malone.Core.Unity
 
               RegisterCoreTypes(container);
 
-                            //DynamicModuleUtility.RegisterModule(typeof(UnityPerRequestHttpModule));
+              //DynamicModuleUtility.RegisterModule(typeof(UnityPerRequestHttpModule));
 
               return container;
           });
 
-                                public static IUnityContainer Container => container.Value;
+        public static IUnityContainer Container => container.Value;
 
         #endregion
 
@@ -47,7 +47,7 @@ namespace malone.Core.Unity
         {
         }
 
-                                                                                        public static void RegisterCoreTypes(IUnityContainer container)
+        public static void RegisterCoreTypes(IUnityContainer container)
         {
             //Inicialización de módulos base del core
             var basicModules = new BasicModulesInitializer();

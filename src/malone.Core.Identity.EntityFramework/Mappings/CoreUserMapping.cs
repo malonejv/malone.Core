@@ -1,10 +1,9 @@
-﻿using malone.Core.Identity.EntityFramework.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
 using System.Data.Entity.ModelConfiguration.Configuration;
+using malone.Core.Identity.EntityFramework.Entities;
 
 namespace malone.Core.Identity.EntityFramework.DAL.Mappings
 {
@@ -18,9 +17,9 @@ namespace malone.Core.Identity.EntityFramework.DAL.Mappings
         public CoreUserMapping()
         {
             EntityTypeConfiguration<TUserEntity> entityUserConfiguration = ToTable("Users");
-            entityUserConfiguration.HasMany<TUserRole>((TUserEntity u) => (ICollection<TUserRole>)u.Roles).WithOptional().HasForeignKey<TKey>((TUserRole ur) => ur.UserId);
-            entityUserConfiguration.HasMany<TUserClaim>((TUserEntity u) => (ICollection<TUserClaim>)u.Claims).WithOptional().HasForeignKey<TKey>((TUserClaim uc) => uc.UserId);
-            entityUserConfiguration.HasMany<TUserLogin>((TUserEntity u) => (ICollection<TUserLogin>)u.Logins).WithRequired().HasForeignKey<TKey>((TUserLogin ul) => ul.UserId);
+            entityUserConfiguration.HasMany<TUserRole>((TUserEntity u) => u.Roles).WithOptional().HasForeignKey<TKey>((TUserRole ur) => ur.UserId);
+            entityUserConfiguration.HasMany<TUserClaim>((TUserEntity u) => u.Claims).WithOptional().HasForeignKey<TKey>((TUserClaim uc) => uc.UserId);
+            entityUserConfiguration.HasMany<TUserLogin>((TUserEntity u) => u.Logins).WithRequired().HasForeignKey<TKey>((TUserLogin ul) => ul.UserId);
             StringPropertyConfiguration indexUserName = entityUserConfiguration.Property((TUserEntity u) => u.UserName).IsRequired().HasMaxLength(new int?(256));
             string userNameIndexColumnName = "Index";
             IndexAttribute indexUserNameAttribute = new IndexAttribute("UserNameIndex");

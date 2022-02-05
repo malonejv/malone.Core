@@ -9,31 +9,43 @@ using System.Text.RegularExpressions;
 
 namespace malone.Core.Commons.Helpers.Extensions
 {
-                public static class StringExtensions
+    public static class StringExtensions
     {
-                                                public static byte[] ToByteArray(this string hex)
+        public static byte[] ToByteArray(this string hex)
         {
             int NumberChars = hex.Length;
             byte[] bytes = new byte[NumberChars / 2];
             for (int i = 0; i < NumberChars; i += 2)
+            {
                 bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            }
+
             return bytes;
         }
 
-                                                public static SecureString ToSecureString(this string source)
+        public static SecureString ToSecureString(this string source)
         {
             if (string.IsNullOrWhiteSpace(source))
-                return (SecureString)null;
+            {
+                return null;
+            }
+
             SecureString secureString = new SecureString();
             foreach (char c in source)
+            {
                 secureString.AppendChar(c);
+            }
+
             return secureString;
         }
 
-                                                public static string SecureStringToString(this SecureString value)
+        public static string SecureStringToString(this SecureString value)
         {
             if (value == null)
-                return (string)null;
+            {
+                return null;
+            }
+
             IntPtr ptr = IntPtr.Zero;
             try
             {
@@ -43,7 +55,9 @@ namespace malone.Core.Commons.Helpers.Extensions
             finally
             {
                 if (ptr != IntPtr.Zero)
+                {
                     Marshal.FreeBSTR(ptr);
+                }
             }
         }
 
@@ -65,11 +79,13 @@ namespace malone.Core.Commons.Helpers.Extensions
             }
         }
 
-                                                                public static string EncodeToISO88598(this string inputText, Encoding initialEncoding = null)
+        public static string EncodeToISO88598(this string inputText, Encoding initialEncoding = null)
         {
             Encoding iso88598 = Encoding.GetEncoding("iso-8859-8");
             if (initialEncoding == null)
+            {
                 initialEncoding = Encoding.GetEncoding("iso-8859-1");
+            }
 
             byte[] textBytes = initialEncoding.GetBytes(inputText.Trim());
             byte[] textConvertedBytes = Encoding.Convert(initialEncoding, iso88598, textBytes);
@@ -81,7 +97,7 @@ namespace malone.Core.Commons.Helpers.Extensions
             return result;
         }
 
-                                                                                public static string EncodeAndRemoveSpecialCharacters(this string inputText, Encoding initialEncoding = null, char replacementChar = ' ')
+        public static string EncodeAndRemoveSpecialCharacters(this string inputText, Encoding initialEncoding = null, char replacementChar = ' ')
         {
             string result = inputText.EncodeToISO88598(initialEncoding);
 
@@ -90,7 +106,7 @@ namespace malone.Core.Commons.Helpers.Extensions
             return result;
         }
 
-                                                        public static string RemoveSpecialCharacters(this string inputText, char replacementChar = ' ')
+        public static string RemoveSpecialCharacters(this string inputText, char replacementChar = ' ')
         {
             inputText = inputText.Trim();
 
@@ -98,12 +114,14 @@ namespace malone.Core.Commons.Helpers.Extensions
             MatchCollection matches = regEx.Matches(inputText);
 
             foreach (Match item in matches)
+            {
                 inputText = inputText.Replace(item.Value, replacementChar.ToString());
+            }
 
             return inputText;
         }
 
-                                                public static bool HasSpecialCharacters(this string inputText)
+        public static bool HasSpecialCharacters(this string inputText)
         {
             inputText = inputText.Trim();
 

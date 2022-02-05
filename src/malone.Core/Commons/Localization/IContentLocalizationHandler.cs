@@ -3,7 +3,7 @@
 
 namespace malone.Core.Commons.Localization
 {
-                internal interface IContentLocalizationHandler : ILocalizationHandler<CoreContents>
+    internal interface IContentLocalizationHandler : ILocalizationHandler<CoreContents>
     {
     }
 }

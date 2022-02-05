@@ -1,6 +1,6 @@
-﻿using malone.Core.Dapper.Attributes;
-using System;
+﻿using System;
 using System.Data;
+using malone.Core.Dapper.Attributes;
 
 namespace malone.Core.Identity.Dapper.Entities
 {
@@ -8,10 +8,10 @@ namespace malone.Core.Identity.Dapper.Entities
     public class CoreUserRole<TKey>
         where TKey : IEquatable<TKey>
     {
-                                [Column("UserId", type: DbType.Int32, Direction = ParameterDirection.Input)]
+        [Column("UserId", type: DbType.Int32, Direction = ParameterDirection.Input)]
         public virtual TKey UserId { get; set; }
 
-                                [Column("RoleId", type: DbType.Int32, Direction = ParameterDirection.Input)]
+        [Column("RoleId", type: DbType.Int32, Direction = ParameterDirection.Input)]
         public virtual TKey RoleId { get; set; }
 
     }

@@ -1,6 +1,6 @@
-﻿using malone.Core.DataAccess.Repositories;
+﻿using System;
+using malone.Core.DataAccess.Repositories;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
-using System;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 {

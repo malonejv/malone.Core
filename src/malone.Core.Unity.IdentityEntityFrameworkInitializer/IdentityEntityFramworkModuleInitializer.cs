@@ -27,7 +27,7 @@ namespace malone.Core.Unity.IdentityEntityFramworkInitializer
             container.RegisterType<IRoleStore<CoreRole, int>, RoleStore<CoreRole, int, CoreUserRole>>();
             container.RegisterType<IUserStore<CoreUser, int>, UserStore<CoreUser, CoreRole, int, CoreUserLogin, CoreUserRole, CoreUserClaim>>();
 
-                        container.RegisterType<IEmailMessageService, EmailService>();
+            container.RegisterType<IEmailMessageService, EmailService>();
             container.RegisterType<ISmsMessageService, SmsService>();
 
             container.RegisterType<IIdentityValidator<CoreUser>, UserValidator<CoreUser, int>>();

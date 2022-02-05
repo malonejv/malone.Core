@@ -1,14 +1,14 @@
-﻿using malone.Core.AdoNet.Database;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using malone.Core.AdoNet.Database;
 using malone.Core.AdoNet.Entities;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.Entities.Model;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 
 namespace malone.Core.AdoNet.Repositories
 {
@@ -49,7 +49,10 @@ namespace malone.Core.AdoNet.Repositories
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }
@@ -86,7 +89,10 @@ namespace malone.Core.AdoNet.Repositories
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }

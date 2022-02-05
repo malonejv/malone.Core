@@ -1,20 +1,20 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:47:42</date>
 
+using System;
+using System.Configuration;
 using malone.Core.Commons.Configurations.Attributes;
 using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Log;
-using System;
-using System.Configuration;
 
 namespace malone.Core.Commons.Configurations
 {
-                public static class ConfigurationExtensions
+    public static class ConfigurationExtensions
     {
-                                internal static ILogger logger;
+        internal static ILogger logger;
 
-                                internal static ILogger Logger
+        internal static ILogger Logger
         {
             get
             {
@@ -26,7 +26,7 @@ namespace malone.Core.Commons.Configurations
             }
         }
 
-                                                internal static string SectionName(this Type configurationType)
+        internal static string SectionName(this Type configurationType)
         {
             try
             {
@@ -48,7 +48,10 @@ namespace malone.Core.Commons.Configurations
             catch (Exception ex)
             {
                 var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.TECH200, configurationType.Name);
-                if (Logger != null) Logger.Error(techEx);
+                if (Logger != null)
+                {
+                    Logger.Error(techEx);
+                }
 
                 throw techEx;
             }

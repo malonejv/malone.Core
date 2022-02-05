@@ -5,14 +5,18 @@ using System.Security.Cryptography;
 
 namespace malone.Core.Commons.Security
 {
-                public class CryptoServiceFactory
+    public class CryptoServiceFactory
     {
-                                                public static CryptoService Create(SymmetricAlgorithm algorithm = null)
+        public static CryptoService Create(SymmetricAlgorithm algorithm = null)
         {
             if (algorithm == null)
+            {
                 return CryptoService.CreateAES();
+            }
             else
+            {
                 return new CryptoService(algorithm);
+            }
         }
     }
 }

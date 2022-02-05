@@ -1,4 +1,11 @@
-﻿using malone.Core.AdoNet.Context;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using malone.Core.AdoNet.Context;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
@@ -6,13 +13,6 @@ using malone.Core.Entities.Model;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using malone.Core.Identity.AdoNet.SqlServer.Entities.Filters;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 {
@@ -45,7 +45,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected ILogger Logger { get; }
 
-                                public bool AutoSaveChanges { get; set; }
+        public bool AutoSaveChanges { get; set; }
 
         public UserStore(IUserLoginRepository<TKey, TUserLogin> logins, IUserClaimRepository<TKey, TUserClaim> userClaims, IUserRoleRepository<TKey, TUserRole> userRoles, IRoleRepository<TKey, TRoleEntity> roles, IUserRepository<TKey, TUserEntity> users, IContext context, ILogger logger)
         {
@@ -548,7 +548,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         #region Protected methods
 
-                                                protected virtual async Task<TUserEntity> GetUserAggregateAsync(Expression<Func<TUserEntity, bool>> filter)
+        protected virtual async Task<TUserEntity> GetUserAggregateAsync(Expression<Func<TUserEntity, bool>> filter)
         {
             TKey id;
             string usernameOrEmail;
@@ -578,12 +578,18 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         private void CheckLogger(ILogger logger)
         {
-            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (logger == null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
         }
 
         private void CheckContext(IContext context)
         {
-            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
 
             if (!(context is CoreDbContext))
             {
@@ -653,7 +659,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected bool _disposed;
 
-                                public void Dispose()
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -667,7 +673,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
             }
         }
 
-                                        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (disposing && Context != null)
             {

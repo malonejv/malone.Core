@@ -1,18 +1,18 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:47:44</date>
 
+using System;
+using System.Configuration;
 using malone.Core.Commons.Configurations.Attributes;
 using malone.Core.Commons.Configurations.DbFactory;
 using malone.Core.Commons.Configurations.Modules;
-using System;
-using System.Configuration;
 
 namespace malone.Core.Commons.Configurations
 {
-                [SectionName("coreSettings")]
+    [SectionName("coreSettings")]
     public class CoreSettingsSection : ConfigurationSection
     {
-                                [ConfigurationProperty("xmlns", IsRequired = false)]
+        [ConfigurationProperty("xmlns", IsRequired = false)]
         public String Xmlns
         {
             get
@@ -21,14 +21,14 @@ namespace malone.Core.Commons.Configurations
             }
         }
 
-                                [ConfigurationProperty("databaseConfiguration", IsDefaultCollection = true)]
+        [ConfigurationProperty("databaseConfiguration", IsDefaultCollection = true)]
         public DatabaseConfigurationElement DatabaseConfiguration
         {
             get { return (DatabaseConfigurationElement)this["databaseConfiguration"]; }
             set { this["databaseConfiguration"] = value; }
         }
 
-                                [ConfigurationProperty("modules", IsRequired = false)]
+        [ConfigurationProperty("modules", IsRequired = false)]
         public ModulesElementCollection Modules
         {
             get

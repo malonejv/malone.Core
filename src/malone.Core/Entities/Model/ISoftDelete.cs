@@ -3,8 +3,8 @@
 
 namespace malone.Core.Entities.Model
 {
-                public interface ISoftDelete
+    public interface ISoftDelete
     {
-                                        bool IsDeleted { get; set; }
+        bool IsDeleted { get; set; }
     }
 }

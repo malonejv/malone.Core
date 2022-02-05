@@ -1,21 +1,24 @@
-﻿using log4net;
+﻿using System;
+using log4net;
 using malone.Core.Commons.Log;
-using System;
 
 namespace malone.Core.Log4Net
 {
     public class Log4netLogger : LoggerBase
     {
-                                private readonly ILog logger;
+        private readonly ILog logger;
 
-                                                public Log4netLogger(ILog logger) : base()
+        public Log4netLogger(ILog logger) : base()
         {
             this.logger = logger;
         }
 
-                                                                        public override void Log(LogItem item)
+        public override void Log(LogItem item)
         {
-            if (item == null) throw new ArgumentNullException("item");
+            if (item == null)
+            {
+                throw new ArgumentNullException("item");
+            }
 
             string message = item.Message;// FormatItem(item);
 
@@ -47,7 +50,7 @@ namespace malone.Core.Log4Net
             }
         }
 
-                                        protected override bool IsLogLevelEnabled(LogLevel level)
+        protected override bool IsLogLevelEnabled(LogLevel level)
         {
             switch (level)
             {

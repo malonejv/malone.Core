@@ -1,13 +1,13 @@
-﻿using Dapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using Dapper;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
 using malone.Core.Dapper.Repositories;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.Dapper.Entities;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 
 namespace malone.Core.Identity.Dapper.Repositories
 {
@@ -46,7 +46,7 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         #region Public Methods
 
-                                                public string GetUserName(TKey userId)
+        public string GetUserName(TKey userId)
         {
             string commandText = "Select Name from Users where Id = @id";
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@id", userId } };
@@ -54,7 +54,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.QueryFirstOrDefault<string>(commandText, parameters, transaction: Context.Transaction);
         }
 
-                                                public string GetUserId(string userName)
+        public string GetUserId(string userName)
         {
             string commandText = "Select Id from Users where UserName = @name";
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@name", userName } };
@@ -62,7 +62,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.QueryFirstOrDefault<string>(commandText, parameters, transaction: Context.Transaction);
         }
 
-                                                public TUserEntity GetUserById(TKey userId)
+        public TUserEntity GetUserById(TKey userId)
         {
             TUserEntity user = null;
             string commandText = "Select * from Users where Id = @id";
@@ -90,14 +90,14 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.QueryFirstOrDefault<TUserEntity>(commandText, parameters, transaction: Context.Transaction);
         }
 
-                                                public List<TUserEntity> GetUserByName(string userName)
+        public List<TUserEntity> GetUserByName(string userName)
         {
             List<TUserEntity> users = new List<TUserEntity>();
             string commandText = "Select * from Users where UserName = @name";
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@name", userName } };
 
             var rows = Connection.Query<TUserEntity>(commandText, parameters, transaction: Context.Transaction);
-            
+
             //foreach (var row in rows)
             //{
             //    TUserEntity user = (TUserEntity)Activator.CreateInstance(typeof(TUserEntity));
@@ -147,7 +147,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return rows.ToList();
         }
 
-                                                public string GetPasswordHash(TKey userId)
+        public string GetPasswordHash(TKey userId)
         {
             string commandText = "Select PasswordHash from Users where Id = @id";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -162,7 +162,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return passHash;
         }
 
-                                                        public int SetPasswordHash(TKey userId, string passwordHash)
+        public int SetPasswordHash(TKey userId, string passwordHash)
         {
             string commandText = "Update Users set PasswordHash = @pwdHash where Id = @id";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -172,7 +172,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-                                                public string GetSecurityStamp(TKey userId)
+        public string GetSecurityStamp(TKey userId)
         {
             string commandText = "Select SecurityStamp from Users where Id = @id";
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@id", userId } };
@@ -181,7 +181,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return result;
         }
 
-                                                public int Insert(TUserEntity user)
+        public int Insert(TUserEntity user)
         {
             string commandText = @"Insert into Users (UserName, Id, PasswordHash, SecurityStamp,Email,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed, AccessFailedCount,LockoutEnabled,LockoutEndDateUtc,TwoFactorEnabled)
                 values (@name, @id, @pwdHash, @SecStamp,@email,@emailconfirmed,@phonenumber,@phonenumberconfirmed,@accesscount,@lockoutenabled,@lockoutenddate,@twofactorenabled)";
@@ -202,7 +202,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-                                                private int Delete(TKey userId)
+        private int Delete(TKey userId)
         {
             string commandText = "Delete from Users where Id = @userId";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -211,12 +211,12 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-                                                public int Delete(TUserEntity user)
+        public int Delete(TUserEntity user)
         {
             return Delete(user.Id);
         }
 
-                                                public int Update(TUserEntity user)
+        public int Update(TUserEntity user)
         {
             string commandText = @"Update Users set UserName = @userName, PasswordHash = @pswHash, SecurityStamp = @secStamp, 
                 Email=@email, EmailConfirmed=@emailconfirmed, PhoneNumber=@phonenumber, PhoneNumberConfirmed=@phonenumberconfirmed,

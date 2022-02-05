@@ -1,13 +1,13 @@
-﻿using Dapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Security.Claims;
+using Dapper;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Log;
 using malone.Core.Dapper.Repositories;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.Dapper.Entities;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Security.Claims;
 
 namespace malone.Core.Identity.Dapper.Repositories
 {
@@ -35,8 +35,8 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         #region Public Methods
 
-                                                public ClaimsIdentity FindByUserId<TUserKey>(TUserKey userId)
-            where TUserKey : IEquatable<TUserKey>
+        public ClaimsIdentity FindByUserId<TUserKey>(TUserKey userId)
+where TUserKey : IEquatable<TUserKey>
         {
             ClaimsIdentity claims = new ClaimsIdentity();
             string commandText = "Select * from UsersClaims where UserId = @userId";
@@ -53,8 +53,8 @@ namespace malone.Core.Identity.Dapper.Repositories
             return claims;
         }
 
-                                                public int Delete<TUserKey>(TUserKey userId)
-            where TUserKey : IEquatable<TUserKey>
+        public int Delete<TUserKey>(TUserKey userId)
+where TUserKey : IEquatable<TUserKey>
         {
             string commandText = "Delete from UsersClaims where UserId = @userId";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -63,8 +63,8 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-                                                        public int Insert<TUserKey>(TUserKey userId, Claim userClaim)
-            where TUserKey : IEquatable<TUserKey>
+        public int Insert<TUserKey>(TUserKey userId, Claim userClaim)
+where TUserKey : IEquatable<TUserKey>
         {
             string commandText = "Insert into UsersClaims (ClaimValue, ClaimType, UserId) values (@value, @type, @userId)";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -75,8 +75,8 @@ namespace malone.Core.Identity.Dapper.Repositories
             return Connection.Execute(commandText, parameters, transaction: Context.Transaction);
         }
 
-                                                        public int Delete<TUserKey>(TUserKey userId, Claim claim)
-            where TUserKey : IEquatable<TUserKey>
+        public int Delete<TUserKey>(TUserKey userId, Claim claim)
+where TUserKey : IEquatable<TUserKey>
         {
             string commandText = "Delete from UsersClaims where UserId = @userId and @ClaimValue = @value and ClaimType = @type";
             Dictionary<string, object> parameters = new Dictionary<string, object>();

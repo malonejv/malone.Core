@@ -7,11 +7,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace malone.Core.Entities.Model
 {
-                public static class IBaseEntityExtensions
+    public static class IBaseEntityExtensions
     {
-                                                                public static TEntity Clone<TEntity, TKey>(this TEntity entityToClone)
-            where TKey : IEquatable<TKey>
-            where TEntity : class, IBaseEntity<TKey>
+        public static TEntity Clone<TEntity, TKey>(this TEntity entityToClone)
+where TKey : IEquatable<TKey>
+where TEntity : class, IBaseEntity<TKey>
         {
 
             if (entityToClone != null)
@@ -29,7 +29,9 @@ namespace malone.Core.Entities.Model
                 return result;
             }
             else
+            {
                 return default(TEntity);
+            }
         }
     }
 }

@@ -8,49 +8,49 @@ using System.Threading.Tasks;
 
 namespace malone.Core.Commons.Threading
 {
-                public static class TaskExtensions
+    public static class TaskExtensions
     {
-                                                        public static CultureAwaiter<T> WithCurrentCulture<T>(this Task<T> task)
+        public static CultureAwaiter<T> WithCurrentCulture<T>(this Task<T> task)
         {
             return new CultureAwaiter<T>(task);
         }
 
-                                                public static CultureAwaiter WithCurrentCulture(this Task task)
+        public static CultureAwaiter WithCurrentCulture(this Task task)
         {
             return new CultureAwaiter(task);
         }
 
-                                        public struct CultureAwaiter<T> : ICriticalNotifyCompletion
+        public struct CultureAwaiter<T> : ICriticalNotifyCompletion
         {
-                                                private readonly Task<T> _task;
+            private readonly Task<T> _task;
 
-                                                            public CultureAwaiter(Task<T> task)
+            public CultureAwaiter(Task<T> task)
             {
                 _task = task;
             }
 
-                                                            public CultureAwaiter<T> GetAwaiter()
+            public CultureAwaiter<T> GetAwaiter()
             {
                 return this;
             }
 
-                                                public bool IsCompleted
+            public bool IsCompleted
             {
                 get { return _task.IsCompleted; }
             }
 
-                                                            public T GetResult()
+            public T GetResult()
             {
                 return _task.GetAwaiter().GetResult();
             }
 
-                                                            public void OnCompleted(Action continuation)
+            public void OnCompleted(Action continuation)
             {
                 // The compiler will never call this method
                 throw new NotImplementedException();
             }
 
-                                                            public void UnsafeOnCompleted(Action continuation)
+            public void UnsafeOnCompleted(Action continuation)
             {
                 var currentCulture = Thread.CurrentThread.CurrentCulture;
                 var currentUiCulture = Thread.CurrentThread.CurrentUICulture;
@@ -73,37 +73,37 @@ namespace malone.Core.Commons.Threading
             }
         }
 
-                                public struct CultureAwaiter : ICriticalNotifyCompletion
+        public struct CultureAwaiter : ICriticalNotifyCompletion
         {
-                                                private readonly Task _task;
+            private readonly Task _task;
 
-                                                            public CultureAwaiter(Task task)
+            public CultureAwaiter(Task task)
             {
                 _task = task;
             }
 
-                                                            public CultureAwaiter GetAwaiter()
+            public CultureAwaiter GetAwaiter()
             {
                 return this;
             }
 
-                                                public bool IsCompleted
+            public bool IsCompleted
             {
                 get { return _task.IsCompleted; }
             }
 
-                                                public void GetResult()
+            public void GetResult()
             {
                 _task.GetAwaiter().GetResult();
             }
 
-                                                            public void OnCompleted(Action continuation)
+            public void OnCompleted(Action continuation)
             {
                 // The compiler will never call this method
                 throw new NotImplementedException();
             }
 
-                                                            public void UnsafeOnCompleted(Action continuation)
+            public void UnsafeOnCompleted(Action continuation)
             {
                 var currentCulture = Thread.CurrentThread.CurrentCulture;
                 var currentUiCulture = Thread.CurrentThread.CurrentUICulture;

@@ -5,23 +5,23 @@ using System.Configuration;
 
 namespace malone.Core.Commons.Configurations.Features
 {
-                public class FeatureElement : ConfigurationElement
+    public class FeatureElement : ConfigurationElement
     {
-                                [ConfigurationProperty("name", IsRequired = true, IsKey = true)]
+        [ConfigurationProperty("name", IsRequired = true, IsKey = true)]
         public string Name
         {
             get { return (string)this["name"]; }
             set { this["name"] = value; }
         }
 
-                                [ConfigurationProperty("allEnabled", IsRequired = true)]
+        [ConfigurationProperty("allEnabled", IsRequired = true)]
         public bool AllEnabled
         {
             get { return (bool)this["allEnabled"]; }
             set { this["allEnabled"] = value; }
         }
 
-                                [ConfigurationProperty("behaviors")]
+        [ConfigurationProperty("behaviors")]
         public BehaviorElementCollection Behaviors
         {
             get { return (BehaviorElementCollection)this["behaviors"]; }

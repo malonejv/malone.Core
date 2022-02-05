@@ -1,18 +1,17 @@
-﻿using malone.Core.AdoNet.Context;
-using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Commons.Log;
-using malone.Core.DataAccess.Context;
-using malone.Core.Entities.Model;
-using malone.Core.Identity.Dapper.Entities;
-using malone.Core.Identity.Dapper.Entities.Filters;
-using Microsoft.AspNet.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using malone.Core.AdoNet.Context;
+using malone.Core.Commons.Helpers.Extensions;
+using malone.Core.Commons.Log;
+using malone.Core.DataAccess.Context;
+using malone.Core.Entities.Model;
+using malone.Core.Identity.Dapper.Entities;
+using Microsoft.AspNet.Identity;
 
 namespace malone.Core.Identity.Dapper.Repositories
 {
@@ -45,7 +44,7 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         protected ILogger Logger { get; }
 
-                                public bool AutoSaveChanges { get; set; }
+        public bool AutoSaveChanges { get; set; }
 
         public UserStore(IUserLoginRepository<TKey, TUserLogin> logins, IUserClaimRepository<TKey, TUserClaim> userClaims, IUserRoleRepository<TKey, TUserRole> userRoles, IRoleRepository<TKey, TRoleEntity> roles, IUserRepository<TKey, TUserEntity> users, IContext context, ILogger logger)
         {
@@ -108,7 +107,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             TUserEntity user = null;
             if (!userId.IsDefault())
             {
-                user = _users.GetUserById(userId) as TUserEntity;
+                user = _users.GetUserById(userId);
             }
             return await Task.FromResult<TUserEntity>(user).ConfigureAwait(false);
         }
@@ -143,7 +142,7 @@ namespace malone.Core.Identity.Dapper.Repositories
         public async Task<TUserEntity> FindByIdAsync(TKey userId)
         {
             ThrowIfDisposed();
-            TUserEntity result = _users.GetUserById(userId) as TUserEntity;
+            TUserEntity result = _users.GetUserById(userId);
             if (!result.IsDefault())
             {
                 return await Task.FromResult<TUserEntity>(result).ConfigureAwait(false);
@@ -157,7 +156,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             ThrowIfDisposed();
             userName.ThrowIfNullOrEmpty(nameof(userName));
 
-            List<TUserEntity> result = _users.GetUserByName(userName) as List<TUserEntity>;
+            List<TUserEntity> result = _users.GetUserByName(userName);
 
             // Should I throw if > 1 user?
             if (result != null && result.Count == 1)
@@ -508,12 +507,18 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         private void CheckLogger(ILogger logger)
         {
-            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (logger == null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
         }
 
         private void CheckContext(IContext context)
         {
-            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
 
             if (!(context is CoreDbContext))
             {
@@ -540,7 +545,7 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         protected bool _disposed;
 
-                                public void Dispose()
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -554,7 +559,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             }
         }
 
-                                        protected virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (disposing && Context != null)
             {

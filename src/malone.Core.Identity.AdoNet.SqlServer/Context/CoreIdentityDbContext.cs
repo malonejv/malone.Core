@@ -1,8 +1,8 @@
-﻿using malone.Core.AdoNet.Context;
+﻿using System;
+using malone.Core.AdoNet.Context;
 using malone.Core.Commons.DI;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
-using System;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Context
 {

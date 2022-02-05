@@ -1,6 +1,6 @@
-﻿using malone.Core.Business.Components;
+﻿using System;
+using malone.Core.Business.Components;
 using malone.Core.Identity.EntityFramework.Entities;
-using System;
 
 namespace malone.Core.Identity.EntityFramework.Business
 {

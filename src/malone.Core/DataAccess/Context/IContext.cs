@@ -3,10 +3,10 @@
 
 namespace malone.Core.DataAccess.Context
 {
-                public interface IContext
+    public interface IContext
     {
-                                        int SaveChanges();
+        int SaveChanges();
 
-                                void Dispose();
+        void Dispose();
     }
 }

@@ -6,55 +6,59 @@ using System.Linq;
 
 namespace malone.Core.Business.Components
 {
-                        public delegate ValidationResult ValidationRuleDelegate(params object[] arguments);
+    public delegate ValidationResult ValidationRuleDelegate(params object[] arguments);
 
-                public class ValidationRule
+    public class ValidationRule
     {
-                                public ValidationRule()
+        public ValidationRule()
         {
             Arguments = new List<object>();
         }
 
-                                public ValidationRuleDelegate Method { get; set; }
+        public ValidationRuleDelegate Method { get; set; }
 
-                                public List<object> Arguments { get; set; }
+        public List<object> Arguments { get; set; }
     }
 
-                public class ValidationResult
+    public class ValidationResult
     {
-                                                public ValidationResult(string errorCode, string message)
+        public ValidationResult(string errorCode, string message)
         {
             ErrorCode = errorCode;
             Message = message;
         }
 
-                                        public ValidationResult(string errorCode) : this(errorCode, null)
+        public ValidationResult(string errorCode) : this(errorCode, null)
         {
         }
 
-                                public object Return { get; set; }
+        public object Return { get; set; }
 
-                                public bool IsValid { get; set; }
+        public bool IsValid { get; set; }
 
-                                public string ErrorCode { get; set; }
+        public string ErrorCode { get; set; }
 
-                                public string Message { get; internal protected set; }
+        public string Message { get; internal protected set; }
     }
 
-                public class ValidationResultList : List<ValidationResult>
+    public class ValidationResultList : List<ValidationResult>
     {
-                                public bool IsValid
+        public bool IsValid
         {
             get
             {
                 if (this.Count > 0 && this.Any(item => item.IsValid == false))
+                {
                     return false;
+                }
                 else
+                {
                     return true;
+                }
             }
         }
 
-                                public ValidationResultList()
+        public ValidationResultList()
         {
         }
     }
