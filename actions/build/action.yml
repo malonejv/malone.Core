@@ -48,7 +48,7 @@ jobs:
         uses: NuGet/setup-nuget@v1.0.5
 
       - name: Add GitHub Source
-        run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ inputs.token }}
+        run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${ inputs.token }
           
       - name: Nuget Restore Core Packages
         run:  nuget restore ${{ inputs.solution_path }}
