@@ -37,31 +37,31 @@ runs:
     shell: pwsh
     run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ inputs.token }}
 
-  - name: Show variables
+  #- name: Show variables
+  #  shell: pwsh
+  #  run: echo ${{inputs.configuration}} ${{inputs.solution_path}} ${{inputs.artifacts_path}} ${{inputs.allow_push}}
+  - name: Nuget Restore Core Packages
     shell: pwsh
-    run: echo ${{inputs.configuration}} ${{inputs.solution_path}} ${{inputs.artifacts_path}} ${{inputs.allow_push}}
-  #- name: Nuget Restore Core Packages
-  #  shell: pwsh
-  #  run:  nuget restore ${{ inputs.solution_path }}
+    run:  nuget restore ${{ inputs.solution_path }}
     
-  #- name: Build malone.Core
-  #  shell: pwsh
-  #  run: msbuild ${{ inputs.solution_path }} /t:Build /p:Configuration=${{ inputs.configuration }}
+  - name: Build malone.Core
+    shell: pwsh
+    run: msbuild ${{ inputs.solution_path }} /t:Build /p:Configuration=${{ inputs.configuration }}
         
-  #- name: Prepare Packages
-  #  shell: pwsh
-  #  if: ${{ inputs.allow_push }}
-  #  run:
-  #       |
-  #        $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects
-  #        $projects | foreach{ nuget pack $_ -Properties Configuration=${{ inputs.configuration }} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg -OutputDirectory ${{ inputs.artifacts_path }} }
+  - name: Prepare Packages
+    shell: pwsh
+    if: ${{ inputs.allow_push }}
+    run:
+         |
+          $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects
+          $projects | foreach{ nuget pack $_ -Properties Configuration=${{ inputs.configuration }} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg -OutputDirectory ${{ inputs.artifacts_path }} }
           
-  #- name: Upload artifacts
-  #  if: ${{ inputs.allow_push }}
-  #  uses: actions/upload-artifact@v2
-  #  with:
-  #    name: nuget-packages
-  #    path: ${{ inputs.artifacts_path }}\*
-  #    if-no-files-found: error
-  #    retention-days: 1
+  - name: Upload artifacts
+    if: ${{ inputs.allow_push }}
+    uses: actions/upload-artifact@v2
+    with:
+      name: nuget-packages
+      path: ${{ inputs.artifacts_path }}\*
+      if-no-files-found: error
+      retention-days: 1
           
