@@ -62,4 +62,4 @@ jobs:
       - uses: ./actions/deploy
         with:
               artifacts_path: ${ env:NUGET_ARTIFACTS_DIR }
-              allow_push: ${{ env:ALLOW_PUSH_PACKAGES }}
+              allow_push: ${ env:ALLOW_PUSH_PACKAGES }
