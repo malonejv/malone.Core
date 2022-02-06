@@ -56,7 +56,7 @@ jobs:
       runs-on: windows-latest
       environment: development
       needs: build-and-pack
-      if: ${ env:ALLOW_PUSH_PACKAGES }
+      if: ${{ env:ALLOW_PUSH_PACKAGES }}
       
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps: 
