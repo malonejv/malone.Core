@@ -61,7 +61,7 @@ runs:
     uses: actions/upload-artifact@v2
     with:
       name: nuget-packages
-      path: ${{ inputs.artifacts_path }}\*
+      path: ${{ inputs.artifacts_path }}\
       if-no-files-found: error
       retention-days: 1
           
