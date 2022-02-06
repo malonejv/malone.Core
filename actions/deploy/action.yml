@@ -2,14 +2,10 @@ name: Deploy Workflow
 description: Deploy application
 
 inputs:
-  artifacs_path:
+  artifacts_path:
     required: true
     type: string
     default: ''
-  allow_push:
-    required: true
-    type: boolean
-    default: false
   
 runs:
   using: "composite"
