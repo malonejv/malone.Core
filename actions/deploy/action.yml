@@ -21,7 +21,7 @@ runs:
     uses: actions/download-artifact@v2
     with:
         name: nuget-packages
-        path: ${ inputs.artifacts_path }
+        path: ${{ inputs.artifacts_path }}
 
   - name: "Pushing Nuget Packages"
     shell: pwsh

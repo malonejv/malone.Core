@@ -35,30 +35,30 @@ runs:
 
   - name: Add GitHub Source
     shell: pwsh
-    run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${ inputs.token }
+    run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ inputs.token }}
       
   - name: Nuget Restore Core Packages
     shell: pwsh
-    run:  nuget restore ${ inputs.solution_path }
+    run:  nuget restore ${{ inputs.solution_path }}
     
   - name: Build malone.Core
     shell: pwsh
-    run: msbuild ${ inputs.solution_path } /t:Build /p:Configuration=${ inputs.configuration }
+    run: msbuild ${{ inputs.solution_path }} /t:Build /p:Configuration=${{ inputs.configuration }}
         
   - name: Prepare Packages
     shell: pwsh
-    if: ${ inputs.allow_push }
+    if: ${{ inputs.allow_push }}
     run:
          |
-          $projects = .\Get-ProjectsInSolution.ps1 ${ inputs.solution_path } -Type NonTestProjects
-          $projects | foreach{ nuget pack $_ -Properties Configuration=${ inputs.configuration } -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg -OutputDirectory "${ inputs.artifacts_path }" }
+          $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path } -Type NonTestProjects
+          $projects | foreach{ nuget pack $_ -Properties Configuration=${{ inputs.configuration }} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg -OutputDirectory "${{ inputs.artifacts_path }}" }
           
   - name: Upload artifacts
-    if: ${ inputs.allow_push }
+    if: ${{ inputs.allow_push }}
     uses: actions/upload-artifact@v2
     with:
       name: nuget-packages
-      path: ${ inputs.artifacts_path }\*
+      path: ${{ inputs.artifacts_path }}\*
       if-no-files-found: error
       retention-days: 1
           
