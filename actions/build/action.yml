@@ -1,74 +1,53 @@
 name: Build Workflow
+description: Build application
+inputs:
+   configuration:
+     required: true
+     default: 'Debug'
+   solution_path:
+     required: true
+     default: ''
+   artifacts_path:
+     required: true
+     default: ''
+   allow_push:
+     required: true
+     default: false
+   token:
+     required: true
+     default: ''
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the development branch
-on:
-  workflow_call:
-    inputs:
-      configuration:
-        required: true
-        type: string
-        default: 'Debug'
-      solution_path:
-        required: true
-        type: string
-        default: ''
-      artifacts_path:
-        required: true
-        type: string
-        default: ''
-      allow_push:
-        required: true
-        type: boolean
-        default: false
-      token:
-        required: true
-        type: string
-        default: ''
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  build:
-      name: Build
-
-      # The type of runner that the job will run on
-      runs-on: windows-latest
+runs:
+  using: "composite"
       
-     # Steps represent a sequence of tasks that will be executed as part of the job
-      steps:
+  # Steps represent a sequence of tasks that will be executed as part of the job
+  steps:
 
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+  # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+  - uses: actions/checkout@v2
+  
+  # Steps represent a sequence of tasks that will be executed as part of the job
+  - uses: microsoft/setup-msbuild@v1.1
+
+  - uses: NuGet/setup-nuget@v1.0.5
+
+  - run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${ inputs.token }
       
-      # Steps represent a sequence of tasks that will be executed as part of the job
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.1
-
-      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1.0.5
-
-      - name: Add GitHub Source
-        run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${ inputs.token }
-          
-      - name: Nuget Restore Core Packages
-        run:  nuget restore ${ inputs.solution_path }
+  - run:  nuget restore ${ inputs.solution_path }
+    
+  - run: msbuild ${ inputs.solution_path } /t:Build /p:Configuration=${ inputs.configuration }
         
-      - name: Build malone.Core
-        run: msbuild ${ inputs.solution_path } /t:Build /p:Configuration=${ inputs.configuration }
-            
-      - name: Prepare Packages
-        if: ${ inputs.allow_push }
-        run:
-             |
-              $projects = .\Get-ProjectsInSolution.ps1 ${ inputs.solution_path } -Type NonTestProjects
-              $projects | foreach{ nuget pack $_ -Properties Configuration=${ inputs.configuration } -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg -OutputDirectory "${ inputs.artifacts_path }" }
-              
-      - name: Upload artifacts
-        if: ${ inputs.allow_push }
-        uses: actions/upload-artifact@v2
-        with:
-          name: nuget-packages
-          path: ${ inputs.artifacts_path }\*
-          if-no-files-found: error
-          retention-days: 1
+  - if: ${ inputs.allow_push }
+    run:
+         |
+          $projects = .\Get-ProjectsInSolution.ps1 ${ inputs.solution_path } -Type NonTestProjects
+          $projects | foreach{ nuget pack $_ -Properties Configuration=${ inputs.configuration } -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg -OutputDirectory "${ inputs.artifacts_path }" }
+          
+  - if: ${ inputs.allow_push }
+    uses: actions/upload-artifact@v2
+    with:
+      name: nuget-packages
+      path: ${ inputs.artifacts_path }\*
+      if-no-files-found: error
+      retention-days: 1
           
