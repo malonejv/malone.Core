@@ -69,7 +69,7 @@ jobs:
         name: Create Release
         runs-on: windows-latest
         environment: development
-        if: ${ env:ALLOW_PUSH_PACKAGES }
+        if: ${{ env:ALLOW_PUSH_PACKAGES }}
 
         steps:
             - name: Create Release
