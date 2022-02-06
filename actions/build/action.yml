@@ -39,7 +39,7 @@ runs:
 
   - name: Show variables
     shell: pwsh
-    run: echo ${inputs.configuration} ${inputs.solution_path} ${inputs.artifacts_path} ${inputs.allow_push}
+    run: echo ${{inputs.configuration}} ${{inputs.solution_path}} ${{inputs.artifacts_path}} ${{inputs.allow_push}}
   #- name: Nuget Restore Core Packages
   #  shell: pwsh
   #  run:  nuget restore ${{ inputs.solution_path }}
