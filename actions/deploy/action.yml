@@ -5,14 +5,6 @@ name: Deploy Workflow
 on:
   workflow_call:
     inputs:
-      branch:
-        required: true
-        type: string
-        default: ''
-      configuration:
-        required: true
-        type: string
-        default: 'Debug'
       artifacs_path:
         required: true
         type: string
@@ -27,7 +19,7 @@ jobs:
   deploy:
       name: Deploy
       needs: build-and-pack
-      if: ${{ inputs.allow_push }}
+      if: ${ inputs.allow_push }
       
       # The type of runner that the job will run on
       runs-on: windows-latest
@@ -39,7 +31,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
             name: nuget-packages
-            path: ${{ inputs.artifacts_path }}
+            path: ${ inputs.artifacts_path }
 
       - name: "Pushing Nuget Packages"
         run: | 
