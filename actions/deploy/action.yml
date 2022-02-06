@@ -8,6 +8,7 @@ on:
       branch:
         required: true
         type: string
+        default: ''
       configuration:
         required: true
         type: string
@@ -15,9 +16,11 @@ on:
       artifacs_path:
         required: true
         type: string
+        default: ''
       allow_push:
         required: true
-        type: string
+        type: boolean
+        default: false
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
