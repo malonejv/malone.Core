@@ -121,6 +121,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{FD11
 		..\Get-ProjectsInSolution.ps1 = ..\Get-ProjectsInSolution.ps1
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "actions", "actions", "{F4B7757C-E1D6-48AF-A6D2-C2546E685FAF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{1EEDB9AB-97BC-4191-ADE5-85F90EDAF1C2}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\actions\build\action.yml = ..\.github\actions\build\action.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{4FB75B60-4B82-4956-AD6A-6CA7A4E6B6EC}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\actions\deploy\action.yml = ..\.github\actions\deploy\action.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -834,6 +846,9 @@ Global
 		{5C683C67-9122-43ED-BD2D-FAED83007D78} = {1D50ED78-FBF6-490B-95ED-3A9CA0858936}
 		{765B4548-F6B9-41C9-A640-A12B3F91185B} = {1D50ED78-FBF6-490B-95ED-3A9CA0858936}
 		{FD11AED8-C9FC-4948-B282-BDF67A7BD621} = {2AFC5CCC-A9FC-4232-9A11-B58385408C56}
+		{F4B7757C-E1D6-48AF-A6D2-C2546E685FAF} = {2AFC5CCC-A9FC-4232-9A11-B58385408C56}
+		{1EEDB9AB-97BC-4191-ADE5-85F90EDAF1C2} = {F4B7757C-E1D6-48AF-A6D2-C2546E685FAF}
+		{4FB75B60-4B82-4956-AD6A-6CA7A4E6B6EC} = {F4B7757C-E1D6-48AF-A6D2-C2546E685FAF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
