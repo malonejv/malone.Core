@@ -33,13 +33,15 @@ jobs:
      # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
       - uses: actions/checkout@v1
-      - uses: .\actions\build
+      - uses: ./actions/build
         with:
               branch: ${{ github.ref_name }}
               configuration: ${env:CONFIGURATION}
-              soluntion_path: 'src\malone.Core.sln'
+              solution_path: 'src\malone.Core.sln'
               artifacts_path: ${ env:NUGET_ARTIFACTS_DIR }
               allow_push: ${ env:ALLOW_PUSH_PACKAGES }
+              token: ${{ secrets.GITHUB_TOKEN }}
+
            
       - name: Version Number
         id: version_number
@@ -57,7 +59,7 @@ jobs:
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps: 
       - uses: actions/checkout@v1
-      - uses: .\actions\deploy
+      - uses: ./actions/deploy
         with:
               branch: ${{ github.ref_name }}
               configuration: ${env:CONFIGURATION}
