@@ -54,11 +54,11 @@ jobs:
       runs-on: windows-latest
       environment: development
       needs: build-and-pack
-      if: ${ env:ALLOW_PUSH_PACKAGES }
       
       # Steps represent a sequence of tasks that will be executed as part of the job
       steps: 
       - uses: actions/checkout@v1
       - uses: ./actions/deploy
+        if: ${ env:ALLOW_PUSH_PACKAGES }
         with:
               artifacts_path: ${ env:NUGET_ARTIFACTS_DIR }
