@@ -6,6 +6,9 @@ inputs:
     required: true
     type: string
     default: ''
+  allow_push:
+    required: true
+    default: false
   
 runs:
   using: "composite"
@@ -14,12 +17,14 @@ runs:
   steps: 
 
   - name: Download artifacts
+    if: ${{ inputs.allow_push }}
     uses: actions/download-artifact@v2
     with:
         name: nuget-packages
         path: ${{ inputs.artifacts_path }}
 
   - name: "Pushing Nuget Packages"
+    if: ${{ inputs.allow_push }}
     shell: pwsh
     run: | 
           nuget push *-dev.nupkg -SkipDuplicate -source "github"
