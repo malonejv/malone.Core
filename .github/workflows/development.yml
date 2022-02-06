@@ -17,7 +17,7 @@ on:
 env:
   CONFIGURATION: "Debug"
   ALLOW_PUSH_PACKAGES: "${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}"
-  VARIABLES_DIR: 'src\malone.Core\bin\${env:CONFIGURATION}\Variables'
+  VARIABLES_DIR: "src\\malone.Core\\bin\\${env:CONFIGURATION}\\Variables"
   NUGET_ARTIFACTS_DIR: ${{ github.workspace }}\nuget-artifacts
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -35,9 +35,9 @@ jobs:
       - uses: actions/checkout@v1
       - uses: ./actions/build
         with:
-              configuration: ${env:CONFIGURATION}
+              configuration: "${env:CONFIGURATION}"
               solution_path: 'src\malone.Core.sln'
-              artifacts_path: ${ env:NUGET_ARTIFACTS_DIR }
+              artifacts_path: "${ env:NUGET_ARTIFACTS_DIR }"
               allow_push: ${ env:ALLOW_PUSH_PACKAGES }
               token: ${{ secrets.GITHUB_TOKEN }}
 
