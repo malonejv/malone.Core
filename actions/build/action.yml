@@ -39,7 +39,7 @@ runs:
 
   - name: Show variables
     shell: pwsh
-    run: echo ${ env:CONFIGURATION } ${ env:SOLUTION_PATH } ${ env:ARTIFACTS_PATH } ${ env:ALLOW_PUSH }
+    run: echo ${env:CONFIGURATION} ${env:SOLUTION_PATH} ${env:ARTIFACTS_PATH} ${env:ALLOW_PUSH}
   #- name: Nuget Restore Core Packages
   #  shell: pwsh
   #  run:  nuget restore ${{ inputs.solution_path }}
