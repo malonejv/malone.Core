@@ -37,6 +37,7 @@ runs:
   - name: "Pushing Nuget Packages"
     if: ${{ inputs.allow_push }}
     shell: pwsh
-    run: | 
+    run: |
+          cd .\nuget-packages
           nuget push *-dev.nupkg -SkipDuplicate -source "github"
           nuget push *-dev.snupkg -SkipDuplicate -source "github"
