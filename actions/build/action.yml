@@ -61,7 +61,7 @@ runs:
     uses: actions/upload-artifact@v2
     with:
       name: nuget-packages
-      path: "${{ github.workspace }}\\nuget-artifacts\*"
+      path: "${{ github.workspace }}\\nuget-artifacts\\*"
       if-no-files-found: error
       retention-days: 1
           
