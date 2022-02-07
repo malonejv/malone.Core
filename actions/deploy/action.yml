@@ -9,12 +9,19 @@ inputs:
   allow_push:
     required: true
     default: false
+  token:
+     required: true
+     default: ''
   
 runs:
   using: "composite"
 
   # Steps represent a sequence of tasks that will be executed as part of the job
   steps: 
+  
+  - name: Add GitHub Source
+    shell: pwsh
+    run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ inputs.token }}
 
   - name: Download artifacts
     if: ${{ inputs.allow_push }}

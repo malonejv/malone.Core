@@ -64,6 +64,7 @@ jobs:
         with:
               artifacts_path: ${{ env:NUGET_ARTIFACTS_DIR }}
               allow_push: ${ env:ALLOW_PUSH_PACKAGES }
+              token: ${{ secrets.GITHUB_TOKEN }}
 
   create-release:            
         name: Create Release
