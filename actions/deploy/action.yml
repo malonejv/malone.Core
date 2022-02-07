@@ -22,6 +22,10 @@ runs:
   - name: Add GitHub Source
     shell: pwsh
     run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ inputs.token }}
+    
+  - name: List artifacts
+    shell: pwsh
+    run:  Get-ChildItem -File -Path .\nuget-artifacts
 
   - name: Download artifacts
     if: ${{ inputs.allow_push }}
@@ -29,6 +33,10 @@ runs:
     with:
         name: nuget-packages
         path: "${{ github.workspace }}\\nuget-artifacts\\"
+
+  - name: List artifacts
+    shell: pwsh
+    run:  Get-ChildItem -File -Path .\nuget-artifacts
 
   - name: "Pushing Nuget Packages"
     if: ${{ inputs.allow_push }}
