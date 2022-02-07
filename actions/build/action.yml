@@ -65,3 +65,5 @@ runs:
       if-no-files-found: error
       retention-days: 1
           
+  - name: List artifacts
+    run:  Get-ChildItem -File -Path .\nuget-artifacts
