@@ -16,7 +16,6 @@ inputs:
 runs:
   using: "composite"
 
-  # Steps represent a sequence of tasks that will be executed as part of the job
   steps: 
   
   - name: Add GitHub Source

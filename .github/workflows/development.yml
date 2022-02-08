@@ -1,16 +1,12 @@
-# This is a basic workflow to help you get started with Actions
 
 name: CI/CD to Development
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the development branch
 on:
   push:
     branches:
       - development
       - feature/**
   pull_request:
-    # Sequence of patterns matched against refs/heads
     branches:
       - development
 
@@ -20,7 +16,6 @@ env:
   VARIABLES_DIR: "src\\malone.Core\\bin\\Debug\\Variables"
   NUGET_ARTIFACTS_DIR: "${{ github.workspace }}\\nuget-artifacts"
   
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build-and-pack:
       name: Build & Pack
@@ -30,10 +25,9 @@ jobs:
       outputs:
         version_number: ${{ steps.version_number.outputs.version_number }}
 
-     # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
       - uses: actions/checkout@v1
-      - uses: ./actions/build
+      - uses: ./.github/actions/build
         with:
               configuration: "${env:CONFIGURATION}"
               solution_path: 'src\malone.Core.sln'
@@ -55,11 +49,9 @@ jobs:
       environment: development
       needs: build-and-pack
 
-      
-      # Steps represent a sequence of tasks that will be executed as part of the job
       steps: 
       - uses: actions/checkout@v1
-      - uses: ./actions/deploy
+      - uses: ./.github/actions/deploy
         with:
               artifacts_path: "${env:NUGET_ARTIFACTS_DIR}"
               allow_push: ${env:ALLOW_PUSH_PACKAGES}
