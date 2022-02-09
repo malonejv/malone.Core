@@ -15,7 +15,6 @@ on:
 
 env:
   CONFIGURATION: "Release"
-  ALLOW_PUSH_PACKAGES: "${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}"
   VARIABLES_DIR: "src\\malone.Core\\bin\\Release\\Variables"
   NUGET_ARTIFACTS_DIR: "${{ github.workspace }}\\nuget-artifacts"
   
@@ -47,11 +46,11 @@ jobs:
       steps:
       - uses: actions/checkout@v1
       - uses: ./.github/actions/pack
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         with:
               configuration: "${env:CONFIGURATION}"
               solution_path: 'src\malone.Core.sln'
               artifacts_path: "${env:NUGET_ARTIFACTS_DIR}"
-              allow_push: ${env:ALLOW_PUSH_PACKAGES}
               token: ${{ secrets.GITHUB_TOKEN }}
  
   deploy:
@@ -63,9 +62,9 @@ jobs:
       steps: 
       - uses: actions/checkout@v1
       - uses: ./.github/actions/deploy
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         with:
               artifacts_path: ${env:NUGET_ARTIFACTS_DIR}
-              allow_push: ${env:ALLOW_PUSH_PACKAGES}
               token: ${{ secrets.GITHUB_TOKEN }}
 
   create-release:            
@@ -75,6 +74,7 @@ jobs:
 
         steps:
             - name: Create Release
+              if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
               uses: actions/create-release@v1
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
