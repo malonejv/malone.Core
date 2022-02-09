@@ -1,9 +1,6 @@
-# This is a basic workflow to help you get started with Actions
 
 name: CI/CD to Production
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches:
@@ -11,7 +8,6 @@ on:
       - release/**
       - hotfix/**
   pull_request:
-    # Sequence of patterns matched against refs/heads
     branches:
       - master
       - release/**
@@ -20,23 +16,21 @@ on:
 env:
   CONFIGURATION: "Release"
   ALLOW_PUSH_PACKAGES: "${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}"
-  VARIABLES_DIR: 'src\malone.Core\bin\${env:CONFIGURATION}\Variables'
-  NUGET_ARTIFACTS_DIR: "${{ github.workspace }}\nuget-artifacts"
+  VARIABLES_DIR: "src\\malone.Core\\bin\\Release\\Variables"
+  NUGET_ARTIFACTS_DIR: "${{ github.workspace }}\\nuget-artifacts"
   
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build-and-pack:
       name: Build & Pack
       runs-on: windows-latest
-      environment: development
+      environment: production
       
       outputs:
         version_number: ${{ steps.version_number.outputs.version_number }}
 
-     # Steps represent a sequence of tasks that will be executed as part of the job
       steps:
       - uses: actions/checkout@v1
-      - uses: ./actions/build
+      - uses: ./.github/actions/build
         with:
               configuration: ${env:CONFIGURATION}
               solution_path: 'src\malone.Core.sln'
@@ -57,13 +51,12 @@ jobs:
       environment: development
       needs: build-and-pack
       
-      # Steps represent a sequence of tasks that will be executed as part of the job
       steps: 
       - uses: actions/checkout@v1
-      - uses: ./actions/deploy
+      - uses: ./.github/actions/deploy
         with:
-              artifacts_path: ${{ env:NUGET_ARTIFACTS_DIR }}
-              allow_push: ${ env:ALLOW_PUSH_PACKAGES }
+              artifacts_path: ${env:NUGET_ARTIFACTS_DIR}
+              allow_push: ${env:ALLOW_PUSH_PACKAGES}
               token: ${{ secrets.GITHUB_TOKEN }}
 
   create-release:            
@@ -73,10 +66,9 @@ jobs:
 
         steps:
             - name: Create Release
-              if: ${{ env:ALLOW_PUSH_PACKAGES }}
               uses: actions/create-release@v1
               env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
               with:
                 tag_name: v${{needs.build-and-pack.outputs.version_number}}
                 release_name: v${{ needs.build-and-pack.outputs.version_number }}

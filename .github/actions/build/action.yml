@@ -23,13 +23,10 @@ inputs:
 runs:
   using: "composite"
       
-  # Steps represent a sequence of tasks that will be executed as part of the job
   steps:
 
-  # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
   - uses: actions/checkout@v2
   
-  # Steps represent a sequence of tasks that will be executed as part of the job
   - name: Setup MSBuild
     uses: microsoft/setup-msbuild@v1.1
 
@@ -39,10 +36,7 @@ runs:
   - name: Add GitHub Source
     shell: pwsh
     run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ inputs.token }}
-
-  #- name: Show variables
-  #  shell: pwsh
-  #  run: echo ${{inputs.configuration}} ${{inputs.solution_path}} ${{inputs.artifacts_path}} ${{inputs.allow_push}}
+    
   - name: Nuget Restore Core Packages
     shell: pwsh
     run:  nuget restore ${{ inputs.solution_path }}
