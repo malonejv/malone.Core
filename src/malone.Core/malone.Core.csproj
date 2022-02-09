@@ -270,7 +270,8 @@
       <Time>$([System.DateTime]::Now.ToString("HHmm"))</Time>
     </PropertyGroup>
     <ItemGroup>
-      <VersionNumber Include="$(OutVersion).$(Year)$(Month)$(Date)$(Time)" />
+      <VersionNumber Include="$(OutVersion)" />
+	  <DevRevision Include="$(Year)$(Month)$(Date)$(Time)" />
     </ItemGroup>
   </Target>
   <Target Name="GetSemVer">
@@ -296,7 +297,8 @@
       if $(ConfigurationName) == Debug (
       (
       echo {
-      echo   "MALONE_CORE_VER": "@(VersionNumber)"
+      echo   "MALONE_CORE_VER": "@(VersionNumber),"
+	  echo   "MALONE_CORE_DEV_REV": "@(DevRevision)"
       echo }
       )&gt;"variables"
       )
@@ -309,7 +311,7 @@
       )&gt;"variables"
       )
       if $(ConfigurationName) == DebugNuget (
-      nuget pack "$(ProjectPath)" -Suffix dev -Properties Configuration=DebugNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
+      nuget pack "$(ProjectPath)" -version @(VersionNumber) -Suffix dev@(DevRevision) -Properties Configuration=DebugNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
       xcopy "$(TargetDir)$(TargetName)*.*nupkg" "..\..\..\..\..\malone.Core.DevLocalNugets" /SY
       del "$(TargetDir)$(TargetName)*.*nupkg" /Q
       )</PostBuildEvent>

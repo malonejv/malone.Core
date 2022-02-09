@@ -33,7 +33,6 @@ jobs:
       - uses: ./.github/actions/build
         with:
               configuration: "${env:CONFIGURATION}"
-              variables_dir: "${env:VARIABLES_DIR}"
               solution_path: 'src\malone.Core.sln'
               artifacts_path: "${env:NUGET_ARTIFACTS_DIR}"
               allow_push: ${env:ALLOW_PUSH_PACKAGES}

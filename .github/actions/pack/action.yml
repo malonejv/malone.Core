@@ -1,5 +1,5 @@
-name: Build Workflow
-description: Build application
+name: Pack Workflow
+description: Pack application
 inputs:
    configuration:
      required: true
@@ -19,10 +19,6 @@ inputs:
    token:
      required: true
      default: ''
-outputs:
-  version_number: 
-    description: "Version number"
-    value: ${{ steps.version_number.outputs.version_number }}
 
 runs:
   using: "composite"
@@ -31,9 +27,6 @@ runs:
 
   - uses: actions/checkout@v2
   
-  - name: Setup MSBuild
-    uses: microsoft/setup-msbuild@v1.1
-
   - name: Setup NuGet
     uses: NuGet/setup-nuget@v1.0.5
 
@@ -41,21 +34,18 @@ runs:
     shell: pwsh
     run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ inputs.token }}
     
-  - name: Nuget Restore Core Packages
-    shell: pwsh
-    run:  nuget restore ${{ inputs.solution_path }}
-    
   - name: Build malone.Core
     shell: pwsh
     run: msbuild ${{ inputs.solution_path }} /t:"Clean;Build" /p:Configuration=${{ inputs.configuration }}
   
-  - name: Version Number
+  - name: Prepare Packages
     shell: pwsh
-    id: version_number
-    run: |
-         $maloneCoreInfo = (Get-Content ${{ inputs.variables_dir }} | Out-String |ConvertFrom-Json)
-         echo "::set-output name=version_number::$maloneCoreInfo"
-        
+    if: ${{ fromJSON(inputs.allow_push) }}
+    run:
+         |
+          $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects
+          $projects | foreach{ nuget pack $_ -Properties Configuration=${{ inputs.configuration }} -Version ${{ steps.version_number.outputs.version_number }} ${{inputs.additional_pack_properties }} -OutputDirectory ${{ inputs.artifacts_path }} }
+          
   - name: Upload artifacts
     if: ${{ inputs.allow_push }}
     uses: actions/upload-artifact@v2
