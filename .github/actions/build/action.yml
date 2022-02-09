@@ -43,7 +43,7 @@ runs:
     
   - name: Build malone.Core
     shell: pwsh
-    run: msbuild ${{ inputs.solution_path }} /t:Clean;Rebuild /p:Configuration=${{ inputs.configuration }}
+    run: msbuild ${{ inputs.solution_path }} /t:"Clean;Build" /p:Configuration=${{ inputs.configuration }}
         
   - name: Prepare Packages
     shell: pwsh
