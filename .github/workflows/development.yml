@@ -30,6 +30,7 @@ jobs:
       - uses: ./.github/actions/build
         with:
               configuration: "${env:CONFIGURATION}"
+              variables_dir: "${env:VARIABLES_DIR}"
               solution_path: 'src\malone.Core.sln'
               additional_pack_properties: "-Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg"
               artifacts_path: "${env:NUGET_ARTIFACTS_DIR}"
@@ -37,12 +38,12 @@ jobs:
               token: ${{ secrets.GITHUB_TOKEN }}
 
            
-      - name: Version Number
-        id: version_number
-        run: |
-              $version = (Get-Content ${env:VARIABLES_DIR} | Out-String |ConvertFrom-Json).MALONE_CORE_VER
-              echo "MALONE_CORE_VER=$version"
-              echo "::set-output name=version_number::$version"
+      #- name: Version Number
+      #  id: version_number
+      #  run: |
+      #        $version = (Get-Content ${env:VARIABLES_DIR} | Out-String |ConvertFrom-Json).MALONE_CORE_VER
+      #        echo "MALONE_CORE_VER=$version"
+      #        echo "::set-output name=version_number::$version"
     
   deploy:
       name: Deploy

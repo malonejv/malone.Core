@@ -4,6 +4,9 @@ inputs:
    configuration:
      required: true
      default: 'Debug'
+   variables_dir:
+     required: true
+     default: ''
    solution_path:
      required: true
      default: ''
@@ -19,6 +22,10 @@ inputs:
    token:
      required: true
      default: ''
+outputs:
+  version_number: 
+    description: "Version number"
+    value: ${{ steps.version_number.outputs.version_number }}
 
 runs:
   using: "composite"
@@ -44,6 +51,13 @@ runs:
   - name: Build malone.Core
     shell: pwsh
     run: msbuild ${{ inputs.solution_path }} /t:"Clean;Build" /p:Configuration=${{ inputs.configuration }}
+  
+  - name: Version Number
+    id: version_number
+    run: |
+         $version = (Get-Content ${{ inputs.variables_dir }} | Out-String |ConvertFrom-Json).MALONE_CORE_VER
+         echo "MALONE_CORE_VER=$version"
+         echo "::set-output name=version_number::$version"
         
   - name: Prepare Packages
     shell: pwsh
@@ -51,7 +65,7 @@ runs:
     run:
          |
           $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects
-          $projects | foreach{ nuget pack $_ -Properties Configuration=${{ inputs.configuration }} ${{inputs.additional_pack_properties }} -OutputDirectory ${{ inputs.artifacts_path }} }
+          $projects | foreach{ nuget pack $_ -Properties Configuration=${{ inputs.configuration }} -Version ${{ steps.version_number.outputs.version_number }} ${{inputs.additional_pack_properties }} -OutputDirectory ${{ inputs.artifacts_path }} }
           
   - name: Upload artifacts
     if: ${{ inputs.allow_push }}
@@ -63,5 +77,6 @@ runs:
       retention-days: 1
           
   - name: List artifacts
+    if: ${{ inputs.allow_push }}
     shell: pwsh
     run:  Get-ChildItem -File -Path .\nuget-artifacts

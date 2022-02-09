@@ -23,7 +23,7 @@ runs:
     run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ inputs.token }}
     
   - name: Download artifacts
-    if: ${{ inputs.allow_push }}
+    if: ${{ fromJSON(inputs.allow_push) }}
     uses: actions/download-artifact@v2
     with:
         name: nuget-packages
@@ -34,7 +34,7 @@ runs:
     run:  Get-ChildItem -File -Path .\nuget-packages
 
   - name: "Pushing Nuget Packages"
-    if: ${{ inputs.allow_push }}
+    if: ${{ fromJSON(inputs.allow_push) }}
     shell: pwsh
     run: |
           cd .\nuget-packages

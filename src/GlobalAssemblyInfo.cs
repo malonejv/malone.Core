@@ -9,7 +9,7 @@ using System.Reflection;
 [assembly: AssemblyCompany("Javier López Malone")]
 [assembly: AssemblyCopyright("Copyright © Javier López Malone 2022")]
 
-[assembly: AssemblyVersion("2.1.*")]
+[assembly: AssemblyVersion("2.1.10.*")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
