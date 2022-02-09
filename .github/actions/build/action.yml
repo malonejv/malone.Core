@@ -53,6 +53,7 @@ runs:
     run: msbuild ${{ inputs.solution_path }} /t:"Clean;Build" /p:Configuration=${{ inputs.configuration }}
   
   - name: Version Number
+    shell: pwsh
     id: version_number
     run: |
          $version = (Get-Content ${{ inputs.variables_dir }} | Out-String |ConvertFrom-Json).MALONE_CORE_VER
