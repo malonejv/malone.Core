@@ -49,7 +49,7 @@ jobs:
               solution_path: 'src\malone.Core.sln'
               additional_pack_properties: "-Version ${{ needs.build.outputs.version_number.MALONE_CORE_VER }}-dev${{ needs.build.outputs.version_number.MALONE_CORE_DEV_REV }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg"
               artifacts_path: "${env:NUGET_ARTIFACTS_DIR}"
-              allow_push: ${env:ALLOW_PUSH_PACKAGES}
+              allow_push: ${toJSON(env:ALLOW_PUSH_PACKAGES)}
               token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
@@ -63,5 +63,5 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
               artifacts_path: "${env:NUGET_ARTIFACTS_DIR}"
-              allow_push: ${env:ALLOW_PUSH_PACKAGES}
+              allow_push: ${toJSON(env:ALLOW_PUSH_PACKAGES)}
               token: ${{ secrets.GITHUB_TOKEN }}
