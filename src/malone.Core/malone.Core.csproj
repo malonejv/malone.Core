@@ -297,7 +297,7 @@
       if $(ConfigurationName) == Debug (
       (
       echo {
-      echo   "MALONE_CORE_VER": "@(VersionNumber),"
+      echo   "MALONE_CORE_VER": "@(VersionNumber)",
 	  echo   "MALONE_CORE_DEV_REV": "@(DevRevision)"
       echo }
       )&gt;"variables"
