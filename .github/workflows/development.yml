@@ -32,6 +32,7 @@ jobs:
         with:
               configuration: "${env:CONFIGURATION}"
               solution_path: 'src\malone.Core.sln'
+              variables_dir: "${env:VARIABLES_DIR}"
               token: ${{ secrets.GITHUB_TOKEN }}
   
   pack:

@@ -7,6 +7,9 @@ inputs:
    solution_path:
      required: true
      default: ''
+   variables_dir:
+     required: true
+     default: ''
    token:
      required: true
      default: ''
