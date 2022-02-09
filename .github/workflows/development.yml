@@ -44,7 +44,7 @@ jobs:
       steps:
       - uses: actions/checkout@v1
       - uses: ./.github/actions/pack
-        if: ${env:ALLOW_PUSH_PACKAGES}==true
+        if: env:ALLOW_PUSH_PACKAGES
         with:
               configuration: "${env:CONFIGURATION}"
               solution_path: 'src\malone.Core.sln'
