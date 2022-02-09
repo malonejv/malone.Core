@@ -132,6 +132,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{4FB75B
 		..\.github\actions\deploy\action.yml = ..\.github\actions\deploy\action.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pack", "pack", "{BACA58B5-D10E-41E0-9B53-B6D3CE972053}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\actions\pack\action.yml = ..\.github\actions\pack\action.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -848,9 +853,10 @@ Global
 		{F4B7757C-E1D6-48AF-A6D2-C2546E685FAF} = {2AFC5CCC-A9FC-4232-9A11-B58385408C56}
 		{1EEDB9AB-97BC-4191-ADE5-85F90EDAF1C2} = {F4B7757C-E1D6-48AF-A6D2-C2546E685FAF}
 		{4FB75B60-4B82-4956-AD6A-6CA7A4E6B6EC} = {F4B7757C-E1D6-48AF-A6D2-C2546E685FAF}
+		{BACA58B5-D10E-41E0-9B53-B6D3CE972053} = {F4B7757C-E1D6-48AF-A6D2-C2546E685FAF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {BF840011-B60A-44FF-9D38-4CB15C4C9C8A}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
+		SolutionGuid = {BF840011-B60A-44FF-9D38-4CB15C4C9C8A}
 	EndGlobalSection
 EndGlobal

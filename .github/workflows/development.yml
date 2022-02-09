@@ -17,8 +17,8 @@ env:
   NUGET_ARTIFACTS_DIR: "${{ github.workspace }}\\nuget-artifacts"
   
 jobs:
-  build-and-pack:
-      name: Build & Pack
+  build:
+      name: Build
       runs-on: windows-latest
       environment: development
       
@@ -28,28 +28,33 @@ jobs:
       steps:
       - uses: actions/checkout@v1
       - uses: ./.github/actions/build
+        id: build_app
         with:
               configuration: "${env:CONFIGURATION}"
-              variables_dir: "${env:VARIABLES_DIR}"
               solution_path: 'src\malone.Core.sln'
-              additional_pack_properties: "-Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg"
+              token: ${{ secrets.GITHUB_TOKEN }}
+  
+  pack:
+      name: Pack
+      runs-on: windows-latest
+      environment: development
+      needs: build
+      
+      steps:
+      - uses: ./.github/actions/pack
+        with:
+              configuration: "${env:CONFIGURATION}"
+              solution_path: 'src\malone.Core.sln'
+              additional_pack_properties: "-Version ${{ needs.build.outputs.version_number.MALONE_CORE_VER }}-dev${{ needs.build.outputs.version_number.MALONE_CORE_DEV_REV }} -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg"
               artifacts_path: "${env:NUGET_ARTIFACTS_DIR}"
               allow_push: ${env:ALLOW_PUSH_PACKAGES}
               token: ${{ secrets.GITHUB_TOKEN }}
 
-           
-      #- name: Version Number
-      #  id: version_number
-      #  run: |
-      #        $version = (Get-Content ${env:VARIABLES_DIR} | Out-String |ConvertFrom-Json).MALONE_CORE_VER
-      #        echo "MALONE_CORE_VER=$version"
-      #        echo "::set-output name=version_number::$version"
-    
   deploy:
       name: Deploy
       runs-on: windows-latest
       environment: development
-      needs: build-and-pack
+      needs: pack
 
       steps: 
       - uses: actions/checkout@v1
