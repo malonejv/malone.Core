@@ -7,18 +7,16 @@ inputs:
    solution_path:
      required: true
      default: ''
-   additional_pack_properties:
-     required: false
-     default: ''
-   artifacts_path:
+   variables_dir:
      required: true
      default: ''
-   allow_push:
-     required: false
-     default: false
    token:
      required: true
      default: ''
+outputs:
+  version_number: 
+    description: "Version number"
+    value: ${{ steps.version_number.outputs.version_number }}
 
 runs:
   using: "composite"
@@ -43,25 +41,12 @@ runs:
     
   - name: Build malone.Core
     shell: pwsh
-    run: msbuild ${{ inputs.solution_path }} /t:Clean;Rebuild /p:Configuration=${{ inputs.configuration }}
-        
-  - name: Prepare Packages
+    run: msbuild ${{ inputs.solution_path }} /t:"Clean;Build" /p:Configuration=${{ inputs.configuration }}
+  
+  - name: Version Number
     shell: pwsh
-    if: ${{ inputs.allow_push }}
-    run:
-         |
-          $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects
-          $projects | foreach{ nuget pack $_ -Properties Configuration=${{ inputs.configuration }} ${{inputs.additional_pack_properties }} -OutputDirectory ${{ inputs.artifacts_path }} }
-          
-  - name: Upload artifacts
-    if: ${{ inputs.allow_push }}
-    uses: actions/upload-artifact@v2
-    with:
-      name: nuget-packages
-      path: "${{ github.workspace }}\\nuget-artifacts\\*"
-      if-no-files-found: error
-      retention-days: 1
-          
-  - name: List artifacts
-    shell: pwsh
-    run:  Get-ChildItem -File -Path .\nuget-artifacts
+    id: version_number
+    run: |
+         (Get-Content ${{ inputs.variables_dir }})
+         $maloneCoreInfo = (Get-Content ${{ inputs.variables_dir }} | Out-String |ConvertFrom-Json)
+         echo "::set-output name=version_number::$maloneCoreInfo"
