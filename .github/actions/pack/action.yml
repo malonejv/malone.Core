@@ -13,9 +13,6 @@ inputs:
    artifacts_path:
      required: true
      default: ''
-   allow_push:
-     required: false
-     default: false
    token:
      required: true
      default: ''
@@ -36,14 +33,12 @@ runs:
     
   - name: Prepare Packages
     shell: pwsh
-    if: ${{ fromJSON(inputs.allow_push) }}
     run:
          |
           $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects
           $projects | foreach{ nuget pack $_ -Properties Configuration=${{ inputs.configuration }} ${{inputs.additional_pack_properties }} -OutputDirectory ${{ inputs.artifacts_path }} }
           
   - name: Upload artifacts
-    if: ${{ inputs.allow_push }}
     uses: actions/upload-artifact@v2
     with:
       name: nuget-packages
@@ -52,6 +47,5 @@ runs:
       retention-days: 1
           
   - name: List artifacts
-    if: ${{ inputs.allow_push }}
     shell: pwsh
     run:  Get-ChildItem -File -Path .\nuget-artifacts
