@@ -7,11 +7,14 @@ inputs:
    solution_path:
      required: true
      default: ''
+   additional_pack_properties:
+     required: false
+     default: ''
    artifacts_path:
      required: true
      default: ''
    allow_push:
-     required: true
+     required: false
      default: false
    token:
      required: true
@@ -46,7 +49,7 @@ runs:
     
   - name: Build malone.Core
     shell: pwsh
-    run: msbuild ${{ inputs.solution_path }} /t:Build /p:Configuration=${{ inputs.configuration }}
+    run: msbuild ${{ inputs.solution_path }} /t:Clean;Rebuild /p:Configuration=${{ inputs.configuration }}
         
   - name: Prepare Packages
     shell: pwsh
@@ -54,7 +57,7 @@ runs:
     run:
          |
           $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects
-          $projects | foreach{ nuget pack $_ -Properties Configuration=${{ inputs.configuration }} -Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg -OutputDirectory ${{ inputs.artifacts_path }} }
+          $projects | foreach{ nuget pack $_ -Properties Configuration=${{ inputs.configuration }} ${{inputs.additional_pack_properties }} -OutputDirectory ${{ inputs.artifacts_path }} }
           
   - name: Upload artifacts
     if: ${{ inputs.allow_push }}

@@ -37,6 +37,7 @@ jobs:
         with:
               configuration: "${env:CONFIGURATION}"
               solution_path: 'src\malone.Core.sln'
+              additional_pack_properties: "-Suffix dev -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg"
               artifacts_path: "${env:NUGET_ARTIFACTS_DIR}"
               allow_push: ${env:ALLOW_PUSH_PACKAGES}
               token: ${{ secrets.GITHUB_TOKEN }}
