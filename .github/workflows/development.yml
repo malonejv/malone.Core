@@ -44,7 +44,7 @@ jobs:
       steps:
       - uses: actions/checkout@v1
       - uses: ./.github/actions/pack
-        if: ${env:ALLOW_PUSH_PACKAGES}
+        if: ${env:ALLOW_PUSH_PACKAGES}==true
         with:
               configuration: "${env:CONFIGURATION}"
               solution_path: 'src\malone.Core.sln'
@@ -62,7 +62,7 @@ jobs:
       steps: 
       - uses: actions/checkout@v1
       - uses: ./.github/actions/deploy
-        if: ${env:ALLOW_PUSH_PACKAGES}
+        if: ${env:ALLOW_PUSH_PACKAGES}==true
         with:
               artifacts_path: "${env:NUGET_ARTIFACTS_DIR}"
               allow_push: ${toJSON(env:ALLOW_PUSH_PACKAGES)}
