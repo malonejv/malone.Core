@@ -22,7 +22,7 @@ jobs:
       environment: development
       
       outputs:
-        version_number: ${{ steps.build_app.outputs.version_number }}
+        version_number: fromJSON("${{steps.build_app.outputs.version_number}}")
 
       steps:
       - uses: actions/checkout@v1
@@ -36,8 +36,6 @@ jobs:
       - name: Build Output
         run: |
               echo "${{steps.build_app.outputs.version_number}}"
-              echo ${{steps.build_app.outputs.version_number}}.MALONE_CORE_VER
-              echo ${{steps.build_app.outputs.version_number}}.MALONE_CORE_DEV_REV
   
   pack:
       name: Pack
