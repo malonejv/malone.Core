@@ -3,7 +3,7 @@ description: Build application
 inputs:
    configuration:
      required: true
-     default: 'Debug'
+     default: 'Release'
    solution_path:
      required: true
      default: ''

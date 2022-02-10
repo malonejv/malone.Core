@@ -22,7 +22,7 @@ jobs:
       environment: development
       
       outputs:
-        version_number: ${{ steps.version_number.outputs.version_number }}
+        version_number: ${{ steps.build_app.outputs.version_number }}
 
       steps:
       - uses: actions/checkout@v1
