@@ -79,7 +79,7 @@ jobs:
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
               with:
-                tag_name: v("${{steps.build_app.outputs.version_number}}" | ConvertFrom-Json).MALONE_CORE_VER
-                release_name: v("${{steps.build_app.outputs.version_number}}" | ConvertFrom-Json).MALONE_CORE_VER
+                tag_name: v("${{needs.build.outputs.version_number}}" | ConvertFrom-Json).MALONE_CORE_VER
+                release_name: v("${{needs.build.outputs.version_number}}" | ConvertFrom-Json).MALONE_CORE_VER
                 draft: false
                 prerelease: false
