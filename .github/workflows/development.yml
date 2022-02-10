@@ -52,7 +52,7 @@ jobs:
         with:
               configuration: "${env:CONFIGURATION}"
               solution_path: 'src\malone.Core.sln'
-              additional_pack_properties: '-Version ("${{needs.build.outputs.version_number}}" | ConvertFrom-Json).MALONE_CORE_VER -Suffix "-dev"+("${{needs.build.outputs.version_number}}" | ConvertFrom-Json).MALONE_CORE_DEV_REV -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg'
+              additional_pack_properties: '-Version ("${{needs.build.outputs.version_number}}" | ConvertFrom-Json).MALONE_CORE_VER -Suffix ("dev" + ($content | ConvertFrom-Json).MALONE_CORE_DEV_REV) -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg'
               artifacts_path: "${env:NUGET_ARTIFACTS_DIR}"
               token: ${{ secrets.GITHUB_TOKEN }}
 
