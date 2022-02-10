@@ -47,6 +47,5 @@ runs:
     shell: pwsh
     id: version_number
     run: |
-         (Get-Content ${{ inputs.variables_dir }})
          $maloneCoreInfo = (Get-Content ${{ inputs.variables_dir }} | ConvertFrom-Json)
          echo "::set-output name=version_number::$maloneCoreInfo"
