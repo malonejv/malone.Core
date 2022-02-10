@@ -22,7 +22,7 @@ jobs:
       environment: development
       
       outputs:
-        version_number: fromJSON("${{steps.build_app.outputs.version_number}}")
+        version_number: ${{steps.build_app.outputs.version_number}}
 
       steps:
       - uses: actions/checkout@v1
@@ -35,7 +35,7 @@ jobs:
               token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build Output
         run: |
-              echo "${{steps.build_app.outputs.version_number}}"
+              Write-Host (${{steps.build_app.outputs.version_number}} | ConvertFrom-Json)
   
   pack:
       name: Pack
@@ -45,14 +45,14 @@ jobs:
       
       steps:
       - name: Build Output
-        run: echo "${{needs.build.outputs.version_number}}"
+        run: Write-Host (${{needs.build.outputs.version_number}} | ConvertFrom-Json)
       - uses: actions/checkout@v1
       - uses: ./.github/actions/pack
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
         with:
               configuration: "${env:CONFIGURATION}"
               solution_path: 'src\malone.Core.sln'
-              additional_pack_properties: "-Version ${{ needs.build.outputs.version_number }}.MALONE_CORE_VER-dev${{ needs.build.outputs.version_number }}.MALONE_CORE_DEV_REV -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg"
+              additional_pack_properties: "-Version (${{needs.build.outputs.version_number}} | ConvertFrom-Json).MALONE_CORE_VER-dev(${{needs.build.outputs.version_number}} | ConvertFrom-Json).MALONE_CORE_DEV_REV -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg"
               artifacts_path: "${env:NUGET_ARTIFACTS_DIR}"
               token: ${{ secrets.GITHUB_TOKEN }}
 

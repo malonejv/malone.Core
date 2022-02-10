@@ -41,12 +41,12 @@ runs:
     
   - name: Build malone.Core
     shell: pwsh
-    run: msbuild ${{ inputs.solution_path }} /t:"Clean;Build" /p:Configuration=${{ inputs.configuration }}
+    run: msbuild ${{ inputs.solution_path }} /t:Build /p:Configuration=${{ inputs.configuration }}
   
   - name: Version Number
     shell: pwsh
     id: version_number
     run: |
          (Get-Content ${{ inputs.variables_dir }})
-         $maloneCoreInfo = (Get-Content ${{ inputs.variables_dir }} | Out-String |ConvertFrom-Json)
+         $maloneCoreInfo = (Get-Content ${{ inputs.variables_dir }} | ConvertFrom-Json)
          echo "::set-output name=version_number::$maloneCoreInfo"
