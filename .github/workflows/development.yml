@@ -36,8 +36,8 @@ jobs:
       - name: Build Output
         run: |
               echo "${{steps.build_app.outputs.version_number}}"
-              echo (${{steps.build_app.outputs.version_number}}).MALONE_CORE_VER
-              echo (${{steps.build_app.outputs.version_number}}).MALONE_CORE_DEV_REV
+              echo ${{steps.build_app.outputs.version_number}}.MALONE_CORE_VER
+              echo ${{steps.build_app.outputs.version_number}}.MALONE_CORE_DEV_REV
   
   pack:
       name: Pack
@@ -54,7 +54,7 @@ jobs:
         with:
               configuration: "${env:CONFIGURATION}"
               solution_path: 'src\malone.Core.sln'
-              additional_pack_properties: "-Version (${{ needs.build.outputs.version_number }}).MALONE_CORE_VER-dev(${{ needs.build.outputs.version_number }}).MALONE_CORE_DEV_REV -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg"
+              additional_pack_properties: "-Version ${{ needs.build.outputs.version_number }}.MALONE_CORE_VER-dev${{ needs.build.outputs.version_number }}.MALONE_CORE_DEV_REV -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg"
               artifacts_path: "${env:NUGET_ARTIFACTS_DIR}"
               token: ${{ secrets.GITHUB_TOKEN }}
 
