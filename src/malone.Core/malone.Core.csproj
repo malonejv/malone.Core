@@ -296,13 +296,13 @@
     <PostBuildEvent>
       if $(ConfigurationName) == Debug (
       (
-      echo \'{ "MALONE_CORE_VER": "@(VersionNumber)", "MALONE_CORE_DEV_REV": "@(DevRevision)" }\'
+      echo "{ 'MALONE_CORE_VER': '@(VersionNumber)', 'MALONE_CORE_DEV_REV': '@(DevRevision)' }"
       )&gt;"variables"
       )
 
       if $(ConfigurationName) == Release (
       (
-      echo \'{ "MALONE_CORE_VER": "@(SemVer)" }\'
+      echo "{ 'MALONE_CORE_VER': '@(SemVer)' }"
       )&gt;"variables"
       )
       if $(ConfigurationName) == DebugNuget (
