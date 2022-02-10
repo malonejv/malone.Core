@@ -34,7 +34,7 @@ jobs:
               variables_dir: "${env:VARIABLES_DIR}"
               token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build Output
-        run: echo ${{steps.build_app.outputs.version_number}}
+        run: echo "${{steps.build_app.outputs.version_number}}"
   
   pack:
       name: Pack
@@ -44,7 +44,7 @@ jobs:
       
       steps:
       - name: Build Output
-        run: echo ${{needs.build.outputs.version_number}}
+        run: echo "${{needs.build.outputs.version_number}}"
       - uses: actions/checkout@v1
       - uses: ./.github/actions/pack
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
