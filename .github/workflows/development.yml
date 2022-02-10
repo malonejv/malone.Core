@@ -45,7 +45,7 @@ jobs:
       
       steps:
       - name: Build Output
-        run: Write-Host (${{needs.build.outputs.version_number}} | ConvertFrom-Json)
+        run: Write-Host ("${{needs.build.outputs.version_number}}" | ConvertFrom-Json)
       - uses: actions/checkout@v1
       - uses: ./.github/actions/pack
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
