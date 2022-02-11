@@ -54,7 +54,7 @@ runs:
     shell: pwsh
     run: |
            New-Item -Path "${{ github.workspace }}" -Name "built-objects" -ItemType Directory
-           $solutionDir = ${{ inputs.solution_path }} | Split-Path
+           $solutionDir = "${{ github.workspace }}${{ inputs.solution_path }}" | Split-Path
            $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects | Split-Path
            $projects | ForEach-Object { 
               $folderName = Split-Path $_ -Leaf
