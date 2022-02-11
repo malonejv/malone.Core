@@ -44,7 +44,7 @@ runs:
   - name: Prepare Packages
     shell: pwsh
     run: |
-          Get-ChildItem "${{ github.workspace }}" -Recurse
+          Get-ChildItem ".\" -Recurse
           $projects = .\Get-ProjectsInSolution.ps1 .\built-artifacts\malone.Core.sln -Type NonTestProjects
           $projects | foreach{ nuget pack $_ -Properties Configuration=${{ inputs.configuration }} ${{inputs.additional_pack_properties }} -OutputDirectory ${{ inputs.artifacts_path }} }
           
