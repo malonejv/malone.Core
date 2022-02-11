@@ -50,32 +50,32 @@ runs:
          $maloneCoreInfo = (Get-Content ${{ inputs.variables_dir }} | ConvertFrom-Json)
          echo "::set-output name=version_number::$maloneCoreInfo"
     
-  - name: Preparing artifacts
-    shell: pwsh
-    run: |
-           New-Item -Path "${{ github.workspace }}" -Name "built-objects" -ItemType Directory
-           $solutionDir = "${{ github.workspace }}\${{ inputs.solution_path }}" | Split-Path
-           $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects | Split-Path
-           $projects | ForEach-Object { 
-              $folderName = Split-Path $_ -Leaf
-              New-Item -Path "${{ github.workspace }}\built-objects" -Name $folderName -ItemType Directory 
-              Write-Host Origen
-              Write-Host ******
-              Get-ChildItem "$solutionDir\$folderName\bin\" -Recurse
-              Copy-Item "$solutionDir\$folderName\bin\" -Destination "${{ github.workspace }}\built-objects\$folderName" -Recurse -Container
-              Write-Host Destino
-              Write-Host *******
-              Get-ChildItem "${{ github.workspace }}\built-objects\$folderName" -Recurse }
+  #- name: Preparing artifacts
+  #  shell: pwsh
+  #  run: |
+  #         New-Item -Path "${{ github.workspace }}" -Name "built-objects" -ItemType Directory
+  #         $solutionDir = "${{ github.workspace }}\${{ inputs.solution_path }}" | Split-Path
+  #         $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects | Split-Path
+  #         $projects | ForEach-Object { 
+  #            $folderName = Split-Path $_ -Leaf
+  #            New-Item -Path "${{ github.workspace }}\built-objects" -Name $folderName -ItemType Directory 
+  #            Write-Host Origen
+  #            Write-Host ******
+  #            Get-ChildItem "$solutionDir\$folderName\bin\" -Recurse
+  #            Copy-Item "$solutionDir\$folderName\bin\" -Destination "${{ github.workspace }}\built-objects\$folderName" -Recurse -Container
+  #            Write-Host Destino
+  #            Write-Host *******
+  #            Get-ChildItem "${{ github.workspace }}\built-objects\$folderName" -Recurse }
       
-  - name: Upload artifacts
-    uses: actions/upload-artifact@v2
-    with:
-      name: built-artifacts
-      path: "${{ github.workspace }}\\built-objects\\*"
-      if-no-files-found: error
-      retention-days: 10
+  #- name: Upload artifacts
+  #  uses: actions/upload-artifact@v2
+  #  with:
+  #    name: built-artifacts
+  #    path: "${{ github.workspace }}\\src\\*"
+  #    if-no-files-found: error
+  #    retention-days: 5
 
-  - name: List artifacts
-    shell: pwsh
-    run:  Get-ChildItem -Path .\built-artifacts -Recurse
+  #- name: List artifacts
+  #  shell: pwsh
+  #  run:  Get-ChildItem -Path .\built-artifacts -Recurse
           
