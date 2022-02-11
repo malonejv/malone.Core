@@ -57,8 +57,8 @@ runs:
            $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects | Split-Path
            $projects | ForEach-Object { 
               $folderName = Split-Path $_ -Leaf
-              New-Item -Path "${{ github.workspace }}\\built-objects" -Name $folderName -ItemType Directory 
-              Copy-Item ($_+ "\\bin\\") -Destination ("${{ github.workspace }}\\built-objects\\"+$folderName) -Recurse -Container
+              New-Item -Path "${{ github.workspace }}built-objects" -Name $folderName -ItemType Directory 
+              Copy-Item ($_+ "\bin\") -Destination ("${{ github.workspace }}built-objects\"+$folderName) -Recurse -Container
            }
       
   - name: Upload artifacts
