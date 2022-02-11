@@ -54,7 +54,7 @@ runs:
     shell: pwsh
     run: |
            New-Item -Path "${{ github.workspace }}" -Name "built-objects" -ItemType Directory
-           
+           $solutionDir = ${{ inputs.solution_path }} | Split-Path
            $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects | Split-Path
            $projects | ForEach-Object { 
               $folderName = Split-Path $_ -Leaf
@@ -62,11 +62,11 @@ runs:
               Write-Host Origen
               Write-Host ******
               Write-Host 
-              Get-ChildItem ("${{ inputs.solution_path }}\"+ $folderName + "\bin\") -Recurse
-              Copy-Item ("${{ inputs.solution_path }}\"+ $folderName + "\bin\") -Destination ("${{ github.workspace }}\built-objects\"+$folderName) -Recurse -Container
+              Get-ChildItem ("$solutionDir\$folderName\bin\") -Recurse
+              Copy-Item "$solutionDir\$folderName\bin\") -Destination "${{ github.workspace }}\built-objects\$folderName") -Recurse -Container
               Write-Host Destino
               Write-Host *******
-              Get-ChildItem ("${{ github.workspace }}\built-objects\"+ +$folderName) -Recurse
+              Get-ChildItem ("${{ github.workspace }}\built-objects\$folderName") -Recurse
            }
       
   - name: Upload artifacts
