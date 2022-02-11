@@ -51,6 +51,7 @@ runs:
          echo "::set-output name=version_number::$maloneCoreInfo"
     
   - name: Preparing artifacts
+    shell: pwsh
     run: |
            New-Item -Path "${{ github.workspace }}" -Name "built-objects" -ItemType Directory
            $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects | Split-Path
