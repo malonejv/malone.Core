@@ -30,6 +30,10 @@ runs:
   - name: Add GitHub Source
     shell: pwsh
     run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ inputs.token }}
+   
+  - name: Nuget Restore Core Packages
+    shell: pwsh
+    run:  nuget restore ${{ inputs.solution_path }}
     
   - name: Download artifacts
     uses: actions/download-artifact@v2
