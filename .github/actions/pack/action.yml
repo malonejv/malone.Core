@@ -31,22 +31,22 @@ runs:
     shell: pwsh
     run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ inputs.token }}
     
-  #- name: Download artifacts
-  #  uses: actions/download-artifact@v2
-  #  with:
-  #      name: built-artifacts
-  #      path: "built-artifacts"
-
-  #- name: List artifacts
-  #  shell: pwsh
-  #  run:  Get-ChildItem -Path .\built-artifacts -Recurse
+  - name: Download artifacts
+    uses: actions/download-artifact@v2
+    with:
+        name: built-artifacts
+        path: "built-artifacts"
 
   - name: Prepare Packages
     shell: pwsh
     run: |
-          Get-ChildItem ".\" -Recurse
-          $projects = .\Get-ProjectsInSolution.ps1 .\built-artifacts\malone.Core.sln -Type NonTestProjects
-          $projects | foreach{ nuget pack $_ -Properties Configuration=${{ inputs.configuration }} ${{inputs.additional_pack_properties }} -OutputDirectory ${{ inputs.artifacts_path }} }
+          $solutionDir="${{ github.workspace }}\${{ inputs.solution_path }}" | Split-Path
+          $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects | Split-Path
+          $projects | ForEach-Object { 
+            $folderName = Split-Path $_ -Leaf
+            Copy-Item "D:\Test\$folderName\bin" -Recurse -Container -Destination "$solutionDir\$folderName\" 
+            Copy-Item "${{ github.workspace }}\built-objects\$folderName\bin" -Destination "$solutionDir\$folderName\" -Recurse -Container
+            nuget pack $_ -Properties Configuration=${{ inputs.configuration }} ${{inputs.additional_pack_properties }} -OutputDirectory ${{ inputs.artifacts_path }} }
           
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
