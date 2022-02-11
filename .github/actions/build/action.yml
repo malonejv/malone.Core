@@ -60,11 +60,11 @@ runs:
               New-Item -Path "${{ github.workspace }}\built-objects" -Name $folderName -ItemType Directory 
               Write-Host Origen
               Write-Host ******
-              Get-ChildItem ("${{ github.workspace }}\"+ $folderName + "\bin\")
+              Get-ChildItem ("${{ github.workspace }}\") -Recurse
               Copy-Item ("${{ github.workspace }}\"+ $folderName + "\bin\") -Destination ("${{ github.workspace }}\built-objects\"+$folderName) -Recurse -Container
               Write-Host Destino
               Write-Host *******
-              Get-ChildItem ("${{ github.workspace }}\built-objects\"+ +$folderName)
+              Get-ChildItem ("${{ github.workspace }}\built-objects\"+ +$folderName) -Recurse
            }
       
   - name: Upload artifacts
