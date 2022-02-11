@@ -58,7 +58,7 @@ runs:
            $projects | ForEach-Object { 
               $folderName = Split-Path $_ -Leaf
               New-Item -Path "${{ github.workspace }}\\built-objects" -Name $folderName -ItemType Directory 
-              Copy-Item ($_+ "\\bin\\") -Destination ("${{ github.workspace }}\\"+$folderName) -Recurse -Container
+              Copy-Item ($_+ "\\bin\\") -Destination ("${{ github.workspace }}\\built-objects\\"+$folderName) -Recurse -Container
            }
       
   - name: Upload artifacts
