@@ -34,7 +34,7 @@ runs:
   - name: Download artifacts
     uses: actions/download-artifact@v2
     with:
-        name: built-objects
+        name: built-artifacts
         path: "built-artifacts"
 
   - name: List artifacts
