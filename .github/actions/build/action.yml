@@ -58,6 +58,8 @@ runs:
            $projects | ForEach-Object { 
               $folderName = Split-Path $_ -Leaf
               New-Item -Path "${{ github.workspace }}\built-objects" -Name $folderName -ItemType Directory 
+              Write-Host ($_+ "\bin\")
+              Get-ChildItem ($_+ "\bin\")
               Copy-Item ($_+ "\bin\") -Destination ("${{ github.workspace }}\built-objects\"+$folderName) -Recurse -Container
            }
       
