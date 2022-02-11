@@ -31,6 +31,16 @@ runs:
     shell: pwsh
     run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ inputs.token }}
     
+  - name: Download artifacts
+    uses: actions/download-artifact@v2
+    with:
+        name: built-objects
+        path: "built-artifacts"
+
+  - name: List artifacts
+    shell: pwsh
+    run:  Get-ChildItem -Path .\built-artifacts -Recurse
+
   - name: Prepare Packages
     shell: pwsh
     run:
@@ -44,7 +54,7 @@ runs:
       name: nuget-packages
       path: "${{ github.workspace }}\\nuget-artifacts\\*"
       if-no-files-found: error
-      retention-days: 1
+      retention-days: 10
           
   - name: List artifacts
     shell: pwsh
