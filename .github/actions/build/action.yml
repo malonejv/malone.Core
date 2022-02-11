@@ -70,8 +70,8 @@ runs:
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
     with:
-      name: built-objects
-      path: "${{ github.workspace }}\\built-artifacts\\*"
+      name: built-artifacts
+      path: "${{ github.workspace }}\\built-objects\\*"
       if-no-files-found: error
       retention-days: 10
 
