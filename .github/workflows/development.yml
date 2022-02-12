@@ -37,7 +37,7 @@ jobs:
               nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
               nuget_username: "malonejv"
               nuget_password: "${{ secrets.GITHUB_TOKEN }}"
-              build_artifact_name: ${env:BUILD_ARTIFACT}
+              build_artifact_name: ${{env:BUILD_ARTIFACT}}
 
   pack:
       name: Pack
