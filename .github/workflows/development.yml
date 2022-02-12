@@ -14,8 +14,8 @@ env:
   CONFIGURATION: "Debug"
   SOLUTION_PATH: "${{ github.workspace }}\\src\\malone.Core.sln"
   VARIABLES_PATH: "${{ github.workspace }}\\src\\malone.Core\\bin\\Debug\\Variables"
-  BUILD_ARTIFACT: "build-artifacts"
-  PACK_ARTIFACT: "pack-artifacts"
+  #BUILD_ARTIFACT: "build-artifacts"
+  #PACK_ARTIFACT: "pack-artifacts"
   
 jobs:
   build:
@@ -37,7 +37,7 @@ jobs:
               nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
               nuget_username: "malonejv"
               nuget_password: "${{ secrets.GITHUB_TOKEN }}"
-              build_artifact_name: ${env:BUILD_ARTIFACT}
+              build_artifact_name: "build-artifacts"
 
   pack:
       name: Pack
@@ -56,8 +56,8 @@ jobs:
               nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
               nuget_username: "malonejv"
               nuget_password: "${{ secrets.GITHUB_TOKEN }}"
-              build_artifact_name: ${env:BUILD_ARTIFACT}
-              pack_artifact_name: ${env:PACK_ARTIFACT}
+              build_artifact_name: "build-artifacts"
+              pack_artifact_name: "pack-artifacts"
 
   deploy:
       name: Deploy
@@ -73,4 +73,4 @@ jobs:
               nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
               nuget_username: "malonejv"
               nuget_password: "${{ secrets.GITHUB_TOKEN }}"
-              pack_artifact_name: ${env:PACK_ARTIFACT}
+              pack_artifact_name: "pack-artifacts"

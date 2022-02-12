@@ -40,7 +40,7 @@ jobs:
               nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
               nuget_username: "malonejv"
               nuget_password: "${{ secrets.GITHUB_TOKEN }}"
-              build_artifact_name: ${env:BUILD_ARTIFACT}
+              build_artifact_name: "build-artifacts"
    
   pack:
       name: Pack
@@ -58,8 +58,8 @@ jobs:
               nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
               nuget_username: "malonejv"
               nuget_password: "${{ secrets.GITHUB_TOKEN }}"
-              build_artifact_name: ${env:BUILD_ARTIFACT}
-              pack_artifact_name: ${env:PACK_ARTIFACT}
+              build_artifact_name: "build-artifacts"
+              pack_artifact_name: "pack-artifacts"
  
   deploy:
       name: Deploy
@@ -75,7 +75,7 @@ jobs:
               nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
               nuget_username: "malonejv"
               nuget_password: "${{ secrets.GITHUB_TOKEN }}"
-              pack_artifact_name: ${env:PACK_ARTIFACT}
+              pack_artifact_name: "pack-artifacts"
 
   create-release:            
         name: Create Release
