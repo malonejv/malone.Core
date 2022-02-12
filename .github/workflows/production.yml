@@ -15,8 +15,10 @@ on:
 
 env:
   CONFIGURATION: "Release"
-  VARIABLES_DIR: "src\\malone.Core\\bin\\Release\\Variables"
-  NUGET_ARTIFACTS_DIR: "${{ github.workspace }}\\nuget-artifacts"
+  SOLUTION_PATH: "${{ github.workspace }}\\src\\malone.Core.sln"
+  VARIABLES_PATH: "${{ github.workspace }}\\src\\malone.Core\\bin\\Release\\Variables"
+  BUILD_ARTIFACT: "build-artifacts"
+  PACK_ARTIFACT: "pack-artifacts"
   
 jobs:
   build:
@@ -25,22 +27,25 @@ jobs:
       environment: production
       
       outputs:
-        version_number: ${{ steps.version_number.outputs.version_number }}
+        version_number: ${{steps.build_app.outputs.version_number}}
 
       steps:
       - uses: actions/checkout@v1
       - uses: ./.github/actions/build
+        id: build_app
         with:
               configuration: "${env:CONFIGURATION}"
-              solution_path: 'src\malone.Core.sln'
-              variables_dir: "${env:VARIABLES_DIR}"
-              token: ${{ secrets.GITHUB_TOKEN }}
-           
+              solution_path: "${env:SOLUTION_PATH}"
+              variables_path: "${env:VARIABLES_PATH}"
+              nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
+              nuget_username: "malonejv"
+              nuget_password: "${{ secrets.GITHUB_TOKEN }}"
+              build_artifact_name: "${env:BUILD_ARTIFACT}"
    
   pack:
       name: Pack
       runs-on: windows-latest
-      environment: development
+      environment: production
       needs: build
       
       steps:
@@ -49,14 +54,17 @@ jobs:
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         with:
               configuration: "${env:CONFIGURATION}"
-              solution_path: 'src\malone.Core.sln'
-              artifacts_path: "${env:NUGET_ARTIFACTS_DIR}"
-              token: ${{ secrets.GITHUB_TOKEN }}
+              solution_path: "${env:SOLUTION_PATH}"
+              nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
+              nuget_username: "malonejv"
+              nuget_password: "${{ secrets.GITHUB_TOKEN }}"
+              build_artifact_name: "${env:BUILD_ARTIFACT}"
+              pack_artifact_name: "${env:PACK_ARTIFACT}"
  
   deploy:
       name: Deploy
       runs-on: windows-latest
-      environment: development
+      environment: production
       needs: pack
       
       steps: 
@@ -64,13 +72,15 @@ jobs:
       - uses: ./.github/actions/deploy
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         with:
-              artifacts_path: ${env:NUGET_ARTIFACTS_DIR}
-              token: ${{ secrets.GITHUB_TOKEN }}
+              nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
+              nuget_username: "malonejv"
+              nuget_password: "${{ secrets.GITHUB_TOKEN }}"
+              pack_artifact_name: "${env:PACK_ARTIFACT}"
 
   create-release:            
         name: Create Release
         runs-on: windows-latest
-        environment: development
+        environment: production
 
         steps:
             - name: Create Release

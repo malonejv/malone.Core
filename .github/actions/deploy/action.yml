@@ -2,35 +2,37 @@ name: Deploy Workflow
 description: Deploy application
 
 inputs:
-  artifacts_path:
-    required: true
-    default: ''
-  token:
+   nuget_source:
      required: true
      default: ''
+   nuget_username:
+     required: true
+     default: ''
+   nuget_password:
+     required: true
+     default: ''
+   pack_artifact_name:
+     required: true
+     default: 'pack-artifacts'
   
 runs:
   using: "composite"
 
   steps: 
   
-  - name: Add GitHub Source
+  - name: Add GitHub as Nuget Source
     shell: pwsh
-    run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ inputs.token }}
+    run: nuget sources add -name "github" -Source ${{ inputs.nuget_source }} -Username ${{ inputs.nuget_username }} -Password ${{ inputs.nuget_password }}
     
-  - name: Download artifacts
+  - name: Download packed artifacts
     uses: actions/download-artifact@v2
     with:
-        name: nuget-packages
-        path: "nuget-packages"
+        name: ${{ inputs.pack_artifact_name }}
+        path: ${{ inputs.pack_artifact_name }}
 
-  - name: List artifacts
-    shell: pwsh
-    run:  Get-ChildItem -File -Path .\nuget-packages
-
-  - name: "Pushing Nuget Packages"
+  - name: "Push Nuget Packages"
     shell: pwsh
     run: |
-          cd .\nuget-packages
+          cd "${{ github.workspace }}\\${{ inputs.pack_artifact_name }}"
           nuget push *-dev.nupkg -SkipDuplicate -source "github"
           nuget push *-dev.snupkg -SkipDuplicate -source "github"

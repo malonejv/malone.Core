@@ -10,12 +10,21 @@ inputs:
    additional_pack_properties:
      required: false
      default: ''
-   artifacts_path:
+   nuget_source:
      required: true
      default: ''
-   token:
+   nuget_username:
      required: true
      default: ''
+   nuget_password:
+     required: true
+     default: ''
+   build_artifact_name:
+     required: true
+     default: 'build-artifacts'
+   pack_artifact_name:
+     required: true
+     default: 'pack-artifacts'
 
 runs:
   using: "composite"
@@ -27,38 +36,34 @@ runs:
   - name: Setup NuGet
     uses: NuGet/setup-nuget@v1.0.5
 
-  - name: Add GitHub Source
+  - name: Add GitHub as Nuget Source
     shell: pwsh
-    run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/malonejv/index.json -Username malonejv -Password ${{ inputs.token }}
+    run: nuget sources add -name "github" -Source ${{ inputs.nuget_source }} -Username ${{ inputs.nuget_username }} -Password ${{ inputs.nuget_password }}
    
-  - name: Nuget Restore Core Packages
+  - name: Restore Nuget Packages
     shell: pwsh
     run:  nuget restore ${{ inputs.solution_path }}
     
-  - name: Download artifacts
+  - name: Download built artifacts
     uses: actions/download-artifact@v2
     with:
-        name: built-artifacts
-        path: "built-artifacts"
+        name: ${{ inputs.build_artifact_name }}
+        path: ${{ inputs.build_artifact_name }}
 
   - name: Prepare Packages
     shell: pwsh
     run: |
-          $solutionDir="${{ github.workspace }}\${{ inputs.solution_path }}" | Split-Path
+          $solutionDir="${{ inputs.solution_path }}" | Split-Path
           $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects | Split-Path
           $projects | ForEach-Object { 
             $folderName = Split-Path $_ -Leaf
-            Copy-Item "${{ github.workspace }}\built-artifacts\$folderName\bin" -Destination "$solutionDir\$folderName\" -Recurse -Container
-            nuget pack $_ -Properties Configuration=${{ inputs.configuration }} ${{inputs.additional_pack_properties }} -OutputDirectory ${{ inputs.artifacts_path }} }
+            Copy-Item "${{ github.workspace }}\${{ inputs.build_artifact_name }}\$folderName\bin" -Destination "$solutionDir\$folderName\" -Recurse -Container
+            nuget pack $_ -Properties Configuration=${{ inputs.configuration }} ${{inputs.additional_pack_properties }} -OutputDirectory "${{ github.workspace }}\\${{ inputs.pack_artifact_name }}" }
           
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
     with:
-      name: nuget-packages
-      path: "${{ github.workspace }}\\nuget-artifacts\\*"
+      name:  ${{ inputs.pack_artifact_name }}
+      path: "${{ github.workspace }}\\${{ inputs.pack_artifact_name }}\\*"
       if-no-files-found: error
       retention-days: 10
-          
-  - name: List artifacts
-    shell: pwsh
-    run:  Get-ChildItem -File -Path .\nuget-artifacts

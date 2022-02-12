@@ -12,8 +12,10 @@ on:
 
 env:
   CONFIGURATION: "Debug"
-  VARIABLES_DIR: "src\\malone.Core\\bin\\Debug\\Variables"
-  NUGET_ARTIFACTS_DIR: "${{ github.workspace }}\\nuget-artifacts"
+  SOLUTION_PATH: "${{ github.workspace }}\\src\\malone.Core.sln"
+  VARIABLES_PATH: "${{ github.workspace }}\\src\\malone.Core\\bin\\Debug\\Variables"
+  BUILD_ARTIFACT: "build-artifacts"
+  PACK_ARTIFACT: "pack-artifacts"
   
 jobs:
   build:
@@ -30,13 +32,13 @@ jobs:
         id: build_app
         with:
               configuration: "${env:CONFIGURATION}"
-              solution_path: 'src\malone.Core.sln'
-              variables_dir: "${env:VARIABLES_DIR}"
-              token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build Output
-        run: |
-              Write-Host ("${{steps.build_app.outputs.version_number}}" | ConvertFrom-Json)
-  
+              solution_path: "${env:SOLUTION_PATH}"
+              variables_path: "${env:VARIABLES_PATH}"
+              nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
+              nuget_username: "malonejv"
+              nuget_password: "${{ secrets.GITHUB_TOKEN }}"
+              build_artifact_name: "${env:BUILD_ARTIFACT}"
+
   pack:
       name: Pack
       runs-on: windows-latest
@@ -44,17 +46,18 @@ jobs:
       needs: build
       
       steps:
-      - name: Build Output
-        run: Write-Host ("${{needs.build.outputs.version_number}}" | ConvertFrom-Json)
       - uses: actions/checkout@v1
       - uses: ./.github/actions/pack
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
         with:
               configuration: "${env:CONFIGURATION}"
-              solution_path: 'src\malone.Core.sln'
+              solution_path: "${env:SOLUTION_PATH}"
               additional_pack_properties: '-Version ("${{needs.build.outputs.version_number}}" | ConvertFrom-Json).MALONE_CORE_VER -Suffix ("dev" + ("${{needs.build.outputs.version_number}}" | ConvertFrom-Json).MALONE_CORE_DEV_REV) -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg'
-              artifacts_path: "${env:NUGET_ARTIFACTS_DIR}"
-              token: ${{ secrets.GITHUB_TOKEN }}
+              nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
+              nuget_username: "malonejv"
+              nuget_password: "${{ secrets.GITHUB_TOKEN }}"
+              build_artifact_name: "${env:BUILD_ARTIFACT}"
+              pack_artifact_name: "${env:PACK_ARTIFACT}"
 
   deploy:
       name: Deploy
@@ -67,5 +70,7 @@ jobs:
       - uses: ./.github/actions/deploy
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
         with:
-              artifacts_path: "${env:NUGET_ARTIFACTS_DIR}"
-              token: ${{ secrets.GITHUB_TOKEN }}
+              nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
+              nuget_username: "malonejv"
+              nuget_password: "${{ secrets.GITHUB_TOKEN }}"
+              pack_artifact_name: "${env:PACK_ARTIFACT}"
