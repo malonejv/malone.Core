@@ -62,14 +62,14 @@ runs:
   - name: Preparing artifacts
     shell: pwsh
     run: |
-           $buldObjects="built-objects"
-           New-Item -Path "${{ github.workspace }}" -Name $buldObjects -ItemType Directory
+           $buildObjects="${{ inputs.build_artifact_name }}"
+           New-Item -Path "${{ github.workspace }}" -Name $buildObjects -ItemType Directory
            $solutionDir = "${{ inputs.solution_path }}" | Split-Path
            $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects | Split-Path
            $projects | ForEach-Object { 
               $folderName = Split-Path $_ -Leaf
-              New-Item -Path "${{ github.workspace }}\$buldObjects" -Name $folderName -ItemType Directory 
-              Copy-Item "$solutionDir\$folderName\bin\" -Destination "${{ github.workspace }}\$buldObjects\$folderName" -Recurse -Container }
+              New-Item -Path "${{ github.workspace }}\$buildObjects" -Name $folderName -ItemType Directory 
+              Copy-Item "$solutionDir\$folderName\bin\" -Destination "${{ github.workspace }}\$buildObjects\$folderName" -Recurse -Container }
       
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
