@@ -70,6 +70,7 @@ runs:
               $folderName = Split-Path $_ -Leaf
               New-Item -Path "${{ github.workspace }}\$buildObjects" -Name $folderName -ItemType Directory 
               Copy-Item "$solutionDir\$folderName\bin\" -Destination "${{ github.workspace }}\$buildObjects\$folderName" -Recurse -Container }
+           Get-ChildItem "${{ github.workspace }}\\${{ inputs.build_artifact_name }}" -Recurse
       
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
