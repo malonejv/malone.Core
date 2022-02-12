@@ -76,6 +76,7 @@ jobs:
               nuget_username: "malonejv"
               nuget_password: "${{ secrets.GITHUB_TOKEN }}"
               pack_artifact_name: "pack-artifacts"
+              package_pattern: "*.nupkg"
 
   create-release:            
         name: Create Release

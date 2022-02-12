@@ -14,7 +14,13 @@ inputs:
    pack_artifact_name:
      required: true
      default: 'pack-artifacts'
-  
+   package_pattern:
+     required: true
+     default: ''
+   symbol_pattern:
+     required: false
+     default: ''
+     
 runs:
   using: "composite"
 
@@ -34,5 +40,5 @@ runs:
     shell: pwsh
     run: |
           cd "${{ github.workspace }}\\${{ inputs.pack_artifact_name }}"
-          nuget push *-dev.nupkg -SkipDuplicate -source "github"
-          nuget push *-dev.snupkg -SkipDuplicate -source "github"
+          nuget push "${{ inputs.package_pattern }}" -SkipDuplicate -source "github"
+          if("${{ inputs.symbol_pattern }}"-ne""){ nuget push "${{ inputs.symbol_pattern }}" -SkipDuplicate -source "github"}

@@ -58,7 +58,7 @@ runs:
           $projects | ForEach-Object { 
             $folderName = Split-Path $_ -Leaf
             Copy-Item "${{ github.workspace }}\${{ inputs.build_artifact_name }}\$folderName\bin" -Destination "$solutionDir\$folderName\" -Recurse -Container
-            nuget pack $_ -Properties Configuration=${{ inputs.configuration }} ${{inputs.additional_pack_properties }} -OutputDirectory "${{ github.workspace }}\\${{ inputs.pack_artifact_name }}" }
+            nuget pack $_ -Properties Configuration=${{ inputs.configuration }} ${{inputs.additional_pack_properties }} -OutputDirectory "${{ github.workspace }}\\${{ inputs.pack_artifact_name }}"}
           
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
