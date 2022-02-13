@@ -55,8 +55,8 @@ runs:
     run: |
           $solutionDir="${{ inputs.solution_path }}" | Split-Path
           $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects | Split-Path
-          $copied=Copy-Item "${{ github.workspace }}\${{ inputs.build_artifact_name }}" -Destination "$solutionDir\" -Force -Recurse -Container
-          Write-Host "Archivos copiados: $copied.Count"
+          Copy-Item "${{ github.workspace }}\${{ inputs.build_artifact_name }}" -Destination "$solutionDir" -Force -Recurse -Container
+          Get-ChildItem "$solutionDir" -Recurse -Depth 3
           $projects | ForEach-Object { 
             $folderName = Split-Path $_ -Leaf
             nuget pack $_ -Properties Configuration=${{ inputs.configuration }} ${{inputs.additional_pack_properties }} -OutputDirectory "${{ github.workspace }}\\${{ inputs.pack_artifact_name }}"}
@@ -67,4 +67,4 @@ runs:
       name:  "${{ inputs.pack_artifact_name }}"
       path: "${{ github.workspace }}\\${{ inputs.pack_artifact_name }}\\*"
       if-no-files-found: error
-      retention-days: 10
+      retention-days: 1
