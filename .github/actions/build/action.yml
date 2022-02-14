@@ -56,6 +56,7 @@ runs:
           $solutionDir=${{ inputs.solution_path }} | Split-Path
           $assemblyVersion=.\Get-AssemblyVersion.ps1 -Path "$solutionDir" -FileMask "GlobalAssemblyInfo.cs"
           $newAssemblyVersion=.\Upd-AssemblyVersion.ps1 -CurrentVersionFilePath "$solutionDir\CurrentVersion" -AssemblyVersionFilePath "$solutionDir\GlobalAssemblyInfo.cs" -AssemblyVersion $assemblyVersion -Environment $environment
+          Write-Host "Version number: $newAssemblyVersion"
           echo "::set-output name=version_number::$newAssemblyVersion"
 
   - name: Build application
