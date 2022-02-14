@@ -29,60 +29,63 @@ param (
 	}
 	
 	$CurrentVersionPath = ($CurrentVersionFilePath | Resolve-Path).ProviderPath
-	Write-Verbose $CurrentVersionPath
+	Write-Verbose "Current Version Path: $CurrentVersionPath"
 	
 	$currentVersion=Get-Content "$CurrentVersionPath" | ConvertFrom-Json
-	Write-Verbose $currentVersion
+	Write-Verbose "Current Version: $currentVersion"
 	
 	$assemblyVersionMatch=[regex]::Match($AssemblyVersion,"(\d+)\.(\d+)\.(\d+)\.(\d+)").captures
 	$assemblyVersionMajor=$assemblyVersionMatch.Groups[1].value
 	$assemblyVersionMinor=$assemblyVersionMatch.Groups[2].value
 	$assemblyVersionPatch=$assemblyVersionMatch.Groups[3].value
 	$assemblyVersionRevision=$assemblyVersionMatch.Groups[4].value
-	Write-Verbose $AssemblyVersion
+	Write-Verbose "Assembly Version: $AssemblyVersion"
 	
 	$newAssemblyVersionMajor=0
 	$newAssemblyVersionMinor=0
 	$newAssemblyVersionPatch=0
 	$newAssemblyVersionRevision=0
 	
-	if($BranchType -eq "Development"){
+	Write-Verbose "Environment: $Environment"
+	if($Environment -eq "Development"){
 		$currentVersionMatch=[regex]::Match($currentVersion.development,"(\d+)\.(\d+)\.(\d+)\.(\d+)").captures
-		
+		Write-Verbose "Current match: $currentVersionMatch"
+
 		$currentMajor=$currentVersionMatch.Groups[1].value
 		$currentMinor=$currentVersionMatch.Groups[2].value
 		$currentPatch=$currentVersionMatch.Groups[3].value
 		$currentRevision=$currentVersionMatch.Groups[4].value
-		
+		Write-Verbose "Current match groups: $currentMajor.$currentMinor.$currentPatch.$currentRevision"
+
 		if($assemblyVersionMajor -lt $currentMajor){
 			$newAssemblyVersionMajor=$currentMajor
 			$newAssemblyVersionMinor=$currentMinor
-			$newAssemblyVersionPatch=$currentPatch+1
+			$newAssemblyVersionPatch=([int]$currentPatch)+1
 		}elseif($assemblyVersionMajor -gt $currentMajor){
 			$newAssemblyVersionMajor=$assemblyVersionMajor
-			$newAssemblyVersionMinor=$assemblyVersionMinor
-			$newAssemblyVersionPatch=$assemblyVersionPatch
+			$newAssemblyVersionMinor=0
+			$newAssemblyVersionPatch=0
 		}elseif($assemblyVersionMajor -eq $currentMajor){
 			$newAssemblyVersionMajor=$currentMajor
 			if($assemblyVersionMinor -lt $currentMinor){
 				$newAssemblyVersionMinor=$currentMinor
-				$newAssemblyVersionPatch=$currentPatch+1
+				$newAssemblyVersionPatch=([int]$currentPatch)+1
 			}elseif($assemblyVersionMinor -gt $currentMinor){
 				$newAssemblyVersionMinor=$assemblyVersionMinor
-				$newAssemblyVersionPatch=$assemblyVersionPatch
+				$newAssemblyVersionPatch=0
 			}elseif($assemblyVersionMinor -eq $currentMinor){
 				$newAssemblyVersionMinor=$currentMinor
 				
-				if($assemblyVersionPatch -gt $currentPatch){
+				if([int]$assemblyVersionPatch -gt [int]$currentPatch){
 					$newAssemblyVersionPatch=$assemblyVersionPatch
-					$newAssemblyVersionRevision=$assemblyVersionRevision
+					$newAssemblyVersionRevision=0
 				}else{
 					$newAssemblyVersionPatch=$currentPatch
-					$newAssemblyVersionRevision=$currentRevision+1
+					$newAssemblyVersionRevision=([int]$currentRevision)+1
 				}
 			}
 		}
-	}elseif($BranchType -eq "Production") {
+	}elseif($Environment -eq "Production") {
 		$currentVersionMatch=[regex]::Match($currentVersion.production,"(\d+)\.(\d+)\.(\d+)\.(\d+)").captures
 		$currentMajor=$currentVersionMatch.Groups[1].value
 		$currentMinor=$currentVersionMatch.Groups[2].value
@@ -93,25 +96,25 @@ param (
 		if($assemblyVersionMajor -lt $currentMajor){
 			$newAssemblyVersionMajor=$currentMajor
 			$newAssemblyVersionMinor=$currentMinor
-			$newAssemblyVersionPatch=$currentPatch+1
+			$newAssemblyVersionPatch=([int]$currentPatch)+1
 		}elseif($assemblyVersionMajor -gt $currentMajor){
 			$newAssemblyVersionMajor=$assemblyVersionMajor
-			$newAssemblyVersionMinor=$assemblyVersionMinor
-			$newAssemblyVersionPatch=$assemblyVersionPatch
+			$newAssemblyVersionMinor=0
+			$newAssemblyVersionPatch=0
 		}elseif($assemblyVersionMajor -eq $currentMajor){
 			$newAssemblyVersionMajor=$currentMajor
 			if($assemblyVersionMinor -lt $currentMinor){
 				$newAssemblyVersionMinor=$currentMinor
-				$newAssemblyVersionPatch=$currentPatch+1
+				$newAssemblyVersionPatch=([int]$currentPatch)+1
 			}elseif($assemblyVersionMinor -gt $currentMinor){
 				$newAssemblyVersionMinor=$assemblyVersionMinor
-				$newAssemblyVersionPatch=$assemblyVersionPatch
+				$newAssemblyVersionPatch=0
 			}elseif($assemblyVersionMinor -eq $currentMinor){
 				$newAssemblyVersionMinor=$currentMinor
 				if($assemblyVersionPatch -gt $currentPatch){
 					$newAssemblyVersionPatch=$assemblyVersionPatch
 				}else{
-					$newAssemblyVersionPatch=$currentPatch+1
+					$newAssemblyVersionPatch=([int]$currentPatch)+1
 				}
 			}
 		}
@@ -121,13 +124,15 @@ param (
 	$newAssemblyVersion="$newAssemblyVersionMajor.$newAssemblyVersionMinor.$newAssemblyVersionPatch.$newAssemblyVersionRevision"
 	(Get-Content "$AssemblyVersionFilePath").replace("$AssemblyVersion", "$newAssemblyVersion") | Set-Content "$AssemblyVersionFilePath"
 
-	if($BranchType -eq "Development"){
+	if($Environment -eq "Development"){
 		$currentVersion.development=$newAssemblyVersion
 	}else{
 		$currentVersion.production=$newAssemblyVersion
 	}
+	Write-Verbose "Current Version File: $currentVersion"
+
 	Set-Content -Value ($currentVersion | convertTo-Json) -Path "$CurrentVersionFilePath"	
-	
+	Write-Verbose "New Assembly Version: $newAssemblyVersion"
 	return $newAssemblyVersion
 	
 	
