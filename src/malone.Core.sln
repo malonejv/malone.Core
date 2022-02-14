@@ -117,7 +117,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Identity.AdoNet
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{FD11AED8-C9FC-4948-B282-BDF67A7BD621}"
 	ProjectSection(SolutionItems) = preProject
+		..\Get-AssemblyVersion.ps1 = ..\Get-AssemblyVersion.ps1
 		..\Get-ProjectsInSolution.ps1 = ..\Get-ProjectsInSolution.ps1
+		..\Upd-AssemblyVersion.ps1 = ..\Upd-AssemblyVersion.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "actions", "actions", "{F4B7757C-E1D6-48AF-A6D2-C2546E685FAF}"
@@ -856,7 +858,7 @@ Global
 		{BACA58B5-D10E-41E0-9B53-B6D3CE972053} = {F4B7757C-E1D6-48AF-A6D2-C2546E685FAF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 		SolutionGuid = {BF840011-B60A-44FF-9D38-4CB15C4C9C8A}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal

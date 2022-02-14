@@ -48,16 +48,26 @@ runs:
     shell: pwsh
     run:  nuget restore ${{ inputs.solution_path }}
     
+  - name: Update Version
+    id: version_number
+    shell: pwsh
+    run: |
+          if(${{ inputs.configuration }} -eq "Release"){$environment="Production"}else{$environment="Development"}
+          $solutionDir=${{ inputs.solution_path }} | Split-Path
+          $assemblyVersion=.\Get-AssemblyVersion.ps1 -Path "$solutionDir" -FileMask "GlobalAssemblyInfo.cs"
+          $newAssemblyVersion=.\Upd-AssemblyVersion.ps1 -CurrentVersionFilePath "$solutionDir\CurrentVersion" -AssemblyVersionFilePath "$solutionDir\GlobalAssemblyInfo.cs" -AssemblyVersion $assemblyVersion -Environment $environment
+          echo "::set-output name=version_number::$newAssemblyVersion"
+
   - name: Build application
     shell: pwsh
     run: msbuild ${{ inputs.solution_path }} /t:Build /p:Configuration=${{ inputs.configuration }}
 
-  - name: Version Number
-    shell: pwsh
-    id: version_number
-    run: |
-         $maloneCoreInfo = (Get-Content ${{ inputs.variables_path }} | ConvertFrom-Json)
-         echo "::set-output name=version_number::$maloneCoreInfo"
+  #- name: Version Number
+  #  shell: pwsh
+  #  id: version_number
+  #  run: |
+  #       $maloneCoreInfo = (Get-Content ${{ inputs.variables_path }} | ConvertFrom-Json)
+  #       echo "::set-output name=version_number::$maloneCoreInfo"
     
   - name: Preparing artifacts
     shell: pwsh
@@ -70,6 +80,8 @@ runs:
               $folderName = Split-Path $_ -Leaf
               New-Item -Path "${{ github.workspace }}\$buildObjects" -Name $folderName -ItemType Directory 
               Copy-Item "$solutionDir\$folderName\bin\" -Destination "${{ github.workspace }}\$buildObjects\$folderName" -Recurse -Container }
+
+              "${{ github.workspace }}\CurrentVersion"
       
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
