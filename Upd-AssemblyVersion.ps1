@@ -62,7 +62,7 @@ param (
 			$newAssemblyVersionMajor=$assemblyVersionMajor
 			$newAssemblyVersionMinor=$assemblyVersionMinor
 			$newAssemblyVersionPatch=$assemblyVersionPatch
-		}elseif($assemblyVersionMajor -e $currentMajor){
+		}elseif($assemblyVersionMajor -eq $currentMajor){
 			$newAssemblyVersionMajor=$currentMajor
 			if($assemblyVersionMinor -lt $currentMinor){
 				$newAssemblyVersionMinor=$currentMinor
@@ -70,7 +70,7 @@ param (
 			}elseif($assemblyVersionMinor -gt $currentMinor){
 				$newAssemblyVersionMinor=$assemblyVersionMinor
 				$newAssemblyVersionPatch=$assemblyVersionPatch
-			}elseif($assemblyVersionMinor -e $currentMinor){
+			}elseif($assemblyVersionMinor -eq $currentMinor){
 				$newAssemblyVersionMinor=$currentMinor
 				
 				if($assemblyVersionPatch -gt $currentPatch){
@@ -98,7 +98,7 @@ param (
 			$newAssemblyVersionMajor=$assemblyVersionMajor
 			$newAssemblyVersionMinor=$assemblyVersionMinor
 			$newAssemblyVersionPatch=$assemblyVersionPatch
-		}elseif($assemblyVersionMajor -e $currentMajor){
+		}elseif($assemblyVersionMajor -eq $currentMajor){
 			$newAssemblyVersionMajor=$currentMajor
 			if($assemblyVersionMinor -lt $currentMinor){
 				$newAssemblyVersionMinor=$currentMinor
@@ -106,7 +106,7 @@ param (
 			}elseif($assemblyVersionMinor -gt $currentMinor){
 				$newAssemblyVersionMinor=$assemblyVersionMinor
 				$newAssemblyVersionPatch=$assemblyVersionPatch
-			}elseif($assemblyVersionMinor -e $currentMinor){
+			}elseif($assemblyVersionMinor -eq $currentMinor){
 				$newAssemblyVersionMinor=$currentMinor
 				if($assemblyVersionPatch -gt $currentPatch){
 					$newAssemblyVersionPatch=$assemblyVersionPatch
