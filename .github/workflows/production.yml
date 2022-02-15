@@ -17,8 +17,6 @@ env:
   CONFIGURATION: "Release"
   SOLUTION_PATH: "${{ github.workspace }}\\src\\malone.Core.sln"
   VARIABLES_PATH: "${{ github.workspace }}\\src\\malone.Core\\bin\\Release\\Variables"
-  BUILD_ARTIFACT: "build-artifacts"
-  PACK_ARTIFACT: "pack-artifacts"
   
 jobs:
   build:
@@ -55,6 +53,7 @@ jobs:
         with:
               configuration: "${env:CONFIGURATION}"
               solution_path: "${env:SOLUTION_PATH}"
+              additional_pack_properties: '-IncludeReferencedProjects'
               nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
               nuget_username: "malonejv"
               nuget_password: "${{ secrets.GITHUB_TOKEN }}"
@@ -82,6 +81,7 @@ jobs:
         name: Create Release
         runs-on: windows-latest
         environment: production
+        needs: build
 
         steps:
             - name: Create Release
@@ -90,7 +90,7 @@ jobs:
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
               with:
-                tag_name: v("${{needs.build.outputs.version_number}}" | ConvertFrom-Json).MALONE_CORE_VER
-                release_name: v("${{needs.build.outputs.version_number}}" | ConvertFrom-Json).MALONE_CORE_VER
+                tag_name: "v${{needs.build.outputs.version_number}}"
+                release_name: "v${{needs.build.outputs.version_number}}"
                 draft: false
                 prerelease: false

@@ -14,8 +14,6 @@ env:
   CONFIGURATION: "Debug"
   SOLUTION_PATH: "${{ github.workspace }}\\src\\malone.Core.sln"
   VARIABLES_PATH: "${{ github.workspace }}\\src\\malone.Core\\bin\\Debug\\Variables"
-  #BUILD_ARTIFACT: "build-artifacts"
-  #PACK_ARTIFACT: "pack-artifacts"
   
 jobs:
   build:
