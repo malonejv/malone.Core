@@ -50,7 +50,7 @@ jobs:
         with:
               configuration: "${env:CONFIGURATION}"
               solution_path: "${env:SOLUTION_PATH}"
-              additional_pack_properties: '-Version ("${{needs.build.outputs.version_number}}" | ConvertFrom-Json).MALONE_CORE_VER -Suffix ("dev" + ("${{needs.build.outputs.version_number}}" | ConvertFrom-Json).MALONE_CORE_DEV_REV) -IncludeReferencedProjects'
+              additional_pack_properties: '-Suffix "dev" -IncludeReferencedProjects'
               nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
               nuget_username: "malonejv"
               nuget_password: "${{ secrets.GITHUB_TOKEN }}"
