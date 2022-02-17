@@ -125,6 +125,9 @@
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GlobalAssemblyInfo.tt</DependentUpon>
     </Compile>
     <Compile Include="Business\Components\BusinessComponent.cs" />
     <Compile Include="Business\Components\BusinessValidator.cs" />
@@ -250,8 +253,16 @@
     <EmbeddedResource Include="Resources\Exceptions.resx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\GlobalAssemblyInfo.tt">
+      <Link>Properties\GlobalAssemblyInfo.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>GlobalAssemblyInfo.cs</LastGenOutput>
+    </Content>
     <Content Include="capibara.png" />
     <Content Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GetAssemblyVersion">
@@ -271,7 +282,7 @@
     </PropertyGroup>
     <ItemGroup>
       <VersionNumber Include="$(OutVersion)" />
-	  <DevRevision Include="$(Year)$(Month)$(Date)$(Time)" />
+      <DevRevision Include="$(Year)$(Month)$(Date)$(Time)" />
     </ItemGroup>
   </Target>
   <Target Name="GetSemVer">

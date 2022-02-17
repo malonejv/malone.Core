@@ -120,7 +120,6 @@ param (
 		}
 	}
 	
-	
 	$newAssemblyVersion="$newAssemblyVersionMajor.$newAssemblyVersionMinor.$newAssemblyVersionPatch.$newAssemblyVersionRevision"
 	(Get-Content "$AssemblyVersionFilePath").replace("$AssemblyVersion", "$newAssemblyVersion") | Set-Content "$AssemblyVersionFilePath"
 
@@ -131,7 +130,7 @@ param (
 	}
 	Write-Verbose "Current Version File: $currentVersion"
 
-	Set-Content -Value ($currentVersion | convertTo-Json) -Path "$CurrentVersionFilePath"	
+	#Set-Content -Value ($currentVersion | convertTo-Json) -Path "$CurrentVersionFilePath"	
 	Write-Verbose "New Assembly Version: $newAssemblyVersion"
 	return $newAssemblyVersion
 	

@@ -63,13 +63,6 @@ runs:
     shell: pwsh
     run: msbuild ${{ inputs.solution_path }} /t:Build /p:Configuration=${{ inputs.configuration }}
 
-  #- name: Version Number
-  #  shell: pwsh
-  #  id: version_number
-  #  run: |
-  #       $maloneCoreInfo = (Get-Content ${{ inputs.variables_path }} | ConvertFrom-Json)
-  #       echo "::set-output name=version_number::$maloneCoreInfo"
-    
   - name: Preparing artifacts
     shell: pwsh
     run: |
