@@ -68,7 +68,8 @@ runs:
            $solutionPath="${{ inputs.solution_path }}"
            Invoke-Expression "$scriptsDir\Get-ProjectsInSolution.ps1 -Path `"$solutionPath`" -Type `"NonTestProjects`" -Verbose" -Outvariable projects
            $projects | ForEach-Object { 
-              $folderName = Split-Path $_ -Leaf
+              $projectName = Split-Path $_ -Leaf
+              $folderName = $projectName.substring(0,$projectName.lastIndexOf('.'))
               Write-Verbose "$folderName"
               New-Item -Path "${{ github.workspace }}\$buildObjects" -Name $folderName -ItemType Directory 
               Copy-Item "$solutionDir\$folderName\bin\" -Destination "${{ github.workspace }}\$buildObjects\$folderName" -Recurse -Container }
