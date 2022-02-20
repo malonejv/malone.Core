@@ -12,8 +12,8 @@ on:
 env:
   CONFIGURATION: "Debug"
   SOLUTION_PATH: "${{ github.workspace }}\\src\\malone.Core.sln"
-  SCRIPTS_DIR: "${{ github.workspace }}\\BuildScripts"
-  MALONECORE_PKGOUTDIR: ${{ github.workspace }}\\pack-artifacts
+  SCRIPTS_DIR: "${{ github.workspace }}\\src\\BuildScripts"
+  MALONECORE_PKGOUTDIR: "${{ github.workspace }}\\pack-artifacts"
   MALONECORE_VERBOSE: ${{ secrets.MALONECORE_VERBOSE }}
   MALONECORE_ENVIRONMENT: ${{ secrets.MALONECORE_ENVIRONMENT}}
   
