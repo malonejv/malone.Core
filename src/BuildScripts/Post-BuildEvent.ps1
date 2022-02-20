@@ -5,6 +5,9 @@ Runs pre-buildevent tasks.
 .PARAMETER SolutionPath
 Path of the solution file (.sln).
  
+.PARAMETER Environment
+Environment in which the version number would be updated (by default 'Development').
+ 
 .PARAMETER Configuration
 Configuration of build process (by default Debug).
  
@@ -12,7 +15,7 @@ Configuration of build process (by default Debug).
 Path where the artifacts will be copied.
  
 .EXAMPLE
-.\Post-BuildEvent -SolutionPath $SolutionPath -Configuration $Configuration -OutputDir $OutputDir'
+.\Post-BuildEvent -SolutionPath $SolutionPath -Environment $Environment -Configuration $Configuration -OutputDir $OutputDir'
  
 #>
 [CmdletBinding()]
@@ -21,6 +24,9 @@ param (
 	[ValidateScript({ Test-Path -Path $_ -PathType Leaf })]
     [string]
     $SolutionPath,
+	[ValidateSet('Development','Production','Local')]
+	[string]
+	$Environment="Development",
 	[ValidateSet('DebugNuget','Debug','Release')]
 	[string]
 	$Configuration="Debug",
@@ -40,12 +46,18 @@ param (
         Write-Host ""
     }
     
-	if (!$Configuration) {
-		$Configuration = 'Debug'
+	if (!$Environment) {
+		$Environment = 'Development'
 	}
 
-    if( $Configuration -ne 'DebugNuget'){
-        return
+    if($Environment -eq 'Development' -and $Configuration -ne "DebugNuget"){
+        return 
+	}
+
+    if($Environment -eq 'Development'){
+        $Configuration = 'Debug'
+    }else{
+        $Configuration = 'Release'
     }
 
 	if($PSBoundParameters['Verbose']) {
@@ -92,5 +104,3 @@ param (
     Write-Verbose "Packing the solution projects"
     Write-Verbose " Command: Invoke-Expression `"$PackProjectsScript -Projects `"$projectsParam`" -PackingProperties `"$PackingProperties`" -Configuration `"$Configuration`" -OutputDir `"$OutputDir`" -Verbose:([bool]::parse(`"$PropagateVerbose`"))`""
     Invoke-Expression "$PackProjectsScript -Projects `"$Projects`" -Configuration `"$Configuration`" -OutputDir `"$OutputDir`" -Verbose:([bool]::parse(`"$PropagateVerbose`"))"
-
-    #Invoke-Expression "$PackProjectsScript -Projects `"$Projects`" -PackingProperties `"$PackingProperties`" -Configuration `"$Configuration`" -OutputDir `"$OutputDir`" -Verbose:([bool]::parse(`"$PropagateVerbose`"))"

@@ -7,7 +7,7 @@ inputs:
    solution_path:
      required: true
      default: ''
-   variables_path:
+   scripts_dir:
      required: true
      default: ''
    nuget_source:
@@ -24,10 +24,10 @@ inputs:
      default: 'build-artifacts'
    MALONECORE_VERBOSE:
      required: true
-     default: 'build-artifacts'
+     default: 'True'
    MALONECORE_ENVIRONMENT:
      required: true
-     default: 'build-artifacts'
+     default: 'Development'
 outputs:
   version_number: 
     description: "Version number"
@@ -64,14 +64,13 @@ runs:
            $buildObjects="build-objects"
            New-Item -Path "${{ github.workspace }}" -Name $buildObjects -ItemType Directory
            $solutionDir = "${{ inputs.solution_path }}" | Split-Path
-           $projects = ${{ github.workspace }}\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects | Split-Path
+           $scriptsDir="${{ inputs.scripts_dir }}"
+           $projects = $scriptsDir\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects | Split-Path
            $projects | ForEach-Object { 
               $folderName = Split-Path $_ -Leaf
               New-Item -Path "${{ github.workspace }}\$buildObjects" -Name $folderName -ItemType Directory 
               Copy-Item "$solutionDir\$folderName\bin\" -Destination "${{ github.workspace }}\$buildObjects\$folderName" -Recurse -Container }
-
-              "${{ github.workspace }}\CurrentVersion"
-      
+           
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
     with:

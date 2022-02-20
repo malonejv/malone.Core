@@ -12,7 +12,8 @@ on:
 env:
   CONFIGURATION: "Debug"
   SOLUTION_PATH: "${{ github.workspace }}\\src\\malone.Core.sln"
-  VARIABLES_PATH: "${{ github.workspace }}\\src\\malone.Core\\bin\\Debug\\Variables"
+  SCRIPTS_DIR: "${{ github.workspace }}\\BuildScripts"
+  MALONECORE_PKGOUTDIR: ${{ github.workspace }}\\pack-artifacts
   MALONECORE_VERBOSE: ${{ secrets.MALONECORE_VERBOSE }}
   MALONECORE_ENVIRONMENT: ${{ secrets.MALONECORE_ENVIRONMENT}}
   
@@ -32,7 +33,7 @@ jobs:
         with:
               configuration: "${env:CONFIGURATION}"
               solution_path: "${env:SOLUTION_PATH}"
-              variables_path: "${env:VARIABLES_PATH}"
+              scripts_dir: "${env:SCRIPTS_DIR}"
               nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
               nuget_username: "malonejv"
               nuget_password: "${{ secrets.GITHUB_TOKEN }}"
@@ -53,9 +54,13 @@ jobs:
         with:
               configuration: "${env:CONFIGURATION}"
               solution_path: "${env:SOLUTION_PATH}"
+              scripts_dir: "${env:SCRIPTS_DIR}"
               nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
               nuget_username: "malonejv"
               nuget_password: "${{ secrets.GITHUB_TOKEN }}"
+              MALONECORE_VERBOSE: "${env:MALONECORE_VERBOSE}"
+              MALONECORE_ENVIRONMENT: "${env:MALONECORE_ENVIRONMENT}"
+              MALONECORE_PKGOUTDIR: "${env:MALONECORE_PKGOUTDIR}"
               build_artifact_name: "build-artifacts"
               pack_artifact_name: "pack-artifacts"
 
