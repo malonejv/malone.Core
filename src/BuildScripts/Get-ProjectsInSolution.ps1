@@ -3,14 +3,14 @@
 .SYNOPSIS
 Gets the projects of the visual studio solution.
  
-.PARAMETER SolutionPath
+.PARAMETER $Path
 Path of the solution file (.sln).
  
 .PARAMETER Type
 Type of projects to return, by default All but could be NonTestProjects or TestProjects
  
 .EXAMPLE
-.\Get-ProjectsInSolution -SolutionPath $SolutionPath -Type $Type'
+.\Get-ProjectsInSolution -Path $Path -Type $Type'
  
 #>
 [CmdletBinding()]
