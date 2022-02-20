@@ -42,6 +42,8 @@ jobs:
               build_artifact_name: "build-artifacts"
               MALONECORE_VERBOSE: "${env:MALONECORE_VERBOSE}"
               MALONECORE_ENVIRONMENT: "${env:MALONECORE_ENVIRONMENT}"
+              SHOULD_COMMIT: "${env:SHOULD_COMMIT}"
+              BRANCH: "${env:BRANCH}"
 
   pack:
       name: Pack
