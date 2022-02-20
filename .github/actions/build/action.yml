@@ -85,6 +85,8 @@ runs:
   - name: Push after version updated
     shell: pwsh
     run: |
+          git config user.email "malonejv@gmail.com"
+          git config user.name "malonejv"
           git add .
           git commit -m "Version updated"
           git push
