@@ -7,9 +7,6 @@ inputs:
    solution_path:
      required: true
      default: ''
-   additional_pack_properties:
-     required: false
-     default: ''
    nuget_source:
      required: true
      default: ''
@@ -58,7 +55,7 @@ runs:
           Copy-Item "${{ github.workspace }}\${{ inputs.build_artifact_name }}\*" -Destination "$solutionDir" -Force -Recurse -Container
           $projects | ForEach-Object { 
             $folderName = Split-Path $_ -Leaf
-            nuget pack $_ -Properties Configuration=${{ inputs.configuration }} ${{inputs.additional_pack_properties }} -OutputDirectory "${{ github.workspace }}\\${{ inputs.pack_artifact_name }}"}
+            nuget pack $_ -Properties Configuration=${{ inputs.configuration }} -OutputDirectory "${{ github.workspace }}\\${{ inputs.pack_artifact_name }}"}
           
   - name: Upload artifacts
     uses: actions/upload-artifact@v2

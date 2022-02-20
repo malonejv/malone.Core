@@ -22,6 +22,12 @@ inputs:
    build_artifact_name:
      required: true
      default: 'build-artifacts'
+   MALONECORE_VERBOSE:
+     required: true
+     default: 'build-artifacts'
+   MALONECORE_ENVIRONMENT:
+     required: true
+     default: 'build-artifacts'
 outputs:
   version_number: 
     description: "Version number"
@@ -47,22 +53,10 @@ runs:
   - name: Restore Nuget Packages
     shell: pwsh
     run:  nuget restore ${{ inputs.solution_path }}
-    
-  - name: Update Version
-    id: version_number
-    shell: pwsh
-    run: |
-          if(${{ inputs.configuration }} -eq "Release"){$environment="Production"}else{$environment="Development"}
-          $solutionDir=${{ inputs.solution_path }} | Split-Path
-          $assemblyVersion=${{ github.workspace }}\Get-AssemblyVersion.ps1 -Path "$solutionDir" -FileMask "GlobalAssemblyInfo.cs"
-          $newAssemblyVersion=${{ github.workspace }}\Upd-AssemblyVersion.ps1 -CurrentVersionFilePath "$solutionDir\CurrentVersion" -AssemblyVersionFilePath "$solutionDir\GlobalAssemblyInfo.cs" -AssemblyVersion $assemblyVersion -Environment $environment -Verbose
-          Write-Host "Version number: $newAssemblyVersion"
-          echo "MaloneCoreVersionNumber=$newAssemblyVersion" | Out-File -FilePath $Env:GITHUB_PATH -Encoding utf8 -Append
-          echo "::set-output name=version_number::$newAssemblyVersion"
-
+  
   - name: Build application
     shell: pwsh
-    run: msbuild ${{ inputs.solution_path }} /t:Build /p:Configuration=${{ inputs.configuration }}
+    run: msbuild ${{ inputs.solution_path }} /t:Build /p:Configuration=${{ inputs.configuration }} 
 
   - name: Preparing artifacts
     shell: pwsh
@@ -70,7 +64,7 @@ runs:
            $buildObjects="build-objects"
            New-Item -Path "${{ github.workspace }}" -Name $buildObjects -ItemType Directory
            $solutionDir = "${{ inputs.solution_path }}" | Split-Path
-           $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects | Split-Path
+           $projects = ${{ github.workspace }}\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects | Split-Path
            $projects | ForEach-Object { 
               $folderName = Split-Path $_ -Leaf
               New-Item -Path "${{ github.workspace }}\$buildObjects" -Name $folderName -ItemType Directory 
@@ -85,3 +79,11 @@ runs:
       path: "${{ github.workspace }}\\build-objects\\*"
       if-no-files-found: error
       retention-days: 5
+
+  - name: Push after version updated
+    shell: pwsh
+    run: |
+          git .
+          git commit -m "Version updated"
+          git push
+

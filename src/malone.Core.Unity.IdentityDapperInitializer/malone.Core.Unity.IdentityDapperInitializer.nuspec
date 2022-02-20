@@ -13,30 +13,10 @@
 		<copyright>Copyright 2020</copyright>
 		<repository type="git" url="https://github.com/malonejv/malone.Core.git" branch="development" />
 		<icon>capibara.png</icon>
-		<dependencies>
-			<group targetFramework=".NETFramework4.5" />
-			<group targetFramework=".NETFramework4.5.1" />
-			<group targetFramework=".NETFramework4.5.2" />
-			<group targetFramework=".NETFramework4.6" />
-			<group targetFramework=".NETFramework4.6.1" />
-			<group targetFramework=".NETFramework4.6.2" />
-			<group targetFramework=".NETFramework4.7" />
-			<group targetFramework=".NETFramework4.7.1" />
-			<group targetFramework=".NETFramework4.7.2" />
-			<group targetFramework=".NETFramework4.8" />
-		</dependencies>
+		<readme>docs\readme.md</readme>
 	</metadata>
 	<files>
-		<file src="bin\$configuration$\**" target="lib/net45" />
-		<file src="bin\$configuration$\**" target="lib/net451" />
-		<file src="bin\$configuration$\**" target="lib/net452" />
-		<file src="bin\$configuration$\**" target="lib/net46" />
-		<file src="bin\$configuration$\**" target="lib/net461" />
-		<file src="bin\$configuration$\**" target="lib/net462" />
-		<file src="bin\$configuration$\**" target="lib/net47" />
-		<file src="bin\$configuration$\**" target="lib/net471" />
-		<file src="bin\$configuration$\**" target="lib/net472" />
-		<file src="bin\$configuration$\**" target="lib/net48" />
-		<file src="capibara.png" />
+		<file src="capibara.png" target="" />
+		<file src="readme.md" target="docs\" />
 	</files>
 </package>
