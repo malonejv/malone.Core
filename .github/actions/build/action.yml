@@ -65,7 +65,8 @@ runs:
            New-Item -Path "${{ github.workspace }}" -Name $buildObjects -ItemType Directory
            $solutionDir = "${{ inputs.solution_path }}" | Split-Path
            $scriptsDir="${{ inputs.scripts_dir }}"
-           $projects = "$scriptsDir\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects" | Split-Path
+           $solutionPath="${{ inputs.solution_path }}"
+           $projects = "$scriptsDir\Get-ProjectsInSolution.ps1" "$solutionPath" -Type NonTestProjects | Split-Path
            $projects | ForEach-Object { 
               $folderName = Split-Path $_ -Leaf
               New-Item -Path "${{ github.workspace }}\$buildObjects" -Name $folderName -ItemType Directory 
