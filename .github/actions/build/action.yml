@@ -65,10 +65,10 @@ runs:
            New-Item -Path "${{ github.workspace }}" -Name $buildObjects -ItemType Directory
            $solutionDir = "${{ inputs.solution_path }}" | Split-Path
            $scriptsDir="${{ inputs.scripts_dir }}"
-           $solutionPath="${{ inputs.solution_path }}"
-           $projects = "$scriptsDir\Get-ProjectsInSolution.ps1" "$solutionPath" -Type NonTestProjects | Split-Path
+           $projects = "$scriptsDir\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects"
            $projects | ForEach-Object { 
               $folderName = Split-Path $_ -Leaf
+              Write-Verbose "$folderName"
               New-Item -Path "${{ github.workspace }}\$buildObjects" -Name $folderName -ItemType Directory 
               Copy-Item "$solutionDir\$folderName\bin\" -Destination "${{ github.workspace }}\$buildObjects\$folderName" -Recurse -Container }
            
