@@ -85,7 +85,7 @@ runs:
   - name: Push after version updated
     shell: pwsh
     run: |
-          git .
+          git add .
           git commit -m "Version updated"
           git push
 
