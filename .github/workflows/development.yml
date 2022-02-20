@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - development
-      - feature/**
   pull_request:
     branches:
       - development
@@ -13,7 +12,12 @@ on:
 env:
   CONFIGURATION: "Debug"
   SOLUTION_PATH: "${{ github.workspace }}\\src\\malone.Core.sln"
-  VARIABLES_PATH: "${{ github.workspace }}\\src\\malone.Core\\bin\\Debug\\Variables"
+  SCRIPTS_DIR: "${{ github.workspace }}\\src\\BuildScripts"
+  MALONECORE_PKGOUTDIR: "${{ github.workspace }}\\pack-artifacts"
+  MALONECORE_VERBOSE: ${{ secrets.MALONECORE_VERBOSE }}
+  MALONECORE_ENVIRONMENT: ${{ secrets.MALONECORE_ENVIRONMENT}}
+  SHOULD_COMMIT: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
+  BRANCH: ${{ github.ref_name }}
   
 jobs:
   build:
@@ -31,11 +35,15 @@ jobs:
         with:
               configuration: "${env:CONFIGURATION}"
               solution_path: "${env:SOLUTION_PATH}"
-              variables_path: "${env:VARIABLES_PATH}"
+              scripts_dir: "${env:SCRIPTS_DIR}"
               nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
               nuget_username: "malonejv"
               nuget_password: "${{ secrets.GITHUB_TOKEN }}"
               build_artifact_name: "build-artifacts"
+              MALONECORE_VERBOSE: "${env:MALONECORE_VERBOSE}"
+              MALONECORE_ENVIRONMENT: "${env:MALONECORE_ENVIRONMENT}"
+              SHOULD_COMMIT: "${env:SHOULD_COMMIT}"
+              BRANCH: "${env:BRANCH}"
 
   pack:
       name: Pack
@@ -50,10 +58,13 @@ jobs:
         with:
               configuration: "${env:CONFIGURATION}"
               solution_path: "${env:SOLUTION_PATH}"
-              additional_pack_properties: '-Suffix "dev" -IncludeReferencedProjects'
+              scripts_dir: "${env:SCRIPTS_DIR}"
               nuget_source: "https://nuget.pkg.github.com/malonejv/index.json"
               nuget_username: "malonejv"
               nuget_password: "${{ secrets.GITHUB_TOKEN }}"
+              MALONECORE_VERBOSE: "${env:MALONECORE_VERBOSE}"
+              MALONECORE_ENVIRONMENT: "${env:MALONECORE_ENVIRONMENT}"
+              MALONECORE_PKGOUTDIR: "${env:MALONECORE_PKGOUTDIR}"
               build_artifact_name: "build-artifacts"
               pack_artifact_name: "pack-artifacts"
 

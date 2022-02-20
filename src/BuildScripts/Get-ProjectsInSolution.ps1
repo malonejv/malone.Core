@@ -1,5 +1,18 @@
 #Based on https://gist.github.com/jstangroome/557222
-#requires -version 2.0
+<#
+.SYNOPSIS
+Gets the projects of the visual studio solution.
+ 
+.PARAMETER $Path
+Path of the solution file (.sln).
+ 
+.PARAMETER Type
+Type of projects to return, by default All but could be NonTestProjects or TestProjects
+ 
+.EXAMPLE
+.\Get-ProjectsInSolution -Path $Path -Type $Type'
+ 
+#>
 [CmdletBinding()]
 param (
     [parameter(Mandatory=$true)]

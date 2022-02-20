@@ -12,13 +12,11 @@
 		<description>$description$</description>
 		<copyright>$copyright$</copyright>
 		<repository type="git" url="https://github.com/malonejv/malone.Core.git" branch="development" />
-		<icon>content/capibara.png</icon>
-		<contentFiles>
-			<!-- Include Assets as Content -->
-			<files include="content/capibara.png" buildAction="None" copyToOutput="false" />
-		</contentFiles>
+		<icon>capibara.png</icon>
+		<readme>docs\readme.md</readme>
 	</metadata>
 	<files>
-    <file src="capibara.png" target="content" />
+		<file src="capibara.png" target="" />
+		<file src="readme.md" target="docs\" />
 	</files>
 </package>

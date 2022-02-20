@@ -235,6 +235,7 @@
       <TransformOnBuild>true</TransformOnBuild>
     </None>
     <None Include="packages.config" />
+    <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Commons\Exceptions\Resources\Exceptions.en.resx" />
@@ -250,72 +251,13 @@
     <EmbeddedResource Include="Resources\Exceptions.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="capibara.png" />
-    <Content Include="readme.txt" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="GetAssemblyVersion">
-    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="Assemblies" ItemName="ProjAssemblyInfo" />
-    </GetAssemblyIdentity>
-    <PropertyGroup>
-      <Pattern>(\d+)\.(\d+)\.(\d+)</Pattern>
-      <In>%(ProjAssemblyInfo.Version)</In>
-      <OutVersion>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern)))</OutVersion>
-    </PropertyGroup>
-    <PropertyGroup>
-      <Year>$([System.DateTime]::Now.ToString("yy"))</Year>
-      <Month>$([System.DateTime]::Now.ToString("MM"))</Month>
-      <Date>$([System.DateTime]::Now.ToString("dd"))</Date>
-      <Time>$([System.DateTime]::Now.ToString("HHmm"))</Time>
-    </PropertyGroup>
-    <ItemGroup>
-      <VersionNumber Include="$(OutVersion)" />
-	  <DevRevision Include="$(Year)$(Month)$(Date)$(Time)" />
-    </ItemGroup>
-  </Target>
-  <Target Name="GetSemVer">
-    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="Assemblies" ItemName="ProjAssemblyInfo" />
-    </GetAssemblyIdentity>
-    <PropertyGroup>
-      <Pattern>(\d+)\.(\d+)\.(\d+)</Pattern>
-      <In>%(ProjAssemblyInfo.Version)</In>
-      <OutVersion>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern)))</OutVersion>
-    </PropertyGroup>
-    <ItemGroup>
-      <SemVer Include="$(OutVersion)" />
-    </ItemGroup>
-  </Target>
   <PropertyGroup>
-    <PostBuildEventDependsOn>
-      $(PostBuildEventDependsOn);
-      GetAssemblyVersion;
-	  GetSemVer;
-    </PostBuildEventDependsOn>
-    <PostBuildEvent>
-      if $(ConfigurationName) == Debug (
-      (
-      echo "{ 'MALONE_CORE_VER': '@(VersionNumber)', 'MALONE_CORE_DEV_REV': '@(DevRevision)' }"
-      )&gt;"variables"
-      )
-
-      if $(ConfigurationName) == Release (
-      (
-      echo "{ 'MALONE_CORE_VER': '@(SemVer)' }"
-      )&gt;"variables"
-      )
-      if $(ConfigurationName) == DebugNuget (
-      nuget pack "$(ProjectPath)" -version @(VersionNumber) -Suffix dev@(DevRevision) -Properties Configuration=DebugNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-      xcopy "$(TargetDir)$(TargetName)*.*nupkg" "..\..\..\..\..\malone.Core.DevLocalNugets" /SY
-      del "$(TargetDir)$(TargetName)*.*nupkg" /Q
-      )</PostBuildEvent>
+    <PostBuildEvent>powershell -NoProfile -ExecutionPolicy RemoteSigned -Command "$(SolutionDir)BuildScripts\Post-BuildEvent.ps1 -SolutionPath $(SolutionPath) -Environment "$env:MALONECORE_ENVIRONMENT" -Configuration $(ConfigurationName) -OutputDir "$env:MALONECORE_PKGOUTDIR" -Verbose:([bool]::parse("$env:MALONECORE_VERBOSE"))"</PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <PropertyGroup>
+    <PreBuildEvent>powershell -NoProfile -ExecutionPolicy RemoteSigned -Command "$(SolutionDir)BuildScripts\Pre-BuildEvent.ps1 -SolutionDir $(SolutionDir) -TargetDir $(TargetDir) -Environment $env:MALONECORE_ENVIRONMENT -Verbose:([bool]::parse("$env:MALONECORE_VERBOSE"))"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

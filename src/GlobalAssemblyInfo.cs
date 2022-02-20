@@ -1,18 +1,31 @@
-ï»¿//<author>Javier LÃ³pez Malone</author>
+//<author>Javier López Malone</author>
 //<date>25/11/2020 02:48:19</date>
 
 using System.Reflection;
 
-
-
 [assembly: AssemblyTitle("malonejv.Core")]
-[assembly: AssemblyCompany("Javier LÃ³pez Malone")]
-[assembly: AssemblyCopyright("Copyright Â© Javier LÃ³pez Malone 2022")]
+[assembly: AssemblyCompany("Javier López Malone")]
+[assembly: AssemblyCopyright("Copyright © Javier López Malone 2022")]
 
-[assembly: AssemblyVersion("2.1.11.0")]
+
+/*
+ * Actualizar siempre AssemblyFileVersion.
+ * El script se encarga de actualizar el resto.
+ * Al hacer merge tanto de feature -> development
+ * como de master -> development y development -> master
+ * SIEMPRE tomar la versión de development.
+ */
+[assembly: AssemblyFileVersion("2.1.10.38")]
+
+/*NO MODIFICAR*/
+/**************/
+[assembly: AssemblyVersion("2.1.10")]
+[assembly: AssemblyInformationalVersion("2.1.10.38-dev")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
 #else
 [assembly: AssemblyConfiguration("Release")]
 #endif
+/**************/
+/*NO MODIFICAR*/

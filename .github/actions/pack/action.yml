@@ -7,8 +7,8 @@ inputs:
    solution_path:
      required: true
      default: ''
-   additional_pack_properties:
-     required: false
+   scripts_dir:
+     required: true
      default: ''
    nuget_source:
      required: true
@@ -17,6 +17,15 @@ inputs:
      required: true
      default: ''
    nuget_password:
+     required: true
+     default: ''
+   MALONECORE_VERBOSE:
+     required: true
+     default: 'True'
+   MALONECORE_ENVIRONMENT:
+     required: true
+     default: 'Development'
+   MALONECORE_PKGOUTDIR:
      required: true
      default: ''
    build_artifact_name:
@@ -54,11 +63,8 @@ runs:
     shell: pwsh
     run: |
           $solutionDir="${{ inputs.solution_path }}" | Split-Path
-          $projects = .\Get-ProjectsInSolution.ps1 ${{ inputs.solution_path }} -Type NonTestProjects | Split-Path
-          Copy-Item "${{ github.workspace }}\${{ inputs.build_artifact_name }}\*" -Destination "$solutionDir" -Force -Recurse -Container
-          $projects | ForEach-Object { 
-            $folderName = Split-Path $_ -Leaf
-            nuget pack $_ -Properties Configuration=${{ inputs.configuration }} ${{inputs.additional_pack_properties }} -OutputDirectory "${{ github.workspace }}\\${{ inputs.pack_artifact_name }}"}
+          $scriptsDir="${{ inputs.scripts_dir }}"
+          $projects = $scriptsDir\Post-BuildEvent.ps1 Post-BuildEvent.ps1 -SolutionPath ${{ inputs.solution_path }} -Environment "${{ inputs.MALONECORE_ENVIRONMENT }}" -OutputDir "${{ inputs.MALONECORE_PKGOUTDIR }}" -Verbose:([bool]::parse("${{ inputs.MALONECORE_VERBOSE }}"))"
           
   - name: Upload artifacts
     uses: actions/upload-artifact@v2

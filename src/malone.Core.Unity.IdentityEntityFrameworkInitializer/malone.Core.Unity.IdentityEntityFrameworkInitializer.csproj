@@ -144,13 +144,4 @@
     <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
   <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    if $(ConfigurationName) == DebugNuget (
-    nuget pack "$(ProjectPath)" -Suffix dev -Properties Configuration=DebugNuget -IncludeReferencedProjects -Symbols -SymbolPackageFormat snupkg
-    xcopy "$(TargetDir)$(TargetName)*.*nupkg" "..\..\..\..\..\malone.Core.DevLocalNugets" /SY
-	del "$(TargetDir)$(TargetName)*.*nupkg" /Q
-    )
-    </PostBuildEvent>
-  </PropertyGroup>
 </Project>
