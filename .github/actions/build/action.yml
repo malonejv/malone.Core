@@ -28,6 +28,9 @@ inputs:
    MALONECORE_ENVIRONMENT:
      required: true
      default: 'Development'
+   MALONECORE_SHOULDPACK:
+     required: true
+     default: ''
    SHOULD_COMMIT:
      required: true
      default: ''
