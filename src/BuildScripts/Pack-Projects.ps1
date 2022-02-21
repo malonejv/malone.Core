@@ -73,7 +73,8 @@ param (
     Write-Verbose "  Projects count: $ProjectsCount"
 
     $Projects=$projectsParam.split(', ')
-
+    
+    New-Item "$OutputDir" -ItemType Directory  -Force
     for ($projectsCounter=0; $projectsCounter -lt $ProjectsCount; $projectsCounter++) {
         $projectPath=$Projects[$projectsCounter]
         $projectsName = Split-Path $projectPath -Leaf
