@@ -79,6 +79,7 @@ param (
         $projectPath=$Projects[$projectsCounter]
         $projectsName = Split-Path $projectPath -Leaf
         Write-Verbose "Packing Project: $([int]$projectsCounter+1). $projectsName"
+        Write-Verbose "Path: $projectPath"
 	    Write-Progress `
 		    -Activity "Packing progress:" `
 		    -PercentComplete ([int](100 * $([int]$projectsCounter+1) / $ProjectsCount)) `
@@ -86,5 +87,5 @@ param (
 		    -Status ("Packing project: [{0}]" -f ($projectsName)) `
 		    -Id 1
         
-        nuget pack $projectPath -Properties Configuration=$Configuration -IncludeReferencedProjects -OutputDirectory "$OutputDir"
+        nuget pack "$projectPath" -Properties Configuration="$Configuration" -IncludeReferencedProjects -OutputDirectory "$OutputDir"
     }
