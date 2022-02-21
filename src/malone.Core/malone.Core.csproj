@@ -255,7 +255,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>powershell -NoProfile -ExecutionPolicy RemoteSigned -Command "$(SolutionDir)BuildScripts\Post-BuildEvent.ps1 -SolutionPath $(SolutionPath) -Environment "$env:MALONECORE_ENVIRONMENT" -Configuration $(ConfigurationName) -OutputDir "$env:MALONECORE_PKGOUTDIR" -Verbose:([bool]::parse("$env:MALONECORE_VERBOSE"))"</PostBuildEvent>
+    <PostBuildEvent>powershell -NoProfile -ExecutionPolicy RemoteSigned -Command "$(SolutionDir)BuildScripts\Post-BuildEvent.ps1 -SolutionPath $(SolutionPath) -Environment "$env:MALONECORE_ENVIRONMENT" -Configuration $(ConfigurationName) -OutputDir "$env:MALONECORE_PKGOUTDIR" -ShouldPack:([bool]::parse("$env:MALONECORE_SHOULDPACK")) -Verbose:([bool]::parse("$env:MALONECORE_VERBOSE"))"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>powershell -NoProfile -ExecutionPolicy RemoteSigned -Command "$(SolutionDir)BuildScripts\Pre-BuildEvent.ps1 -SolutionDir $(SolutionDir) -TargetDir $(TargetDir) -Environment $env:MALONECORE_ENVIRONMENT -Verbose:([bool]::parse("$env:MALONECORE_VERBOSE"))"</PreBuildEvent>
