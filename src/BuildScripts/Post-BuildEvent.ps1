@@ -11,8 +11,11 @@ Environment in which the version number would be updated (by default 'Developmen
 .PARAMETER Configuration
 Configuration of build process (by default Debug).
  
+.PARAMETER $BuildArtifactsPath
+Path where the build-artifacts where generated.
+ 
 .PARAMETER OutputDir
-Path where the artifacts will be copied.
+Path where the pack-artifacts will be copied.
  
 .EXAMPLE
 .\Post-BuildEvent -SolutionPath $SolutionPath -Environment $Environment -Configuration $Configuration -OutputDir $OutputDir'
@@ -30,6 +33,9 @@ param (
 	[ValidateSet('DebugNuget','Debug','Release')]
 	[string]
 	$Configuration="Debug",
+    [ValidateScript({ Test-Path -Path $_ -PathType Container })]
+    [string]
+    $BuildArtifactsPath,
     [parameter(Mandatory=$true)]
     [string]
     $OutputDir
@@ -50,14 +56,12 @@ param (
 		$Environment = 'Development'
 	}
 
-    if($Environment -eq 'Development' -and $Configuration -ne "DebugNuget"){
+    if($Environment -eq 'Local' -and $Configuration -ne "DebugNuget"){
         return 
-	}
-
-    if($Environment -eq 'Development'){
-        $Configuration = 'Debug'
-    }else{
+	}elseif($Environment -eq 'Production'){
         $Configuration = 'Release'
+    }else{
+        $Configuration = 'Debug'
     }
 
 	if($PSBoundParameters['Verbose']) {
@@ -97,9 +101,13 @@ param (
     Write-Verbose " Command: Invoke-Expression `"$GetProjectsScript -Path `"$SolutionPath`" -Type `"NonTestProjects`" -Verbose:([bool]::parse(`"$PropagateVerbose`"))`""
     Invoke-Expression "$GetProjectsScript -Path `"$SolutionPath`" -Type `"NonTestProjects`" -Verbose:([bool]::parse(`"$PropagateVerbose`"))" -Outvariable Projects
     Write-Verbose " Projects count: $($Projects.count)"
-
-    $projectsParam=$projects | foreach{ "$_, "}
-    Write-Verbose "Projects: $projectsParam"
+    
+    $projectParam=$projects | foreach{ "$_, " }
+    
+    if($Environment -eq 'Development' -or $Environment -eq 'Production'){
+        Write-Verbose "Copying build-artifacts"
+        Copy-Item "$BuildArtifactsPath" -Destination "$solutionDir" -Force -Recurse -Container
+    }
 
     Write-Verbose "Packing the solution projects"
     Write-Verbose " Command: Invoke-Expression `"$PackProjectsScript -Projects `"$projectsParam`" -PackingProperties `"$PackingProperties`" -Configuration `"$Configuration`" -OutputDir `"$OutputDir`" -Verbose:([bool]::parse(`"$PropagateVerbose`"))`""

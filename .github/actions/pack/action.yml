@@ -65,7 +65,8 @@ runs:
           $solutionDir="${{ inputs.solution_path }}" | Split-Path
           $scriptsDir="${{ inputs.scripts_dir }}"
           $solutionPath="${{ inputs.solution_path }}"
-          Invoke-Expression "$scriptsDir\Post-BuildEvent.ps1 -SolutionPath `"$solutionPath`" -Environment `"${{ inputs.MALONECORE_ENVIRONMENT }}`" -OutputDir `"${{ inputs.MALONECORE_PKGOUTDIR }}`" -Verbose:([bool]::parse(`"${{ inputs.MALONECORE_VERBOSE }}`"))"
+          $buildArtifactPath="${{ github.workspace }}\${{ inputs.build_artifact_name }}\*"
+          Invoke-Expression "$scriptsDir\Post-BuildEvent.ps1 -SolutionPath `"$solutionPath`" -Environment `"${{ inputs.MALONECORE_ENVIRONMENT }}`" -BuildArtifactsPath `"$buildArtifactPath`" -OutputDir `"${{ inputs.MALONECORE_PKGOUTDIR }}`" -Verbose:([bool]::parse(`"${{ inputs.MALONECORE_VERBOSE }}`"))"
           
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
