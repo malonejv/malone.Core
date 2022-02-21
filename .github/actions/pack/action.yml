@@ -66,7 +66,8 @@ runs:
           $scriptsDir="${{ inputs.scripts_dir }}"
           $solutionPath="${{ inputs.solution_path }}"
           $buildArtifactPath="${{ github.workspace }}\${{ inputs.build_artifact_name }}\*"
-          Invoke-Expression "$scriptsDir\Post-BuildEvent.ps1 -SolutionPath `"$solutionPath`" -Environment `"${{ inputs.MALONECORE_ENVIRONMENT }}`" -BuildArtifactsPath `"$buildArtifactPath`" -OutputDir `"${{ inputs.MALONECORE_PKGOUTDIR }}`" -ShouldPack:([bool]::parse(`"$true`")) -Verbose:([bool]::parse(`"${{ inputs.MALONECORE_VERBOSE }}`"))"
+          $OutputDir="${{ inputs.MALONECORE_PKGOUTDIR }}"
+          Invoke-Expression "$scriptsDir\Post-BuildEvent.ps1 -SolutionPath `"$solutionPath`" -Environment `"${{ inputs.MALONECORE_ENVIRONMENT }}`" -BuildArtifactsPath `"$buildArtifactPath`" -OutputDir `"$OutputDir`" -ShouldPack:([bool]::parse(`"$true`")) -Verbose:([bool]::parse(`"${{ inputs.MALONECORE_VERBOSE }}`"))"
           
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
