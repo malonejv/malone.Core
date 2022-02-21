@@ -86,5 +86,5 @@ param (
 		    -Status ("Packing project: [{0}]" -f ($projectsName)) `
 		    -Id 1
         
-        nuget pack $projectPath -Properties Configuration=$Configuration -IncludeReferencedProjects -OutputDirectory $OutputDir
+        nuget pack $projectPath -Properties Configuration=$Configuration -IncludeReferencedProjects -OutputDirectory "$OutputDir"
     }
