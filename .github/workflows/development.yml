@@ -15,7 +15,8 @@ env:
   SCRIPTS_DIR: "${{ github.workspace }}\\src\\BuildScripts"
   MALONECORE_PKGOUTDIR: "${{ github.workspace }}\\pack-artifacts"
   MALONECORE_VERBOSE: ${{ secrets.MALONECORE_VERBOSE }}
-  MALONECORE_ENVIRONMENT: ${{ secrets.MALONECORE_ENVIRONMENT}}
+  MALONECORE_ENVIRONMENT: ${{ secrets.MALONECORE_ENVIRONMENT }}
+  MALONECORE_SHOULDPACK: ${{ secrets.MALONECORE_SHOULDPACK }}
   SHOULD_COMMIT: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
   BRANCH: ${{ github.ref_name }}
   
