@@ -88,7 +88,7 @@ param (
             Write-Host ""
 	    }
     
-        $OutputDir = ($OutputDir | Resolve-Path).ProviderPath
+        #$OutputDir = ($OutputDir | Resolve-Path).ProviderPath
  
         $PropagateVerbose=($PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent -eq $true)
         
