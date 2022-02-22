@@ -115,5 +115,5 @@ param (
 
         Write-Verbose "Packing the solution projects"
         Write-Verbose " Command: Invoke-Expression `"$PackProjectsScript -Projects `"$projectsParam`" -PackingProperties `"$PackingProperties`" -Configuration `"$Configuration`" -OutputDir `"$OutputDir`" -Verbose:([bool]::parse(`"$PropagateVerbose`"))`""
-        Invoke-Expression "$PackProjectsScript -Projects `"$Projects`" -Configuration `"$Configuration`" -OutputDir `"$OutputDir`" -Verbose:([bool]::parse(`"$PropagateVerbose`"))"
+        Invoke-Expression "$PackProjectsScript -Projects `"$projectsParam`" -Configuration `"$Configuration`" -OutputDir `"$OutputDir`" -Verbose:([bool]::parse(`"$PropagateVerbose`"))"
     }
