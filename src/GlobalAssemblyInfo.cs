@@ -15,12 +15,12 @@ using System.Reflection;
  * como de master -> development y development -> master
  * SIEMPRE tomar la versión de development.
  */
-[assembly: AssemblyFileVersion("2.1.11.16")]
+[assembly: AssemblyFileVersion("2.1.11.17")]
 
 /*NO MODIFICAR*/
 /**************/
 [assembly: AssemblyVersion("2.1.11")]
-[assembly: AssemblyInformationalVersion("2.1.11.16-beta")]
+[assembly: AssemblyInformationalVersion("2.1.11.17-beta")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
