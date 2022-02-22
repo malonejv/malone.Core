@@ -75,7 +75,8 @@ param (
 
     
     New-Item "$OutputDir" -ItemType Directory  -Force
-    for ($projectsCounter=0; $projectsCounter -lt $ProjectsCount; $projectsCounter++) {
+	#$ProjectsCount-1 -> El -1 es porque cuando concateno con , le estoy poniendo , al último elemento.
+    for ($projectsCounter=0; $projectsCounter -lt $ProjectsCount-1; $projectsCounter++) {
         $projectPath=$Projects[$projectsCounter]
         $projectsName = Split-Path $projectPath -Leaf
         Write-Verbose "Packing Project: $([int]$projectsCounter+1). $projectsName"
