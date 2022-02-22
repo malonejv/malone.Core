@@ -85,5 +85,5 @@ jobs:
               nuget_username: "malonejv"
               nuget_password: "${{ secrets.GITHUB_TOKEN }}"
               pack_artifact_name: "pack-artifacts"
-              package_pattern: "*-dev*.nupkg"
+              package_pattern: "malone.Core*-beta.nupkg"
               #symbol_pattern: "*-dev.snupkg"
