@@ -73,6 +73,9 @@ param (
     Write-Verbose "  Projects count: $ProjectsCount"
 
     $Projects=$projectsParam.split(', ')
+    $ProjectsCount = $Projects.count
+    Write-Verbose "  Projects count: $ProjectsCount"
+
     
     New-Item "$OutputDir" -ItemType Directory  -Force
     for ($projectsCounter=0; $projectsCounter -lt $ProjectsCount; $projectsCounter++) {
