@@ -106,7 +106,7 @@ param (
         Invoke-Expression "$GetProjectsScript -Path `"$SolutionPath`" -Type `"NonTestProjects`" -Verbose:([bool]::parse(`"$PropagateVerbose`"))" -Outvariable Projects
         Write-Verbose " Projects count: $($Projects.count)"
     
-        $projectParam=$projects | foreach{ "$_, " }
+        $projectsParam=$projects | foreach{ "$_, " }
     
         if($Environment -eq 'Development' -or $Environment -eq 'Production'){
             Write-Verbose "Copying build-artifacts"

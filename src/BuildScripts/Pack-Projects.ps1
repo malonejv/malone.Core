@@ -69,9 +69,6 @@ param (
     Write-Verbose "  Current script: $($MyInvocation.MyCommand.Path)"
     $ScriptsDir = $MyInvocation.MyCommand.Path | Split-Path
 
-    $ProjectsCount = $Projects.count
-    Write-Verbose "  Projects count: $ProjectsCount"
-
     $Projects=$projectsParam.split(', ')
     $ProjectsCount = $Projects.count
     Write-Verbose "  Projects count: $ProjectsCount"
