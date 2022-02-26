@@ -48,6 +48,7 @@ jobs:
       - name: "Echo Environmnet: "
         run: |
             Write-Host "MALONECORE_ENVIRONMENT: ${env:MALONECORE_ENVIRONMENT}"
+            Write-Host "MALONECORE_CONFIGURATION: ${{ secrets.MALONECORE_CONFIGURATION }}"
             Write-Host "MALONECORE_CONFIGURATION: ${env:MALONECORE_CONFIGURATION}"
             Write-Host "MALONECORE_VERBOSE: ${env:MALONECORE_VERBOSE}"
             Write-Host "MALONECORE_SHOULDPACK: ${env:MALONECORE_SHOULDPACK}"
