@@ -72,7 +72,7 @@ runs:
   
   - name: Build application
     shell: pwsh
-    run: msbuild ${{ inputs.SOLUTION_PATH }} /t:Build /p:Configuration=${{ inputs.MALONECORE_CONFIGURATION }} 
+    run: msbuild ${{ inputs.SOLUTION_PATH }} /t:Build /p:Configuration="${{ inputs.MALONECORE_CONFIGURATION }}"
 
   - name: Preparing artifacts
     shell: pwsh
