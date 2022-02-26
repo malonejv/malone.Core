@@ -1,0 +1,103 @@
+
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - development
+      - master
+      - release/**
+      - hotfix/**
+  pull_request:
+    branches:
+      - development
+      - master
+      - release/**
+      - hotfix/**
+
+env:
+  MALONECORE_ENVIRONMENT: ${{ secrets.MALONECORE_ENVIRONMENT }}
+  MALONECORE_CONFIGURATION: ${{ secrets.MALONECORE_CONFIGURATION }}
+  MALONECORE_VERBOSE: ${{ secrets.MALONECORE_VERBOSE }}
+  MALONECORE_SHOULDPACK: ${{ secrets.MALONECORE_SHOULDPACK }}
+  MALONECORE_NUGET_PATTERN: ${{ secrets.MALONECORE_NUGET_PATTERN }}
+  MALONECORE_NUGET_SYMBOL_PATTERN: ${{ secrets.MALONECORE_NUGET_SYMBOL_PATTERN }}
+  BRANCH: ${{ github.ref_name }}
+  SHOULD_COMMIT: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/development' || github.ref == 'refs/heads/master')  }}
+  SOLUTION_PATH: "${{ github.workspace }}\\src\\malone.Core.sln"
+  SCRIPTS_DIR: "${{ github.workspace }}\\src\\BuildScripts"
+  BUILD_ARTIFACTS_NAME: "build-artifacts"
+  PACK_ARTIFACTS_NAME: "pack-artifacts"
+  GIT_USERNAME: "malonejv"
+  GIT_USERMAIL: "malonejv@gmail.com"
+  NUGET_SOURCE: "https://nuget.pkg.github.com/malonejv/index.json"
+  NUGET_USERNAME: "malonejv"
+  NUGET_PASSWORD: "${{ secrets.GITHUB_TOKEN }}"
+  
+jobs:
+  build:
+      name: Build
+      runs-on: windows-latest
+      environment: "${env:MALONECORE_ENVIRONMENT}"
+      
+      outputs:
+        version_number: ${{steps.build_app.outputs.version_number}}
+
+      steps:
+      - uses: actions/checkout@v1
+      - uses: ./.github/actions/build
+        id: build_app
+        with:
+              MALONECORE_ENVIRONMENT: "${env:MALONECORE_ENVIRONMENT}"
+              MALONECORE_CONFIGURATION: "${env:MALONECORE_CONFIGURATION}"
+              MALONECORE_VERBOSE: "${env:MALONECORE_VERBOSE}"
+              MALONECORE_SHOULDPACK: "${env:MALONECORE_SHOULDPACK}"
+              BRANCH: "${env:BRANCH}"
+              SHOULD_COMMIT: "${env:SHOULD_COMMIT}"
+              SOLUTION_PATH: "${env:SOLUTION_PATH}"
+              SCRIPTS_DIR: "${env:SCRIPTS_DIR}"
+              BUILD_ARTIFACTS_NAME: "${env:BUILD_ARTIFACTS_NAME}"
+              GIT_USERNAME: "${env:GIT_USERNAME}"
+              GIT_USERMAIL: "${env:GIT_USERMAIL}"
+              NUGET_SOURCE: "${env:NUGET_SOURCE}"
+              NUGET_USERNAME: "${env:NUGET_USERNAME}"
+              NUGET_PASSWORD: "${env:NUGET_PASSWORD}"
+
+  pack:
+      name: Pack
+      runs-on: windows-latest
+      environment: "${env:MALONECORE_ENVIRONMENT}"
+      needs: build
+      
+      steps:
+      - uses: actions/checkout@v1
+      - uses: ./.github/actions/pack
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
+        with:
+              MALONECORE_ENVIRONMENT: "${env:MALONECORE_ENVIRONMENT}"
+              MALONECORE_VERBOSE: "${env:MALONECORE_VERBOSE}"
+              SOLUTION_PATH: "${env:SOLUTION_PATH}"
+              SCRIPTS_DIR: "${env:SCRIPTS_DIR}"
+              BUILD_ARTIFACTS_NAME: "${env:BUILD_ARTIFACTS_NAME}"
+              PACK_ARTIFACTS_NAME: "${env:PACK_ARTIFACTS_NAME}"
+              NUGET_SOURCE: "${env:NUGET_SOURCE}"
+              NUGET_USERNAME: "${env:NUGET_USERNAME}"
+              NUGET_PASSWORD: "${env:NUGET_PASSWORD}"
+
+  deploy:
+      name: Deploy
+      runs-on: windows-latest
+      environment: "${env:MALONECORE_ENVIRONMENT}"
+      needs: pack
+
+      steps: 
+      - uses: actions/checkout@v1
+      - uses: ./.github/actions/deploy
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
+        with:
+              MALONECORE_NUGET_PATTERN: "${env:MALONECORE_NUGET_PATTERN}"
+              MALONECORE_NUGET_SYMBOL_PATTERN: "${env:MALONECORE_NUGET_SYMBOL_PATTERN}"
+              PACK_ARTIFACTS_NAME: "${env:PACK_ARTIFACTS_NAME}"
+              NUGET_SOURCE: "${env:NUGET_SOURCE}"
+              NUGET_USERNAME: "${env:NUGET_USERNAME}"
+              NUGET_PASSWORD: "${env:NUGET_PASSWORD}"

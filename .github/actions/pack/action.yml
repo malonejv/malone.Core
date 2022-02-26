@@ -1,39 +1,33 @@
 name: Pack Workflow
 description: Pack application
 inputs:
-   configuration:
-     required: true
-     default: 'Release'
-   solution_path:
-     required: true
-     default: ''
-   scripts_dir:
-     required: true
-     default: ''
-   nuget_source:
-     required: true
-     default: ''
-   nuget_username:
-     required: true
-     default: ''
-   nuget_password:
-     required: true
-     default: ''
-   MALONECORE_VERBOSE:
-     required: true
-     default: 'True'
    MALONECORE_ENVIRONMENT:
      required: true
      default: 'Development'
-   MALONECORE_PKGOUTDIR:
+   MALONECORE_VERBOSE:
+     required: true
+     default: 'True'
+   SOLUTION_PATH:
      required: true
      default: ''
-   build_artifact_name:
+   SCRIPTS_DIR:
+     required: true
+     default: ''
+   BUILD_ARTIFACTS_NAME:
      required: true
      default: 'build-artifacts'
-   pack_artifact_name:
+   PACK_ARTIFACTS_NAME:
      required: true
      default: 'pack-artifacts'
+   NUGET_SOURCE:
+     required: true
+     default: ''
+   NUGET_USERNAME:
+     required: true
+     default: ''
+   NUGET_PASSWORD:
+     required: true
+     default: ''
 
 runs:
   using: "composite"
@@ -47,32 +41,32 @@ runs:
 
   - name: Add GitHub as Nuget Source
     shell: pwsh
-    run: nuget sources add -name "github" -Source ${{ inputs.nuget_source }} -Username ${{ inputs.nuget_username }} -Password ${{ inputs.nuget_password }}
+    run: nuget sources add -name "github" -Source ${{ inputs.NUGET_SOURCE }} -Username ${{ inputs.NUGET_USERNAME }} -Password ${{ inputs.NUGET_PASSWORD }}
    
   - name: Restore Nuget Packages
     shell: pwsh
-    run:  nuget restore ${{ inputs.solution_path }}
+    run:  nuget restore ${{ inputs.SOLUTION_PATH }}
     
   - name: Download built artifacts
     uses: actions/download-artifact@v2
     with:
-        name: "${{ inputs.build_artifact_name }}"
-        path: "${{ inputs.build_artifact_name }}"
+        name: "${{ inputs.BUILD_ARTIFACTS_NAME }}"
+        path: "${{ inputs.BUILD_ARTIFACTS_NAME }}"
 
   - name: Prepare Packages
     shell: pwsh
     run: |
-          $solutionDir="${{ inputs.solution_path }}" | Split-Path
-          $scriptsDir="${{ inputs.scripts_dir }}"
-          $solutionPath="${{ inputs.solution_path }}"
-          $buildArtifactPath="${{ github.workspace }}\${{ inputs.build_artifact_name }}\*"
-          $OutputDir="${{ inputs.MALONECORE_PKGOUTDIR }}"
+          $solutionDir="${{ inputs.SOLUTION_PATH }}" | Split-Path
+          $scriptsDir="${{ inputs.SCRIPTS_DIR }}"
+          $solutionPath="${{ inputs.SOLUTION_PATH }}"
+          $buildArtifactPath="${{ github.workspace }}\${{ inputs.BUILD_ARTIFACTS_NAME }}\*"
+          $OutputDir="${{ github.workspace }}\\${{ inputs.PACK_ARTIFACTS_NAME }}"
           Invoke-Expression "$scriptsDir\Post-BuildEvent.ps1 -SolutionPath `"$solutionPath`" -Environment `"${{ inputs.MALONECORE_ENVIRONMENT }}`" -BuildArtifactsPath `"$buildArtifactPath`" -OutputDir `"$OutputDir`" -ShouldPack:([bool]::parse(`"$true`")) -Verbose:([bool]::parse(`"${{ inputs.MALONECORE_VERBOSE }}`"))"
           
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
     with:
-      name:  "${{ inputs.pack_artifact_name }}"
-      path: "${{ github.workspace }}\\${{ inputs.pack_artifact_name }}\\*"
+      name:  "${{ inputs.PACK_ARTIFACTS_NAME }}"
+      path: "${{ github.workspace }}\\${{ inputs.PACK_ARTIFACTS_NAME }}\\*"
       if-no-files-found: error
       retention-days: 1

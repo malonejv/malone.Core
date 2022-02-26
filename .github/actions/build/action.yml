@@ -1,40 +1,46 @@
 name: Build Workflow
 description: Build application
 inputs:
-   configuration:
-     required: true
-     default: 'Release'
-   solution_path:
-     required: true
-     default: ''
-   scripts_dir:
-     required: true
-     default: ''
-   nuget_source:
-     required: true
-     default: ''
-   nuget_username:
-     required: true
-     default: ''
-   nuget_password:
-     required: true
-     default: ''
-   build_artifact_name:
-     required: true
-     default: 'build-artifacts'
-   MALONECORE_VERBOSE:
-     required: true
-     default: 'True'
    MALONECORE_ENVIRONMENT:
      required: true
      default: 'Development'
+   MALONECORE_CONFIGURATION:
+     required: true
+     default: 'Release'
+   MALONECORE_VERBOSE:
+     required: true
+     default: 'True'
    MALONECORE_SHOULDPACK:
+     required: true
+     default: ''
+   BRANCH:
      required: true
      default: ''
    SHOULD_COMMIT:
      required: true
      default: ''
-   BRANCH:
+   SOLUTION_PATH:
+     required: true
+     default: ''
+   SCRIPTS_DIR:
+     required: true
+     default: ''
+   BUILD_ARTIFACTS_NAME:
+     required: true
+     default: 'build-artifacts'
+   GIT_USERNAME:
+     required: true
+     default: ''
+   GIT_USERMAIL:
+     required: true
+     default: ''
+   NUGET_SOURCE:
+     required: true
+     default: ''
+   NUGET_USERNAME:
+     required: true
+     default: ''
+   NUGET_PASSWORD:
      required: true
      default: ''
 
@@ -58,24 +64,24 @@ runs:
 
   - name: Add GitHub as Nuget Source
     shell: pwsh
-    run: nuget sources add -name "github" -Source ${{ inputs.nuget_source }} -Username ${{ inputs.nuget_username }} -Password ${{ inputs.nuget_password }}
+    run: nuget sources add -name "github" -Source ${{ inputs.NUGET_SOURCE }} -Username ${{ inputs.NUGET_USERNAME }} -Password ${{ inputs.NUGET_PASSWORD }}
     
   - name: Restore Nuget Packages
     shell: pwsh
-    run:  nuget restore ${{ inputs.solution_path }}
+    run:  nuget restore ${{ inputs.SOLUTION_PATH }}
   
   - name: Build application
     shell: pwsh
-    run: msbuild ${{ inputs.solution_path }} /t:Build /p:Configuration=${{ inputs.configuration }} 
+    run: msbuild ${{ inputs.SOLUTION_PATH }} /t:Build /p:Configuration=${{ inputs.MALONECORE_CONFIGURATION }} 
 
   - name: Preparing artifacts
     shell: pwsh
     run: |
-           $buildObjects="build-objects"
+           $buildObjects="${{ inputs.BUILD_ARTIFACTS_NAME }}"
            New-Item -Path "${{ github.workspace }}" -Name $buildObjects -ItemType Directory
-           $solutionDir = "${{ inputs.solution_path }}" | Split-Path
-           $scriptsDir="${{ inputs.scripts_dir }}"
-           $solutionPath="${{ inputs.solution_path }}"
+           $solutionDir = "${{ inputs.SOLUTION_PATH }}" | Split-Path
+           $scriptsDir="${{ inputs.SCRIPTS_DIR }}"
+           $solutionPath="${{ inputs.SOLUTION_PATH }}"
            Invoke-Expression "$scriptsDir\Get-ProjectsInSolution.ps1 -Path `"$solutionPath`" -Type `"NonTestProjects`" -Verbose" -Outvariable projects
            $projects | ForEach-Object { 
               $projectName = Split-Path $_ -Leaf
@@ -87,8 +93,8 @@ runs:
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
     with:
-      name: "${{ inputs.build_artifact_name }}"
-      path: "${{ github.workspace }}\\build-objects\\*"
+      name: "${{ inputs.BUILD_ARTIFACTS_NAME }}"
+      path: "${{ github.workspace }}\\${{ inputs.BUILD_ARTIFACTS_NAME }}\\*"
       if-no-files-found: error
       retention-days: 5
 
@@ -96,8 +102,8 @@ runs:
     shell: pwsh
     run: |
           if([bool]::parse("${{ inputs.SHOULD_COMMIT }}")){
-              git config user.email "malonejv@gmail.com"
-              git config user.name "malonejv"
+              git config user.email "${{ inputs.GIT_USERMAIL }}"
+              git config user.name "${{ inputs.GIT_USERNAME }}"
               git add .
               git commit -m "Version updated"
               git push origin "${{ inputs.BRANCH }}"}
