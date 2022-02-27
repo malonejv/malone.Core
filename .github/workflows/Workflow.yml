@@ -25,6 +25,7 @@ env:
   BRANCH: ${{ github.ref_name }}
   SHOULD_COMMIT: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/development' || github.ref == 'refs/heads/master')  }}
   SOLUTION_PATH: "${{ github.workspace }}\\src\\malone.Core.sln"
+  PKG_ARTIFACTS_DIR: "${{ github.workspace }}\\pack-artifacts"
   SCRIPTS_DIR: "${{ github.workspace }}\\src\\BuildScripts"
   GIT_USERNAME: "malonejv"
   GIT_USERMAIL: "malonejv@gmail.com"
@@ -103,6 +104,7 @@ jobs:
               BRANCH: "${env:BRANCH}"
               SHOULD_COMMIT: "${env:SHOULD_COMMIT}"
               SOLUTION_PATH: "${env:SOLUTION_PATH}"
+              PKG_ARTIFACTS_DIR: "${env:PKG_ARTIFACTS_DIR}"
               SCRIPTS_DIR: "${env:SCRIPTS_DIR}"
               BUILD_ARTIFACTS_NAME: "build-artifacts"
               GIT_USERNAME: "${env:GIT_USERNAME}"
@@ -125,6 +127,7 @@ jobs:
               MALONECORE_ENVIRONMENT: "${env:MALONECORE_ENVIRONMENT}"
               MALONECORE_VERBOSE: "${env:MALONECORE_VERBOSE}"
               SOLUTION_PATH: "${env:SOLUTION_PATH}"
+              PKG_ARTIFACTS_DIR: "${env:PKG_ARTIFACTS_DIR}"
               SCRIPTS_DIR: "${env:SCRIPTS_DIR}"
               BUILD_ARTIFACTS_NAME: "build-artifacts"
               PACK_ARTIFACTS_NAME: "pack-artifacts"
@@ -145,6 +148,7 @@ jobs:
         with:
               MALONECORE_NUGET_PATTERN: "${env:MALONECORE_NUGET_PATTERN}"
               MALONECORE_NUGET_SYMBOL_PATTERN: "${env:MALONECORE_NUGET_SYMBOL_PATTERN}"
+              PKG_ARTIFACTS_DIR: "${env:PKG_ARTIFACTS_DIR}"
               PACK_ARTIFACTS_NAME: "pack-artifacts"
               NUGET_SOURCE: "${env:NUGET_SOURCE}"
               NUGET_USERNAME: "${env:NUGET_USERNAME}"
