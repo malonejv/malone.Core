@@ -1,0 +1,151 @@
+
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - development
+      - master
+      - release/**
+      - hotfix/**
+  pull_request:
+    branches:
+      - development
+      - master
+      - release/**
+      - hotfix/**
+
+env:
+  MALONECORE_ENVIRONMENT: ''
+  MALONECORE_CONFIGURATION: ''
+  MALONECORE_VERBOSE: ''
+  MALONECORE_SHOULDPACK: ''
+  MALONECORE_NUGET_PATTERN: 'malone.Core*.nupkg'
+  MALONECORE_NUGET_SYMBOL_PATTERN: ''
+  BRANCH: ${{ github.ref_name }}
+  SHOULD_COMMIT: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/development' || github.ref == 'refs/heads/master')  }}
+  SOLUTION_PATH: "${{ github.workspace }}\\src\\malone.Core.sln"
+  SCRIPTS_DIR: "${{ github.workspace }}\\src\\BuildScripts"
+  GIT_USERNAME: "malonejv"
+  GIT_USERMAIL: "malonejv@gmail.com"
+  NUGET_SOURCE: "https://nuget.pkg.github.com/malonejv/index.json"
+  NUGET_USERNAME: "malonejv"
+  NUGET_PASSWORD: "${{ secrets.GITHUB_TOKEN }}"
+  
+jobs:
+  build:
+      name: Build
+      runs-on: windows-latest
+      
+      outputs:
+        version_number: ${{steps.build_app.outputs.version_number}}
+
+      steps:
+      
+      - name: "Defining development variables: "
+        if: github.base_ref=='development' && startsWith(github.head_ref, 'feature/')
+        run: |
+            echo "MALONECORE_ENVIRONMENT=Development" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_CONFIGURATION=Debug" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_VERBOSE=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_SHOULDPACK=False" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+
+      - name: "Defining development variables: "
+        if: github.ref_name=='development'
+        run: |
+            echo "MALONECORE_ENVIRONMENT=Development" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_CONFIGURATION=Debug" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_VERBOSE=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_SHOULDPACK=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_NUGET_SYMBOL_PATTERN=malone.Core*.snupkg" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+          
+      - name: "Defining hotfix production variables: "
+        if: github.base_ref=='master' && (startsWith(github.head_ref, 'release/')  || startsWith(github.head_ref, 'hotfix/'))
+        run: |
+            echo "MALONECORE_ENVIRONMENT=Production" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_CONFIGURATION=Release" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_VERBOSE=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_SHOULDPACK=False" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+              
+      - name: "Defining production variables: "
+        if: github.ref_name=='master'
+        run: |
+            echo "MALONECORE_ENVIRONMENT=Production" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_CONFIGURATION=Release" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_VERBOSE=False" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_SHOULDPACK=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            
+      - name: "Echo Environmnet: "
+        run: |
+            Write-Host "Merge From: ${{ github.head_ref }}"
+            Write-Host "Merge To: ${{ github.base_ref }}"
+            Write-Host "MALONECORE_ENVIRONMENT: ${env:MALONECORE_ENVIRONMENT}"
+            Write-Host "MALONECORE_CONFIGURATION: ${env:MALONECORE_CONFIGURATION}"
+            Write-Host "MALONECORE_VERBOSE: ${env:MALONECORE_VERBOSE}"
+            Write-Host "MALONECORE_SHOULDPACK: ${env:MALONECORE_SHOULDPACK}"
+            Write-Host "MALONECORE_NUGET_PATTERN: ${env:MALONECORE_NUGET_PATTERN}"
+            Write-Host "MALONECORE_NUGET_SYMBOL_PATTERN: ${env:MALONECORE_NUGET_SYMBOL_PATTERN}"
+            Write-Host "BRANCH: ${env:BRANCH}"
+            Write-Host "SHOULD_COMMIT: ${env:SHOULD_COMMIT}"
+            Write-Host "SOLUTION_PATH: ${env:SOLUTION_PATH}"
+            Write-Host "SCRIPTS_DIR: ${env:SCRIPTS_DIR}"
+            Write-Host "GIT_USERNAME: ${env:GIT_USERNAME}"
+            Write-Host "GIT_USERMAIL: ${env:GIT_USERMAIL}"
+
+      - uses: actions/checkout@v1
+      - uses: ./.github/actions/build
+        id: build_app
+        with:
+              MALONECORE_ENVIRONMENT: "${env:MALONECORE_ENVIRONMENT}"
+              MALONECORE_CONFIGURATION: "${env:MALONECORE_CONFIGURATION}"
+              MALONECORE_VERBOSE: "${env:MALONECORE_VERBOSE}"
+              MALONECORE_SHOULDPACK: "${env:MALONECORE_SHOULDPACK}"
+              BRANCH: "${env:BRANCH}"
+              SHOULD_COMMIT: "${env:SHOULD_COMMIT}"
+              SOLUTION_PATH: "${env:SOLUTION_PATH}"
+              SCRIPTS_DIR: "${env:SCRIPTS_DIR}"
+              BUILD_ARTIFACTS_NAME: "build-artifacts"
+              GIT_USERNAME: "${env:GIT_USERNAME}"
+              GIT_USERMAIL: "${env:GIT_USERMAIL}"
+              NUGET_SOURCE: "${env:NUGET_SOURCE}"
+              NUGET_USERNAME: "${env:NUGET_USERNAME}"
+              NUGET_PASSWORD: "${env:NUGET_PASSWORD}"
+
+  pack:
+      name: Pack
+      runs-on: windows-latest
+      environment: ${env:MALONECORE_ENVIRONMENT}
+      needs: build
+      
+      steps:
+      - uses: actions/checkout@v1
+      - uses: ./.github/actions/pack
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
+        with:
+              MALONECORE_ENVIRONMENT: "${env:MALONECORE_ENVIRONMENT}"
+              MALONECORE_VERBOSE: "${env:MALONECORE_VERBOSE}"
+              SOLUTION_PATH: "${env:SOLUTION_PATH}"
+              SCRIPTS_DIR: "${env:SCRIPTS_DIR}"
+              BUILD_ARTIFACTS_NAME: "build-artifacts"
+              PACK_ARTIFACTS_NAME: "pack-artifacts"
+              NUGET_SOURCE: "${env:NUGET_SOURCE}"
+              NUGET_USERNAME: "${env:NUGET_USERNAME}"
+              NUGET_PASSWORD: "${env:NUGET_PASSWORD}"
+
+  deploy:
+      name: Deploy
+      runs-on: windows-latest
+      environment: ${env:MALONECORE_ENVIRONMENT}
+      needs: pack
+
+      steps: 
+      - uses: actions/checkout@v1
+      - uses: ./.github/actions/deploy
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
+        with:
+              MALONECORE_NUGET_PATTERN: "${env:MALONECORE_NUGET_PATTERN}"
+              MALONECORE_NUGET_SYMBOL_PATTERN: "${env:MALONECORE_NUGET_SYMBOL_PATTERN}"
+              PACK_ARTIFACTS_NAME: "pack-artifacts"
+              NUGET_SOURCE: "${env:NUGET_SOURCE}"
+              NUGET_USERNAME: "${env:NUGET_USERNAME}"
+              NUGET_PASSWORD: "${env:NUGET_PASSWORD}"

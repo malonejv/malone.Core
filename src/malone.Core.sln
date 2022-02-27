@@ -94,10 +94,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05.Nuget", "05.Nuget", "{1C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.WebApi.Test", "malone.Core.WebApi.Test\malone.Core.WebApi.Test.csproj", "{740BD134-AB9F-4503-9F86-4642B151FECB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{68758EB3-E0F4-469F-A63D-8B8592414B1D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.Pipelines", "01.Pipelines", "{68758EB3-E0F4-469F-A63D-8B8592414B1D}"
 	ProjectSection(SolutionItems) = preProject
-		..\.github\workflows\development.yml = ..\.github\workflows\development.yml
-		..\.github\workflows\production.yml = ..\.github\workflows\production.yml
+		..\.github\workflows\Workflow.yml = ..\.github\workflows\Workflow.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.AdoNet.Firebird", "malone.Core.AdoNet.Firebird\malone.Core.AdoNet.Firebird.csproj", "{E6DCA648-55B4-4411-BC4D-52D5F69D0612}"
@@ -116,7 +115,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Identity.Dapper
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Identity.AdoNet.SqlServer", "malone.Core.Identity.AdoNet.SqlServer\malone.Core.Identity.AdoNet.SqlServer.csproj", "{765B4548-F6B9-41C9-A640-A12B3F91185B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{FD11AED8-C9FC-4948-B282-BDF67A7BD621}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03.scripts", "03.scripts", "{FD11AED8-C9FC-4948-B282-BDF67A7BD621}"
 	ProjectSection(SolutionItems) = preProject
 		BuildScripts\Get-AssemblyVersion.ps1 = BuildScripts\Get-AssemblyVersion.ps1
 		BuildScripts\Get-ProjectsInSolution.ps1 = BuildScripts\Get-ProjectsInSolution.ps1
@@ -126,19 +125,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{FD11
 		BuildScripts\Upd-AssemblyVersion.ps1 = BuildScripts\Upd-AssemblyVersion.ps1
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "actions", "actions", "{F4B7757C-E1D6-48AF-A6D2-C2546E685FAF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.actions", "02.actions", "{F4B7757C-E1D6-48AF-A6D2-C2546E685FAF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{1EEDB9AB-97BC-4191-ADE5-85F90EDAF1C2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.build", "01.build", "{1EEDB9AB-97BC-4191-ADE5-85F90EDAF1C2}"
 	ProjectSection(SolutionItems) = preProject
 		..\.github\actions\build\action.yml = ..\.github\actions\build\action.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{4FB75B60-4B82-4956-AD6A-6CA7A4E6B6EC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03.deploy", "03.deploy", "{4FB75B60-4B82-4956-AD6A-6CA7A4E6B6EC}"
 	ProjectSection(SolutionItems) = preProject
 		..\.github\actions\deploy\action.yml = ..\.github\actions\deploy\action.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pack", "pack", "{BACA58B5-D10E-41E0-9B53-B6D3CE972053}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.pack", "02.pack", "{BACA58B5-D10E-41E0-9B53-B6D3CE972053}"
 	ProjectSection(SolutionItems) = preProject
 		..\.github\actions\pack\action.yml = ..\.github\actions\pack\action.yml
 	EndProjectSection

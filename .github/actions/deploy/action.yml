@@ -2,23 +2,23 @@ name: Deploy Workflow
 description: Deploy application
 
 inputs:
-   nuget_source:
+   MALONECORE_NUGET_PATTERN:
      required: true
      default: ''
-   nuget_username:
-     required: true
+   MALONECORE_NUGET_SYMBOL_PATTERN:
+     required: false
      default: ''
-   nuget_password:
-     required: true
-     default: ''
-   pack_artifact_name:
+   PACK_ARTIFACTS_NAME:
      required: true
      default: 'pack-artifacts'
-   package_pattern:
+   NUGET_SOURCE:
      required: true
      default: ''
-   symbol_pattern:
-     required: false
+   NUGET_USERNAME:
+     required: true
+     default: ''
+   NUGET_PASSWORD:
+     required: true
      default: ''
      
 runs:
@@ -28,17 +28,17 @@ runs:
   
   - name: Add GitHub as Nuget Source
     shell: pwsh
-    run: nuget sources add -name "github" -Source ${{ inputs.nuget_source }} -Username ${{ inputs.nuget_username }} -Password ${{ inputs.nuget_password }}
+    run: nuget sources add -name "github" -Source ${{ inputs.NUGET_SOURCE }} -Username ${{ inputs.NUGET_USERNAME }} -Password ${{ inputs.NUGET_PASSWORD }}
     
   - name: Download packed artifacts
     uses: actions/download-artifact@v2
     with:
-        name: "${{ inputs.pack_artifact_name }}"
-        path: "${{ inputs.pack_artifact_name }}"
+        name: "${{ inputs.PACK_ARTIFACTS_NAME }}"
+        path: "${{ inputs.PACK_ARTIFACTS_NAME }}"
 
   - name: "Push Nuget Packages"
     shell: pwsh
     run: |
-          cd "${{ github.workspace }}\\${{ inputs.pack_artifact_name }}"
-          nuget push "${{ inputs.package_pattern }}" -SkipDuplicate -source "github"
-          if("${{ inputs.symbol_pattern }}"-ne""){ nuget push "${{ inputs.symbol_pattern }}" -SkipDuplicate -source "github"}
+          cd "${{ github.workspace }}\\${{ inputs.PACK_ARTIFACTS_NAME }}"
+          nuget push "${{ inputs.MALONECORE_NUGET_PATTERN }}" -SkipDuplicate -source "github"
+          if("${{ inputs.MALONECORE_NUGET_SYMBOL_PATTERN }}"-ne""){ nuget push "${{ inputs.MALONECORE_NUGET_SYMBOL_PATTERN }}" -SkipDuplicate -source "github"}
