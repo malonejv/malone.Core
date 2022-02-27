@@ -45,6 +45,14 @@ jobs:
       steps:
       
       - name: "Defining development variables: "
+        if: github.base_ref=='development' && startsWith(github.head_ref, 'feature/')
+        run: |
+            echo "MALONECORE_ENVIRONMENT=Development" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_CONFIGURATION=Debug" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_VERBOSE=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_SHOULDPACK=False" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+
+      - name: "Defining development variables: "
         if: github.ref_name=='development'
         run: |
             echo "MALONECORE_ENVIRONMENT=Development" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
@@ -52,21 +60,23 @@ jobs:
             echo "MALONECORE_VERBOSE=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
             echo "MALONECORE_SHOULDPACK=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
             echo "MALONECORE_NUGET_SYMBOL_PATTERN=malone.Core*.snupkg" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
-
+          
+      - name: "Defining hotfix production variables: "
+        if: github.base_ref=='master' && (startsWith(github.head_ref, 'release/')  || startsWith(github.head_ref, 'hotfix/'))
+        run: |
+            echo "MALONECORE_ENVIRONMENT=Production" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_CONFIGURATION=Release" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_VERBOSE=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+            echo "MALONECORE_SHOULDPACK=False" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+              
       - name: "Defining production variables: "
-        if: github.ref_name=='master' || startsWith(github.ref_name, 'release')  || startsWith(github.ref_name, 'hotfix')
+        if: github.ref_name=='master'
         run: |
             echo "MALONECORE_ENVIRONMENT=Production" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
             echo "MALONECORE_CONFIGURATION=Release" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
             echo "MALONECORE_VERBOSE=False" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
             echo "MALONECORE_SHOULDPACK=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
             
-      - name: "Defining hotfix production variables: "
-        if: startsWith(github.ref_name, 'release')  || startsWith(github.ref_name, 'hotfix')
-        run: |
-            echo "MALONECORE_VERBOSE=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
-            echo "MALONECORE_SHOULDPACK=False" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
-
       - name: "Echo Environmnet: "
         run: |
             Write-Host "Merge From: ${{ github.head_ref }}"
