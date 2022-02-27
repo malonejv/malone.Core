@@ -55,7 +55,7 @@ jobs:
             echo "MALONECORE_NUGET_SYMBOL_PATTERN=malone.Core*.snupkg" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
 
       - name: "Defining production variables: "
-        if: github.ref_name=='master' || startsWith(github.ref_name, "release")  || startsWith(github.ref_name, "hotfix")
+        if: github.ref_name=='master' || startsWith(github.ref_name, 'release')  || startsWith(github.ref_name, 'hotfix')
         run: |
             echo "MALONECORE_ENVIRONMENT=Production" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
             echo "MALONECORE_CONFIGURATION=Release" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
@@ -63,7 +63,7 @@ jobs:
             echo "MALONECORE_SHOULDPACK=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
             
       - name: "Defining hotfix production variables: "
-        if: startsWith(github.ref_name, "release")  || startsWith(github.ref_name, "hotfix")
+        if: startsWith(github.ref_name, 'release')  || startsWith(github.ref_name, 'hotfix')
         run: |
             echo "MALONECORE_VERBOSE=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
             echo "MALONECORE_SHOULDPACK=False" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
