@@ -2,15 +2,15 @@ name: Deploy Workflow
 description: Deploy application
 
 inputs:
+   MALONECORE_NUGET_PATTERN:
+     required: true
+     default: ''
+   MALONECORE_NUGET_SYMBOL_PATTERN:
+     required: false
+     default: ''
    PACK_ARTIFACTS_NAME:
      required: true
      default: 'pack-artifacts'
-   PACKAGE_PATTERN:
-     required: true
-     default: ''
-   SYMBOL_PATTERN:
-     required: false
-     default: ''
    NUGET_SOURCE:
      required: true
      default: ''
@@ -40,5 +40,5 @@ runs:
     shell: pwsh
     run: |
           cd "${{ github.workspace }}\\${{ inputs.PACK_ARTIFACTS_NAME }}"
-          nuget push "${{ inputs.PACKAGE_PATTERN }}" -SkipDuplicate -source "github"
-          if("${{ inputs.SYMBOL_PATTERN }}"-ne""){ nuget push "${{ inputs.SYMBOL_PATTERN }}" -SkipDuplicate -source "github"}
+          nuget push "${{ inputs.MALONECORE_NUGET_PATTERN }}" -SkipDuplicate -source "github"
+          if("${{ inputs.MALONECORE_NUGET_SYMBOL_PATTERN }}"-ne""){ nuget push "${{ inputs.MALONECORE_NUGET_SYMBOL_PATTERN }}" -SkipDuplicate -source "github"}
