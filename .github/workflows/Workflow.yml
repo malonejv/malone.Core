@@ -38,7 +38,6 @@ jobs:
   build:
       name: Build
       runs-on: windows-latest
-      environment: "${env:MALONECORE_ENVIRONMENT}"
       
       outputs:
         version_number: ${{steps.build_app.outputs.version_number}}
@@ -107,7 +106,7 @@ jobs:
   pack:
       name: Pack
       runs-on: windows-latest
-      environment: "${env:MALONECORE_ENVIRONMENT}"
+      environment: ${env:MALONECORE_ENVIRONMENT}
       needs: build
       
       steps:
@@ -128,7 +127,7 @@ jobs:
   deploy:
       name: Deploy
       runs-on: windows-latest
-      environment: "${env:MALONECORE_ENVIRONMENT}"
+      environment: ${env:MALONECORE_ENVIRONMENT}
       needs: pack
 
       steps: 
