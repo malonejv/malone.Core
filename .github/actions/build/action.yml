@@ -89,7 +89,6 @@ runs:
               Write-Verbose "$folderName"
               New-Item -Path "${{ github.workspace }}\$buildObjects" -Name $folderName -ItemType Directory 
               Copy-Item "$solutionDir\$folderName\bin\" -Destination "${{ github.workspace }}\$buildObjects\$folderName" -Recurse -Container }
-           Get-ChildItem "${{ github.workspace }}\\${{ inputs.BUILD_ARTIFACTS_NAME }}" -Recurse -Depth 3 -Include malone.Core*
            
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
