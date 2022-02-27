@@ -130,8 +130,8 @@ jobs:
               MALONECORE_VERBOSE: "${env:MALONECORE_VERBOSE}"
               SOLUTION_PATH: "${env:SOLUTION_PATH}"
               SCRIPTS_DIR: "${env:SCRIPTS_DIR}"
-              BUILD_ARTIFACTS_NAME: "${env:BUILD_ARTIFACTS_NAME}"
-              PACK_ARTIFACTS_NAME: "${env:PACK_ARTIFACTS_NAME}"
+              BUILD_ARTIFACTS_NAME: ${env:BUILD_ARTIFACTS_NAME}
+              PACK_ARTIFACTS_NAME: ${env:PACK_ARTIFACTS_NAME}
               NUGET_SOURCE: "${env:NUGET_SOURCE}"
               NUGET_USERNAME: "${env:NUGET_USERNAME}"
               NUGET_PASSWORD: "${env:NUGET_PASSWORD}"
