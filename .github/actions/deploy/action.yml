@@ -8,6 +8,9 @@ inputs:
    MALONECORE_NUGET_SYMBOL_PATTERN:
      required: false
      default: ''
+   PKG_ARTIFACTS_DIR:
+     required: false
+     default: ''
    PACK_ARTIFACTS_NAME:
      required: true
      default: 'pack-artifacts'
@@ -39,6 +42,6 @@ runs:
   - name: "Push Nuget Packages"
     shell: pwsh
     run: |
-          cd "${{ github.workspace }}\\${{ inputs.PACK_ARTIFACTS_NAME }}"
+          cd "${{ inputs.PKG_ARTIFACTS_DIR }}"
           nuget push "${{ inputs.MALONECORE_NUGET_PATTERN }}" -SkipDuplicate -source "github"
           if("${{ inputs.MALONECORE_NUGET_SYMBOL_PATTERN }}"-ne""){ nuget push "${{ inputs.MALONECORE_NUGET_SYMBOL_PATTERN }}" -SkipDuplicate -source "github"}

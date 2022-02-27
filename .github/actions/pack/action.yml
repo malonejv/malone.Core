@@ -10,6 +10,9 @@ inputs:
    SOLUTION_PATH:
      required: true
      default: ''
+   PKG_ARTIFACTS_DIR:
+     required: true
+     default: ''
    SCRIPTS_DIR:
      required: true
      default: ''
@@ -60,13 +63,13 @@ runs:
           $scriptsDir="${{ inputs.SCRIPTS_DIR }}"
           $solutionPath="${{ inputs.SOLUTION_PATH }}"
           $buildArtifactPath="${{ github.workspace }}\${{ inputs.BUILD_ARTIFACTS_NAME }}\*"
-          $OutputDir="${{ github.workspace }}\\${{ inputs.PACK_ARTIFACTS_NAME }}"
+          $OutputDir="${{ inputs.PKG_ARTIFACTS_DIR }}"
           Invoke-Expression "$scriptsDir\Post-BuildEvent.ps1 -SolutionPath `"$solutionPath`" -Environment `"${{ inputs.MALONECORE_ENVIRONMENT }}`" -BuildArtifactsPath `"$buildArtifactPath`" -OutputDir `"$OutputDir`" -ShouldPack:([bool]::parse(`"$true`")) -Verbose:([bool]::parse(`"${{ inputs.MALONECORE_VERBOSE }}`"))"
           
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
     with:
       name:  "${{ inputs.PACK_ARTIFACTS_NAME }}"
-      path: "${{ github.workspace }}\\${{ inputs.PACK_ARTIFACTS_NAME }}\\*"
+      path: "${{ inputs.PKG_ARTIFACTS_DIR }}\\*"
       if-no-files-found: error
       retention-days: 1
