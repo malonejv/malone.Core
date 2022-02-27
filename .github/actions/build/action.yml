@@ -22,6 +22,9 @@ inputs:
    SOLUTION_PATH:
      required: true
      default: ''
+   PKG_ARTIFACTS_DIR:
+     required: true
+     default: ''
    SCRIPTS_DIR:
      required: true
      default: ''
