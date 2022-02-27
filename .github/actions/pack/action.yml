@@ -67,6 +67,6 @@ runs:
     uses: actions/upload-artifact@v2
     with:
       name:  "${{ inputs.PACK_ARTIFACTS_NAME }}"
-      path: "${{ github.workspace }}\\pack-artifacts\\*"
+      path: "${{ github.workspace }}\\${{ inputs.PACK_ARTIFACTS_NAME }}\\*"
       if-no-files-found: error
       retention-days: 1
