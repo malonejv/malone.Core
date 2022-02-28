@@ -81,7 +81,6 @@ jobs:
   pack:
       name: Pack
       runs-on: windows-latest
-      environment: ${env:MALONECORE_ENVIRONMENT}
       needs: build
       
       steps:
@@ -90,17 +89,6 @@ jobs:
       - uses: ./.github/actions/getenv
         id: get_env
       
-      - name: "Echo Environmnet: "
-        run: |
-          Write-Host "MALONECORE_ENVIRONMENT: ${env:MALONECORE_ENVIRONMENT}"
-          Write-Host "MALONECORE_CONFIGURATION: ${env:MALONECORE_CONFIGURATION}"
-          Write-Host "MALONECORE_VERBOSE: ${env:MALONECORE_VERBOSE}"
-          Write-Host "MALONECORE_SHOULDPACK: ${env:MALONECORE_SHOULDPACK}"
-          Write-Host "MALONECORE_NUGET_PATTERN: ${env:MALONECORE_NUGET_PATTERN}"
-          Write-Host "MALONECORE_NUGET_SYMBOL_PATTERN: ${env:MALONECORE_NUGET_SYMBOL_PATTERN}"
-          Write-Host "BRANCH: ${env:BRANCH}"
-          Write-Host "SHOULD_COMMIT: ${env:SHOULD_COMMIT}"
-
       - uses: actions/checkout@v1
       - uses: ./.github/actions/pack
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
@@ -119,7 +107,6 @@ jobs:
   deploy:
       name: Deploy
       runs-on: windows-latest
-      environment: ${env:MALONECORE_ENVIRONMENT}
       needs: pack
 
       steps: 
@@ -128,17 +115,6 @@ jobs:
       - uses: ./.github/actions/getenv
         id: get_env
       
-      - name: "Echo Environmnet: "
-        run: |
-          Write-Host "MALONECORE_ENVIRONMENT: ${env:MALONECORE_ENVIRONMENT}"
-          Write-Host "MALONECORE_CONFIGURATION: ${env:MALONECORE_CONFIGURATION}"
-          Write-Host "MALONECORE_VERBOSE: ${env:MALONECORE_VERBOSE}"
-          Write-Host "MALONECORE_SHOULDPACK: ${env:MALONECORE_SHOULDPACK}"
-          Write-Host "MALONECORE_NUGET_PATTERN: ${env:MALONECORE_NUGET_PATTERN}"
-          Write-Host "MALONECORE_NUGET_SYMBOL_PATTERN: ${env:MALONECORE_NUGET_SYMBOL_PATTERN}"
-          Write-Host "BRANCH: ${env:BRANCH}"
-          Write-Host "SHOULD_COMMIT: ${env:SHOULD_COMMIT}"
-
       - uses: actions/checkout@v1
       - uses: ./.github/actions/deploy
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
