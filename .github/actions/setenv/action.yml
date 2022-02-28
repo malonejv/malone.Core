@@ -12,10 +12,10 @@ runs:
     if: github.base_ref=='development' && startsWith(github.head_ref, 'feature/')
     shell: pwsh
     run: |
-        Add-Content "MALONECORE_ENVIRONMENT=Development" -Encoding utf-8
-        Add-Content "MALONECORE_CONFIGURATION=Debug" -Encoding utf-8
-        Add-Content "MALONECORE_VERBOSE=True" -Encoding utf-8
-        Add-Content "MALONECORE_SHOULDPACK=False" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_ENVIRONMENT=Development" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_CONFIGURATION=Debug" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_VERBOSE=True" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_SHOULDPACK=False" -Encoding utf-8
         echo "MALONECORE_ENVIRONMENT=Development" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
         echo "MALONECORE_CONFIGURATION=Debug" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
         echo "MALONECORE_VERBOSE=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
@@ -25,11 +25,11 @@ runs:
     if: github.ref_name=='development'
     shell: pwsh
     run: |
-        Add-Content "MALONECORE_ENVIRONMENT=Development" -Encoding utf-8
-        Add-Content "MALONECORE_CONFIGURATION=Debug" -Encoding utf-8
-        Add-Content "MALONECORE_VERBOSE=True" -Encoding utf-8
-        Add-Content "MALONECORE_SHOULDPACK=True" -Encoding utf-8
-        Add-Content "MALONECORE_NUGET_SYMBOL_PATTERN=malone.Core*.snupkg" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_ENVIRONMENT=Development" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_CONFIGURATION=Debug" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_VERBOSE=True" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_SHOULDPACK=True" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_NUGET_SYMBOL_PATTERN=malone.Core*.snupkg" -Encoding utf-8
         echo "MALONECORE_ENVIRONMENT=Development" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
         echo "MALONECORE_CONFIGURATION=Debug" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
         echo "MALONECORE_VERBOSE=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
@@ -40,10 +40,10 @@ runs:
     if: github.base_ref=='master' && (startsWith(github.head_ref, 'release/')  || startsWith(github.head_ref, 'hotfix/'))
     shell: pwsh
     run: |
-        Add-Content "MALONECORE_ENVIRONMENT=Production" -Encoding utf-8
-        Add-Content "MALONECORE_CONFIGURATION=Release" -Encoding utf-8
-        Add-Content "MALONECORE_VERBOSE=True" -Encoding utf-8
-        Add-Content "MALONECORE_SHOULDPACK=False" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_ENVIRONMENT=Production" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_CONFIGURATION=Release" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_VERBOSE=True" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_SHOULDPACK=False" -Encoding utf-8
         echo "MALONECORE_ENVIRONMENT=Production" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
         echo "MALONECORE_CONFIGURATION=Release" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
         echo "MALONECORE_VERBOSE=True" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
@@ -53,10 +53,10 @@ runs:
     if: github.ref_name=='master'
     shell: pwsh
     run: |
-        Add-Content "MALONECORE_ENVIRONMENT=Production" -Encoding utf-8
-        Add-Content "MALONECORE_CONFIGURATION=Release" -Encoding utf-8
-        Add-Content "MALONECORE_VERBOSE=False" -Encoding utf-8
-        Add-Content "MALONECORE_SHOULDPACK=True" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_ENVIRONMENT=Production" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_CONFIGURATION=Release" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_VERBOSE=False" -Encoding utf-8
+        Add-Content "${{ github.workspace }}\\.venv" -Value "MALONECORE_SHOULDPACK=True" -Encoding utf-8
         echo "MALONECORE_ENVIRONMENT=Production" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
         echo "MALONECORE_CONFIGURATION=Release" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
         echo "MALONECORE_VERBOSE=False" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append

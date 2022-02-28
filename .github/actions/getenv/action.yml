@@ -17,7 +17,7 @@ runs:
   - name: "Get variables: "
     shell: pwsh
     run: |
-        $venvPath="${{ github.workspace }}\\venv"
+        $venvPath="${{ github.workspace }}\\venv\\.venv"
         [System.IO.File]::ReadLines("$venvPath") | ForEach-Object {
             echo $_ | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
         }
