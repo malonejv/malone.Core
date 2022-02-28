@@ -67,7 +67,7 @@ runs:
     uses: actions/upload-artifact@v2
     with:
       name: "venv"
-      path: "${{ github.workspace }}\\venv\\*"
+      path: "${{ github.workspace }}\\.venv"
       if-no-files-found: error
       retention-days: 1
 
