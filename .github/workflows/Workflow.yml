@@ -81,7 +81,6 @@ jobs:
   pack:
       name: Pack
       runs-on: windows-latest
-      environment: ${env:MALONECORE_ENVIRONMENT}
       needs: build
       
       steps:
@@ -119,7 +118,6 @@ jobs:
   deploy:
       name: Deploy
       runs-on: windows-latest
-      environment: ${env:MALONECORE_ENVIRONMENT}
       needs: pack
 
       steps: 
