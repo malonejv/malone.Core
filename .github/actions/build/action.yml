@@ -73,6 +73,14 @@ runs:
     shell: pwsh
     run:  nuget restore ${{ inputs.SOLUTION_PATH }}
   
+  - name: Pull before version updated
+    shell: pwsh
+    run: |
+          if([bool]::parse("${{ inputs.SHOULD_COMMIT }}")){
+              git config user.email "${{ inputs.GIT_USERMAIL }}"
+              git config user.name "${{ inputs.GIT_USERNAME }}"
+              git pull origin "${{ inputs.BRANCH }}"}
+              
   - name: Build application
     shell: pwsh
     run: msbuild ${{ inputs.SOLUTION_PATH }} /t:Build /p:Configuration="${{ inputs.MALONECORE_CONFIGURATION }}"
@@ -105,8 +113,6 @@ runs:
     shell: pwsh
     run: |
           if([bool]::parse("${{ inputs.SHOULD_COMMIT }}")){
-              git config user.email "${{ inputs.GIT_USERMAIL }}"
-              git config user.name "${{ inputs.GIT_USERNAME }}"
               git add .
               git commit -m "Version updated"
               git push origin "${{ inputs.BRANCH }}"}
