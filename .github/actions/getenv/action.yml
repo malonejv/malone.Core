@@ -1,0 +1,23 @@
+name: Get-Env
+description: Gets shared environment variables
+
+runs:
+  using: "composite"
+      
+  steps:
+
+  - uses: actions/checkout@v2
+  
+  - name: Download variables
+    uses: actions/download-artifact@v2
+    with:
+        name: "venv"
+        path: "${{ github.workspace }}\\venv"
+
+  - name: "Get variables: "
+    shell: pwsh
+    run: |
+        $venvPath="${{ github.workspace }}\\venv"
+        [System.IO.File]::ReadLines("$venvPath") | ForEach-Object {
+            echo $_ | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+        }

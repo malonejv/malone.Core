@@ -142,6 +142,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.pack", "02.pack", "{BACA
 		..\.github\actions\pack\action.yml = ..\.github\actions\pack\action.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.variables", "00.variables", "{4D7ECF07-8F96-47D7-82BF-BF52A78E9EAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "set-env", "set-env", "{9211F4B0-1C6F-46AC-BFFF-34D8B5FC243B}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\actions\setenv\action.yml = ..\.github\actions\setenv\action.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "get-env", "get-env", "{F41EEBA9-05A2-4CB5-BA9C-FBE069C4FC9C}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\actions\getenv\action.yml = ..\.github\actions\getenv\action.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -694,9 +706,12 @@ Global
 		{1EEDB9AB-97BC-4191-ADE5-85F90EDAF1C2} = {F4B7757C-E1D6-48AF-A6D2-C2546E685FAF}
 		{4FB75B60-4B82-4956-AD6A-6CA7A4E6B6EC} = {F4B7757C-E1D6-48AF-A6D2-C2546E685FAF}
 		{BACA58B5-D10E-41E0-9B53-B6D3CE972053} = {F4B7757C-E1D6-48AF-A6D2-C2546E685FAF}
+		{4D7ECF07-8F96-47D7-82BF-BF52A78E9EAB} = {F4B7757C-E1D6-48AF-A6D2-C2546E685FAF}
+		{9211F4B0-1C6F-46AC-BFFF-34D8B5FC243B} = {4D7ECF07-8F96-47D7-82BF-BF52A78E9EAB}
+		{F41EEBA9-05A2-4CB5-BA9C-FBE069C4FC9C} = {4D7ECF07-8F96-47D7-82BF-BF52A78E9EAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {BF840011-B60A-44FF-9D38-4CB15C4C9C8A}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
+		SolutionGuid = {BF840011-B60A-44FF-9D38-4CB15C4C9C8A}
 	EndGlobalSection
 EndGlobal
