@@ -69,18 +69,17 @@ param (
     Write-Verbose "  Current script: $($MyInvocation.MyCommand.Path)"
     $ScriptsDir = $MyInvocation.MyCommand.Path | Split-Path
 
-    $Projects=$projectsParam.split(', ')
+    $Projects=$projectsParam.split(',')
     $ProjectsCount = $Projects.count
     Write-Verbose "  Projects count: $ProjectsCount"
 
-    
     New-Item "$OutputDir" -ItemType Directory  -Force
 	#$ProjectsCount-1 -> El -1 es porque cuando concateno con , le estoy poniendo , al último elemento.
     for ($projectsCounter=0; $projectsCounter -lt $ProjectsCount-1; $projectsCounter++) {
-        $projectPath=$Projects[$projectsCounter]
+        $projectPath=$Projects[$projectsCounter].Trim()
         $projectsName = Split-Path $projectPath -Leaf
-        Write-Verbose "Packing Project: $([int]$projectsCounter+1). $projectsName"
         Write-Verbose "Path: $projectPath"
+        Write-Verbose "Packing Project: $([int]$projectsCounter+1). $projectsName"
 	    Write-Progress `
 		    -Activity "Packing progress:" `
 		    -PercentComplete ([int](100 * $([int]$projectsCounter+1) / $ProjectsCount)) `
