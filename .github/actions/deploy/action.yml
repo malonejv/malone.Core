@@ -39,6 +39,7 @@ runs:
     shell: pwsh
     run: |
           nuget sources add -name "github" -Source ${{ inputs.NUGET_SOURCE }} -Username ${{ inputs.NUGET_USERNAME }} -Password ${{ inputs.NUGET_PASSWORD }}
+          nuget setApiKey ${{ inputs.NUGET_PASSWORD }} -Source ${{ inputs.NUGET_SOURCE }}
           cd "${{ inputs.PKG_ARTIFACTS_DIR }}"
           nuget push "${{ inputs.MALONECORE_NUGET_PATTERN }}" -SkipDuplicate -source "github"
           if("${{ inputs.MALONECORE_NUGET_SYMBOL_PATTERN }}"-ne""){ nuget push "${{ inputs.MALONECORE_NUGET_SYMBOL_PATTERN }}" -SkipDuplicate -source "github"}
