@@ -9,12 +9,12 @@ namespace malone.Core.Services
 	/// <summary>
 	/// The ExecuteValidationRulesDelegate.
 	/// </summary>
-	/// <param name="validationRules">The validationRules<see cref="T: List{ValidationRule}"/>.</param>
-	/// <returns>The <see cref="T: ValidationResultList"/>.</returns>
+	/// <param name="validationRules">The validationRules<see cref="List{ValidationRule}"/>.</param>
+	/// <returns>The <see cref="ValidationResultList"/>.</returns>
 	public delegate ValidationResultList ExecuteValidationRulesDelegate(List<ValidationRule> validationRules);
 
 	/// <summary>
-	/// Defines the <see cref="T: IBaseServiceValidator{TEntity}" />.
+	/// Defines the <see cref="IBaseServiceValidator{TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
 	public interface IBaseServiceValidator<TEntity>
@@ -28,8 +28,8 @@ where TEntity : class
 		/// <summary>
 		/// The ExecuteAddValidationRules.
 		/// </summary>
-		/// <param name="validationRules">The validationRules<see cref="T: List{ValidationRule}"/>.</param>
-		/// <returns>The <see cref="T: ValidationResultList"/>.</returns>
+		/// <param name="validationRules">The validationRules<see cref="List{ValidationRule}"/>.</param>
+		/// <returns>The <see cref="ValidationResultList"/>.</returns>
 		ValidationResultList ExecuteAddValidationRules(List<ValidationRule> validationRules);
 
 		/// <summary>
@@ -40,8 +40,8 @@ where TEntity : class
 		/// <summary>
 		/// The ExecuteUpdateValidationRules.
 		/// </summary>
-		/// <param name="validationRules">The validationRules<see cref="T: List{ValidationRule}"/>.</param>
-		/// <returns>The <see cref="T: ValidationResultList"/>.</returns>
+		/// <param name="validationRules">The validationRules<see cref="List{ValidationRule}"/>.</param>
+		/// <returns>The <see cref="ValidationResultList"/>.</returns>
 		ValidationResultList ExecuteUpdateValidationRules(List<ValidationRule> validationRules);
 
 		/// <summary>
@@ -52,16 +52,16 @@ where TEntity : class
 		/// <summary>
 		/// The ExecuteDeleteValidationRules.
 		/// </summary>
-		/// <param name="validationRules">The validationRules<see cref="T: List{ValidationRule}"/>.</param>
-		/// <returns>The <see cref="T: ValidationResultList"/>.</returns>
+		/// <param name="validationRules">The validationRules<see cref="List{ValidationRule}"/>.</param>
+		/// <returns>The <see cref="ValidationResultList"/>.</returns>
 		ValidationResultList ExecuteDeleteValidationRules(List<ValidationRule> validationRules);
 
 		/// <summary>
 		/// The Validate.
 		/// </summary>
-		/// <param name="validationTriggerMethod">The validationTriggerMethod<see cref="T: ExecuteValidationRulesDelegate"/>.</param>
-		/// <param name="validationRules">The validationRules<see cref="T: List{ValidationRule}"/>.</param>
-		/// <returns>The <see cref="T: ValidationResultList"/>.</returns>
+		/// <param name="validationTriggerMethod">The validationTriggerMethod<see cref="ExecuteValidationRulesDelegate"/>.</param>
+		/// <param name="validationRules">The validationRules<see cref="List{ValidationRule}"/>.</param>
+		/// <returns>The <see cref="ValidationResultList"/>.</returns>
 		ValidationResultList Validate(ExecuteValidationRulesDelegate validationTriggerMethod, List<ValidationRule> validationRules);
 	}
 

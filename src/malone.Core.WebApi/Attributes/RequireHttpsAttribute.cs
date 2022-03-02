@@ -8,14 +8,14 @@
 	using System.Web.Http.Filters;
 
 	/// <summary>
-	/// Defines the <see cref="T: RequireHttpsAttribute" />.
+	/// Defines the <see cref="RequireHttpsAttribute" />.
 	/// </summary>
 	public class RequireHttpsAttribute : AuthorizationFilterAttribute
 	{
 		/// <summary>
 		/// The OnAuthorization.
 		/// </summary>
-		/// <param name="actionContext">The actionContext<see cref="T: HttpActionContext"/>.</param>
+		/// <param name="actionContext">The actionContext<see cref="HttpActionContext"/>.</param>
 		public override void OnAuthorization(HttpActionContext actionContext)
 		{
 			if (actionContext.Request.RequestUri.Scheme != Uri.UriSchemeHttps)

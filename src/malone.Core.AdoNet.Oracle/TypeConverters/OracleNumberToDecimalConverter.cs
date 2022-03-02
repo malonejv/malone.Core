@@ -5,15 +5,15 @@
 	using malone.Core.AdoNet.Parameters;
 
 	/// <summary>
-	/// Defines the <see cref="T: OracleNumberToDecimalConverter" />.
+	/// Defines the <see cref="OracleNumberToDecimalConverter" />.
 	/// </summary>
 	public class OracleNumberToDecimalConverter : IParameterConverter
 	{
 		/// <summary>
 		/// The Convert.
 		/// </summary>
-		/// <param name="value">The value<see cref="T: object"/>.</param>
-		/// <returns>The <see cref="T: object"/>.</returns>
+		/// <param name="value">The value<see cref="object"/>.</param>
+		/// <returns>The <see cref="object"/>.</returns>
 		public object Convert(object value)
 		{
 			if (value is DBNull)

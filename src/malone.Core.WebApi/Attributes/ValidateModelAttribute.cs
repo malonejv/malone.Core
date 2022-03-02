@@ -7,14 +7,14 @@
 
 	//TODO: Agregar por coniguración
 	/// <summary>
-	/// Defines the <see cref="T: ValidateModelAttribute" />.
+	/// Defines the <see cref="ValidateModelAttribute" />.
 	/// </summary>
 	public class ValidateModelAttribute : ActionFilterAttribute
 	{
 		/// <summary>
 		/// The OnActionExecuting.
 		/// </summary>
-		/// <param name="actionContext">The actionContext<see cref="T: HttpActionContext"/>.</param>
+		/// <param name="actionContext">The actionContext<see cref="HttpActionContext"/>.</param>
 		public override void OnActionExecuting(HttpActionContext actionContext)
 		{
 			if (actionContext.ModelState.IsValid == false)

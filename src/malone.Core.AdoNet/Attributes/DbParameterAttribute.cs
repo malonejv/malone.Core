@@ -4,7 +4,7 @@
 	using System.Data;
 
 	/// <summary>
-	/// Defines the <see cref="T: DbParameterAttribute" />.
+	/// Defines the <see cref="DbParameterAttribute" />.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Property)]
 	public class DbParameterAttribute : DbFieldAttribute
@@ -15,9 +15,9 @@
 		private int _size;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: DbParameterAttribute"/> class.
+		/// Initializes a new instance of the <see cref="DbParameterAttribute"/> class.
 		/// </summary>
-		/// <param name="name">The name<see cref="T: string"/>.</param>
+		/// <param name="name">The name<see cref="string"/>.</param>
 		public DbParameterAttribute(string name) : base(name)
 		{
 		}

@@ -11,7 +11,7 @@
 namespace malone.Core.Commons.Localization.Resources
 {
 	/// <summary>
-	/// Defines the <see cref="T: Contents" />.
+	/// Defines the <see cref="Contents" />.
 	/// </summary>
 	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
 	[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -29,7 +29,7 @@ namespace malone.Core.Commons.Localization.Resources
 		private static global::System.Globalization.CultureInfo resourceCulture;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: Contents"/> class.
+		/// Initializes a new instance of the <see cref="Contents"/> class.
 		/// </summary>
 		[global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
 		internal Contents()

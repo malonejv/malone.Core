@@ -8,7 +8,7 @@ namespace malone.Core.Commons.Exceptions
 	using malone.Core.Services;
 
 	/// <summary>
-	/// Defines the <see cref="T: BusinessRulesValidationException" />.
+	/// Defines the <see cref="BusinessRulesValidationException" />.
 	/// </summary>
 	public class BusinessRulesValidationException : Exception
 	{
@@ -42,9 +42,9 @@ namespace malone.Core.Commons.Exceptions
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: BusinessRulesValidationException"/> class.
+		/// Initializes a new instance of the <see cref="BusinessRulesValidationException"/> class.
 		/// </summary>
-		/// <param name="results">The results<see cref="T: ValidationResultList"/>.</param>
+		/// <param name="results">The results<see cref="ValidationResultList"/>.</param>
 		public BusinessRulesValidationException(ValidationResultList results)
 : base()
 		{

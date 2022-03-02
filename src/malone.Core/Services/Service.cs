@@ -14,9 +14,9 @@ namespace malone.Core.Services
 	using malone.Core.Logging;
 
 	/// <summary>
-	/// Defines the <see cref="T: Service{TKey, TEntity, TValidator}" />.
+	/// Defines the <see cref="Service{TKey, TEntity, TValidator}" />.
 	/// </summary>
-	/// <typeparam name="TKey">.</typeparam>
+	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TValidator">.</typeparam>
 	public abstract class Service<TKey, TEntity, TValidator> : BaseService<TEntity, TValidator>, IService<TKey, TEntity, TValidator>
@@ -40,11 +40,11 @@ where TValidator : IServiceValidator<TKey, TEntity>
 		public ICoreLogger Logger { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: Service{TKey, TEntity, TValidator}"/> class.
+		/// Initializes a new instance of the <see cref="Service{TKey, TEntity, TValidator}"/> class.
 		/// </summary>
-		/// <param name="businessValidator">The businessValidator<see cref="T: TValidator"/>.</param>
-		/// <param name="repository">The repository<see cref="T: IRepository{TKey, TEntity}"/>.</param>
-		/// <param name="logger">The logger<see cref="T: ICoreLogger"/>.</param>
+		/// <param name="businessValidator">The businessValidator<see cref="TValidator"/>.</param>
+		/// <param name="repository">The repository<see cref="IRepository{TKey, TEntity}"/>.</param>
+		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
 		public Service(TValidator businessValidator, IRepository<TKey, TEntity> repository, ICoreLogger logger) : base(businessValidator, repository, logger)
 		{
 			ServiceValidator = businessValidator;
@@ -55,10 +55,10 @@ where TValidator : IServiceValidator<TKey, TEntity>
 		/// <summary>
 		/// The GetById.
 		/// </summary>
-		/// <param name="id">The id<see cref="T: TKey"/>.</param>
-		/// <param name="includeDeleted">The includeDeleted<see cref="T: bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: TEntity"/>.</returns>
+		/// <param name="id">The id<see cref="TKey"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
+		/// <returns>The <see cref="TEntity"/>.</returns>
 		public virtual TEntity GetById(
 TKey id,
 bool includeDeleted = false,
@@ -88,9 +88,9 @@ string includeProperties = "")
 		/// <summary>
 		/// The Update.
 		/// </summary>
-		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
-		/// <param name="saveChanges">The saveChanges<see cref="T: bool"/>.</param>
-		/// <param name="disposeUoW">The disposeUoW<see cref="T: bool"/>.</param>
+		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
+		/// <param name="saveChanges">The saveChanges<see cref="bool"/>.</param>
+		/// <param name="disposeUoW">The disposeUoW<see cref="bool"/>.</param>
 		public virtual void Update(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
 		{
 			try
@@ -104,8 +104,8 @@ string includeProperties = "")
 				{
 					throw new BusinessRulesValidationException(validationResult);
 				}
-
-				Repository.Update(entity);
+				//TODO: Revisar
+				Repository.Update(entity, null);
 				if (saveChanges)
 				{
 					uow.SaveChanges();
@@ -150,9 +150,9 @@ string includeProperties = "")
 		/// <summary>
 		/// The Delete.
 		/// </summary>
-		/// <param name="id">The id<see cref="T: TKey"/>.</param>
-		/// <param name="saveChanges">The saveChanges<see cref="T: bool"/>.</param>
-		/// <param name="disposeUoW">The disposeUoW<see cref="T: bool"/>.</param>
+		/// <param name="id">The id<see cref="TKey"/>.</param>
+		/// <param name="saveChanges">The saveChanges<see cref="bool"/>.</param>
+		/// <param name="disposeUoW">The disposeUoW<see cref="bool"/>.</param>
 		public virtual void Delete(TKey id, bool saveChanges = true, bool disposeUoW = true)
 		{
 			try
@@ -185,7 +185,7 @@ string includeProperties = "")
 		/// <summary>
 		/// The CheckEntity.
 		/// </summary>
-		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
+		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
 		protected void CheckEntity(TEntity entity)
 		{
 			if (entity == default(TEntity))
@@ -197,7 +197,7 @@ string includeProperties = "")
 		/// <summary>
 		/// The CheckEntityId.
 		/// </summary>
-		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
+		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
 		protected override void CheckEntityId(TEntity entity)
 		{
 			if (entity.Id.Equals(default(TKey)))
@@ -209,7 +209,7 @@ string includeProperties = "")
 		/// <summary>
 		/// The CheckId.
 		/// </summary>
-		/// <param name="id">The id<see cref="T: TKey"/>.</param>
+		/// <param name="id">The id<see cref="TKey"/>.</param>
 		protected void CheckId(TKey id)
 		{
 			if (id.Equals(default(TKey)))
@@ -221,7 +221,7 @@ string includeProperties = "")
 		/// <summary>
 		/// The CheckId.
 		/// </summary>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		protected override void CheckId(params object[] args)
 		{
 			if (args == null)
@@ -244,7 +244,7 @@ string includeProperties = "")
 	}
 
 	/// <summary>
-	/// Defines the <see cref="T: Service{TEntity, TValidator}" />.
+	/// Defines the <see cref="Service{TEntity, TValidator}" />.
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TValidator">.</typeparam>
@@ -253,11 +253,11 @@ where TEntity : class, IBaseEntity
 where TValidator : IServiceValidator<TEntity>
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: Service{TEntity, TValidator}"/> class.
+		/// Initializes a new instance of the <see cref="Service{TEntity, TValidator}"/> class.
 		/// </summary>
-		/// <param name="businessValidator">The businessValidator<see cref="T: TValidator"/>.</param>
-		/// <param name="repository">The repository<see cref="T: IRepository{TEntity}"/>.</param>
-		/// <param name="logger">The logger<see cref="T: ICoreLogger"/>.</param>
+		/// <param name="businessValidator">The businessValidator<see cref="TValidator"/>.</param>
+		/// <param name="repository">The repository<see cref="IRepository{TEntity}"/>.</param>
+		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
 		public Service(TValidator businessValidator, IRepository<TEntity> repository, ICoreLogger logger)
 : base(businessValidator, repository, logger)
 		{

@@ -6,12 +6,12 @@ namespace malone.Core.Commons.Exceptions
 	using System;
 
 	/// <summary>
-	/// Defines the <see cref="T: BusinessValidationException" />.
+	/// Defines the <see cref="BusinessValidationException" />.
 	/// </summary>
 	public class BusinessValidationException : BaseException
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: BusinessValidationException"/> class.
+		/// Initializes a new instance of the <see cref="BusinessValidationException"/> class.
 		/// </summary>
 		public BusinessValidationException()
 : base()
@@ -19,19 +19,19 @@ namespace malone.Core.Commons.Exceptions
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: BusinessValidationException"/> class.
+		/// Initializes a new instance of the <see cref="BusinessValidationException"/> class.
 		/// </summary>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
 		public BusinessValidationException(string message)
 : base(message)
 		{
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: BusinessValidationException"/> class.
+		/// Initializes a new instance of the <see cref="BusinessValidationException"/> class.
 		/// </summary>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
-		/// <param name="innerException">The innerException<see cref="T: Exception"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
+		/// <param name="innerException">The innerException<see cref="Exception"/>.</param>
 		public BusinessValidationException(string message, Exception innerException)
 : base(message, innerException)
 		{

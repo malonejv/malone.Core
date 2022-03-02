@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using malone.Core.Commons.Exceptions;
+using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.EF.Entities.Filters;
@@ -12,207 +13,100 @@ using malone.Core.Entities.Model;
 using malone.Core.Logging;
 
 namespace malone.Core.EF.Repositories
+{
+	public class BaseRepository<T> : IBaseRepository<T>, IDisposable
+		where T : class
 	{
-	public class BaseRepository<TEntity> : BaseQueryOperationsRepository<TEntity>, IBaseRepository<TEntity>, IDisposable
-        where TEntity : class
-    {
-        protected DbSet<TEntity> EntityDbSet { get; private set; }
-        protected DbContext Context { get; private set; }
+		protected DbSet<T> EntityDbSet { get; private set; }
+		protected DbContext Context { get; private set; }
+		protected ICoreLogger Logger { get; set; }
+		public IBaseQueryOperationsRepository<T> QueryOperationsRepository { get; }
+		public IBaseDataOperationsRepository<T> DataOperationsRepository { get; }
 
-        protected ICoreLogger Logger { get; set; }
+		#region Constructor
 
-        #region Constructor
+		public BaseRepository(IContext context, ICoreLogger logger, IBaseQueryOperationsRepository<T> queryOperationsRepository, IBaseDataOperationsRepository<T> dataOperationsRepository)
+		{
+			Context = context.ThrowIfNull().ThrowIfNotOfType<IContext, DbContext>();
+			Logger = logger.ThrowIfNull();
+			QueryOperationsRepository = queryOperationsRepository.ThrowIfNull();
+			DataOperationsRepository = dataOperationsRepository.ThrowIfNull();
+			EntityDbSet = Context.Set<T>();
+		}
 
-        public BaseRepository(IContext context, ICoreLogger logger)
-        {
-            CheckContext(context);
-            CheckLogger(logger);
+		#endregion
 
-            Context = (DbContext)context;
-            EntityDbSet = Context.Set<TEntity>();
+		#region Public methods
 
-            Logger = logger;
-        }
+		public IEnumerable<T> Get<TFilter>(TFilter filter, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy, bool includeDeleted, string includeProperties)
+			where TFilter : class, IFilterExpression
+		{
+			ThrowIfDisposed();
+			return QueryOperationsRepository.Get(filter, orderBy, includeDeleted, includeProperties);
+		}
 
-        #endregion
+		public IEnumerable<T> GetAll(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, bool includeDeleted = false, string includeProperties = "")
+		{
+			ThrowIfDisposed();
+			return QueryOperationsRepository.GetAll(orderBy, includeDeleted, includeProperties);
+		}
 
-        #region CRUD Operations
+		public T GetEntity<TFilter>(TFilter filter, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy, bool includeDeleted, string includeProperties)
+			where TFilter : class, IFilterExpression
+		{
+			ThrowIfDisposed();
+			return QueryOperationsRepository.GetEntity(filter, orderBy, includeDeleted, includeProperties);
+		}
 
-        #region ADD
+		public void Insert(T entity)
+		{
+			ThrowIfDisposed();
+			DataOperationsRepository.Insert(entity);
+		}
 
-        public virtual void Insert(TEntity entity)
-        {
-            try
-            {
-                EntityDbSet.Add(entity);
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS602, typeof(TEntity));
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
+		public void Delete(T entity)
+		{
+			ThrowIfDisposed();
+			DataOperationsRepository.Delete(entity);
+		}
 
-                throw techEx;
-            }
-        }
+		public void Update(T oldValues, T newValues)
+		{
+			ThrowIfDisposed();
+			DataOperationsRepository.Update(oldValues, newValues);
+		}
 
-        #endregion
+		#endregion
 
-        #region UPDATE
+		#region Dispose
 
-        public virtual void Update(TEntity oldValues, TEntity newValues)
-        {
-            try
-            {
-                Context.Entry(oldValues).State = EntityState.Detached;
-                Context.Entry(newValues).State = EntityState.Modified;
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
+		protected bool _disposed;
 
-                throw techEx;
-            }
-        }
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
 
-        #endregion
+		protected void ThrowIfDisposed()
+		{
+			if (_disposed)
+			{
+				throw new ObjectDisposedException(GetType().Name);
+			}
+		}
 
-        #region DELETE
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing && Context != null)
+			{
+				Context.Dispose();
+			}
+			_disposed = true;
+			Context = null;
+		}
 
-        public virtual void Delete(TEntity entity)
-        {
-            try
-            {
-                if (Context.Entry(entity).State == EntityState.Detached)
-                {
-                    EntityDbSet.Attach(entity);
-                }
-                EntityDbSet.Remove(entity);
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS603, typeof(TEntity));
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
+		#endregion
 
-                throw techEx;
-            }
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Private And Protected Methods
-
-        private void CheckLogger(ICoreLogger logger)
-        {
-            if (logger == null)
-            {
-                throw new ArgumentNullException(nameof(logger));
-            }
-        }
-
-        private void CheckContext(IContext context)
-        {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            if (!(context is DbContext))
-            {
-                //TODO: Implementar excepciones del core
-                throw new ArgumentException();
-            }
-        }
-
-        protected IQueryable<TEntity> Get(
-           IQueryable<TEntity> query,
-           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-           bool includeDeleted = false,
-           string includeProperties = "")
-        {
-            try
-            {
-                if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
-                {
-                    if (!includeDeleted)
-                    {
-                        query = ((IQueryable<ISoftDelete>)query)
-                            .Where(e => e.IsDeleted == includeDeleted)
-                            .Cast<TEntity>();
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(includeProperties))
-                {
-                    foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                    {
-                        query = query.Include(includeProperty);
-                    }
-                }
-
-                if (orderBy != null)
-                {
-                    return orderBy(query).AsNoTracking<TEntity>();
-                }
-                else
-                {
-                    return query.AsNoTracking<TEntity>();
-                }
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
-
-                throw techEx;
-            }
-        }
-
-        #endregion
-
-        #region Dispose
-
-        protected bool _disposed;
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected void ThrowIfDisposed()
-        {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException(GetType().Name);
-            }
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing && Context != null)
-            {
-                Context.Dispose();
-            }
-            _disposed = true;
-            Context = null;
-        }
-
-        #endregion
-
-    }
+	}
 }

@@ -1,7 +1,7 @@
 ﻿namespace malone.Core.WebApi
 {
 	/// <summary>
-	/// Defines the <see cref="T: IGetRequestParam" />.
+	/// Defines the <see cref="IGetRequestParam" />.
 	/// </summary>
 	public interface IGetRequestParam
 	{

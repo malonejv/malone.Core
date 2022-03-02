@@ -7,18 +7,18 @@ namespace malone.Core.DataAccess.Repositories
 	using malone.Core.Entities.Model;
 
 	/// <summary>
-	/// Defines the <see cref="T: IRepository{TKey, TEntity}" />.
+	/// Defines the <see cref="IRepository{TKey, TEntity}" />.
 	/// </summary>
-	/// <typeparam name="TKey">.</typeparam>
+	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
-	public interface IRepository<TKey, TEntity> : IQueryOperationsRepository<TKey, TEntity>, IDataOperationsRepository<TKey, TEntity>
+	public interface IRepository<TKey, TEntity> : IBaseRepository<TEntity>, IQueryOperationsRepository<TKey, TEntity>, IDataOperationsRepository<TKey, TEntity>
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
 	{
 	}
 
 	/// <summary>
-	/// Defines the <see cref="T: IRepository{TEntity}" />.
+	/// Defines the <see cref="IRepository{TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
 	public interface IRepository<TEntity> : IRepository<int, TEntity>

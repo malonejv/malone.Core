@@ -6,7 +6,7 @@
 	using malone.Core.AdoNet.Database;
 
 	/// <summary>
-	/// Defines the <see cref="T: FbDatabase" />.
+	/// Defines the <see cref="FbDatabase" />.
 	/// </summary>
 	public class FbDatabase : IDatabase
 	{
@@ -16,9 +16,9 @@
 		private string ConnectionString { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: FbDatabase"/> class.
+		/// Initializes a new instance of the <see cref="FbDatabase"/> class.
 		/// </summary>
-		/// <param name="connectionString">The connectionString<see cref="T: string"/>.</param>
+		/// <param name="connectionString">The connectionString<see cref="string"/>.</param>
 		public FbDatabase(string connectionString)
 		{
 			ConnectionString = connectionString;
@@ -27,7 +27,7 @@
 		/// <summary>
 		/// The CreateConnection.
 		/// </summary>
-		/// <returns>The <see cref="T: IDbConnection"/>.</returns>
+		/// <returns>The <see cref="IDbConnection"/>.</returns>
 		public IDbConnection CreateConnection()
 		{
 			return new FbConnection(ConnectionString);
@@ -36,7 +36,7 @@
 		/// <summary>
 		/// The CloseConnection.
 		/// </summary>
-		/// <param name="connection">The connection<see cref="T: IDbConnection"/>.</param>
+		/// <param name="connection">The connection<see cref="IDbConnection"/>.</param>
 		public void CloseConnection(IDbConnection connection)
 		{
 			var fbconnection = (FbConnection)connection;
@@ -47,8 +47,8 @@
 		/// <summary>
 		/// The CreateAdapter.
 		/// </summary>
-		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
-		/// <returns>The <see cref="T: IDataAdapter"/>.</returns>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <returns>The <see cref="IDataAdapter"/>.</returns>
 		public IDataAdapter CreateAdapter(IDbCommand command)
 		{
 			return new FbDataAdapter((FbCommand)command);
@@ -57,8 +57,8 @@
 		/// <summary>
 		/// The CreateParameter.
 		/// </summary>
-		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
-		/// <returns>The <see cref="T: IDbDataParameter"/>.</returns>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <returns>The <see cref="IDbDataParameter"/>.</returns>
 		public IDbDataParameter CreateParameter(IDbCommand command)
 		{
 			FbCommand fbCommand = (FbCommand)command;
@@ -68,11 +68,11 @@
 		/// <summary>
 		/// The AddCommandParameter.
 		/// </summary>
-		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
-		/// <param name="parameterName">The parameterName<see cref="T: string"/>.</param>
-		/// <param name="value">The value<see cref="T: object"/>.</param>
-		/// <param name="parameterdirection">The parameterdirection<see cref="T: ParameterDirection"/>.</param>
-		/// <param name="parameterType">The parameterType<see cref="T: object"/>.</param>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <param name="parameterName">The parameterName<see cref="string"/>.</param>
+		/// <param name="value">The value<see cref="object"/>.</param>
+		/// <param name="parameterdirection">The parameterdirection<see cref="ParameterDirection"/>.</param>
+		/// <param name="parameterType">The parameterType<see cref="object"/>.</param>
 		public void AddCommandParameter(IDbCommand command, string parameterName, object value, ParameterDirection parameterdirection, object parameterType)
 		{
 			FbCommand fbCommand = FbDatabase.ValidateCommand(command);
@@ -93,12 +93,12 @@
 		/// <summary>
 		/// The AddCommandParameter.
 		/// </summary>
-		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
-		/// <param name="parameterName">The parameterName<see cref="T: string"/>.</param>
-		/// <param name="value">The value<see cref="T: object"/>.</param>
-		/// <param name="parameterdirection">The parameterdirection<see cref="T: ParameterDirection"/>.</param>
-		/// <param name="parameterType">The parameterType<see cref="T: object"/>.</param>
-		/// <param name="size">The size<see cref="T: int"/>.</param>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <param name="parameterName">The parameterName<see cref="string"/>.</param>
+		/// <param name="value">The value<see cref="object"/>.</param>
+		/// <param name="parameterdirection">The parameterdirection<see cref="ParameterDirection"/>.</param>
+		/// <param name="parameterType">The parameterType<see cref="object"/>.</param>
+		/// <param name="size">The size<see cref="int"/>.</param>
 		public void AddCommandParameter(IDbCommand command, string parameterName, object value, ParameterDirection parameterdirection, object parameterType, int size)
 		{
 			FbCommand fbCommand = FbDatabase.ValidateCommand(command);
@@ -119,8 +119,8 @@
 		/// <summary>
 		/// The ValidateCommand.
 		/// </summary>
-		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
-		/// <returns>The <see cref="T: FbCommand"/>.</returns>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <returns>The <see cref="FbCommand"/>.</returns>
 		private static FbCommand ValidateCommand(IDbCommand command)
 		{
 			if (!(command is FbCommand fbCommand))

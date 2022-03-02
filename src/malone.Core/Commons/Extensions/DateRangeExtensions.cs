@@ -7,16 +7,16 @@ namespace malone.Core.Commons.Helpers.Extensions
 	using malone.Core.Entities.Model;
 
 	/// <summary>
-	/// Defines the <see cref="T: DateRangeExtensions" />.
+	/// Defines the <see cref="DateRangeExtensions" />.
 	/// </summary>
 	public static class DateRangeExtensions
 	{
 		/// <summary>
 		/// The Contains.
 		/// </summary>
-		/// <param name="range">The range<see cref="T: IDateRange"/>.</param>
-		/// <param name="date">The date<see cref="T: DateTime"/>.</param>
-		/// <returns>The <see cref="T: bool"/>.</returns>
+		/// <param name="range">The range<see cref="IDateRange"/>.</param>
+		/// <param name="date">The date<see cref="DateTime"/>.</param>
+		/// <returns>The <see cref="bool"/>.</returns>
 		public static bool Contains(this IDateRange range, DateTime date)
 		{
 			bool result = false;
@@ -32,9 +32,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The Contains.
 		/// </summary>
-		/// <param name="range">The range<see cref="T: IDateRange"/>.</param>
-		/// <param name="comparisonRange">The comparisonRange<see cref="T: IDateRange"/>.</param>
-		/// <returns>The <see cref="T: bool"/>.</returns>
+		/// <param name="range">The range<see cref="IDateRange"/>.</param>
+		/// <param name="comparisonRange">The comparisonRange<see cref="IDateRange"/>.</param>
+		/// <returns>The <see cref="bool"/>.</returns>
 		public static bool Contains(this IDateRange range, IDateRange comparisonRange)
 		{
 			bool result = false;
@@ -50,9 +50,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The HasOverlap.
 		/// </summary>
-		/// <param name="range">The range<see cref="T: IDateRange"/>.</param>
-		/// <param name="comparisonRange">The comparisonRange<see cref="T: IDateRange"/>.</param>
-		/// <returns>The <see cref="T: bool"/>.</returns>
+		/// <param name="range">The range<see cref="IDateRange"/>.</param>
+		/// <param name="comparisonRange">The comparisonRange<see cref="IDateRange"/>.</param>
+		/// <returns>The <see cref="bool"/>.</returns>
 		public static bool HasOverlap(this IDateRange range, IDateRange comparisonRange)
 		{
 			bool result = false;
@@ -71,10 +71,10 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The HasOverlap.
 		/// </summary>
-		/// <param name="range">The range<see cref="T: IDateRange"/>.</param>
-		/// <param name="from">The from<see cref="T: Nullable{DateTime}"/>.</param>
-		/// <param name="to">The to<see cref="T: Nullable{DateTime}"/>.</param>
-		/// <returns>The <see cref="T: bool"/>.</returns>
+		/// <param name="range">The range<see cref="IDateRange"/>.</param>
+		/// <param name="from">The from<see cref="Nullable{DateTime}"/>.</param>
+		/// <param name="to">The to<see cref="Nullable{DateTime}"/>.</param>
+		/// <returns>The <see cref="bool"/>.</returns>
 		public static bool HasOverlap(this IDateRange range, Nullable<DateTime> from, Nullable<DateTime> to)
 		{
 			DateRange comparisonRange = new DateRange() { FromDate = from, ToDate = to };
@@ -85,8 +85,8 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The IsValidRange.
 		/// </summary>
-		/// <param name="range">The range<see cref="T: IDateRange"/>.</param>
-		/// <returns>The <see cref="T: bool"/>.</returns>
+		/// <param name="range">The range<see cref="IDateRange"/>.</param>
+		/// <returns>The <see cref="bool"/>.</returns>
 		public static bool IsValidRange(this IDateRange range)
 		{
 			bool result = false;

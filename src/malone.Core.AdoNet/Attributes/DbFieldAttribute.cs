@@ -3,15 +3,15 @@
 	using System;
 
 	/// <summary>
-	/// Defines the <see cref="T: DbFieldAttribute" />.
+	/// Defines the <see cref="DbFieldAttribute" />.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Property)]
 	public class DbFieldAttribute : Attribute
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: DbFieldAttribute"/> class.
+		/// Initializes a new instance of the <see cref="DbFieldAttribute"/> class.
 		/// </summary>
-		/// <param name="name">The name<see cref="T: string"/>.</param>
+		/// <param name="name">The name<see cref="string"/>.</param>
 		public DbFieldAttribute(string name)
 		{
 			Name = name;

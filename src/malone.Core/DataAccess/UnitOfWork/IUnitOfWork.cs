@@ -7,7 +7,7 @@ namespace malone.Core.DataAccess.UnitOfWork
 	using malone.Core.DataAccess.Context;
 
 	/// <summary>
-	/// Defines the <see cref="T: IUnitOfWork" />.
+	/// Defines the <see cref="IUnitOfWork" />.
 	/// </summary>
 	public interface IUnitOfWork : IDisposable
 	{
@@ -19,7 +19,7 @@ namespace malone.Core.DataAccess.UnitOfWork
 		/// <summary>
 		/// The SaveChanges.
 		/// </summary>
-		/// <returns>The <see cref="T: int"/>.</returns>
+		/// <returns>The <see cref="int"/>.</returns>
 		int SaveChanges();
 
 		/// <summary>

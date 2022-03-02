@@ -6,9 +6,9 @@ namespace malone.Core.Entities.Model
 	using System;
 
 	/// <summary>
-	/// Defines the <see cref="T: IBaseEntity{TKey}" />.
+	/// Defines the <see cref="IBaseEntity{TKey}" />.
 	/// </summary>
-	/// <typeparam name="TKey">.</typeparam>
+	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	public interface IBaseEntity<TKey>
 		where TKey : IEquatable<TKey>
 	{
@@ -19,7 +19,7 @@ namespace malone.Core.Entities.Model
 	}
 
 	/// <summary>
-	/// Defines the <see cref="T: IBaseEntity" />.
+	/// Defines the <see cref="IBaseEntity" />.
 	/// </summary>
 	public interface IBaseEntity : IBaseEntity<int>
 	{

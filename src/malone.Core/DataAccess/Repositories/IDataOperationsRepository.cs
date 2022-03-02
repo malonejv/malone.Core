@@ -11,10 +11,10 @@ namespace malone.Core.DataAccess.Repositories
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
 	{
-		/// <summary>
-		/// The Update.
-		/// </summary>
-		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
-		void Update(TEntity entity);
+		///// <summary>
+		///// The Update.
+		///// </summary>
+		///// <param name="entity">The entity<see cref="TEntity"/>.</param>
+		//void Update(TEntity entity);
 	}
 }

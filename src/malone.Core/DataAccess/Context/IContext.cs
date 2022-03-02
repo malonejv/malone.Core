@@ -4,14 +4,14 @@
 namespace malone.Core.DataAccess.Context
 {
 	/// <summary>
-	/// Defines the <see cref="T: IContext" />.
+	/// Defines the <see cref="IContext" />.
 	/// </summary>
 	public interface IContext
 	{
 		/// <summary>
 		/// The SaveChanges.
 		/// </summary>
-		/// <returns>The <see cref="T: int"/>.</returns>
+		/// <returns>The <see cref="int"/>.</returns>
 		int SaveChanges();
 
 		/// <summary>

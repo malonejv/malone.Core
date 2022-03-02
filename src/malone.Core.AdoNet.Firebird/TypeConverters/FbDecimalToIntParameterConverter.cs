@@ -4,15 +4,15 @@
 	using malone.Core.AdoNet.Parameters;
 
 	/// <summary>
-	/// Defines the <see cref="T: FbDecimalToIntParameterConverter" />.
+	/// Defines the <see cref="FbDecimalToIntParameterConverter" />.
 	/// </summary>
 	public class FbDecimalToIntParameterConverter : IParameterConverter
 	{
 		/// <summary>
 		/// The Convert.
 		/// </summary>
-		/// <param name="value">The value<see cref="T: object"/>.</param>
-		/// <returns>The <see cref="T: object"/>.</returns>
+		/// <param name="value">The value<see cref="object"/>.</param>
+		/// <returns>The <see cref="object"/>.</returns>
 		public object Convert(object value)
 		{
 			var fbType = ((FbDbType)value);

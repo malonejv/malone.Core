@@ -12,7 +12,7 @@
 	using malone.Core.IoC;
 
 	/// <summary>
-	/// Defines the <see cref="T: HandleExceptionFilterAttribute" />.
+	/// Defines the <see cref="HandleExceptionFilterAttribute" />.
 	/// </summary>
 	public class HandleExceptionFilterAttribute : ExceptionFilterAttribute
 	{
@@ -27,7 +27,7 @@
 		private IErrorLocalizationHandler ErrorLocalizationHandler { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: HandleExceptionFilterAttribute"/> class.
+		/// Initializes a new instance of the <see cref="HandleExceptionFilterAttribute"/> class.
 		/// </summary>
 		public HandleExceptionFilterAttribute()
 		{
@@ -39,7 +39,7 @@
 		/// <summary>
 		/// The OnException.
 		/// </summary>
-		/// <param name="actionExecutedContext">The actionExecutedContext<see cref="T: HttpActionExecutedContext"/>.</param>
+		/// <param name="actionExecutedContext">The actionExecutedContext<see cref="HttpActionExecutedContext"/>.</param>
 		public override void OnException(HttpActionExecutedContext actionExecutedContext)
 		{
 			HttpStatusCode status = HttpStatusCode.InternalServerError;
@@ -108,9 +108,9 @@
 		/// <summary>
 		/// The OnExceptionAsync.
 		/// </summary>
-		/// <param name="actionExecutedContext">The actionExecutedContext<see cref="T: HttpActionExecutedContext"/>.</param>
-		/// <param name="cancellationToken">The cancellationToken<see cref="T: CancellationToken"/>.</param>
-		/// <returns>The <see cref="T: Task"/>.</returns>
+		/// <param name="actionExecutedContext">The actionExecutedContext<see cref="HttpActionExecutedContext"/>.</param>
+		/// <param name="cancellationToken">The cancellationToken<see cref="CancellationToken"/>.</param>
+		/// <returns>The <see cref="Task"/>.</returns>
 		public override Task OnExceptionAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
 		{
 			HttpStatusCode status = HttpStatusCode.InternalServerError;

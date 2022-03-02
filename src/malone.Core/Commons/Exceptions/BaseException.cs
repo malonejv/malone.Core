@@ -6,7 +6,7 @@ namespace malone.Core.Commons.Exceptions
 	using System;
 
 	/// <summary>
-	/// Defines the <see cref="T: BaseException" />.
+	/// Defines the <see cref="BaseException" />.
 	/// </summary>
 	public abstract class BaseException : Exception
 	{
@@ -21,25 +21,25 @@ namespace malone.Core.Commons.Exceptions
 		public const string ERROR_CODE = "ErrorCode";
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: BaseException"/> class.
+		/// Initializes a new instance of the <see cref="BaseException"/> class.
 		/// </summary>
 		public BaseException() : base()
 		{
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: BaseException"/> class.
+		/// Initializes a new instance of the <see cref="BaseException"/> class.
 		/// </summary>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
 		public BaseException(string message) : base(message)
 		{
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: BaseException"/> class.
+		/// Initializes a new instance of the <see cref="BaseException"/> class.
 		/// </summary>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
-		/// <param name="innerException">The innerException<see cref="T: Exception"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
+		/// <param name="innerException">The innerException<see cref="Exception"/>.</param>
 		public BaseException(string message, Exception innerException) : base(message, innerException)
 		{
 		}

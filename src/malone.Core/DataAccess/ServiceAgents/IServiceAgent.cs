@@ -4,7 +4,7 @@
 namespace malone.Core.DataAccess.ServiceAgents
 {
 	/// <summary>
-	/// Defines the <see cref="T: IServiceAgent" />.
+	/// Defines the <see cref="IServiceAgent" />.
 	/// </summary>
 	public interface IServiceAgent
 	{

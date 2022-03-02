@@ -4,6 +4,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using malone.Core.Commons.Exceptions;
+using malone.Core.Commons.Helpers.Extensions;
+using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.EF.Entities.Filters;
 using malone.Core.Entities.Filters;
@@ -12,26 +14,40 @@ using malone.Core.Logging;
 
 namespace malone.Core.EF.Repositories
 {
-	public class BaseQueryOperationsRepository<TEntity> : IBaseQueryOperationsRepository<TEntity>, IDisposable
-		where TEntity : class
+	public class BaseQueryOperationsRepository<T> : IBaseQueryOperationsRepository<T>, IDisposable
+		where T : class
 	{
-		protected DbSet<TEntity> EntityDbSet { get; private set; }
+		protected DbSet<T> EntityDbSet { get; private set; }
 		protected DbContext Context { get; private set; }
-
 		protected ICoreLogger Logger { get; set; }
 
+		#region Constructor
 
-		#region GET ALL
+		public BaseQueryOperationsRepository(IContext context, ICoreLogger logger)
+		{
+			context.ThrowIfNull().ThrowIfNotOfType<IContext, DbContext>();
+			logger.ThrowIfNull();
 
-		public virtual IEnumerable<TEntity> GetAll(
-			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+			Context = (DbContext)context;
+			EntityDbSet = Context.Set<T>();
+
+			Logger = logger;
+		}
+
+		#endregion
+
+		#region Public methods
+
+		public virtual IEnumerable<T> GetAll(
+			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
 			bool includeDeleted = false,
 			string includeProperties = ""
 		   )
 		{
+			ThrowIfDisposed();
 			try
 			{
-				IQueryable<TEntity> query = EntityDbSet;
+				IQueryable<T> query = EntityDbSet;
 
 				query = Get(query, orderBy, includeDeleted, includeProperties);
 
@@ -39,7 +55,7 @@ namespace malone.Core.EF.Repositories
 			}
 			catch (Exception ex)
 			{
-				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(T));
 				if (Logger != null)
 				{
 					Logger.Error(techEx);
@@ -49,25 +65,22 @@ namespace malone.Core.EF.Repositories
 			}
 		}
 
-		#endregion
-
-		#region GET FILTERED
-
-		public virtual IEnumerable<TEntity> Get<TFilter>(
+		public virtual IEnumerable<T> Get<TFilter>(
 		   TFilter filter = default(TFilter),
-		   Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+		   Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
 		   bool includeDeleted = false,
 		   string includeProperties = "")
 			where TFilter : class, IFilterExpression
 		{
+			ThrowIfDisposed();
 			try
 			{
-				IQueryable<TEntity> query = EntityDbSet;
+				IQueryable<T> query = EntityDbSet;
 
-				Expression<Func<TEntity, bool>> filterExp = null;
+				Expression<Func<T, bool>> filterExp = null;
 				if (filter != null)
 				{
-					var filterEF = (filter as IFilterExpressionEF<TEntity>);
+					var filterEF = (filter as IFilterExpressionEF<T>);
 					filterExp = filterEF?.Expression;
 				}
 
@@ -83,7 +96,7 @@ namespace malone.Core.EF.Repositories
 			catch (Exception ex)
 			{
 
-				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(T));
 				if (Logger != null)
 				{
 					Logger.Error(techEx);
@@ -93,27 +106,24 @@ namespace malone.Core.EF.Repositories
 			}
 		}
 
-		#endregion
-
-		#region GET ENTITY
-
-		public virtual TEntity GetEntity<TFilter>(
+		public virtual T GetEntity<TFilter>(
 			TFilter filter = default(TFilter),
-			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
 			bool includeDeleted = false,
 			string includeProperties = "")
 			where TFilter : class, IFilterExpression
 		{
+			ThrowIfDisposed();
 			try
 			{
-				IQueryable<TEntity> query = EntityDbSet;
+				IQueryable<T> query = EntityDbSet;
 
 				query = Get(query, orderBy, includeDeleted, includeProperties);
 
-				Expression<Func<TEntity, bool>> filterExp = null;
+				Expression<Func<T, bool>> filterExp = null;
 				if (filter != null)
 				{
-					filterExp = ((IFilterExpressionEF<TEntity>)filter).Expression;
+					filterExp = ((IFilterExpressionEF<T>)filter).Expression;
 				}
 
 				if (filterExp != null)
@@ -125,7 +135,58 @@ namespace malone.Core.EF.Repositories
 			}
 			catch (Exception ex)
 			{
-				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS601, typeof(TEntity));
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS601, typeof(T));
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
+		}
+
+		#endregion
+
+		#region Private And Protected Methods
+
+		protected IQueryable<T> Get(
+		   IQueryable<T> query,
+		   Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+		   bool includeDeleted = false,
+		   string includeProperties = "")
+		{
+			try
+			{
+				if (typeof(ISoftDelete).IsAssignableFrom(typeof(T)))
+				{
+					if (!includeDeleted)
+					{
+						query = ((IQueryable<ISoftDelete>)query)
+							.Where(e => e.IsDeleted == includeDeleted)
+							.Cast<T>();
+					}
+				}
+
+				if (!string.IsNullOrEmpty(includeProperties))
+				{
+					foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+					{
+						query = query.Include(includeProperty);
+					}
+				}
+
+				if (orderBy != null)
+				{
+					return orderBy(query).AsNoTracking<T>();
+				}
+				else
+				{
+					return query.AsNoTracking<T>();
+				}
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(T));
 				if (Logger != null)
 				{
 					Logger.Error(techEx);
@@ -163,57 +224,6 @@ namespace malone.Core.EF.Repositories
 			}
 			_disposed = true;
 			Context = null;
-		}
-
-		#endregion
-
-		#region Private And Protected Methods
-
-		protected IQueryable<TEntity> Get(
-		   IQueryable<TEntity> query,
-		   Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-		   bool includeDeleted = false,
-		   string includeProperties = "")
-		{
-			try
-			{
-				if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
-				{
-					if (!includeDeleted)
-					{
-						query = ((IQueryable<ISoftDelete>)query)
-							.Where(e => e.IsDeleted == includeDeleted)
-							.Cast<TEntity>();
-					}
-				}
-
-				if (!string.IsNullOrEmpty(includeProperties))
-				{
-					foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-					{
-						query = query.Include(includeProperty);
-					}
-				}
-
-				if (orderBy != null)
-				{
-					return orderBy(query).AsNoTracking<TEntity>();
-				}
-				else
-				{
-					return query.AsNoTracking<TEntity>();
-				}
-			}
-			catch (Exception ex)
-			{
-				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
-				if (Logger != null)
-				{
-					Logger.Error(techEx);
-				}
-
-				throw techEx;
-			}
 		}
 
 		#endregion

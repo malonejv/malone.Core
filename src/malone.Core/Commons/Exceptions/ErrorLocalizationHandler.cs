@@ -7,7 +7,7 @@ namespace malone.Core.Commons.Exceptions
 	using malone.Core.Localization;
 
 	/// <summary>
-	/// Defines the <see cref="T: ErrorLocalizationHandler" />.
+	/// Defines the <see cref="ErrorLocalizationHandler" />.
 	/// </summary>
 	internal class ErrorLocalizationHandler : LocalizationHandler<CoreErrors>, IErrorLocalizationHandler
 	{

@@ -8,15 +8,15 @@ namespace malone.Core.Commons.Helpers.Extensions
 	using System.Reflection;
 
 	/// <summary>
-	/// Defines the <see cref="T: DataRowExtensions" />.
+	/// Defines the <see cref="DataRowExtensions" />.
 	/// </summary>
 	public static class DataRowExtensions
 	{
 		/// <summary>
 		/// The IsNull.
 		/// </summary>
-		/// <param name="row">The row<see cref="T: DataRow"/>.</param>
-		/// <returns>The <see cref="T: bool"/>.</returns>
+		/// <param name="row">The row<see cref="DataRow"/>.</param>
+		/// <returns>The <see cref="bool"/>.</returns>
 		public static bool IsNull(this DataRow row)
 		{
 			return row is null;
@@ -25,9 +25,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The AsInt.
 		/// </summary>
-		/// <param name="row">The row<see cref="T: DataRow"/>.</param>
-		/// <param name="columnName">The columnName<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: int?"/>.</returns>
+		/// <param name="row">The row<see cref="DataRow"/>.</param>
+		/// <param name="columnName">The columnName<see cref="string"/>.</param>
+		/// <returns>The <see cref="int?"/>.</returns>
 		public static int? AsInt(this DataRow row, string columnName)
 		{
 			if (row.IsNull())
@@ -51,9 +51,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The AsIntOrDefault.
 		/// </summary>
-		/// <param name="row">The row<see cref="T: DataRow"/>.</param>
-		/// <param name="columnName">The columnName<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: int"/>.</returns>
+		/// <param name="row">The row<see cref="DataRow"/>.</param>
+		/// <param name="columnName">The columnName<see cref="string"/>.</param>
+		/// <returns>The <see cref="int"/>.</returns>
 		public static int AsIntOrDefault(this DataRow row, string columnName)
 		{
 			if (row.IsNull())
@@ -77,9 +77,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The AsDecimal.
 		/// </summary>
-		/// <param name="row">The row<see cref="T: DataRow"/>.</param>
-		/// <param name="columnName">The columnName<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: decimal?"/>.</returns>
+		/// <param name="row">The row<see cref="DataRow"/>.</param>
+		/// <param name="columnName">The columnName<see cref="string"/>.</param>
+		/// <returns>The <see cref="decimal?"/>.</returns>
 		public static decimal? AsDecimal(this DataRow row, string columnName)
 		{
 			if (row.IsNull())
@@ -103,9 +103,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The AsDecimalOrDefault.
 		/// </summary>
-		/// <param name="row">The row<see cref="T: DataRow"/>.</param>
-		/// <param name="columnName">The columnName<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: decimal"/>.</returns>
+		/// <param name="row">The row<see cref="DataRow"/>.</param>
+		/// <param name="columnName">The columnName<see cref="string"/>.</param>
+		/// <returns>The <see cref="decimal"/>.</returns>
 		public static decimal AsDecimalOrDefault(this DataRow row, string columnName)
 		{
 			if (row.IsNull())
@@ -129,9 +129,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The AsBoolean.
 		/// </summary>
-		/// <param name="row">The row<see cref="T: DataRow"/>.</param>
-		/// <param name="columnName">The columnName<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: bool?"/>.</returns>
+		/// <param name="row">The row<see cref="DataRow"/>.</param>
+		/// <param name="columnName">The columnName<see cref="string"/>.</param>
+		/// <returns>The <see cref="bool?"/>.</returns>
 		public static bool? AsBoolean(this DataRow row, string columnName)
 		{
 			if (row.IsNull())
@@ -155,9 +155,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The AsBooleanOrDefault.
 		/// </summary>
-		/// <param name="row">The row<see cref="T: DataRow"/>.</param>
-		/// <param name="columnName">The columnName<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: bool"/>.</returns>
+		/// <param name="row">The row<see cref="DataRow"/>.</param>
+		/// <param name="columnName">The columnName<see cref="string"/>.</param>
+		/// <returns>The <see cref="bool"/>.</returns>
 		public static bool AsBooleanOrDefault(this DataRow row, string columnName)
 		{
 			if (row.IsNull())
@@ -181,9 +181,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The AsDate.
 		/// </summary>
-		/// <param name="row">The row<see cref="T: DataRow"/>.</param>
-		/// <param name="columnName">The columnName<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: DateTime?"/>.</returns>
+		/// <param name="row">The row<see cref="DataRow"/>.</param>
+		/// <param name="columnName">The columnName<see cref="string"/>.</param>
+		/// <returns>The <see cref="DateTime?"/>.</returns>
 		public static DateTime? AsDate(this DataRow row, string columnName)
 		{
 			if (row.IsNull())
@@ -207,9 +207,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The AsDateOrDefault.
 		/// </summary>
-		/// <param name="row">The row<see cref="T: DataRow"/>.</param>
-		/// <param name="columnName">The columnName<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: DateTime"/>.</returns>
+		/// <param name="row">The row<see cref="DataRow"/>.</param>
+		/// <param name="columnName">The columnName<see cref="string"/>.</param>
+		/// <returns>The <see cref="DateTime"/>.</returns>
 		public static DateTime AsDateOrDefault(this DataRow row, string columnName)
 		{
 			if (row.IsNull())
@@ -233,9 +233,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The AsString.
 		/// </summary>
-		/// <param name="row">The row<see cref="T: DataRow"/>.</param>
-		/// <param name="columnName">The columnName<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: string"/>.</returns>
+		/// <param name="row">The row<see cref="DataRow"/>.</param>
+		/// <param name="columnName">The columnName<see cref="string"/>.</param>
+		/// <returns>The <see cref="string"/>.</returns>
 		public static string AsString(this DataRow row, string columnName)
 		{
 			if (row.IsNull())
@@ -260,9 +260,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// The AsTOrDefault.
 		/// </summary>
 		/// <typeparam name="T">.</typeparam>
-		/// <param name="row">The row<see cref="T: DataRow"/>.</param>
-		/// <param name="columnName">The columnName<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: T"/>.</returns>
+		/// <param name="row">The row<see cref="DataRow"/>.</param>
+		/// <param name="columnName">The columnName<see cref="string"/>.</param>
+		/// <returns>The <see cref="T"/>.</returns>
 		public static T AsTOrDefault<T>(this DataRow row, string columnName)
 where T : IEquatable<T>
 		{
@@ -288,8 +288,8 @@ where T : IEquatable<T>
 		/// The ChangeType.
 		/// </summary>
 		/// <typeparam name="T">.</typeparam>
-		/// <param name="value">The value<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: T"/>.</returns>
+		/// <param name="value">The value<see cref="string"/>.</param>
+		/// <returns>The <see cref="T"/>.</returns>
 		private static T ChangeType<T>(string value)
 		{
 			var t = typeof(T);

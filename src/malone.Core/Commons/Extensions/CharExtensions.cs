@@ -4,7 +4,7 @@
 namespace malone.Core.Commons.Helpers.Extensions
 {
 	/// <summary>
-	/// Defines the <see cref="T: CharExtensions" />.
+	/// Defines the <see cref="CharExtensions" />.
 	/// </summary>
 	public static class CharExtensions
 	{
@@ -16,9 +16,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The Concat.
 		/// </summary>
-		/// <param name="separator">The separator<see cref="T: char"/>.</param>
-		/// <param name="parameters">The parameters<see cref="T: string[]"/>.</param>
-		/// <returns>The <see cref="T: string"/>.</returns>
+		/// <param name="separator">The separator<see cref="char"/>.</param>
+		/// <param name="parameters">The parameters<see cref="string[]"/>.</param>
+		/// <returns>The <see cref="string"/>.</returns>
 		public static string Concat(this char separator, params string[] parameters)
 		{
 			var result = "";
@@ -36,9 +36,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The Split.
 		/// </summary>
-		/// <param name="separator">The separator<see cref="T: char"/>.</param>
-		/// <param name="value">The value<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: string[]"/>.</returns>
+		/// <param name="separator">The separator<see cref="char"/>.</param>
+		/// <param name="value">The value<see cref="string"/>.</param>
+		/// <returns>The <see cref="string[]"/>.</returns>
 		public static string[] Split(this char separator, string value)
 		{
 			string[] result = value.Split(separator);

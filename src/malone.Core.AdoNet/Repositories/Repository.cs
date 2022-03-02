@@ -13,19 +13,19 @@
 	using malone.Core.Logging;
 
 	/// <summary>
-	/// Defines the <see cref="T: Repository{TKey, TEntity}" />.
+	/// Defines the <see cref="Repository{TKey, TEntity}" />.
 	/// </summary>
-	/// <typeparam name="TKey">.</typeparam>
+	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
 	public abstract class Repository<TKey, TEntity> : BaseRepository<TEntity>, IRepository<TKey, TEntity>, IDisposable
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: Repository{TKey, TEntity}"/> class.
+		/// Initializes a new instance of the <see cref="Repository{TKey, TEntity}"/> class.
 		/// </summary>
-		/// <param name="context">The context<see cref="T: IContext"/>.</param>
-		/// <param name="logger">The logger<see cref="T: ICoreLogger"/>.</param>
+		/// <param name="context">The context<see cref="IContext"/>.</param>
+		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
 		public Repository(IContext context, ICoreLogger logger) : base(context, logger)
 		{
 		}
@@ -33,18 +33,18 @@
 		/// <summary>
 		/// The ConfigureCommandForGetById.
 		/// </summary>
-		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
-		/// <param name="includeDeleted">The includeDeleted<see cref="T: bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="T: string"/>.</param>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
 		protected abstract void ConfigureCommandForGetById(IDbCommand command, bool includeDeleted, string includeProperties);
 
 		/// <summary>
 		/// The GetById.
 		/// </summary>
-		/// <param name="id">The id<see cref="T: TKey"/>.</param>
-		/// <param name="includeDeleted">The includeDeleted<see cref="T: bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: TEntity"/>.</returns>
+		/// <param name="id">The id<see cref="TKey"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
+		/// <returns>The <see cref="TEntity"/>.</returns>
 		public virtual TEntity GetById(
 			TKey id,
 			bool includeDeleted = false,
@@ -82,9 +82,9 @@
 		/// <summary>
 		/// The GetUpdateParameters.
 		/// </summary>
-		/// <param name="parameters">The parameters<see cref="T: List{DbParameterWithValue}"/>.</param>
-		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
-		/// <returns>The <see cref="T: List{DbParameterWithValue}"/>.</returns>
+		/// <param name="parameters">The parameters<see cref="List{DbParameterWithValue}"/>.</param>
+		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
+		/// <returns>The <see cref="List{DbParameterWithValue}"/>.</returns>
 		protected virtual List<DbParameterWithValue> GetUpdateParameters(List<DbParameterWithValue> parameters, TEntity entity)
 		{
 			DbParameterWithValue parameter = typeof(TEntity).GetKeyParameter<TKey>(entity.Id);
@@ -98,7 +98,7 @@
 		/// <summary>
 		/// The Update.
 		/// </summary>
-		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
+		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
 		public virtual void Update(TEntity entity)
 		{
 			ThrowIfDisposed();
@@ -128,9 +128,9 @@
 		/// <summary>
 		/// The GetDeleteParameters.
 		/// </summary>
-		/// <param name="parameters">The parameters<see cref="T: List{DbParameterWithValue}"/>.</param>
-		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
-		/// <returns>The <see cref="T: List{DbParameterWithValue}"/>.</returns>
+		/// <param name="parameters">The parameters<see cref="List{DbParameterWithValue}"/>.</param>
+		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
+		/// <returns>The <see cref="List{DbParameterWithValue}"/>.</returns>
 		protected override List<DbParameterWithValue> GetDeleteParameters(List<DbParameterWithValue> parameters, TEntity entity)
 		{
 			DbParameterWithValue parameter = typeof(TEntity).GetKeyParameter<TKey>(entity.Id);
@@ -140,17 +140,17 @@
 	}
 
 	/// <summary>
-	/// Defines the <see cref="T: Repository{TEntity}" />.
+	/// Defines the <see cref="Repository{TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
 	public abstract class Repository<TEntity> : Repository<int, TEntity>, IRepository<TEntity>
 		where TEntity : class, IBaseEntity
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: Repository{TEntity}"/> class.
+		/// Initializes a new instance of the <see cref="Repository{TEntity}"/> class.
 		/// </summary>
-		/// <param name="context">The context<see cref="T: IContext"/>.</param>
-		/// <param name="logger">The logger<see cref="T: ICoreLogger"/>.</param>
+		/// <param name="context">The context<see cref="IContext"/>.</param>
+		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
 		public Repository(IContext context, ICoreLogger logger) : base(context, logger)
 		{
 		}

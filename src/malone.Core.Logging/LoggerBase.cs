@@ -6,7 +6,7 @@ namespace malone.Core.Logging
 	using System;
 
 	/// <summary>
-	/// Defines the <see cref="T: LoggerBase" />.
+	/// Defines the <see cref="LoggerBase" />.
 	/// </summary>
 	public abstract class LoggerBase : ICoreLogger
 	{
@@ -21,16 +21,16 @@ namespace malone.Core.Logging
 		public string Name { get; private set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: LoggerBase"/> class.
+		/// Initializes a new instance of the <see cref="LoggerBase"/> class.
 		/// </summary>
-		/// <param name="name">The name<see cref="T: string"/>.</param>
+		/// <param name="name">The name<see cref="string"/>.</param>
 		protected LoggerBase(string name)
 		{
 			Name = name;
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: LoggerBase"/> class.
+		/// Initializes a new instance of the <see cref="LoggerBase"/> class.
 		/// </summary>
 		protected LoggerBase()
 		{
@@ -39,7 +39,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Debug.
 		/// </summary>
-		/// <param name="obj">The obj<see cref="T: object"/>.</param>
+		/// <param name="obj">The obj<see cref="object"/>.</param>
 		public void Debug(object obj)
 		{
 			if (IsLogLevelEnabled(LogLevel.Debug))
@@ -51,7 +51,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Debug.
 		/// </summary>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
 		public void Debug(string message)
 		{
 			if (IsLogLevelEnabled(LogLevel.Debug))
@@ -63,8 +63,8 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Debug.
 		/// </summary>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Debug(string format, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Debug))
@@ -76,9 +76,9 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Debug.
 		/// </summary>
-		/// <param name="provider">The provider<see cref="T: IFormatProvider"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Debug(IFormatProvider provider, string format, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Debug))
@@ -90,7 +90,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Debug.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
 		public void Debug(Exception exception)
 		{
 			if (IsLogLevelEnabled(LogLevel.Debug))
@@ -102,8 +102,8 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Debug.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
 		public void Debug(Exception exception, string message)
 		{
 			if (IsLogLevelEnabled(LogLevel.Debug))
@@ -115,9 +115,9 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Debug.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Debug(Exception exception, string format, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Debug))
@@ -129,10 +129,10 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Debug.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="provider">The provider<see cref="T: IFormatProvider"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Debug(Exception exception, string format, IFormatProvider provider, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Debug))
@@ -144,7 +144,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Info.
 		/// </summary>
-		/// <param name="obj">The obj<see cref="T: object"/>.</param>
+		/// <param name="obj">The obj<see cref="object"/>.</param>
 		public void Info(object obj)
 		{
 			if (IsLogLevelEnabled(LogLevel.Info))
@@ -156,7 +156,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Info.
 		/// </summary>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
 		public void Info(string message)
 		{
 			if (IsLogLevelEnabled(LogLevel.Info))
@@ -168,8 +168,8 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Info.
 		/// </summary>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Info(string format, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Info))
@@ -181,9 +181,9 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Info.
 		/// </summary>
-		/// <param name="provider">The provider<see cref="T: IFormatProvider"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Info(IFormatProvider provider, string format, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Info))
@@ -195,7 +195,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Info.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
 		public void Info(Exception exception)
 		{
 			if (IsLogLevelEnabled(LogLevel.Info))
@@ -207,8 +207,8 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Info.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
 		public void Info(Exception exception, string message)
 		{
 			if (IsLogLevelEnabled(LogLevel.Info))
@@ -220,9 +220,9 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Info.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Info(Exception exception, string format, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Info))
@@ -234,10 +234,10 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Info.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="provider">The provider<see cref="T: IFormatProvider"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Info(Exception exception, string format, IFormatProvider provider, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Info))
@@ -249,7 +249,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Warn.
 		/// </summary>
-		/// <param name="obj">The obj<see cref="T: object"/>.</param>
+		/// <param name="obj">The obj<see cref="object"/>.</param>
 		public void Warn(object obj)
 		{
 			if (IsLogLevelEnabled(LogLevel.Warn))
@@ -261,7 +261,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Warn.
 		/// </summary>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
 		public void Warn(string message)
 		{
 			if (IsLogLevelEnabled(LogLevel.Warn))
@@ -273,8 +273,8 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Warn.
 		/// </summary>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Warn(string format, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Warn))
@@ -286,9 +286,9 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Warn.
 		/// </summary>
-		/// <param name="provider">The provider<see cref="T: IFormatProvider"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Warn(IFormatProvider provider, string format, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Warn))
@@ -300,7 +300,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Warn.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
 		public void Warn(Exception exception)
 		{
 			if (IsLogLevelEnabled(LogLevel.Warn))
@@ -312,8 +312,8 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Warn.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
 		public void Warn(Exception exception, string message)
 		{
 			if (IsLogLevelEnabled(LogLevel.Warn))
@@ -325,9 +325,9 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Warn.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Warn(Exception exception, string format, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Warn))
@@ -339,10 +339,10 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Warn.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="provider">The provider<see cref="T: IFormatProvider"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Warn(Exception exception, string format, IFormatProvider provider, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Warn))
@@ -354,7 +354,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Error.
 		/// </summary>
-		/// <param name="obj">The obj<see cref="T: object"/>.</param>
+		/// <param name="obj">The obj<see cref="object"/>.</param>
 		public void Error(object obj)
 		{
 			if (IsLogLevelEnabled(LogLevel.Error))
@@ -366,7 +366,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Error.
 		/// </summary>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
 		public void Error(string message)
 		{
 			if (IsLogLevelEnabled(LogLevel.Error))
@@ -378,8 +378,8 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Error.
 		/// </summary>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Error(string format, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Error))
@@ -391,9 +391,9 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Error.
 		/// </summary>
-		/// <param name="provider">The provider<see cref="T: IFormatProvider"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Error(IFormatProvider provider, string format, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Error))
@@ -405,7 +405,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Error.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
 		public void Error(Exception exception)
 		{
 			if (IsLogLevelEnabled(LogLevel.Error))
@@ -417,8 +417,8 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Error.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
 		public void Error(Exception exception, string message)
 		{
 			if (IsLogLevelEnabled(LogLevel.Error))
@@ -430,9 +430,9 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Error.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Error(Exception exception, string format, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Error))
@@ -444,10 +444,10 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Error.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="provider">The provider<see cref="T: IFormatProvider"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Error(Exception exception, string format, IFormatProvider provider, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Error))
@@ -459,7 +459,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Fatal.
 		/// </summary>
-		/// <param name="obj">The obj<see cref="T: object"/>.</param>
+		/// <param name="obj">The obj<see cref="object"/>.</param>
 		public void Fatal(object obj)
 		{
 			if (IsLogLevelEnabled(LogLevel.Fatal))
@@ -471,7 +471,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Fatal.
 		/// </summary>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
 		public void Fatal(string message)
 		{
 			if (IsLogLevelEnabled(LogLevel.Fatal))
@@ -483,8 +483,8 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Fatal.
 		/// </summary>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Fatal(string format, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Fatal))
@@ -496,9 +496,9 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Fatal.
 		/// </summary>
-		/// <param name="provider">The provider<see cref="T: IFormatProvider"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Fatal(IFormatProvider provider, string format, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Fatal))
@@ -510,7 +510,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Fatal.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
 		public void Fatal(Exception exception)
 		{
 			if (IsLogLevelEnabled(LogLevel.Fatal))
@@ -522,8 +522,8 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Fatal.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
 		public void Fatal(Exception exception, string message)
 		{
 			if (IsLogLevelEnabled(LogLevel.Fatal))
@@ -535,9 +535,9 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Fatal.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Fatal(Exception exception, string format, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Fatal))
@@ -549,10 +549,10 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Fatal.
 		/// </summary>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="provider">The provider<see cref="T: IFormatProvider"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public void Fatal(Exception exception, string format, IFormatProvider provider, params object[] args)
 		{
 			if (IsLogLevelEnabled(LogLevel.Fatal))
@@ -564,9 +564,9 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Log.
 		/// </summary>
-		/// <param name="level">The level<see cref="T: LogLevel"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="level">The level<see cref="LogLevel"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public virtual void Log(LogLevel level, string format, params object[] args)
 		{
 			Log(level, String.Format(format, args));
@@ -575,10 +575,10 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Log.
 		/// </summary>
-		/// <param name="level">The level<see cref="T: LogLevel"/>.</param>
-		/// <param name="provider">The provider<see cref="T: IFormatProvider"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="level">The level<see cref="LogLevel"/>.</param>
+		/// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public virtual void Log(LogLevel level, IFormatProvider provider, string format, params object[] args)
 		{
 			Log(level, String.Format(provider, format, args));
@@ -587,8 +587,8 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Log.
 		/// </summary>
-		/// <param name="level">The level<see cref="T: LogLevel"/>.</param>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
+		/// <param name="level">The level<see cref="LogLevel"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
 		public virtual void Log(LogLevel level, string message)
 		{
 			LogItem item = new LogItem { LogLevel = level, Message = message, LoggerName = Name };
@@ -598,8 +598,8 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Log.
 		/// </summary>
-		/// <param name="level">The level<see cref="T: LogLevel"/>.</param>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
+		/// <param name="level">The level<see cref="LogLevel"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
 		public virtual void Log(LogLevel level, Exception exception)
 		{
 			Log(level, exception, String.Empty);
@@ -608,10 +608,10 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Log.
 		/// </summary>
-		/// <param name="level">The level<see cref="T: LogLevel"/>.</param>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="level">The level<see cref="LogLevel"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public virtual void Log(LogLevel level, Exception exception, string format, params object[] args)
 		{
 			string message = String.Format(format, args);
@@ -621,11 +621,11 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Log.
 		/// </summary>
-		/// <param name="level">The level<see cref="T: LogLevel"/>.</param>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="provider">The provider<see cref="T: IFormatProvider"/>.</param>
-		/// <param name="format">The format<see cref="T: string"/>.</param>
-		/// <param name="args">The args<see cref="T: object[]"/>.</param>
+		/// <param name="level">The level<see cref="LogLevel"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="provider">The provider<see cref="IFormatProvider"/>.</param>
+		/// <param name="format">The format<see cref="string"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
 		public virtual void Log(LogLevel level, Exception exception, IFormatProvider provider, string format,
 params object[] args)
 		{
@@ -636,9 +636,9 @@ params object[] args)
 		/// <summary>
 		/// The Log.
 		/// </summary>
-		/// <param name="level">The level<see cref="T: LogLevel"/>.</param>
-		/// <param name="exception">The exception<see cref="T: Exception"/>.</param>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
+		/// <param name="level">The level<see cref="LogLevel"/>.</param>
+		/// <param name="exception">The exception<see cref="Exception"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
 		public virtual void Log(LogLevel level, Exception exception, string message)
 		{
 			Type exceptionType = typeof(Exception);
@@ -657,14 +657,14 @@ params object[] args)
 		/// <summary>
 		/// The Log.
 		/// </summary>
-		/// <param name="item">The item<see cref="T: LogItem"/>.</param>
+		/// <param name="item">The item<see cref="LogItem"/>.</param>
 		public abstract void Log(LogItem item);
 
 		/// <summary>
 		/// The IsLogLevelEnabled.
 		/// </summary>
-		/// <param name="level">The level<see cref="T: LogLevel"/>.</param>
-		/// <returns>The <see cref="T: bool"/>.</returns>
+		/// <param name="level">The level<see cref="LogLevel"/>.</param>
+		/// <returns>The <see cref="bool"/>.</returns>
 		protected virtual bool IsLogLevelEnabled(LogLevel level)
 		{
 			return true;

@@ -8,7 +8,7 @@ namespace malone.Core.Commons.Initializers
 	using malone.Core.Commons.DI;
 
 	/// <summary>
-	/// Defines the <see cref="T: AppInitializer{TInjectorInitializer, TContainer, TLayersInitializer}" />.
+	/// Defines the <see cref="AppInitializer{TInjectorInitializer, TContainer, TLayersInitializer}" />.
 	/// </summary>
 	/// <typeparam name="TInjectorInitializer">.</typeparam>
 	/// <typeparam name="TContainer">.</typeparam>
@@ -29,7 +29,7 @@ namespace malone.Core.Commons.Initializers
 		/// <summary>
 		/// The InitializeInjector.
 		/// </summary>
-		/// <returns>The <see cref="T: TContainer"/>.</returns>
+		/// <returns>The <see cref="TContainer"/>.</returns>
 		private static TContainer InitializeInjector()
 		{
 			TInjectorInitializer instance = new TInjectorInitializer();
@@ -47,7 +47,7 @@ namespace malone.Core.Commons.Initializers
 		/// <summary>
 		/// The FindInjectorInitializerInitializeMethod.
 		/// </summary>
-		/// <returns>The <see cref="T: MethodInfo"/>.</returns>
+		/// <returns>The <see cref="MethodInfo"/>.</returns>
 		private static MethodInfo FindInjectorInitializerInitializeMethod()
 		{
 
@@ -69,7 +69,7 @@ namespace malone.Core.Commons.Initializers
 		/// <summary>
 		/// The InitializeLayers.
 		/// </summary>
-		/// <param name="container">The container<see cref="T: TContainer"/>.</param>
+		/// <param name="container">The container<see cref="TContainer"/>.</param>
 		private static void InitializeLayers(TContainer container)
 		{
 			if (container.Equals(default(TContainer)))
@@ -86,7 +86,7 @@ namespace malone.Core.Commons.Initializers
 		/// <summary>
 		/// The FindLayersInitializerInitializeMethod.
 		/// </summary>
-		/// <returns>The <see cref="T: MethodInfo"/>.</returns>
+		/// <returns>The <see cref="MethodInfo"/>.</returns>
 		private static MethodInfo FindLayersInitializerInitializeMethod()
 		{
 

@@ -8,7 +8,7 @@
 	using malone.Core.Commons.Helpers.Extensions;
 
 	/// <summary>
-	/// Defines the <see cref="T: EntityAdoNetExtensions" />.
+	/// Defines the <see cref="EntityAdoNetExtensions" />.
 	/// </summary>
 	public static class EntityAdoNetExtensions
 	{
@@ -16,8 +16,8 @@
 		/// The GetParameters.
 		/// </summary>
 		/// <typeparam name="TEntity">.</typeparam>
-		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
-		/// <returns>The <see cref="T: IEnumerable{DbParameterWithValue}"/>.</returns>
+		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
+		/// <returns>The <see cref="IEnumerable{DbParameterWithValue}"/>.</returns>
 		public static IEnumerable<DbParameterWithValue> GetParameters<TEntity>(this TEntity entity)
 			where TEntity : class
 		{

@@ -10,14 +10,14 @@
 	using System.Web.Http.Filters;
 
 	/// <summary>
-	/// Defines the <see cref="T: BasicAuthenticationAttribute" />.
+	/// Defines the <see cref="BasicAuthenticationAttribute" />.
 	/// </summary>
 	public class BasicAuthenticationAttribute : AuthorizationFilterAttribute
 	{
 		/// <summary>
 		/// The OnAuthorization.
 		/// </summary>
-		/// <param name="actionContext">The actionContext<see cref="T: HttpActionContext"/>.</param>
+		/// <param name="actionContext">The actionContext<see cref="HttpActionContext"/>.</param>
 		public override void OnAuthorization(HttpActionContext actionContext)
 		{
 			if (actionContext.Request.Headers.Authorization == null)

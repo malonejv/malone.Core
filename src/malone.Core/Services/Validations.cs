@@ -9,17 +9,17 @@ namespace malone.Core.Services
 	/// <summary>
 	/// The ValidationRuleDelegate.
 	/// </summary>
-	/// <param name="arguments">The arguments<see cref="T: object[]"/>.</param>
-	/// <returns>The <see cref="T: ValidationResult"/>.</returns>
+	/// <param name="arguments">The arguments<see cref="object[]"/>.</param>
+	/// <returns>The <see cref="ValidationResult"/>.</returns>
 	public delegate ValidationResult ValidationRuleDelegate(params object[] arguments);
 
 	/// <summary>
-	/// Defines the <see cref="T: ValidationRule" />.
+	/// Defines the <see cref="ValidationRule" />.
 	/// </summary>
 	public class ValidationRule
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: ValidationRule"/> class.
+		/// Initializes a new instance of the <see cref="ValidationRule"/> class.
 		/// </summary>
 		public ValidationRule()
 		{
@@ -38,15 +38,15 @@ namespace malone.Core.Services
 	}
 
 	/// <summary>
-	/// Defines the <see cref="T: ValidationResult" />.
+	/// Defines the <see cref="ValidationResult" />.
 	/// </summary>
 	public class ValidationResult
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: ValidationResult"/> class.
+		/// Initializes a new instance of the <see cref="ValidationResult"/> class.
 		/// </summary>
-		/// <param name="errorCode">The errorCode<see cref="T: string"/>.</param>
-		/// <param name="message">The message<see cref="T: string"/>.</param>
+		/// <param name="errorCode">The errorCode<see cref="string"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
 		public ValidationResult(string errorCode, string message)
 		{
 			ErrorCode = errorCode;
@@ -54,9 +54,9 @@ namespace malone.Core.Services
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: ValidationResult"/> class.
+		/// Initializes a new instance of the <see cref="ValidationResult"/> class.
 		/// </summary>
-		/// <param name="errorCode">The errorCode<see cref="T: string"/>.</param>
+		/// <param name="errorCode">The errorCode<see cref="string"/>.</param>
 		public ValidationResult(string errorCode) : this(errorCode, null)
 		{
 		}
@@ -83,7 +83,7 @@ namespace malone.Core.Services
 	}
 
 	/// <summary>
-	/// Defines the <see cref="T: ValidationResultList" />.
+	/// Defines the <see cref="ValidationResultList" />.
 	/// </summary>
 	public class ValidationResultList : List<ValidationResult>
 	{
@@ -106,7 +106,7 @@ namespace malone.Core.Services
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: ValidationResultList"/> class.
+		/// Initializes a new instance of the <see cref="ValidationResultList"/> class.
 		/// </summary>
 		public ValidationResultList()
 		{

@@ -8,7 +8,7 @@ namespace malone.Core.Entities.Model
 	using System.Runtime.Serialization.Formatters.Binary;
 
 	/// <summary>
-	/// Defines the <see cref="T: IBaseEntityExtensions" />.
+	/// Defines the <see cref="IBaseEntityExtensions" />.
 	/// </summary>
 	public static class IBaseEntityExtensions
 	{
@@ -16,9 +16,9 @@ namespace malone.Core.Entities.Model
 		/// The Clone.
 		/// </summary>
 		/// <typeparam name="TEntity">.</typeparam>
-		/// <typeparam name="TKey">.</typeparam>
-		/// <param name="entityToClone">The entityToClone<see cref="T: TEntity"/>.</param>
-		/// <returns>The <see cref="T: TEntity"/>.</returns>
+		/// <typeparam name="TKey">Type used for key property.</typeparam>
+		/// <param name="entityToClone">The entityToClone<see cref="TEntity"/>.</param>
+		/// <returns>The <see cref="TEntity"/>.</returns>
 		public static TEntity Clone<TEntity, TKey>(this TEntity entityToClone)
 where TKey : IEquatable<TKey>
 where TEntity : class, IBaseEntity<TKey>

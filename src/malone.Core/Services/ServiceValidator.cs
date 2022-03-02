@@ -8,16 +8,16 @@ namespace malone.Core.Services
 	using malone.Core.Entities.Model;
 
 	/// <summary>
-	/// Defines the <see cref="T: ServiceValidator{TKey, TEntity}" />.
+	/// Defines the <see cref="ServiceValidator{TKey, TEntity}" />.
 	/// </summary>
-	/// <typeparam name="TKey">.</typeparam>
+	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
 	public class ServiceValidator<TKey, TEntity> : BaseServiceValidator<TEntity>, IServiceValidator<TKey, TEntity>
 where TKey : IEquatable<TKey>
 where TEntity : class, IBaseEntity<TKey>
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: ServiceValidator{TKey, TEntity}"/> class.
+		/// Initializes a new instance of the <see cref="ServiceValidator{TKey, TEntity}"/> class.
 		/// </summary>
 		public ServiceValidator() : base()
 		{
@@ -25,14 +25,14 @@ where TEntity : class, IBaseEntity<TKey>
 	}
 
 	/// <summary>
-	/// Defines the <see cref="T: ServiceValidator{TEntity}" />.
+	/// Defines the <see cref="ServiceValidator{TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
 	public class ServiceValidator<TEntity> : ServiceValidator<int, TEntity>, IServiceValidator<TEntity>
 where TEntity : class, IBaseEntity
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: ServiceValidator{TEntity}"/> class.
+		/// Initializes a new instance of the <see cref="ServiceValidator{TEntity}"/> class.
 		/// </summary>
 		public ServiceValidator() : base()
 		{

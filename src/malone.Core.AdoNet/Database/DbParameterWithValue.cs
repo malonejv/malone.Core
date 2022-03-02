@@ -3,7 +3,7 @@
 	using malone.Core.AdoNet.Attributes;
 
 	/// <summary>
-	/// Defines the <see cref="T: DbParameterWithValue" />.
+	/// Defines the <see cref="DbParameterWithValue" />.
 	/// </summary>
 	public class DbParameterWithValue
 	{

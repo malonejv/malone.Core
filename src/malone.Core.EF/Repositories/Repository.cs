@@ -10,92 +10,53 @@ using malone.Core.Entities.Model;
 using malone.Core.Logging;
 
 namespace malone.Core.EF.Repositories.Implementations
-	{
+{
 	public class Repository<TKey, TEntity> : BaseRepository<TEntity>, IRepository<TKey, TEntity>, IDisposable
-        where TKey : IEquatable<TKey>
-        where TEntity : class, IBaseEntity<TKey>
-    {
-        #region Constructor
+		where TKey : IEquatable<TKey>
+		where TEntity : class, IBaseEntity<TKey>
+	{
+		public new IQueryOperationsRepository<TKey, TEntity> QueryOperationsRepository { get; }
+		public new IDataOperationsRepository<TKey, TEntity> DataOperationsRepository { get; }
 
-        public Repository(IContext context, ICoreLogger logger) : base(context, logger) { }
+		#region Constructor
 
-        #endregion
+		public Repository(IContext context, ICoreLogger logger, IQueryOperationsRepository<TKey, TEntity> queryOperationsRepository, IDataOperationsRepository<TKey, TEntity> dataOperationsRepository) :
+			base(context, logger, queryOperationsRepository, dataOperationsRepository)
+		{ }
 
-        #region CRUD Operations
+		#endregion
 
-        #region UPDATE
+		#region Public methods
 
-        public virtual void Update(TEntity entity)
-        {
-            try
-            {
-                var oldValues = GetById(entity.Id);
+		public TEntity GetById(TKey id, bool includeDeleted = false, string includeProperties = "")
+		{
+			return QueryOperationsRepository.GetById(id, includeDeleted, includeProperties);
+		}
 
-                if (oldValues.Equals(default(TEntity)))
-                {
-                    throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.DATAACCESS601, typeof(TEntity));
-                }
+		public void SetAddOrUpdate<T>(IEnumerable<T> entities)
+			where T : IBaseEntity
+		{
+			foreach (var entity in entities)
+			{
+				Context.Entry(entity).State = entity.AddOrUpdate();
+			}
+		}
 
-                Context.Entry(entity).State = EntityState.Modified;
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
+		#endregion
 
-                throw techEx;
-            }
-        }
-
-        //public virtual void Update(TEntity oldValues, TEntity newValues)
-        //{
-        //    try
-        //    {
-        //        _context.Entry(oldValues).State = EntityState.Detached;
-
-        //        _context.Entry(newValues).State = EntityState.Modified;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
-        //        if (Logger != null) Logger.Error(techEx);
-
-        //        throw techEx;
-        //    }
-        //}
-
-        #endregion
-
-        #region Private And Protected Methods
-
-        public void SetAddOrUpdate<TEntity>(IEnumerable<TEntity> entities)
-            where TEntity : IBaseEntity
-        {
-            foreach (var entity in entities)
-            {
-                Context.Entry(entity).State = entity.AddOrUpdate();
-            }
-        }
-
-        #endregion
-
-        #endregion
-
-    }
+	}
 
 
-    public class Repository<TEntity> :
-        Repository<int, TEntity>,
-        IRepository<TEntity>
-        where TEntity : class, IBaseEntity
-    {
-        public Repository(IContext context, ICoreLogger logger) : base(context, logger)
-        {
-        }
-    }
+	public class Repository<TEntity> :
+		Repository<int, TEntity>,
+		IRepository<TEntity>
+		where TEntity : class, IBaseEntity
+	{
+		public Repository(IContext context, ICoreLogger logger, IQueryOperationsRepository<int, TEntity> queryOperationsRepository, IDataOperationsRepository<int, TEntity> dataOperationsRepository) :
+			base(context, logger, queryOperationsRepository, dataOperationsRepository)
+		{
+		}
+	}
 
 }
 

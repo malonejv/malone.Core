@@ -16,7 +16,7 @@
 	using malone.Core.Logging;
 
 	/// <summary>
-	/// Defines the <see cref="T: BaseRepository{TEntity}" />.
+	/// Defines the <see cref="BaseRepository{TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
 	public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
@@ -33,10 +33,10 @@
 		protected ICoreLogger Logger { get; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: BaseRepository{TEntity}"/> class.
+		/// Initializes a new instance of the <see cref="BaseRepository{TEntity}"/> class.
 		/// </summary>
-		/// <param name="context">The context<see cref="T: IContext"/>.</param>
-		/// <param name="logger">The logger<see cref="T: ICoreLogger"/>.</param>
+		/// <param name="context">The context<see cref="IContext"/>.</param>
+		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
 		public BaseRepository(IContext context, ICoreLogger logger)
 		{
 			CheckContext(context);
@@ -49,18 +49,18 @@
 		/// <summary>
 		/// The ConfigureCommandForGetAll.
 		/// </summary>
-		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
-		/// <param name="includeDeleted">The includeDeleted<see cref="T: bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="T: string"/>.</param>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
 		protected abstract void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties);
 
 		/// <summary>
 		/// The GetAll.
 		/// </summary>
-		/// <param name="orderBy">The orderBy<see cref="T: Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
-		/// <param name="includeDeleted">The includeDeleted<see cref="T: bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: IEnumerable{TEntity}"/>.</returns>
+		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
+		/// <returns>The <see cref="IEnumerable{TEntity}"/>.</returns>
 		public virtual IEnumerable<TEntity> GetAll(
 			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
 			bool includeDeleted = false,
@@ -93,20 +93,20 @@
 		/// <summary>
 		/// The ConfigureCommandForGet.
 		/// </summary>
-		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
-		/// <param name="includeDeleted">The includeDeleted<see cref="T: bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="T: string"/>.</param>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
 		protected abstract void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties);
 
 		/// <summary>
 		/// The Get.
 		/// </summary>
 		/// <typeparam name="TFilter">.</typeparam>
-		/// <param name="filter">The filter<see cref="T: TFilter"/>.</param>
-		/// <param name="orderBy">The orderBy<see cref="T: Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
-		/// <param name="includeDeleted">The includeDeleted<see cref="T: bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: IEnumerable{TEntity}"/>.</returns>
+		/// <param name="filter">The filter<see cref="TFilter"/>.</param>
+		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
+		/// <returns>The <see cref="IEnumerable{TEntity}"/>.</returns>
 		public virtual IEnumerable<TEntity> Get<TFilter>(
 		   TFilter filter = default(TFilter),
 		   Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
@@ -149,20 +149,20 @@
 		/// <summary>
 		/// The ConfigureCommandForGetEntity.
 		/// </summary>
-		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
-		/// <param name="includeDeleted">The includeDeleted<see cref="T: bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="T: string"/>.</param>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
 		protected abstract void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties);
 
 		/// <summary>
 		/// The GetEntity.
 		/// </summary>
 		/// <typeparam name="TFilter">.</typeparam>
-		/// <param name="filter">The filter<see cref="T: TFilter"/>.</param>
-		/// <param name="orderBy">The orderBy<see cref="T: Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
-		/// <param name="includeDeleted">The includeDeleted<see cref="T: bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: TEntity"/>.</returns>
+		/// <param name="filter">The filter<see cref="TFilter"/>.</param>
+		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
+		/// <returns>The <see cref="TEntity"/>.</returns>
 		public virtual TEntity GetEntity<TFilter>(
 			TFilter filter = default(TFilter),
 			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
@@ -205,15 +205,15 @@
 		/// <summary>
 		/// The ConfigureCommandForInsert.
 		/// </summary>
-		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
 		protected abstract void ConfigureCommandForInsert(IDbCommand command);
 
 		/// <summary>
 		/// The GetInsertParameters.
 		/// </summary>
-		/// <param name="parameters">The parameters<see cref="T: List{DbParameterWithValue}"/>.</param>
-		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
-		/// <returns>The <see cref="T: List{DbParameterWithValue}"/>.</returns>
+		/// <param name="parameters">The parameters<see cref="List{DbParameterWithValue}"/>.</param>
+		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
+		/// <returns>The <see cref="List{DbParameterWithValue}"/>.</returns>
 		protected virtual List<DbParameterWithValue> GetInsertParameters(List<DbParameterWithValue> parameters, TEntity entity)
 		{
 			parameters = entity.GetParameters().ToList();
@@ -223,7 +223,7 @@
 		/// <summary>
 		/// The Insert.
 		/// </summary>
-		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
+		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
 		public virtual void Insert(TEntity entity)
 		{
 			ThrowIfDisposed();
@@ -253,16 +253,16 @@
 		/// <summary>
 		/// The ConfigureCommandForUpdate.
 		/// </summary>
-		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
 		protected abstract void ConfigureCommandForUpdate(IDbCommand command);
 
 		/// <summary>
 		/// The GetUpdateParameters.
 		/// </summary>
-		/// <param name="parameters">The parameters<see cref="T: List{DbParameterWithValue}"/>.</param>
-		/// <param name="oldValues">The oldValues<see cref="T: TEntity"/>.</param>
-		/// <param name="newValues">The newValues<see cref="T: TEntity"/>.</param>
-		/// <returns>The <see cref="T: List{DbParameterWithValue}"/>.</returns>
+		/// <param name="parameters">The parameters<see cref="List{DbParameterWithValue}"/>.</param>
+		/// <param name="oldValues">The oldValues<see cref="TEntity"/>.</param>
+		/// <param name="newValues">The newValues<see cref="TEntity"/>.</param>
+		/// <returns>The <see cref="List{DbParameterWithValue}"/>.</returns>
 		protected virtual List<DbParameterWithValue> GetUpdateParameters(List<DbParameterWithValue> parameters, TEntity oldValues, TEntity newValues)
 		{
 			parameters = newValues.GetParameters().ToList();
@@ -272,8 +272,8 @@
 		/// <summary>
 		/// The Update.
 		/// </summary>
-		/// <param name="oldValues">The oldValues<see cref="T: TEntity"/>.</param>
-		/// <param name="newValues">The newValues<see cref="T: TEntity"/>.</param>
+		/// <param name="oldValues">The oldValues<see cref="TEntity"/>.</param>
+		/// <param name="newValues">The newValues<see cref="TEntity"/>.</param>
 		public virtual void Update(TEntity oldValues, TEntity newValues)
 		{
 			ThrowIfDisposed();
@@ -303,15 +303,15 @@
 		/// <summary>
 		/// The ConfigureCommandForDelete.
 		/// </summary>
-		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
 		protected abstract void ConfigureCommandForDelete(IDbCommand command);
 
 		/// <summary>
 		/// The GetDeleteParameters.
 		/// </summary>
-		/// <param name="parameters">The parameters<see cref="T: List{DbParameterWithValue}"/>.</param>
-		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
-		/// <returns>The <see cref="T: List{DbParameterWithValue}"/>.</returns>
+		/// <param name="parameters">The parameters<see cref="List{DbParameterWithValue}"/>.</param>
+		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
+		/// <returns>The <see cref="List{DbParameterWithValue}"/>.</returns>
 		protected virtual List<DbParameterWithValue> GetDeleteParameters(List<DbParameterWithValue> parameters, TEntity entity)
 		{
 			parameters = entity.GetParameters().ToList();
@@ -321,7 +321,7 @@
 		/// <summary>
 		/// The Delete.
 		/// </summary>
-		/// <param name="entityToDelete">The entityToDelete<see cref="T: TEntity"/>.</param>
+		/// <param name="entityToDelete">The entityToDelete<see cref="TEntity"/>.</param>
 		public virtual void Delete(TEntity entityToDelete)
 		{
 			ThrowIfDisposed();
@@ -351,7 +351,7 @@
 		/// <summary>
 		/// The CheckLogger.
 		/// </summary>
-		/// <param name="logger">The logger<see cref="T: ICoreLogger"/>.</param>
+		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
 		private void CheckLogger(ICoreLogger logger)
 		{
 			if (logger == null)
@@ -363,7 +363,7 @@
 		/// <summary>
 		/// The CheckContext.
 		/// </summary>
-		/// <param name="context">The context<see cref="T: IContext"/>.</param>
+		/// <param name="context">The context<see cref="IContext"/>.</param>
 		private void CheckContext(IContext context)
 		{
 			if (context == null)
@@ -381,10 +381,10 @@
 		/// <summary>
 		/// The GetQueryable.
 		/// </summary>
-		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
-		/// <param name="includeDeleted">The includeDeleted<see cref="T: bool"/>.</param>
-		/// <param name="orderBy">The orderBy<see cref="T: Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
-		/// <returns>The <see cref="T: IQueryable{TEntity}"/>.</returns>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
+		/// <returns>The <see cref="IQueryable{TEntity}"/>.</returns>
 		protected IQueryable<TEntity> GetQueryable(
 		   IDbCommand command,
 		   bool includeDeleted = false,
@@ -443,8 +443,8 @@
 		/// <summary>
 		/// The Map.
 		/// </summary>
-		/// <param name="row">The row<see cref="T: DataRow"/>.</param>
-		/// <returns>The <see cref="T: TEntity"/>.</returns>
+		/// <param name="row">The row<see cref="DataRow"/>.</param>
+		/// <returns>The <see cref="TEntity"/>.</returns>
 		protected abstract TEntity Map(DataRow row);
 
 		/// <summary>
@@ -475,7 +475,7 @@
 		/// <summary>
 		/// The Dispose.
 		/// </summary>
-		/// <param name="disposing">The disposing<see cref="T: bool"/>.</param>
+		/// <param name="disposing">The disposing<see cref="bool"/>.</param>
 		protected virtual void Dispose(bool disposing)
 		{
 			if (disposing && Context != null)

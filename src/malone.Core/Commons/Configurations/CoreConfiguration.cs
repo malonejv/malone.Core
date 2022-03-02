@@ -10,7 +10,7 @@ namespace malone.Core.Commons.Configurations
 	using malone.Core.IoC;
 
 	/// <summary>
-	/// Defines the <see cref="T: CoreConfiguration" />.
+	/// Defines the <see cref="CoreConfiguration" />.
 	/// </summary>
 	public class CoreConfiguration : ICoreConfiguration
 	{
@@ -20,7 +20,7 @@ namespace malone.Core.Commons.Configurations
 		internal IErrorLocalizationHandler ErrorLocalizationHandler { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T: CoreConfiguration"/> class.
+		/// Initializes a new instance of the <see cref="CoreConfiguration"/> class.
 		/// </summary>
 		public CoreConfiguration()//(ICoreLogger logger)
 		{
@@ -30,8 +30,8 @@ namespace malone.Core.Commons.Configurations
 		/// <summary>
 		/// The GetConnectionString.
 		/// </summary>
-		/// <param name="connectionStringName">The connectionStringName<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: string"/>.</returns>
+		/// <param name="connectionStringName">The connectionStringName<see cref="string"/>.</param>
+		/// <returns>The <see cref="string"/>.</returns>
 		public string GetConnectionString(string connectionStringName)
 		{
 			var connectionString = ConfigurationManager.ConnectionStrings[connectionStringName];
@@ -43,7 +43,7 @@ namespace malone.Core.Commons.Configurations
 		/// The GetSection.
 		/// </summary>
 		/// <typeparam name="T">.</typeparam>
-		/// <returns>The <see cref="T: T"/>.</returns>
+		/// <returns>The <see cref="T"/>.</returns>
 		public T GetSection<T>()
 where T : ConfigurationSection
 		{
@@ -78,8 +78,8 @@ where T : ConfigurationSection
 		/// The GetSection.
 		/// </summary>
 		/// <typeparam name="T">.</typeparam>
-		/// <param name="sectionName">The sectionName<see cref="T: string"/>.</param>
-		/// <returns>The <see cref="T: T"/>.</returns>
+		/// <param name="sectionName">The sectionName<see cref="string"/>.</param>
+		/// <returns>The <see cref="T"/>.</returns>
 		public T GetSection<T>(string sectionName)
 where T : ConfigurationSection
 		{
