@@ -1,4 +1,9 @@
-# malonejv.Core ![CI](https://github.com/malonejv/malone.Core/workflows/CI/badge.svg) [![Board Status](https://dev.azure.com/malonejv/45380abc-bef3-4509-b48e-888a31ec7319/d930ffdc-a2ca-481d-92f8-0a4471d4ee97/_apis/work/boardbadge/afbda97e-fb6a-4941-99e1-06a950f80cdb)](https://dev.azure.com/malonejv/45380abc-bef3-4509-b48e-888a31ec7319/_boards/board/t/d930ffdc-a2ca-481d-92f8-0a4471d4ee97/Microsoft.RequirementCategory/)
+# malonejv.Core
+
+| Branch      | Status                                                                                                                                                                             |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Development | [![CI/CD](https://github.com/malonejv/malone.Core/actions/workflows/Workflow.yml/badge.svg)](https://github.com/malonejv/malone.Core/actions/workflows/Workflow.yml)               |
+| Master      | [![CI/CD](https://github.com/malonejv/malone.Core/actions/workflows/Workflow.yml/badge.svg?branch=master)](https://github.com/malonejv/malone.Core/actions/workflows/Workflow.yml) |
 
 ## Configuración
 
@@ -16,10 +21,3 @@ nuget sources Add -Name
 Ese Token queda guardado en:
 
 %userprofile%\AppData\Roaming\NuGet\NuGet.Config
-
-
-## Información
-
-https://desarrollowp.com/blog/tutoriales/aprende-git-de-manera-sencilla-git-flow/
-https://itnext.io/automate-your-releases-versioning-and-release-notes-with-semantic-release-d5575b73d986
-https://docs.microsoft.com/es-es/dotnet/standard/library-guidance/sourcelink
