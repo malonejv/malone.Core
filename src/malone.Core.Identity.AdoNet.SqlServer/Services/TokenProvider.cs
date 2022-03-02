@@ -3,8 +3,8 @@ using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security.DataProtection;
 
-namespace malone.Core.Identity.AdoNet.SqlServer.Business
-{
+namespace malone.Core.Identity.AdoNet.SqlServer.Services
+	{
 
     public static class TokenProvider<TKey, TUserEntity, TUserLogin, TUserRole, TUserClaim>
         where TKey : IEquatable<TKey>

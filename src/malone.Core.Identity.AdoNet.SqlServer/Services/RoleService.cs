@@ -2,8 +2,8 @@
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using Microsoft.AspNet.Identity;
 
-namespace malone.Core.Identity.AdoNet.SqlServer.Business
-{
+namespace malone.Core.Identity.AdoNet.SqlServer.Services
+	{
     public class RoleService<TKey, TRoleEntity, TUserRole> : RoleManager<TRoleEntity, TKey>
         where TKey : IEquatable<TKey>
         where TUserRole : CoreUserRole<TKey>, new()

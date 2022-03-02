@@ -86,13 +86,13 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Business\IUserManagerConfiguration.cs" />
-    <Compile Include="Business\RoleBusinessComponent.cs" />
-    <Compile Include="Business\SignInBusinessComponent.cs" />
-    <Compile Include="Business\TokenProvider.cs" />
-    <Compile Include="Business\UserBusinessComponent.cs" />
-    <Compile Include="Business\UserBussinessValidator.cs" />
-    <Compile Include="Business\UserManagerConfiguration.cs" />
+    <Compile Include="Services\IUserManagerConfiguration.cs" />
+    <Compile Include="Services\RoleService.cs" />
+    <Compile Include="Services\SignInService.cs" />
+    <Compile Include="Services\TokenProvider.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\UserServiceValidator.cs" />
+    <Compile Include="Services\UserManagerConfiguration.cs" />
     <Compile Include="Context\CoreIdentityDbContext.cs" />
     <Compile Include="Entities\CoreRole.cs" />
     <Compile Include="Entities\CoreUser.cs" />

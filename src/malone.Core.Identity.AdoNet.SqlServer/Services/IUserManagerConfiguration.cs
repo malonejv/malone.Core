@@ -2,7 +2,7 @@
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using Microsoft.AspNet.Identity.Owin;
 
-namespace malone.Core.Identity.AdoNet.SqlServer.Business
+namespace malone.Core.Identity.AdoNet.SqlServer.Services
 {
     public interface IUserManagerConfiguration<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, TUserBC>
         where TKey : IEquatable<TKey>

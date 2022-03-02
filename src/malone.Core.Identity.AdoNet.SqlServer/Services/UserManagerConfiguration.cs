@@ -3,8 +3,8 @@ using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
-namespace malone.Core.Identity.AdoNet.SqlServer.Business
-{
+namespace malone.Core.Identity.AdoNet.SqlServer.Services
+	{
     public class UserManagerConfiguration<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, TUserBC> : IUserManagerConfiguration<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, TUserBC>
         where TKey : IEquatable<TKey>
         where TUserLogin : CoreUserLogin<TKey>, new()

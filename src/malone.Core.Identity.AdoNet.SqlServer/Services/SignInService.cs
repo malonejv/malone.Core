@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 
-namespace malone.Core.Identity.AdoNet.SqlServer.Business
+namespace malone.Core.Identity.AdoNet.SqlServer.Services
 	{
 	// Configure the application sign-in manager which is used in this application.
 	public class SignInService<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, TUserManager> : SignInManager<TUserEntity, TKey>

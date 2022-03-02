@@ -6,8 +6,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 
-namespace malone.Core.Identity.AdoNet.SqlServer.Business
-{
+namespace malone.Core.Identity.AdoNet.SqlServer.Services
+	{
 
     public class UserService<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim> : UserManager<TUserEntity, TKey>
         where TKey : IEquatable<TKey>
