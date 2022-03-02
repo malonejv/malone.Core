@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="malone.Core.Identity.Dapper.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

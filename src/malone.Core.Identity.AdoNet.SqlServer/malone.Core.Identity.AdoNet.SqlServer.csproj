@@ -135,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="malone.Core.Identity.AdoNet.SqlServer.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
