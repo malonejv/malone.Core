@@ -14,7 +14,7 @@ namespace malone.Core.DataAccess.Repositories
 		/// <summary>
 		/// The Update.
 		/// </summary>
-		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
+		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
 		void Update(TEntity entity);
 	}
 }

@@ -8,7 +8,7 @@
 	using malone.Core.Services;
 
 	/// <summary>
-	/// Defines the <see cref="ApiController{TKey, TParam, TEntity, TService, TServiceValidator}" />.
+	/// Defines the <see cref="T: ApiController{TKey, TParam, TEntity, TService, TServiceValidator}" />.
 	/// </summary>
 	/// <typeparam name="TKey">.</typeparam>
 	/// <typeparam name="TParam">.</typeparam>
@@ -28,9 +28,9 @@
 		protected TService Service { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ApiController{TKey, TParam, TEntity, TService, TServiceValidator}"/> class.
+		/// Initializes a new instance of the <see cref="T: ApiController{TKey, TParam, TEntity, TService, TServiceValidator}"/> class.
 		/// </summary>
-		/// <param name="businessComponent">The businessComponent<see cref="TService"/>.</param>
+		/// <param name="businessComponent">The businessComponent<see cref="T: TService"/>.</param>
 		public ApiController(TService businessComponent)
 		{
 			Service = businessComponent;
@@ -39,7 +39,7 @@
 		/// <summary>
 		/// The Get.
 		/// </summary>
-		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
+		/// <returns>The <see cref="T: IHttpActionResult"/>.</returns>
 		public virtual IHttpActionResult Get()
 		{
 			IEnumerable list = GetList(null);
@@ -50,8 +50,8 @@
 		/// <summary>
 		/// The GetList.
 		/// </summary>
-		/// <param name="parameters">The parameters<see cref="TParam"/>.</param>
-		/// <returns>The <see cref="IEnumerable"/>.</returns>
+		/// <param name="parameters">The parameters<see cref="T: TParam"/>.</param>
+		/// <returns>The <see cref="T: IEnumerable"/>.</returns>
 		protected virtual IEnumerable GetList(TParam parameters = null)
 		{
 			IEnumerable list = null;
@@ -70,7 +70,7 @@
 		/// <summary>
 		/// The GetAll.
 		/// </summary>
-		/// <returns>The <see cref="IEnumerable"/>.</returns>
+		/// <returns>The <see cref="T: IEnumerable"/>.</returns>
 		protected virtual IEnumerable GetAll()
 		{
 			return Service.GetAll();
@@ -79,8 +79,8 @@
 		/// <summary>
 		/// The GetFiltered.
 		/// </summary>
-		/// <param name="parameters">The parameters<see cref="TParam"/>.</param>
-		/// <returns>The <see cref="IEnumerable"/>.</returns>
+		/// <param name="parameters">The parameters<see cref="T: TParam"/>.</param>
+		/// <returns>The <see cref="T: IEnumerable"/>.</returns>
 		protected virtual IEnumerable GetFiltered(TParam parameters)
 		{
 			throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.TECH202, "GetFiltered", this.GetType().Name);
@@ -89,8 +89,8 @@
 		/// <summary>
 		/// The AsViewModelList.
 		/// </summary>
-		/// <param name="list">The list<see cref="IEnumerable"/>.</param>
-		/// <returns>The <see cref="IEnumerable"/>.</returns>
+		/// <param name="list">The list<see cref="T: IEnumerable"/>.</param>
+		/// <returns>The <see cref="T: IEnumerable"/>.</returns>
 		protected virtual IEnumerable AsViewModelList(IEnumerable list)
 		{
 			return list;
@@ -99,8 +99,8 @@
 		/// <summary>
 		/// The Get.
 		/// </summary>
-		/// <param name="id">The id<see cref="TKey"/>.</param>
-		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
+		/// <param name="id">The id<see cref="T: TKey"/>.</param>
+		/// <returns>The <see cref="T: IHttpActionResult"/>.</returns>
 		[HttpGet, HttpHead]
 		public virtual IHttpActionResult Get(TKey id)
 		{
@@ -119,8 +119,8 @@
 		/// <summary>
 		/// The GetById.
 		/// </summary>
-		/// <param name="id">The id<see cref="TKey"/>.</param>
-		/// <returns>The <see cref="object"/>.</returns>
+		/// <param name="id">The id<see cref="T: TKey"/>.</param>
+		/// <returns>The <see cref="T: object"/>.</returns>
 		protected virtual object GetById(TKey id)
 		{
 			TEntity entity = Service.GetById(id);
@@ -130,8 +130,8 @@
 		/// <summary>
 		/// The AsViewModel.
 		/// </summary>
-		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
-		/// <returns>The <see cref="object"/>.</returns>
+		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
+		/// <returns>The <see cref="T: object"/>.</returns>
 		protected virtual object AsViewModel(TEntity entity)
 		{
 			return entity;
@@ -140,8 +140,8 @@
 		/// <summary>
 		/// The Post.
 		/// </summary>
-		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
-		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
+		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
+		/// <returns>The <see cref="T: IHttpActionResult"/>.</returns>
 		public virtual IHttpActionResult Post([FromBody] TEntity entity)
 		{
 			Service.Add(entity);
@@ -154,9 +154,9 @@
 		/// <summary>
 		/// The Put.
 		/// </summary>
-		/// <param name="id">The id<see cref="TKey"/>.</param>
-		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
-		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
+		/// <param name="id">The id<see cref="T: TKey"/>.</param>
+		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
+		/// <returns>The <see cref="T: IHttpActionResult"/>.</returns>
 		public virtual IHttpActionResult Put(TKey id, [FromBody] TEntity entity)
 		{
 			Service.Update(entity);
@@ -166,8 +166,8 @@
 		/// <summary>
 		/// The Delete.
 		/// </summary>
-		/// <param name="id">The id<see cref="TKey"/>.</param>
-		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
+		/// <param name="id">The id<see cref="T: TKey"/>.</param>
+		/// <returns>The <see cref="T: IHttpActionResult"/>.</returns>
 		public virtual IHttpActionResult Delete(TKey id)
 		{
 			Service.Delete(id);
@@ -176,7 +176,7 @@
 	}
 
 	/// <summary>
-	/// Defines the <see cref="ApiController{TParam, TEntity, TService, TServiceValidator}" />.
+	/// Defines the <see cref="T: ApiController{TParam, TEntity, TService, TServiceValidator}" />.
 	/// </summary>
 	/// <typeparam name="TParam">.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
@@ -190,9 +190,9 @@
    where TService : IService<TEntity, TServiceValidator>
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ApiController{TParam, TEntity, TService, TServiceValidator}"/> class.
+		/// Initializes a new instance of the <see cref="T: ApiController{TParam, TEntity, TService, TServiceValidator}"/> class.
 		/// </summary>
-		/// <param name="businessComponent">The businessComponent<see cref="TService"/>.</param>
+		/// <param name="businessComponent">The businessComponent<see cref="T: TService"/>.</param>
 		public ApiController(TService businessComponent) : base(businessComponent)
 		{
 		}
@@ -200,8 +200,8 @@
 		/// <summary>
 		/// The GetFiltered.
 		/// </summary>
-		/// <param name="parameters">The parameters<see cref="TParam"/>.</param>
-		/// <returns>The <see cref="IEnumerable"/>.</returns>
+		/// <param name="parameters">The parameters<see cref="T: TParam"/>.</param>
+		/// <returns>The <see cref="T: IEnumerable"/>.</returns>
 		protected override IEnumerable GetFiltered(TParam parameters)
 		{
 			throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.TECH202, "GetFiltered", this.GetType().Name);

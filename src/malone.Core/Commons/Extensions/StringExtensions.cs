@@ -10,14 +10,14 @@ namespace malone.Core.Commons.Helpers.Extensions
 	using System.Text.RegularExpressions;
 
 	/// <summary>
-	/// Defines the <see cref="StringExtensions" />.
+	/// Defines the <see cref="T: StringExtensions" />.
 	/// </summary>
 	public static class StringExtensions
 	{
 		/// <summary>
 		/// The ToByteArray.
 		/// </summary>
-		/// <param name="hex">The hex<see cref="string"/>.</param>
+		/// <param name="hex">The hex<see cref="T: string"/>.</param>
 		/// <returns>The <see cref="T: byte[]"/>.</returns>
 		public static byte[] ToByteArray(this string hex)
 		{
@@ -34,8 +34,8 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The ToSecureString.
 		/// </summary>
-		/// <param name="source">The source<see cref="string"/>.</param>
-		/// <returns>The <see cref="SecureString"/>.</returns>
+		/// <param name="source">The source<see cref="T: string"/>.</param>
+		/// <returns>The <see cref="T: SecureString"/>.</returns>
 		public static SecureString ToSecureString(this string source)
 		{
 			if (string.IsNullOrWhiteSpace(source))
@@ -55,8 +55,8 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The SecureStringToString.
 		/// </summary>
-		/// <param name="value">The value<see cref="SecureString"/>.</param>
-		/// <returns>The <see cref="string"/>.</returns>
+		/// <param name="value">The value<see cref="T: SecureString"/>.</param>
+		/// <returns>The <see cref="T: string"/>.</returns>
 		public static string SecureStringToString(this SecureString value)
 		{
 			if (value == null)
@@ -82,8 +82,8 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The IsNullOrEmpty.
 		/// </summary>
-		/// <param name="text">The text<see cref="string"/>.</param>
-		/// <returns>The <see cref="bool"/>.</returns>
+		/// <param name="text">The text<see cref="T: string"/>.</param>
+		/// <returns>The <see cref="T: bool"/>.</returns>
 		public static bool IsNullOrEmpty(this string text)
 		{
 			return string.IsNullOrEmpty(text);
@@ -92,8 +92,8 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The IsNotNullOrEmpty.
 		/// </summary>
-		/// <param name="text">The text<see cref="string"/>.</param>
-		/// <returns>The <see cref="bool"/>.</returns>
+		/// <param name="text">The text<see cref="T: string"/>.</param>
+		/// <returns>The <see cref="T: bool"/>.</returns>
 		public static bool IsNotNullOrEmpty(this string text)
 		{
 			return !string.IsNullOrEmpty(text);
@@ -102,8 +102,8 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The ThrowIfNullOrEmpty.
 		/// </summary>
-		/// <param name="text">The text<see cref="string"/>.</param>
-		/// <param name="paramName">The paramName<see cref="string"/>.</param>
+		/// <param name="text">The text<see cref="T: string"/>.</param>
+		/// <param name="paramName">The paramName<see cref="T: string"/>.</param>
 		public static void ThrowIfNullOrEmpty(this string text, string paramName)
 		{
 			if (string.IsNullOrEmpty(text))
@@ -115,9 +115,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The EncodeToISO88598.
 		/// </summary>
-		/// <param name="inputText">The inputText<see cref="string"/>.</param>
-		/// <param name="initialEncoding">The initialEncoding<see cref="Encoding"/>.</param>
-		/// <returns>The <see cref="string"/>.</returns>
+		/// <param name="inputText">The inputText<see cref="T: string"/>.</param>
+		/// <param name="initialEncoding">The initialEncoding<see cref="T: Encoding"/>.</param>
+		/// <returns>The <see cref="T: string"/>.</returns>
 		public static string EncodeToISO88598(this string inputText, Encoding initialEncoding = null)
 		{
 			Encoding iso88598 = Encoding.GetEncoding("iso-8859-8");
@@ -139,10 +139,10 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The EncodeAndRemoveSpecialCharacters.
 		/// </summary>
-		/// <param name="inputText">The inputText<see cref="string"/>.</param>
-		/// <param name="initialEncoding">The initialEncoding<see cref="Encoding"/>.</param>
-		/// <param name="replacementChar">The replacementChar<see cref="char"/>.</param>
-		/// <returns>The <see cref="string"/>.</returns>
+		/// <param name="inputText">The inputText<see cref="T: string"/>.</param>
+		/// <param name="initialEncoding">The initialEncoding<see cref="T: Encoding"/>.</param>
+		/// <param name="replacementChar">The replacementChar<see cref="T: char"/>.</param>
+		/// <returns>The <see cref="T: string"/>.</returns>
 		public static string EncodeAndRemoveSpecialCharacters(this string inputText, Encoding initialEncoding = null, char replacementChar = ' ')
 		{
 			string result = inputText.EncodeToISO88598(initialEncoding);
@@ -155,9 +155,9 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The RemoveSpecialCharacters.
 		/// </summary>
-		/// <param name="inputText">The inputText<see cref="string"/>.</param>
-		/// <param name="replacementChar">The replacementChar<see cref="char"/>.</param>
-		/// <returns>The <see cref="string"/>.</returns>
+		/// <param name="inputText">The inputText<see cref="T: string"/>.</param>
+		/// <param name="replacementChar">The replacementChar<see cref="T: char"/>.</param>
+		/// <returns>The <see cref="T: string"/>.</returns>
 		public static string RemoveSpecialCharacters(this string inputText, char replacementChar = ' ')
 		{
 			inputText = inputText.Trim();
@@ -176,8 +176,8 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <summary>
 		/// The HasSpecialCharacters.
 		/// </summary>
-		/// <param name="inputText">The inputText<see cref="string"/>.</param>
-		/// <returns>The <see cref="bool"/>.</returns>
+		/// <param name="inputText">The inputText<see cref="T: string"/>.</param>
+		/// <returns>The <see cref="T: bool"/>.</returns>
 		public static bool HasSpecialCharacters(this string inputText)
 		{
 			inputText = inputText.Trim();

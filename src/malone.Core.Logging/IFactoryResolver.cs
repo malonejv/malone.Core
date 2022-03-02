@@ -15,15 +15,15 @@ namespace malone.Core.Logging
 	}
 
 	/// <summary>
-	/// Defines the <see cref="IFactoryResolver" />.
+	/// Defines the <see cref="T: IFactoryResolver" />.
 	/// </summary>
 	public interface IFactoryResolver
 	{
 		/// <summary>
 		/// The GetFactory.
 		/// </summary>
-		/// <param name="factory">The factory<see cref="LoggerFactories"/>.</param>
-		/// <returns>The <see cref="LoggerFactory"/>.</returns>
+		/// <param name="factory">The factory<see cref="T: LoggerFactories"/>.</param>
+		/// <returns>The <see cref="T: LoggerFactory"/>.</returns>
 		LoggerFactory GetFactory(LoggerFactories factory);
 	}
 }

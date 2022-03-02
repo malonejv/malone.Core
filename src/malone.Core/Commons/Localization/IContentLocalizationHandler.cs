@@ -6,7 +6,7 @@ namespace malone.Core.Commons.Localization
 	using malone.Core.Localization;
 
 	/// <summary>
-	/// Defines the <see cref="IContentLocalizationHandler" />.
+	/// Defines the <see cref="T: IContentLocalizationHandler" />.
 	/// </summary>
 	internal interface IContentLocalizationHandler : ILocalizationHandler<CoreContents>
 	{

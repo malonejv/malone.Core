@@ -4,16 +4,16 @@
 	using malone.Core.AdoNet.Parameters;
 
 	/// <summary>
-	/// Defines the <see cref="DbFieldAttributeExtensions" />.
+	/// Defines the <see cref="T: DbFieldAttributeExtensions" />.
 	/// </summary>
 	public static class DbFieldAttributeExtensions
 	{
 		/// <summary>
 		/// The Convert.
 		/// </summary>
-		/// <param name="parameter">The parameter<see cref="DbFieldAttribute"/>.</param>
-		/// <param name="value">The value<see cref="object"/>.</param>
-		/// <returns>The <see cref="object"/>.</returns>
+		/// <param name="parameter">The parameter<see cref="T: DbFieldAttribute"/>.</param>
+		/// <param name="value">The value<see cref="T: object"/>.</param>
+		/// <returns>The <see cref="T: object"/>.</returns>
 		public static object Convert(this DbFieldAttribute parameter, object value)
 		{
 			object result;

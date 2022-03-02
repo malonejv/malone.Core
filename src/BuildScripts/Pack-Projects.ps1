@@ -1,19 +1,19 @@
 <#
 .SYNOPSIS
 Gets the projects of the visual studio solution.
- 
+
 .PARAMETER $ProjectsParam
 String of comma separated projects path.
-  
+
 .PARAMETER Configuration
 Configuration of build process (by default Debug).
- 
+
 .PARAMETER OutputDir
 Path where the artifacts will be copied.
- 
+
 .EXAMPLE
 .\Pack-Projects -Projects $Projects -Configuration $Configuration -OutputDir $OutputDir
- 
+
 #>
 [CmdletBinding()]
 param (
@@ -35,10 +35,10 @@ param (
         Write-Verbose "VerbosePreference: $VerbosePreference"
         $VerbosePreference = 'Continue'
         Write-Verbose "VerbosePreference setted to: $VerbosePreference"
-    
+
         Write-Host ""
     }
-    
+
 	if (!$Configuration) {
 		$Configuration = 'Debug'
 	}
@@ -49,7 +49,7 @@ param (
 
     $ScriptsName = [System.IO.Path]::GetFileNameWithoutExtension($($MyInvocation.MyCommand.Path | Split-Path -Leaf))
     Write-Verbose "Script name: $ScriptsName"
-    
+
     if($PSBoundParameters['Verbose']) {
         Write-Host ""
 	}
@@ -58,13 +58,13 @@ param (
     $PSBoundParameters.GetEnumerator() | ForEach {
             Write-Verbose "  $_"
     }
-    
+
 	if($PSBoundParameters['Verbose']) {
         Write-Host ""
 	}
 
     $PropagateVerbose=($PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent -eq $true)
-        
+
     Write-Verbose "Defined variables:"
     Write-Verbose "  Current script: $($MyInvocation.MyCommand.Path)"
     $ScriptsDir = $MyInvocation.MyCommand.Path | Split-Path
@@ -86,6 +86,6 @@ param (
 		    -CurrentOperation ("Completed {0}%" -f ([int](100 * $([int]$projectsCounter+1) / $ProjectsCount))) `
 		    -Status ("Packing project: [{0}]" -f ($projectsName)) `
 		    -Id 1
-        
+
         nuget pack "$projectPath" -Properties Configuration="$Configuration" -IncludeReferencedProjects -OutputDirectory "$OutputDir"
     }

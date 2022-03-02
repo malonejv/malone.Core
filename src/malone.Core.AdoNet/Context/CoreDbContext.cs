@@ -10,7 +10,7 @@
 	using malone.Core.IoC;
 
 	/// <summary>
-	/// Defines the <see cref="CoreDbContext" />.
+	/// Defines the <see cref="T: CoreDbContext" />.
 	/// </summary>
 	public class CoreDbContext : IDisposable, IContext
 	{
@@ -61,9 +61,9 @@
 		public IDbTransaction Transaction { get; private set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="CoreDbContext"/> class.
+		/// Initializes a new instance of the <see cref="T: CoreDbContext"/> class.
 		/// </summary>
-		/// <param name="connectionStringName">The connectionStringName<see cref="string"/>.</param>
+		/// <param name="connectionStringName">The connectionStringName<see cref="T: string"/>.</param>
 		public CoreDbContext(string connectionStringName)
 		{
 			ConnectionStringName = connectionStringName;
@@ -76,7 +76,7 @@
 		/// <summary>
 		/// The CreateCommand.
 		/// </summary>
-		/// <returns>The <see cref="IDbCommand"/>.</returns>
+		/// <returns>The <see cref="T: IDbCommand"/>.</returns>
 		public IDbCommand CreateCommand()
 		{
 			IDbCommand command = Connection.CreateCommand();
@@ -88,8 +88,8 @@
 		/// <summary>
 		/// The CreateAdapter.
 		/// </summary>
-		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
-		/// <returns>The <see cref="IDataAdapter"/>.</returns>
+		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
+		/// <returns>The <see cref="T: IDataAdapter"/>.</returns>
 		public IDataAdapter CreateAdapter(IDbCommand command)
 		{
 			return Db.CreateAdapter(command);
@@ -98,8 +98,8 @@
 		/// <summary>
 		/// The CreateParameter.
 		/// </summary>
-		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
-		/// <returns>The <see cref="IDbDataParameter"/>.</returns>
+		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
+		/// <returns>The <see cref="T: IDbDataParameter"/>.</returns>
 		public IDbDataParameter CreateParameter(IDbCommand command)
 		{
 			return command.CreateParameter();
@@ -108,8 +108,8 @@
 		/// <summary>
 		/// The AddCommandParameters.
 		/// </summary>
-		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
-		/// <param name="parameters">The parameters<see cref="IEnumerable{DbParameterWithValue}"/>.</param>
+		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
+		/// <param name="parameters">The parameters<see cref="T: IEnumerable{DbParameterWithValue}"/>.</param>
 		public void AddCommandParameters(IDbCommand command, IEnumerable<DbParameterWithValue> parameters)
 		{
 			foreach (DbParameterWithValue parameter in parameters.OrderBy<DbParameterWithValue, int>(e => e.DbParameter.Order))
@@ -130,7 +130,7 @@
 		/// <summary>
 		/// The SaveChanges.
 		/// </summary>
-		/// <returns>The <see cref="int"/>.</returns>
+		/// <returns>The <see cref="T: int"/>.</returns>
 		public int SaveChanges()
 		{
 			if (Transaction == null)
@@ -155,7 +155,7 @@
 		/// <summary>
 		/// The Dispose.
 		/// </summary>
-		/// <param name="disposing">The disposing<see cref="bool"/>.</param>
+		/// <param name="disposing">The disposing<see cref="T: bool"/>.</param>
 		protected virtual void Dispose(bool disposing)
 		{
 			if (_isDisposed)

@@ -23,12 +23,12 @@ inputs:
    NUGET_PASSWORD:
      required: true
      default: ''
-     
+
 runs:
   using: "composite"
 
-  steps: 
-  
+  steps:
+
   - name: Download packed artifacts
     uses: actions/download-artifact@v2
     with:

@@ -18,11 +18,11 @@ namespace malone.Core.EF.Repositories.Implementations
         #region Constructor
 
         public Repository(IContext context, ICoreLogger logger) : base(context, logger) { }
-		  
+
         #endregion
 
         #region CRUD Operations
-			  
+
         #region UPDATE
 
         public virtual void Update(TEntity entity)
@@ -68,7 +68,7 @@ namespace malone.Core.EF.Repositories.Implementations
         //}
 
         #endregion
-		   
+
         #region Private And Protected Methods
 
         public void SetAddOrUpdate<TEntity>(IEnumerable<TEntity> entities)
@@ -79,9 +79,9 @@ namespace malone.Core.EF.Repositories.Implementations
                 Context.Entry(entity).State = entity.AddOrUpdate();
             }
         }
-			  
+
         #endregion
-		   
+
         #endregion
 
     }

@@ -7,7 +7,7 @@
 namespace malone.Core.Entities.Model
 {
 	/// <summary>
-	/// Defines the <see cref="IVersionable" />.
+	/// Defines the <see cref="T: IVersionable" />.
 	/// </summary>
 	public interface IVersionable
 	{

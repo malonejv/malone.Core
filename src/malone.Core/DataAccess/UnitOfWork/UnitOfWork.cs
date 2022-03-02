@@ -8,7 +8,7 @@ namespace malone.Core.DataAccess.UnitOfWork
 	using malone.Core.IoC;
 
 	/// <summary>
-	/// Defines the <see cref="UnitOfWork" />.
+	/// Defines the <see cref="T: UnitOfWork" />.
 	/// </summary>
 	public class UnitOfWork : IUnitOfWork
 	{
@@ -18,9 +18,9 @@ namespace malone.Core.DataAccess.UnitOfWork
 		public IContext Context { get; protected set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="UnitOfWork"/> class.
+		/// Initializes a new instance of the <see cref="T: UnitOfWork"/> class.
 		/// </summary>
-		/// <param name="context">The context<see cref="IContext"/>.</param>
+		/// <param name="context">The context<see cref="T: IContext"/>.</param>
 		public UnitOfWork(IContext context)
 		{
 			Context = context;
@@ -29,7 +29,7 @@ namespace malone.Core.DataAccess.UnitOfWork
 		/// <summary>
 		/// The Create.
 		/// </summary>
-		/// <returns>The <see cref="IUnitOfWork"/>.</returns>
+		/// <returns>The <see cref="T: IUnitOfWork"/>.</returns>
 		public static IUnitOfWork Create()
 		{
 			var context = ServiceLocator.Current.Get<IContext>();
@@ -39,7 +39,7 @@ namespace malone.Core.DataAccess.UnitOfWork
 		/// <summary>
 		/// The SaveChanges.
 		/// </summary>
-		/// <returns>The <see cref="int"/>.</returns>
+		/// <returns>The <see cref="T: int"/>.</returns>
 		public int SaveChanges()
 		{
 			this.ThrowIfDisposed();
@@ -74,7 +74,7 @@ namespace malone.Core.DataAccess.UnitOfWork
 		/// <summary>
 		/// The Dispose.
 		/// </summary>
-		/// <param name="disposing">The disposing<see cref="bool"/>.</param>
+		/// <param name="disposing">The disposing<see cref="T: bool"/>.</param>
 		protected virtual void Dispose(bool disposing)
 		{
 			if (disposing && Context != null)

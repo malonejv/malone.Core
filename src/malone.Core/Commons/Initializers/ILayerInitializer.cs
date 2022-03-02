@@ -7,7 +7,7 @@ namespace malone.Core.Commons.DI
 	using malone.Core.Commons.Initializers;
 
 	/// <summary>
-	/// Defines the <see cref="ILayerInitializer{TContainer}" />.
+	/// Defines the <see cref="T: ILayerInitializer{TContainer}" />.
 	/// </summary>
 	/// <typeparam name="TContainer">.</typeparam>
 	public interface ILayerInitializer<TContainer> : IInitializer<TContainer>

@@ -4,7 +4,7 @@
 namespace malone.Core.Commons.Initializers
 {
 	/// <summary>
-	/// Defines the <see cref="IInjectorInitializer{TContainer}" />.
+	/// Defines the <see cref="T: IInjectorInitializer{TContainer}" />.
 	/// </summary>
 	/// <typeparam name="TContainer">.</typeparam>
 	public interface IInjectorInitializer<TContainer>
@@ -12,7 +12,7 @@ namespace malone.Core.Commons.Initializers
 		/// <summary>
 		/// The Initialize.
 		/// </summary>
-		/// <returns>The <see cref="TContainer"/>.</returns>
+		/// <returns>The <see cref="T: TContainer"/>.</returns>
 		TContainer Initialize();
 
 		/// <summary>

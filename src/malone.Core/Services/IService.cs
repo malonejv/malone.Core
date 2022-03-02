@@ -11,7 +11,7 @@ namespace malone.Core.Services
 	using malone.Core.Entities.Model;
 
 	/// <summary>
-	/// Defines the <see cref="IService{TKey, TEntity, TValidator}" />.
+	/// Defines the <see cref="T: IService{TKey, TEntity, TValidator}" />.
 	/// </summary>
 	/// <typeparam name="TKey">.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
@@ -29,10 +29,10 @@ where TValidator : IServiceValidator<TKey, TEntity>
 		/// <summary>
 		/// The GetById.
 		/// </summary>
-		/// <param name="id">The id<see cref="TKey"/>.</param>
-		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
-		/// <returns>The <see cref="TEntity"/>.</returns>
+		/// <param name="id">The id<see cref="T: TKey"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="T: bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="T: string"/>.</param>
+		/// <returns>The <see cref="T: TEntity"/>.</returns>
 		TEntity GetById(
 TKey id,
 bool includeDeleted = false,
@@ -41,22 +41,22 @@ string includeProperties = "");
 		/// <summary>
 		/// The Update.
 		/// </summary>
-		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
-		/// <param name="saveChanges">The saveChanges<see cref="bool"/>.</param>
-		/// <param name="disposeUoW">The disposeUoW<see cref="bool"/>.</param>
+		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
+		/// <param name="saveChanges">The saveChanges<see cref="T: bool"/>.</param>
+		/// <param name="disposeUoW">The disposeUoW<see cref="T: bool"/>.</param>
 		void Update(TEntity entity, bool saveChanges = true, bool disposeUoW = true);
 
 		/// <summary>
 		/// The Delete.
 		/// </summary>
-		/// <param name="id">The id<see cref="TKey"/>.</param>
-		/// <param name="saveChanges">The saveChanges<see cref="bool"/>.</param>
-		/// <param name="disposeUoW">The disposeUoW<see cref="bool"/>.</param>
+		/// <param name="id">The id<see cref="T: TKey"/>.</param>
+		/// <param name="saveChanges">The saveChanges<see cref="T: bool"/>.</param>
+		/// <param name="disposeUoW">The disposeUoW<see cref="T: bool"/>.</param>
 		void Delete(TKey id, bool saveChanges = true, bool disposeUoW = true);
 	}
 
 	/// <summary>
-	/// Defines the <see cref="IService{TEntity, TValidator}" />.
+	/// Defines the <see cref="T: IService{TEntity, TValidator}" />.
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TValidator">.</typeparam>

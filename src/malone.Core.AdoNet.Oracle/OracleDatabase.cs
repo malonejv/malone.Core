@@ -7,7 +7,7 @@ namespace malone.Core.AdoNet.Oracle
 	using malone.Core.AdoNet.Database;
 
 	/// <summary>
-	/// Defines the <see cref="OracleDatabase" />.
+	/// Defines the <see cref="T: OracleDatabase" />.
 	/// </summary>
 	public class OracleDatabase : IDatabase
 	{
@@ -17,9 +17,9 @@ namespace malone.Core.AdoNet.Oracle
 		private string ConnectionString { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="OracleDatabase"/> class.
+		/// Initializes a new instance of the <see cref="T: OracleDatabase"/> class.
 		/// </summary>
-		/// <param name="connectionString">The connectionString<see cref="string"/>.</param>
+		/// <param name="connectionString">The connectionString<see cref="T: string"/>.</param>
 		public OracleDatabase(string connectionString)
 		{
 			ConnectionString = connectionString;
@@ -28,7 +28,7 @@ namespace malone.Core.AdoNet.Oracle
 		/// <summary>
 		/// The CreateConnection.
 		/// </summary>
-		/// <returns>The <see cref="IDbConnection"/>.</returns>
+		/// <returns>The <see cref="T: IDbConnection"/>.</returns>
 		public IDbConnection CreateConnection()
 		{
 			return new OracleConnection(ConnectionString);
@@ -37,7 +37,7 @@ namespace malone.Core.AdoNet.Oracle
 		/// <summary>
 		/// The CloseConnection.
 		/// </summary>
-		/// <param name="connection">The connection<see cref="IDbConnection"/>.</param>
+		/// <param name="connection">The connection<see cref="T: IDbConnection"/>.</param>
 		public void CloseConnection(IDbConnection connection)
 		{
 			var oracleconnection = (OracleConnection)connection;
@@ -48,10 +48,10 @@ namespace malone.Core.AdoNet.Oracle
 		/// <summary>
 		/// The CreateCommand.
 		/// </summary>
-		/// <param name="commandText">The commandText<see cref="string"/>.</param>
-		/// <param name="commandType">The commandType<see cref="CommandType"/>.</param>
-		/// <param name="connection">The connection<see cref="IDbConnection"/>.</param>
-		/// <returns>The <see cref="IDbCommand"/>.</returns>
+		/// <param name="commandText">The commandText<see cref="T: string"/>.</param>
+		/// <param name="commandType">The commandType<see cref="T: CommandType"/>.</param>
+		/// <param name="connection">The connection<see cref="T: IDbConnection"/>.</param>
+		/// <returns>The <see cref="T: IDbCommand"/>.</returns>
 		public IDbCommand CreateCommand(string commandText, CommandType commandType, IDbConnection connection)
 		{
 			return new OracleCommand()
@@ -65,8 +65,8 @@ namespace malone.Core.AdoNet.Oracle
 		/// <summary>
 		/// The CreateAdapter.
 		/// </summary>
-		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
-		/// <returns>The <see cref="IDataAdapter"/>.</returns>
+		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
+		/// <returns>The <see cref="T: IDataAdapter"/>.</returns>
 		public IDataAdapter CreateAdapter(IDbCommand command)
 		{
 			return new OracleDataAdapter((OracleCommand)command);
@@ -75,8 +75,8 @@ namespace malone.Core.AdoNet.Oracle
 		/// <summary>
 		/// The CreateParameter.
 		/// </summary>
-		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
-		/// <returns>The <see cref="IDbDataParameter"/>.</returns>
+		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
+		/// <returns>The <see cref="T: IDbDataParameter"/>.</returns>
 		public IDbDataParameter CreateParameter(IDbCommand command)
 		{
 			OracleCommand oracleCommand = (OracleCommand)command;
@@ -87,11 +87,11 @@ namespace malone.Core.AdoNet.Oracle
 		/// <summary>
 		/// The AddCommandParameter.
 		/// </summary>
-		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
-		/// <param name="parameterName">The parameterName<see cref="string"/>.</param>
-		/// <param name="value">The value<see cref="object"/>.</param>
-		/// <param name="parameterdirection">The parameterdirection<see cref="ParameterDirection"/>.</param>
-		/// <param name="parameterType">The parameterType<see cref="object"/>.</param>
+		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
+		/// <param name="parameterName">The parameterName<see cref="T: string"/>.</param>
+		/// <param name="value">The value<see cref="T: object"/>.</param>
+		/// <param name="parameterdirection">The parameterdirection<see cref="T: ParameterDirection"/>.</param>
+		/// <param name="parameterType">The parameterType<see cref="T: object"/>.</param>
 		public void AddCommandParameter(IDbCommand command, string parameterName, object value, ParameterDirection parameterdirection, object parameterType)
 		{
 			throw new NotImplementedException();
@@ -100,12 +100,12 @@ namespace malone.Core.AdoNet.Oracle
 		/// <summary>
 		/// The AddCommandParameter.
 		/// </summary>
-		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
-		/// <param name="parameterName">The parameterName<see cref="string"/>.</param>
-		/// <param name="value">The value<see cref="object"/>.</param>
-		/// <param name="parameterdirection">The parameterdirection<see cref="ParameterDirection"/>.</param>
-		/// <param name="parameterType">The parameterType<see cref="object"/>.</param>
-		/// <param name="size">The size<see cref="int"/>.</param>
+		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
+		/// <param name="parameterName">The parameterName<see cref="T: string"/>.</param>
+		/// <param name="value">The value<see cref="T: object"/>.</param>
+		/// <param name="parameterdirection">The parameterdirection<see cref="T: ParameterDirection"/>.</param>
+		/// <param name="parameterType">The parameterType<see cref="T: object"/>.</param>
+		/// <param name="size">The size<see cref="T: int"/>.</param>
 		public void AddCommandParameter(IDbCommand command, string parameterName, object value, ParameterDirection parameterdirection, object parameterType, int size)
 		{
 			throw new NotImplementedException();

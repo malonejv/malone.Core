@@ -11,7 +11,7 @@
 	using malone.Core.Entities.Model;
 
 	/// <summary>
-	/// Defines the <see cref="IBaseEntityAdoNetExtensions" />.
+	/// Defines the <see cref="T: IBaseEntityAdoNetExtensions" />.
 	/// </summary>
 	public static class IBaseEntityAdoNetExtensions
 	{
@@ -25,8 +25,8 @@
 		/// </summary>
 		/// <typeparam name="TKey">.</typeparam>
 		/// <typeparam name="TEntity">.</typeparam>
-		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
-		/// <returns>The <see cref="IEnumerable{DbParameterWithValue}"/>.</returns>
+		/// <param name="entity">The entity<see cref="T: TEntity"/>.</param>
+		/// <returns>The <see cref="T: IEnumerable{DbParameterWithValue}"/>.</returns>
 		public static IEnumerable<DbParameterWithValue> GetNotKeyParameters<TKey, TEntity>(this TEntity entity)
 			where TKey : IEquatable<TKey>
 			where TEntity : class, IBaseEntity<TKey>
@@ -55,9 +55,9 @@
 		/// The GetKeyParameter.
 		/// </summary>
 		/// <typeparam name="TKey">.</typeparam>
-		/// <param name="entityType">The entityType<see cref="Type"/>.</param>
-		/// <param name="id">The id<see cref="TKey"/>.</param>
-		/// <returns>The <see cref="DbParameterWithValue"/>.</returns>
+		/// <param name="entityType">The entityType<see cref="T: Type"/>.</param>
+		/// <param name="id">The id<see cref="T: TKey"/>.</param>
+		/// <returns>The <see cref="T: DbParameterWithValue"/>.</returns>
 		public static DbParameterWithValue GetKeyParameter<TKey>(this Type entityType, TKey id) where TKey : IEquatable<TKey>
 		{
 			if (typeof(IBaseEntity<TKey>).IsAssignableFrom(entityType))

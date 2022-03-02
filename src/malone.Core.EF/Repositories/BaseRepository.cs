@@ -37,7 +37,7 @@ namespace malone.Core.EF.Repositories
         #endregion
 
         #region CRUD Operations
-			 
+
         #region ADD
 
         public virtual void Insert(TEntity entity)

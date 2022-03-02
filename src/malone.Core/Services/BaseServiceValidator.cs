@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 namespace malone.Core.Services
 {
 	/// <summary>
-	/// Defines the <see cref="BaseServiceValidator{TEntity}" />.
+	/// Defines the <see cref="T: BaseServiceValidator{TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
 	public class BaseServiceValidator<TEntity> : IBaseServiceValidator<TEntity>
 		   where TEntity : class
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="BaseServiceValidator{TEntity}"/> class.
+		/// Initializes a new instance of the <see cref="T: BaseServiceValidator{TEntity}"/> class.
 		/// </summary>
 		public BaseServiceValidator()
 		{
@@ -31,8 +31,8 @@ namespace malone.Core.Services
 		/// <summary>
 		/// The ExecuteAddValidationRules.
 		/// </summary>
-		/// <param name="validationRules">The validationRules<see cref="List{ValidationRule}"/>.</param>
-		/// <returns>The <see cref="ValidationResultList"/>.</returns>
+		/// <param name="validationRules">The validationRules<see cref="T: List{ValidationRule}"/>.</param>
+		/// <returns>The <see cref="T: ValidationResultList"/>.</returns>
 		public virtual ValidationResultList ExecuteAddValidationRules(List<ValidationRule> validationRules)
 		{
 			return ExecutesValidationRules(validationRules);
@@ -46,8 +46,8 @@ namespace malone.Core.Services
 		/// <summary>
 		/// The ExecuteUpdateValidationRules.
 		/// </summary>
-		/// <param name="validationRules">The validationRules<see cref="List{ValidationRule}"/>.</param>
-		/// <returns>The <see cref="ValidationResultList"/>.</returns>
+		/// <param name="validationRules">The validationRules<see cref="T: List{ValidationRule}"/>.</param>
+		/// <returns>The <see cref="T: ValidationResultList"/>.</returns>
 		public virtual ValidationResultList ExecuteUpdateValidationRules(List<ValidationRule> validationRules)
 		{
 			return ExecutesValidationRules(validationRules);
@@ -61,8 +61,8 @@ namespace malone.Core.Services
 		/// <summary>
 		/// The ExecuteDeleteValidationRules.
 		/// </summary>
-		/// <param name="validationRules">The validationRules<see cref="List{ValidationRule}"/>.</param>
-		/// <returns>The <see cref="ValidationResultList"/>.</returns>
+		/// <param name="validationRules">The validationRules<see cref="T: List{ValidationRule}"/>.</param>
+		/// <returns>The <see cref="T: ValidationResultList"/>.</returns>
 		public virtual ValidationResultList ExecuteDeleteValidationRules(List<ValidationRule> validationRules)
 		{
 			return ExecutesValidationRules(validationRules);
@@ -71,9 +71,9 @@ namespace malone.Core.Services
 		/// <summary>
 		/// The Validate.
 		/// </summary>
-		/// <param name="validationTriggerMethod">The validationTriggerMethod<see cref="ExecuteValidationRulesDelegate"/>.</param>
-		/// <param name="validationRules">The validationRules<see cref="List{ValidationRule}"/>.</param>
-		/// <returns>The <see cref="ValidationResultList"/>.</returns>
+		/// <param name="validationTriggerMethod">The validationTriggerMethod<see cref="T: ExecuteValidationRulesDelegate"/>.</param>
+		/// <param name="validationRules">The validationRules<see cref="T: List{ValidationRule}"/>.</param>
+		/// <returns>The <see cref="T: ValidationResultList"/>.</returns>
 		public ValidationResultList Validate(ExecuteValidationRulesDelegate validationTriggerMethod, List<ValidationRule> validationRules)
 		{
 			ValidationResultList resultValidations = validationTriggerMethod(validationRules);
@@ -84,8 +84,8 @@ namespace malone.Core.Services
 		/// <summary>
 		/// The ExecutesValidationRules.
 		/// </summary>
-		/// <param name="validationRules">The validationRules<see cref="List{ValidationRule}"/>.</param>
-		/// <returns>The <see cref="ValidationResultList"/>.</returns>
+		/// <param name="validationRules">The validationRules<see cref="T: List{ValidationRule}"/>.</param>
+		/// <returns>The <see cref="T: ValidationResultList"/>.</returns>
 		protected ValidationResultList ExecutesValidationRules(List<ValidationRule> validationRules)
 		{
 			ValidationResultList resultValidations = new ValidationResultList();
@@ -108,9 +108,9 @@ namespace malone.Core.Services
 		/// <summary>
 		/// The InvokeValidationMethod.
 		/// </summary>
-		/// <param name="rule">The rule<see cref="ValidationRuleDelegate"/>.</param>
+		/// <param name="rule">The rule<see cref="T: ValidationRuleDelegate"/>.</param>
 		/// <param name="args">The args<see cref="T: object[]"/>.</param>
-		/// <returns>The <see cref="ValidationResult"/>.</returns>
+		/// <returns>The <see cref="T: ValidationResult"/>.</returns>
 		protected ValidationResult InvokeValidationMethod(ValidationRuleDelegate rule, params object[] args)
 		{
 			return rule(args);

@@ -9,16 +9,16 @@
 	using malone.Core.Commons.Helpers.Extensions;
 
 	/// <summary>
-	/// Defines the <see cref="IFilterExpressionAdoNetExtensions" />.
+	/// Defines the <see cref="T: IFilterExpressionAdoNetExtensions" />.
 	/// </summary>
 	public static class IFilterExpressionAdoNetExtensions
 	{
 		/// <summary>
 		/// The GetParameters.
 		/// </summary>
-		/// <param name="filter">The filter<see cref="IFilterExpressionAdoNet"/>.</param>
-		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
-		/// <returns>The <see cref="IEnumerable{DbParameterWithValue}"/>.</returns>
+		/// <param name="filter">The filter<see cref="T: IFilterExpressionAdoNet"/>.</param>
+		/// <param name="command">The command<see cref="T: IDbCommand"/>.</param>
+		/// <returns>The <see cref="T: IEnumerable{DbParameterWithValue}"/>.</returns>
 		public static IEnumerable<DbParameterWithValue> GetParameters(this IFilterExpressionAdoNet filter, IDbCommand command)
 		{
 			var properties = filter.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);

@@ -6,7 +6,7 @@ namespace malone.Core.Commons.Extensions
 	using System.Text;
 
 	/// <summary>
-	/// Defines the <see cref="ByteArrayExtensions" />.
+	/// Defines the <see cref="T: ByteArrayExtensions" />.
 	/// </summary>
 	public static class ByteArrayExtensions
 	{
@@ -14,7 +14,7 @@ namespace malone.Core.Commons.Extensions
 		/// The ToHexString.
 		/// </summary>
 		/// <param name="ba">The ba<see cref="T: byte[]"/>.</param>
-		/// <returns>The <see cref="string"/>.</returns>
+		/// <returns>The <see cref="T: string"/>.</returns>
 		public static string ToHexString(this byte[] ba)
 		{
 			StringBuilder hex = new StringBuilder(ba.Length * 2);

@@ -4,7 +4,7 @@
 namespace malone.Core.Entities.Model
 {
 	/// <summary>
-	/// Defines the <see cref="ISoftDelete" />.
+	/// Defines the <see cref="T: ISoftDelete" />.
 	/// </summary>
 	public interface ISoftDelete
 	{

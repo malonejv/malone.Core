@@ -11,7 +11,7 @@ namespace malone.Core.Commons.Configurations
 	using malone.Core.Logging;
 
 	/// <summary>
-	/// Defines the <see cref="ConfigurationExtensions" />.
+	/// Defines the <see cref="T: ConfigurationExtensions" />.
 	/// </summary>
 	public static class ConfigurationExtensions
 	{
@@ -38,8 +38,8 @@ namespace malone.Core.Commons.Configurations
 		/// <summary>
 		/// The SectionName.
 		/// </summary>
-		/// <param name="configurationType">The configurationType<see cref="Type"/>.</param>
-		/// <returns>The <see cref="string"/>.</returns>
+		/// <param name="configurationType">The configurationType<see cref="T: Type"/>.</param>
+		/// <returns>The <see cref="T: string"/>.</returns>
 		internal static string SectionName(this Type configurationType)
 		{
 			try

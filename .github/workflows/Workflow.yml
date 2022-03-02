@@ -32,17 +32,17 @@ env:
   NUGET_SOURCE: "https://nuget.pkg.github.com/malonejv/index.json"
   NUGET_USERNAME: "malonejv"
   NUGET_PASSWORD: "${{ secrets.GITHUB_TOKEN }}"
-  
+
 jobs:
   build:
       name: Build
       runs-on: windows-latest
-      
+
       outputs:
         version_number: ${{steps.build_app.outputs.version_number}}
 
       steps:
-      
+
       - uses: actions/checkout@v1
       - uses: ./.github/actions/setenv
         id: set_env
@@ -82,13 +82,13 @@ jobs:
       name: Pack
       runs-on: windows-latest
       needs: build
-      
+
       steps:
-      
+
       - uses: actions/checkout@v1
       - uses: ./.github/actions/getenv
         id: get_env
-      
+
       - uses: actions/checkout@v1
       - uses: ./.github/actions/pack
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
@@ -109,12 +109,12 @@ jobs:
       runs-on: windows-latest
       needs: pack
 
-      steps: 
-      
+      steps:
+
       - uses: actions/checkout@v1
       - uses: ./.github/actions/getenv
         id: get_env
-      
+
       - uses: actions/checkout@v1
       - uses: ./.github/actions/deploy
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}

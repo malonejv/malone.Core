@@ -7,7 +7,7 @@ namespace malone.Core.DataAccess.Repositories
 	using malone.Core.Entities.Model;
 
 	/// <summary>
-	/// Defines the <see cref="IRepository{TKey, TEntity}" />.
+	/// Defines the <see cref="T: IRepository{TKey, TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TKey">.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
@@ -18,7 +18,7 @@ namespace malone.Core.DataAccess.Repositories
 	}
 
 	/// <summary>
-	/// Defines the <see cref="IRepository{TEntity}" />.
+	/// Defines the <see cref="T: IRepository{TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
 	public interface IRepository<TEntity> : IRepository<int, TEntity>

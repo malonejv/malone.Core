@@ -1,6 +1,6 @@
 //<author>Javier López Malone</author>
 //<date>25/11/2020 02:48:19</date>
-	
+
 using System.Reflection;
 
 [assembly: AssemblyTitle("malonejv.Core")]

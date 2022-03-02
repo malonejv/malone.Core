@@ -9,7 +9,7 @@ namespace malone.Core.Commons.Threading
 	using System.Threading.Tasks;
 
 	/// <summary>
-	/// Defines the <see cref="TaskExtensions" />.
+	/// Defines the <see cref="T: TaskExtensions" />.
 	/// </summary>
 	public static class TaskExtensions
 	{
@@ -17,8 +17,8 @@ namespace malone.Core.Commons.Threading
 		/// The WithCurrentCulture.
 		/// </summary>
 		/// <typeparam name="T">.</typeparam>
-		/// <param name="task">The task<see cref="Task{T}"/>.</param>
-		/// <returns>The <see cref="CultureAwaiter{T}"/>.</returns>
+		/// <param name="task">The task<see cref="T: Task{T}"/>.</param>
+		/// <returns>The <see cref="T: CultureAwaiter{T}"/>.</returns>
 		public static CultureAwaiter<T> WithCurrentCulture<T>(this Task<T> task)
 		{
 			return new CultureAwaiter<T>(task);
@@ -27,15 +27,15 @@ namespace malone.Core.Commons.Threading
 		/// <summary>
 		/// The WithCurrentCulture.
 		/// </summary>
-		/// <param name="task">The task<see cref="Task"/>.</param>
-		/// <returns>The <see cref="CultureAwaiter"/>.</returns>
+		/// <param name="task">The task<see cref="T: Task"/>.</param>
+		/// <returns>The <see cref="T: CultureAwaiter"/>.</returns>
 		public static CultureAwaiter WithCurrentCulture(this Task task)
 		{
 			return new CultureAwaiter(task);
 		}
 
 		/// <summary>
-		/// Defines the <see cref="CultureAwaiter{T}" />.
+		/// Defines the <see cref="T: CultureAwaiter{T}" />.
 		/// </summary>
 		/// <typeparam name="T">.</typeparam>
 		public struct CultureAwaiter<T> : ICriticalNotifyCompletion
@@ -46,9 +46,9 @@ namespace malone.Core.Commons.Threading
 			private readonly Task<T> _task;
 
 			/// <summary>
-			/// Initializes a new instance of the <see cref="Task{T}"/> class.
+			/// Initializes a new instance of the <see cref="T: Task{T}"/> class.
 			/// </summary>
-			/// <param name="task">The task<see cref="Task{T}"/>.</param>
+			/// <param name="task">The task<see cref="T: Task{T}"/>.</param>
 			public CultureAwaiter(Task<T> task)
 			{
 				_task = task;
@@ -57,7 +57,7 @@ namespace malone.Core.Commons.Threading
 			/// <summary>
 			/// The GetAwaiter.
 			/// </summary>
-			/// <returns>The <see cref="CultureAwaiter{T}"/>.</returns>
+			/// <returns>The <see cref="T: CultureAwaiter{T}"/>.</returns>
 			public CultureAwaiter<T> GetAwaiter()
 			{
 				return this;
@@ -74,7 +74,7 @@ namespace malone.Core.Commons.Threading
 			/// <summary>
 			/// The GetResult.
 			/// </summary>
-			/// <returns>The <see cref="T"/>.</returns>
+			/// <returns>The <see cref="T: T"/>.</returns>
 			public T GetResult()
 			{
 				return _task.GetAwaiter().GetResult();
@@ -83,7 +83,7 @@ namespace malone.Core.Commons.Threading
 			/// <summary>
 			/// The OnCompleted.
 			/// </summary>
-			/// <param name="continuation">The continuation<see cref="Action"/>.</param>
+			/// <param name="continuation">The continuation<see cref="T: Action"/>.</param>
 			public void OnCompleted(Action continuation)
 			{
 				// The compiler will never call this method
@@ -93,7 +93,7 @@ namespace malone.Core.Commons.Threading
 			/// <summary>
 			/// The UnsafeOnCompleted.
 			/// </summary>
-			/// <param name="continuation">The continuation<see cref="Action"/>.</param>
+			/// <param name="continuation">The continuation<see cref="T: Action"/>.</param>
 			public void UnsafeOnCompleted(Action continuation)
 			{
 				var currentCulture = Thread.CurrentThread.CurrentCulture;
@@ -118,7 +118,7 @@ namespace malone.Core.Commons.Threading
 		}
 
 		/// <summary>
-		/// Defines the <see cref="CultureAwaiter" />.
+		/// Defines the <see cref="T: CultureAwaiter" />.
 		/// </summary>
 		public struct CultureAwaiter : ICriticalNotifyCompletion
 		{
@@ -128,9 +128,9 @@ namespace malone.Core.Commons.Threading
 			private readonly Task _task;
 
 			/// <summary>
-			/// Initializes a new instance of the <see cref="Task"/> class.
+			/// Initializes a new instance of the <see cref="T: Task"/> class.
 			/// </summary>
-			/// <param name="task">The task<see cref="Task"/>.</param>
+			/// <param name="task">The task<see cref="T: Task"/>.</param>
 			public CultureAwaiter(Task task)
 			{
 				_task = task;
@@ -139,7 +139,7 @@ namespace malone.Core.Commons.Threading
 			/// <summary>
 			/// The GetAwaiter.
 			/// </summary>
-			/// <returns>The <see cref="CultureAwaiter"/>.</returns>
+			/// <returns>The <see cref="T: CultureAwaiter"/>.</returns>
 			public CultureAwaiter GetAwaiter()
 			{
 				return this;
@@ -164,7 +164,7 @@ namespace malone.Core.Commons.Threading
 			/// <summary>
 			/// The OnCompleted.
 			/// </summary>
-			/// <param name="continuation">The continuation<see cref="Action"/>.</param>
+			/// <param name="continuation">The continuation<see cref="T: Action"/>.</param>
 			public void OnCompleted(Action continuation)
 			{
 				// The compiler will never call this method
@@ -174,7 +174,7 @@ namespace malone.Core.Commons.Threading
 			/// <summary>
 			/// The UnsafeOnCompleted.
 			/// </summary>
-			/// <param name="continuation">The continuation<see cref="Action"/>.</param>
+			/// <param name="continuation">The continuation<see cref="T: Action"/>.</param>
 			public void UnsafeOnCompleted(Action continuation)
 			{
 				var currentCulture = Thread.CurrentThread.CurrentCulture;

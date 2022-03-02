@@ -9,7 +9,7 @@ namespace malone.Core.Commons.Exceptions
 	using malone.Core.Localization;
 
 	/// <summary>
-	/// Defines the <see cref="ExceptionFactory{TCode, TErrorLocalizationHandler}" />.
+	/// Defines the <see cref="T: ExceptionFactory{TCode, TErrorLocalizationHandler}" />.
 	/// </summary>
 	/// <typeparam name="TCode">.</typeparam>
 	/// <typeparam name="TErrorLocalizationHandler">.</typeparam>
@@ -41,9 +41,9 @@ namespace malone.Core.Commons.Exceptions
 		/// The CreateException.
 		/// </summary>
 		/// <typeparam name="TException">.</typeparam>
-		/// <param name="code">The code<see cref="TCode"/>.</param>
+		/// <param name="code">The code<see cref="T: TCode"/>.</param>
 		/// <param name="args">The args<see cref="T: object[]"/>.</param>
-		/// <returns>The <see cref="TException"/>.</returns>
+		/// <returns>The <see cref="T: TException"/>.</returns>
 		public static TException CreateException<TException>(TCode code, params object[] args) where TException : BaseException
 		{
 			var suportId = Guid.NewGuid();
@@ -70,10 +70,10 @@ namespace malone.Core.Commons.Exceptions
 		/// The CreateException.
 		/// </summary>
 		/// <typeparam name="TException">.</typeparam>
-		/// <param name="innerException">The innerException<see cref="Exception"/>.</param>
-		/// <param name="code">The code<see cref="TCode"/>.</param>
+		/// <param name="innerException">The innerException<see cref="T: Exception"/>.</param>
+		/// <param name="code">The code<see cref="T: TCode"/>.</param>
 		/// <param name="args">The args<see cref="T: object[]"/>.</param>
-		/// <returns>The <see cref="TException"/>.</returns>
+		/// <returns>The <see cref="T: TException"/>.</returns>
 		public static TException CreateException<TException>(Exception innerException, TCode code, params object[] args) where TException : BaseException
 		{
 			var suportId = Guid.NewGuid();

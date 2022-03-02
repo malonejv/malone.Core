@@ -119,7 +119,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected override void ConfigureCommandForUpdate(IDbCommand command)
         {
-            string query = @"UPDATE Roles SET  
+            string query = @"UPDATE Roles SET
                                      Name = @Name,
                               WHERE Id = @Id;";
 
@@ -133,7 +133,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected override void ConfigureCommandForDelete(IDbCommand command)
         {
-            string query = @"DELETE FROM Roles 
+            string query = @"DELETE FROM Roles
                               WHERE Id = @Id;";
 
             command.CommandText = query;

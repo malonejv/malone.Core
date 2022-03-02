@@ -9,7 +9,7 @@ namespace malone.Core.DataAccess.Repositories
 	using malone.Core.Entities.Filters;
 
 	/// <summary>
-	/// Defines the <see cref="IBaseRepository{T}" />.
+	/// Defines the <see cref="T: IBaseRepository{T}" />.
 	/// </summary>
 	/// <typeparam name="T">.</typeparam>
 	public interface IBaseRepository<T> : IBaseQueryOperationsRepository<T>, IBaseDataOperationsRepository<T>

@@ -7,7 +7,7 @@ namespace malone.Core.Entities.Model
 	using System;
 
 	/// <summary>
-	/// Defines the <see cref="IAuditable" />.
+	/// Defines the <see cref="T: IAuditable" />.
 	/// </summary>
 	public interface IAuditable
 	{

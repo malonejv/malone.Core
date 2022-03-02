@@ -81,7 +81,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected override void ConfigureCommandForUpdate(IDbCommand command)
         {
-            string query = @"UPDATE UsersClaims SET  
+            string query = @"UPDATE UsersClaims SET
                                      UserId = @UserId,
                                      ClaimType = @ClaimType,
                                      ClaimValue = @ClaimValue
@@ -97,7 +97,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected override void ConfigureCommandForDelete(IDbCommand command)
         {
-            string query = @"DELETE FROM UsersClaims 
+            string query = @"DELETE FROM UsersClaims
                               WHERE Id = @Id;";
 
             command.CommandText = query;

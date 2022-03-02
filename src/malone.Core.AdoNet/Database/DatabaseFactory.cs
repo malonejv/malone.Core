@@ -9,7 +9,7 @@
 	using malone.Core.Configuration.DbFactory;
 
 	/// <summary>
-	/// Defines the <see cref="DatabaseFactory" />.
+	/// Defines the <see cref="T: DatabaseFactory" />.
 	/// </summary>
 	public class DatabaseFactory
 	{
@@ -24,9 +24,9 @@
 		private DatabaseConfigurationElement DatabaseConfiguration { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DatabaseFactory"/> class.
+		/// Initializes a new instance of the <see cref="T: DatabaseFactory"/> class.
 		/// </summary>
-		/// <param name="configuration">The configuration<see cref="ICoreConfiguration"/>.</param>
+		/// <param name="configuration">The configuration<see cref="T: ICoreConfiguration"/>.</param>
 		public DatabaseFactory(ICoreConfiguration configuration)
 		{
 			if (configuration == null)
@@ -48,8 +48,8 @@
 		/// <summary>
 		/// The CreateDatabase.
 		/// </summary>
-		/// <param name="connectionStringName">The connectionStringName<see cref="string"/>.</param>
-		/// <returns>The <see cref="IDatabase"/>.</returns>
+		/// <param name="connectionStringName">The connectionStringName<see cref="T: string"/>.</param>
+		/// <returns>The <see cref="T: IDatabase"/>.</returns>
 		public IDatabase CreateDatabase(string connectionStringName)
 		{
 			// Verify a DatabaseFactoryConfiguration line exists in the web.config.

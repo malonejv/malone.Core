@@ -9,7 +9,7 @@ namespace malone.Core.DataAccess.Repositories
 {
 	public interface IBaseQueryOperationsRepository<T>
 		where T : class
-	{										
+	{
 		/// <summary>
 		/// The Get.
 		/// </summary>

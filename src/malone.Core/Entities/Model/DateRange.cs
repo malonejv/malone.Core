@@ -6,7 +6,7 @@ namespace malone.Core.Entities.Model
 	using System;
 
 	/// <summary>
-	/// Defines the <see cref="DateRange" />.
+	/// Defines the <see cref="T: DateRange" />.
 	/// </summary>
 	public class DateRange : IDateRange
 	{

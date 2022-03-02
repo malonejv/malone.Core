@@ -8,7 +8,7 @@ namespace malone.Core.Commons.Exceptions
 	using malone.Core.IoC;
 
 	/// <summary>
-	/// Defines the <see cref="CoreExceptionFactory" />.
+	/// Defines the <see cref="T: CoreExceptionFactory" />.
 	/// </summary>
 	internal static class CoreExceptionFactory
 	{
@@ -36,9 +36,9 @@ namespace malone.Core.Commons.Exceptions
 		/// The CreateException.
 		/// </summary>
 		/// <typeparam name="TException">.</typeparam>
-		/// <param name="code">The code<see cref="CoreErrors"/>.</param>
+		/// <param name="code">The code<see cref="T: CoreErrors"/>.</param>
 		/// <param name="args">The args<see cref="T: object[]"/>.</param>
-		/// <returns>The <see cref="TException"/>.</returns>
+		/// <returns>The <see cref="T: TException"/>.</returns>
 		internal static TException CreateException<TException>(CoreErrors code, params object[] args) where TException : BaseException
 		{
 			var suportId = Guid.NewGuid();
@@ -65,10 +65,10 @@ namespace malone.Core.Commons.Exceptions
 		/// The CreateException.
 		/// </summary>
 		/// <typeparam name="TException">.</typeparam>
-		/// <param name="innerException">The innerException<see cref="Exception"/>.</param>
-		/// <param name="code">The code<see cref="CoreErrors"/>.</param>
+		/// <param name="innerException">The innerException<see cref="T: Exception"/>.</param>
+		/// <param name="code">The code<see cref="T: CoreErrors"/>.</param>
 		/// <param name="args">The args<see cref="T: object[]"/>.</param>
-		/// <returns>The <see cref="TException"/>.</returns>
+		/// <returns>The <see cref="T: TException"/>.</returns>
 		internal static TException CreateException<TException>(Exception innerException, CoreErrors code, params object[] args) where TException : BaseException
 		{
 			var suportId = Guid.NewGuid();

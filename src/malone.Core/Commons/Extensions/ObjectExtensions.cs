@@ -6,7 +6,7 @@ namespace malone.Core.Commons.Helpers.Extensions
 	using System;
 
 	/// <summary>
-	/// Defines the <see cref="ObjectExtensions" />.
+	/// Defines the <see cref="T: ObjectExtensions" />.
 	/// </summary>
 	internal static class ObjectExtensions
 	{
@@ -14,8 +14,8 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// The IsNull.
 		/// </summary>
 		/// <typeparam name="T">.</typeparam>
-		/// <param name="@object">The object<see cref="T"/>.</param>
-		/// <returns>The <see cref="bool"/>.</returns>
+		/// <param name="@object">The object<see cref="T: T"/>.</param>
+		/// <returns>The <see cref="T: bool"/>.</returns>
 		internal static bool IsNull<T>(this T @object)
 		{
 			return @object == null;
@@ -25,8 +25,8 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// The IsNotNull.
 		/// </summary>
 		/// <typeparam name="T">.</typeparam>
-		/// <param name="@object">The object<see cref="T"/>.</param>
-		/// <returns>The <see cref="bool"/>.</returns>
+		/// <param name="@object">The object<see cref="T: T"/>.</param>
+		/// <returns>The <see cref="T: bool"/>.</returns>
 		internal static bool IsNotNull<T>(this T @object)
 		{
 			return @object != null;
@@ -36,8 +36,8 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// The IsDefault.
 		/// </summary>
 		/// <typeparam name="T">.</typeparam>
-		/// <param name="@object">The object<see cref="T"/>.</param>
-		/// <returns>The <see cref="bool"/>.</returns>
+		/// <param name="@object">The object<see cref="T: T"/>.</param>
+		/// <returns>The <see cref="T: bool"/>.</returns>
 		internal static bool IsDefault<T>(this T @object)
 		{
 			return @object.Equals(default(T));
@@ -47,8 +47,8 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// The ThrowIfNull.
 		/// </summary>
 		/// <typeparam name="T">.</typeparam>
-		/// <param name="@object">The object<see cref="T"/>.</param>
-		/// <param name="paramName">The paramName<see cref="string"/>.</param>
+		/// <param name="@object">The object<see cref="T: T"/>.</param>
+		/// <param name="paramName">The paramName<see cref="T: string"/>.</param>
 		internal static void ThrowIfNull<T>(this T @object, string paramName)
 		{
 			if (@object == null)

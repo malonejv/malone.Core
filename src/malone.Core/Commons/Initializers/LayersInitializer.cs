@@ -8,7 +8,7 @@ namespace malone.Core.Commons.Initializers
 	using malone.Core.Commons.DI;
 
 	/// <summary>
-	/// Defines the <see cref="LayersInitializer{TContainer}" />.
+	/// Defines the <see cref="T: LayersInitializer{TContainer}" />.
 	/// </summary>
 	/// <typeparam name="TContainer">.</typeparam>
 	public abstract class LayersInitializer<TContainer> : ILayerInitializer<TContainer>
@@ -21,7 +21,7 @@ namespace malone.Core.Commons.Initializers
 		/// <summary>
 		/// The Initialize.
 		/// </summary>
-		/// <param name="container">The container<see cref="TContainer"/>.</param>
+		/// <param name="container">The container<see cref="T: TContainer"/>.</param>
 		public void Initialize(TContainer container)
 		{
 			if (container == null)

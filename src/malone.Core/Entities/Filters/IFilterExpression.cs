@@ -4,7 +4,7 @@
 namespace malone.Core.Entities.Filters
 {
 	/// <summary>
-	/// Defines the <see cref="IFilterExpression" />.
+	/// Defines the <see cref="T: IFilterExpression" />.
 	/// </summary>
 	public interface IFilterExpression
 	{

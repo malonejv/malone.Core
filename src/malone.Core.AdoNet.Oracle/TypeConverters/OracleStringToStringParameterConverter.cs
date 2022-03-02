@@ -5,15 +5,15 @@ namespace malone.Core.AdoNet.Oracle.Parameters
 	using malone.Core.AdoNet.Parameters;
 
 	/// <summary>
-	/// Defines the <see cref="OracleStringToStringParameterConverter" />.
+	/// Defines the <see cref="T: OracleStringToStringParameterConverter" />.
 	/// </summary>
 	public class OracleStringToStringParameterConverter : IParameterConverter
 	{
 		/// <summary>
 		/// The Convert.
 		/// </summary>
-		/// <param name="value">The value<see cref="object"/>.</param>
-		/// <returns>The <see cref="object"/>.</returns>
+		/// <param name="value">The value<see cref="T: object"/>.</param>
+		/// <returns>The <see cref="T: object"/>.</returns>
 		public object Convert(object value)
 		{
 			OracleString oracleString = (OracleString)value;

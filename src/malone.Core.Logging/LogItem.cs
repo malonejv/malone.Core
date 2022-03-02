@@ -7,7 +7,7 @@ namespace malone.Core.Logging
 	using System.Xml.Serialization;
 
 	/// <summary>
-	/// Defines the <see cref="LogItem" />.
+	/// Defines the <see cref="T: LogItem" />.
 	/// </summary>
 	public class LogItem
 	{
@@ -48,7 +48,7 @@ namespace malone.Core.Logging
 		public int? EventId { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="LogItem"/> class.
+		/// Initializes a new instance of the <see cref="T: LogItem"/> class.
 		/// </summary>
 		public LogItem()
 		{
@@ -63,7 +63,7 @@ namespace malone.Core.Logging
 		/// <summary>
 		/// The Clone.
 		/// </summary>
-		/// <returns>The <see cref="LogItem"/>.</returns>
+		/// <returns>The <see cref="T: LogItem"/>.</returns>
 		public LogItem Clone()
 		{
 			LogItem clone = new LogItem

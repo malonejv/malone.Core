@@ -8,7 +8,7 @@ namespace malone.Core.Services
 	using malone.Core.Entities.Model;
 
 	/// <summary>
-	/// Defines the <see cref="ServiceValidator{TKey, TEntity}" />.
+	/// Defines the <see cref="T: ServiceValidator{TKey, TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TKey">.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
@@ -17,7 +17,7 @@ where TKey : IEquatable<TKey>
 where TEntity : class, IBaseEntity<TKey>
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ServiceValidator{TKey, TEntity}"/> class.
+		/// Initializes a new instance of the <see cref="T: ServiceValidator{TKey, TEntity}"/> class.
 		/// </summary>
 		public ServiceValidator() : base()
 		{
@@ -25,14 +25,14 @@ where TEntity : class, IBaseEntity<TKey>
 	}
 
 	/// <summary>
-	/// Defines the <see cref="ServiceValidator{TEntity}" />.
+	/// Defines the <see cref="T: ServiceValidator{TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
 	public class ServiceValidator<TEntity> : ServiceValidator<int, TEntity>, IServiceValidator<TEntity>
 where TEntity : class, IBaseEntity
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ServiceValidator{TEntity}"/> class.
+		/// Initializes a new instance of the <see cref="T: ServiceValidator{TEntity}"/> class.
 		/// </summary>
 		public ServiceValidator() : base()
 		{

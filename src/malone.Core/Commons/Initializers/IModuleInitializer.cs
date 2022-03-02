@@ -4,7 +4,7 @@
 namespace malone.Core.Commons.Initializers
 {
 	/// <summary>
-	/// Defines the <see cref="IModuleInitializer{TContainer}" />.
+	/// Defines the <see cref="T: IModuleInitializer{TContainer}" />.
 	/// </summary>
 	/// <typeparam name="TContainer">.</typeparam>
 	public interface IModuleInitializer<TContainer> : IInitializer<TContainer>
