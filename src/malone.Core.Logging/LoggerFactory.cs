@@ -3,10 +3,22 @@
 
 namespace malone.Core.Logging
 {
-    public abstract class LoggerFactory
-    {
-        public abstract ICoreLogger GetLogger();
+	/// <summary>
+	/// Defines the <see cref="LoggerFactory" />.
+	/// </summary>
+	public abstract class LoggerFactory
+	{
+		/// <summary>
+		/// The GetLogger.
+		/// </summary>
+		/// <returns>The <see cref="ICoreLogger"/>.</returns>
+		public abstract ICoreLogger GetLogger();
 
-        public abstract ICoreLogger GetLogger(string name);
-    }
+		/// <summary>
+		/// The GetLogger.
+		/// </summary>
+		/// <param name="name">The name<see cref="string"/>.</param>
+		/// <returns>The <see cref="ICoreLogger"/>.</returns>
+		public abstract ICoreLogger GetLogger(string name);
+	}
 }

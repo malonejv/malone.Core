@@ -1,18 +1,30 @@
-﻿using System;
-
-namespace malone.Core.AdoNet.Attributes
+﻿namespace malone.Core.AdoNet.Attributes
 {
-    [AttributeUsage(AttributeTargets.Property)]
-    public class DbFieldAttribute : Attribute
-    {
-        public DbFieldAttribute(string name)
-        {
-            Name = name;
-        }
+	using System;
 
-        public string Name { get; set; }
+	/// <summary>
+	/// Defines the <see cref="DbFieldAttribute" />.
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Property)]
+	public class DbFieldAttribute : Attribute
+	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DbFieldAttribute"/> class.
+		/// </summary>
+		/// <param name="name">The name<see cref="string"/>.</param>
+		public DbFieldAttribute(string name)
+		{
+			Name = name;
+		}
 
-        public Type ValueConverter { get; set; }
+		/// <summary>
+		/// Gets or sets the Name.
+		/// </summary>
+		public string Name { get; set; }
 
-    }
+		/// <summary>
+		/// Gets or sets the ValueConverter.
+		/// </summary>
+		public Type ValueConverter { get; set; }
+	}
 }

@@ -1,128 +1,186 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using malone.Core.AdoNet.Database;
-using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.DataAccess.Context;
-using malone.Core.IoC;
+﻿namespace malone.Core.AdoNet.Context
+{
+	using System;
+	using System.Collections.Generic;
+	using System.Data;
+	using System.Linq;
+	using malone.Core.AdoNet.Database;
+	using malone.Core.Commons.Helpers.Extensions;
+	using malone.Core.DataAccess.Context;
+	using malone.Core.IoC;
 
-namespace malone.Core.AdoNet.Context
-	{
+	/// <summary>
+	/// Defines the <see cref="CoreDbContext" />.
+	/// </summary>
 	public class CoreDbContext : IDisposable, IContext
-    {
-        private IDatabase _db;
-        private bool _isDisposed;
+	{
+		/// <summary>
+		/// Defines the _db.
+		/// </summary>
+		private IDatabase _db;
 
-        protected string ConnectionStringName { get; private set; }
+		/// <summary>
+		/// Defines the _isDisposed.
+		/// </summary>
+		private bool _isDisposed;
 
-        protected DatabaseFactory DbFactory { get; private set; }
+		/// <summary>
+		/// Gets the ConnectionStringName.
+		/// </summary>
+		protected string ConnectionStringName { get; private set; }
 
-        protected IDatabase Db
-        {
-            get
-            {
-                if (_db == null)
-                {
-                    _db = DbFactory.CreateDatabase(ConnectionStringName);
-                }
+		/// <summary>
+		/// Gets the DbFactory.
+		/// </summary>
+		protected DatabaseFactory DbFactory { get; private set; }
 
-                return _db;
-            }
-        }
+		/// <summary>
+		/// Gets the Db.
+		/// </summary>
+		protected IDatabase Db
+		{
+			get
+			{
+				if (_db == null)
+				{
+					_db = DbFactory.CreateDatabase(ConnectionStringName);
+				}
 
-        public IDbConnection Connection { get; private set; }
+				return _db;
+			}
+		}
 
-        public IDbTransaction Transaction { get; private set; }
+		/// <summary>
+		/// Gets the Connection.
+		/// </summary>
+		public IDbConnection Connection { get; private set; }
 
+		/// <summary>
+		/// Gets the Transaction.
+		/// </summary>
+		public IDbTransaction Transaction { get; private set; }
 
-        public CoreDbContext(string connectionStringName)
-        {
-            ConnectionStringName = connectionStringName;
-            DbFactory = ServiceLocator.Current.Get<DatabaseFactory>();
-            Connection = Db.CreateConnection();
-            Connection.Open();
-            Transaction = Connection.BeginTransaction();
-        }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="CoreDbContext"/> class.
+		/// </summary>
+		/// <param name="connectionStringName">The connectionStringName<see cref="string"/>.</param>
+		public CoreDbContext(string connectionStringName)
+		{
+			ConnectionStringName = connectionStringName;
+			DbFactory = ServiceLocator.Current.Get<DatabaseFactory>();
+			Connection = Db.CreateConnection();
+			Connection.Open();
+			Transaction = Connection.BeginTransaction();
+		}
 
-        public IDbCommand CreateCommand()
-        {
-            IDbCommand command = Connection.CreateCommand();
-            command.Transaction = Transaction;
+		/// <summary>
+		/// The CreateCommand.
+		/// </summary>
+		/// <returns>The <see cref="IDbCommand"/>.</returns>
+		public IDbCommand CreateCommand()
+		{
+			IDbCommand command = Connection.CreateCommand();
+			command.Transaction = Transaction;
 
-            return command;
-        }
+			return command;
+		}
 
-        public IDataAdapter CreateAdapter(IDbCommand command)
-        {
-            return Db.CreateAdapter(command);
-        }
+		/// <summary>
+		/// The CreateAdapter.
+		/// </summary>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <returns>The <see cref="IDataAdapter"/>.</returns>
+		public IDataAdapter CreateAdapter(IDbCommand command)
+		{
+			return Db.CreateAdapter(command);
+		}
 
-        public IDbDataParameter CreateParameter(IDbCommand command)
-        {
-            return command.CreateParameter();
-        }
+		/// <summary>
+		/// The CreateParameter.
+		/// </summary>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <returns>The <see cref="IDbDataParameter"/>.</returns>
+		public IDbDataParameter CreateParameter(IDbCommand command)
+		{
+			return command.CreateParameter();
+		}
 
-        public void AddCommandParameters(IDbCommand command, IEnumerable<DbParameterWithValue> parameters)
-        {
-            foreach (DbParameterWithValue parameter in parameters.OrderBy<DbParameterWithValue, int>(e => e.DbParameter.Order))
-            {
-                parameter.ThrowIfNull("DbParameter");
+		/// <summary>
+		/// The AddCommandParameters.
+		/// </summary>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <param name="parameters">The parameters<see cref="IEnumerable{DbParameterWithValue}"/>.</param>
+		public void AddCommandParameters(IDbCommand command, IEnumerable<DbParameterWithValue> parameters)
+		{
+			foreach (DbParameterWithValue parameter in parameters.OrderBy<DbParameterWithValue, int>(e => e.DbParameter.Order))
+			{
+				parameter.ThrowIfNull("DbParameter");
 
-                if (parameter.DbParameter.IsSizeDefined)
-                {
-                    Db.AddCommandParameter(command, parameter.DbParameter.Name, parameter.Value, parameter.DbParameter.Direction, parameter.DbParameter.Type, parameter.DbParameter.Size);
-                }
-                else
-                {
-                    Db.AddCommandParameter(command, parameter.DbParameter.Name, parameter.Value, parameter.DbParameter.Direction, parameter.DbParameter.Type);
-                }
-            }
-        }
+				if (parameter.DbParameter.IsSizeDefined)
+				{
+					Db.AddCommandParameter(command, parameter.DbParameter.Name, parameter.Value, parameter.DbParameter.Direction, parameter.DbParameter.Type, parameter.DbParameter.Size);
+				}
+				else
+				{
+					Db.AddCommandParameter(command, parameter.DbParameter.Name, parameter.Value, parameter.DbParameter.Direction, parameter.DbParameter.Type);
+				}
+			}
+		}
 
-        public int SaveChanges()
-        {
-            if (Transaction == null)
-            {
-                throw new InvalidOperationException("Transaction have already been commited. Check your transaction handling.");
-            }
-            Transaction.Commit();
-            Transaction = null;
+		/// <summary>
+		/// The SaveChanges.
+		/// </summary>
+		/// <returns>The <see cref="int"/>.</returns>
+		public int SaveChanges()
+		{
+			if (Transaction == null)
+			{
+				throw new InvalidOperationException("Transaction have already been commited. Check your transaction handling.");
+			}
+			Transaction.Commit();
+			Transaction = null;
 
-            return 0;
-        }
+			return 0;
+		}
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+		/// <summary>
+		/// The Dispose.
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_isDisposed)
-            {
-                return;
-            }
+		/// <summary>
+		/// The Dispose.
+		/// </summary>
+		/// <param name="disposing">The disposing<see cref="bool"/>.</param>
+		protected virtual void Dispose(bool disposing)
+		{
+			if (_isDisposed)
+			{
+				return;
+			}
 
-            if (disposing)
-            {
-                if (Transaction != null)
-                {
-                    Transaction.Rollback();
-                    Transaction.Dispose();
-                    Transaction = null;
-                }
-                if (Connection != null)
-                {
-                    Connection.Close();
-                    Connection.Dispose();
-                    Connection = null;
-                    DbFactory = null;
-                }
-            }
+			if (disposing)
+			{
+				if (Transaction != null)
+				{
+					Transaction.Rollback();
+					Transaction.Dispose();
+					Transaction = null;
+				}
+				if (Connection != null)
+				{
+					Connection.Close();
+					Connection.Dispose();
+					Connection = null;
+					DbFactory = null;
+				}
+			}
 
-            _isDisposed = true;
-        }
-    }
+			_isDisposed = true;
+		}
+	}
 }

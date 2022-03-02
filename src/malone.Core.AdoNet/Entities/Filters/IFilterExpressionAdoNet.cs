@@ -1,10 +1,11 @@
-﻿using malone.Core.Entities.Filters;
-
-namespace malone.Core.AdoNet.Entities.Filters
+﻿namespace malone.Core.AdoNet.Entities.Filters
 {
-    public interface IFilterExpressionAdoNet : IFilterExpression
-    {
-        //List<IFilterField> Fields { get; set; }
+	using malone.Core.Entities.Filters;
 
-    }
+	/// <summary>
+	/// Defines the <see cref="IFilterExpressionAdoNet" />.
+	/// </summary>
+	public interface IFilterExpressionAdoNet : IFilterExpression
+	{
+	}
 }

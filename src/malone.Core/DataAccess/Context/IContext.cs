@@ -3,10 +3,20 @@
 
 namespace malone.Core.DataAccess.Context
 {
-    public interface IContext
-    {
-        int SaveChanges();
+	/// <summary>
+	/// Defines the <see cref="IContext" />.
+	/// </summary>
+	public interface IContext
+	{
+		/// <summary>
+		/// The SaveChanges.
+		/// </summary>
+		/// <returns>The <see cref="int"/>.</returns>
+		int SaveChanges();
 
-        void Dispose();
-    }
+		/// <summary>
+		/// The Dispose.
+		/// </summary>
+		void Dispose();
+	}
 }

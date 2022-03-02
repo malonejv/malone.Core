@@ -13,7 +13,7 @@ using malone.Core.Logging;
 
 namespace malone.Core.EF.Repositories
 	{
-	public class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
+	public class BaseRepository<TEntity> : BaseQueryOperationsRepository<TEntity>, IBaseRepository<TEntity>, IDisposable
         where TEntity : class
     {
         protected DbSet<TEntity> EntityDbSet { get; private set; }
@@ -37,123 +37,7 @@ namespace malone.Core.EF.Repositories
         #endregion
 
         #region CRUD Operations
-
-        #region GET ALL
-
-        public virtual IEnumerable<TEntity> GetAll(
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            bool includeDeleted = false,
-            string includeProperties = ""
-           )
-        {
-            try
-            {
-                IQueryable<TEntity> query = EntityDbSet;
-
-                query = Get(query, orderBy, includeDeleted, includeProperties);
-
-                return query.ToList();
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
-
-                throw techEx;
-            }
-        }
-
-        #endregion
-
-        #region GET FILTERED
-
-        public virtual IEnumerable<TEntity> Get<TFilter>(
-           TFilter filter = default(TFilter),
-           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-           bool includeDeleted = false,
-           string includeProperties = "")
-            where TFilter : class, IFilterExpression
-        {
-            try
-            {
-                IQueryable<TEntity> query = EntityDbSet;
-
-                Expression<Func<TEntity, bool>> filterExp = null;
-                if (filter != null)
-                {
-                    var filterEF = (filter as IFilterExpressionEF<TEntity>);
-                    filterExp = filterEF?.Expression;
-                }
-
-                if (filterExp != null)
-                {
-                    query = query.Where(filterExp);
-                }
-
-                query = Get(query, orderBy, includeDeleted, includeProperties);
-
-                return query.ToList();
-            }
-            catch (Exception ex)
-            {
-
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
-
-                throw techEx;
-            }
-        }
-
-        #endregion
-
-        #region GET ENTITY
-
-        public virtual TEntity GetEntity<TFilter>(
-            TFilter filter = default(TFilter),
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            bool includeDeleted = false,
-            string includeProperties = "")
-            where TFilter : class, IFilterExpression
-        {
-            try
-            {
-                IQueryable<TEntity> query = EntityDbSet;
-
-                query = Get(query, orderBy, includeDeleted, includeProperties);
-
-                Expression<Func<TEntity, bool>> filterExp = null;
-                if (filter != null)
-                {
-                    filterExp = ((IFilterExpressionEF<TEntity>)filter).Expression;
-                }
-
-                if (filterExp != null)
-                {
-                    query = query.Where(filterExp);
-                }
-
-                return query.FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS601, typeof(TEntity));
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
-
-                throw techEx;
-            }
-        }
-
-        #endregion
-
+			 
         #region ADD
 
         public virtual void Insert(TEntity entity)

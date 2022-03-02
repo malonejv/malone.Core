@@ -1,65 +1,115 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:47:41</date>
 
-using System.Collections.Generic;
-using System.Linq;
-
 namespace malone.Core.Services
 {
-    public delegate ValidationResult ValidationRuleDelegate(params object[] arguments);
+	using System.Collections.Generic;
+	using System.Linq;
 
-    public class ValidationRule
-    {
-        public ValidationRule()
-        {
-            Arguments = new List<object>();
-        }
+	/// <summary>
+	/// The ValidationRuleDelegate.
+	/// </summary>
+	/// <param name="arguments">The arguments<see cref="T: object[]"/>.</param>
+	/// <returns>The <see cref="ValidationResult"/>.</returns>
+	public delegate ValidationResult ValidationRuleDelegate(params object[] arguments);
 
-        public ValidationRuleDelegate Method { get; set; }
+	/// <summary>
+	/// Defines the <see cref="ValidationRule" />.
+	/// </summary>
+	public class ValidationRule
+	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ValidationRule"/> class.
+		/// </summary>
+		public ValidationRule()
+		{
+			Arguments = new List<object>();
+		}
 
-        public List<object> Arguments { get; set; }
-    }
+		/// <summary>
+		/// Gets or sets the Method.
+		/// </summary>
+		public ValidationRuleDelegate Method { get; set; }
 
-    public class ValidationResult
-    {
-        public ValidationResult(string errorCode, string message)
-        {
-            ErrorCode = errorCode;
-            Message = message;
-        }
+		/// <summary>
+		/// Gets or sets the Arguments.
+		/// </summary>
+		public List<object> Arguments { get; set; }
+	}
 
-        public ValidationResult(string errorCode) : this(errorCode, null)
-        {
-        }
+	/// <summary>
+	/// Defines the <see cref="ValidationResult" />.
+	/// </summary>
+	public class ValidationResult
+	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ValidationResult"/> class.
+		/// </summary>
+		/// <param name="errorCode">The errorCode<see cref="string"/>.</param>
+		/// <param name="message">The message<see cref="string"/>.</param>
+		public ValidationResult(string errorCode, string message)
+		{
+			ErrorCode = errorCode;
+			Message = message;
+		}
 
-        public object Return { get; set; }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ValidationResult"/> class.
+		/// </summary>
+		/// <param name="errorCode">The errorCode<see cref="string"/>.</param>
+		public ValidationResult(string errorCode) : this(errorCode, null)
+		{
+		}
 
-        public bool IsValid { get; set; }
+		/// <summary>
+		/// Gets or sets the Return.
+		/// </summary>
+		public object Return { get; set; }
 
-        public string ErrorCode { get; set; }
+		/// <summary>
+		/// Gets or sets a value indicating whether IsValid.
+		/// </summary>
+		public bool IsValid { get; set; }
 
-        public string Message { get; internal protected set; }
-    }
+		/// <summary>
+		/// Gets or sets the ErrorCode.
+		/// </summary>
+		public string ErrorCode { get; set; }
 
-    public class ValidationResultList : List<ValidationResult>
-    {
-        public bool IsValid
-        {
-            get
-            {
-                if (this.Count > 0 && this.Any(item => item.IsValid == false))
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-        }
+		/// <summary>
+		/// Gets or sets the Message.
+		/// </summary>
+		public string Message { get; internal protected set; }
+	}
 
-        public ValidationResultList()
-        {
-        }
-    }
+	/// <summary>
+	/// Defines the <see cref="ValidationResultList" />.
+	/// </summary>
+	public class ValidationResultList : List<ValidationResult>
+	{
+		/// <summary>
+		/// Gets a value indicating whether IsValid.
+		/// </summary>
+		public bool IsValid
+		{
+			get
+			{
+				if (this.Count > 0 && this.Any(item => item.IsValid == false))
+				{
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ValidationResultList"/> class.
+		/// </summary>
+		public ValidationResultList()
+		{
+		}
+	}
 }

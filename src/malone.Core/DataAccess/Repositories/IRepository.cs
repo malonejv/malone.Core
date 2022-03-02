@@ -1,25 +1,28 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:48:13</date>
 
-using System;
-using malone.Core.Entities.Model;
-
 namespace malone.Core.DataAccess.Repositories
 {
-    public interface IRepository<TKey, TEntity> : IBaseRepository<TEntity>
-        where TKey : IEquatable<TKey>
-        where TEntity : class, IBaseEntity<TKey>
-    {
-        TEntity GetById(
-TKey id,
-bool includeDeleted = false,
-string includeProperties = "");
+	using System;
+	using malone.Core.Entities.Model;
 
-        void Update(TEntity entity);
-    }
+	/// <summary>
+	/// Defines the <see cref="IRepository{TKey, TEntity}" />.
+	/// </summary>
+	/// <typeparam name="TKey">.</typeparam>
+	/// <typeparam name="TEntity">.</typeparam>
+	public interface IRepository<TKey, TEntity> : IQueryOperationsRepository<TKey, TEntity>, IDataOperationsRepository<TKey, TEntity>
+		where TKey : IEquatable<TKey>
+		where TEntity : class, IBaseEntity<TKey>
+	{
+	}
 
-    public interface IRepository<TEntity> : IRepository<int, TEntity>
+	/// <summary>
+	/// Defines the <see cref="IRepository{TEntity}" />.
+	/// </summary>
+	/// <typeparam name="TEntity">.</typeparam>
+	public interface IRepository<TEntity> : IRepository<int, TEntity>
 where TEntity : class, IBaseEntity
-    {
-    }
+	{
+	}
 }

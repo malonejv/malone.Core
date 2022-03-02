@@ -126,6 +126,14 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DataAccess\Repositories\IBaseDataOperationsRepository.cs" />
+    <Compile Include="DataAccess\Repositories\IBaseQueryOperationsRepository.cs" />
+    <Compile Include="DataAccess\Repositories\IDataOperationsRepository.cs" />
+    <Compile Include="DataAccess\Repositories\IQueryOperationsRepository.cs" />
+    <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\BaseServiceValidator.cs" />
+    <Compile Include="Services\IBaseService.cs" />
+    <Compile Include="Services\IBaseServiceValidator.cs" />
     <Compile Include="Services\Service.cs" />
     <Compile Include="Services\ServiceValidator.cs" />
     <Compile Include="Services\IService.cs" />

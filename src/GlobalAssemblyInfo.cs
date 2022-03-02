@@ -1,6 +1,6 @@
 //<author>Javier López Malone</author>
 //<date>25/11/2020 02:48:19</date>
-
+	
 using System.Reflection;
 
 [assembly: AssemblyTitle("malonejv.Core")]
@@ -15,12 +15,12 @@ using System.Reflection;
  * como de master -> development y development -> master
  * SIEMPRE tomar la versión de development.
  */
-[assembly: AssemblyFileVersion("2.1.11.56")]
+[assembly: AssemblyFileVersion("2.1.11.64")]
 
 /*NO MODIFICAR*/
 /**************/
 [assembly: AssemblyVersion("2.1.11")]
-[assembly: AssemblyInformationalVersion("2.1.11.56-dev")]
+[assembly: AssemblyInformationalVersion("2.1.11.64-dev")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]

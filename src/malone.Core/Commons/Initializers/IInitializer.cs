@@ -3,8 +3,16 @@
 
 namespace malone.Core.Commons.Initializers
 {
-    public interface IInitializer<TContainer>
-    {
-        void Initialize(TContainer container);
-    }
+	/// <summary>
+	/// Defines the <see cref="IInitializer{TContainer}" />.
+	/// </summary>
+	/// <typeparam name="TContainer">.</typeparam>
+	public interface IInitializer<TContainer>
+	{
+		/// <summary>
+		/// The Initialize.
+		/// </summary>
+		/// <param name="container">The container<see cref="TContainer"/>.</param>
+		void Initialize(TContainer container);
+	}
 }

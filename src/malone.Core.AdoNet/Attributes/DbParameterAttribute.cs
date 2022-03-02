@@ -1,37 +1,61 @@
-﻿using System;
-using System.Data;
-
-namespace malone.Core.AdoNet.Attributes
+﻿namespace malone.Core.AdoNet.Attributes
 {
-    [AttributeUsage(AttributeTargets.Property)]
-    public class DbParameterAttribute : DbFieldAttribute
-    {
-        private int _size;
+	using System;
+	using System.Data;
 
-        public DbParameterAttribute(string name) : base(name)
-        {
-        }
+	/// <summary>
+	/// Defines the <see cref="DbParameterAttribute" />.
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Property)]
+	public class DbParameterAttribute : DbFieldAttribute
+	{
+		/// <summary>
+		/// Defines the _size.
+		/// </summary>
+		private int _size;
 
-        public int Order { get; set; }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DbParameterAttribute"/> class.
+		/// </summary>
+		/// <param name="name">The name<see cref="string"/>.</param>
+		public DbParameterAttribute(string name) : base(name)
+		{
+		}
 
-        public ParameterDirection Direction { get; set; }
+		/// <summary>
+		/// Gets or sets the Order.
+		/// </summary>
+		public int Order { get; set; }
 
-        public object Type { get; set; }
+		/// <summary>
+		/// Gets or sets the Direction.
+		/// </summary>
+		public ParameterDirection Direction { get; set; }
 
-        public bool IsSizeDefined { get; private set; }
+		/// <summary>
+		/// Gets or sets the Type.
+		/// </summary>
+		public object Type { get; set; }
 
-        public int Size
-        {
-            get
-            {
-                return this._size;
-            }
-            set
-            {
-                this._size = value;
-                this.IsSizeDefined = true;
-            }
-        }
+		/// <summary>
+		/// Gets a value indicating whether IsSizeDefined.
+		/// </summary>
+		public bool IsSizeDefined { get; private set; }
 
-    }
+		/// <summary>
+		/// Gets or sets the Size.
+		/// </summary>
+		public int Size
+		{
+			get
+			{
+				return this._size;
+			}
+			set
+			{
+				this._size = value;
+				this.IsSizeDefined = true;
+			}
+		}
+	}
 }

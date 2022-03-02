@@ -3,8 +3,14 @@
 
 namespace malone.Core.Entities.Model
 {
-    public interface ISoftDelete
-    {
-        bool IsDeleted { get; set; }
-    }
+	/// <summary>
+	/// Defines the <see cref="ISoftDelete" />.
+	/// </summary>
+	public interface ISoftDelete
+	{
+		/// <summary>
+		/// Gets or sets a value indicating whether IsDeleted.
+		/// </summary>
+		bool IsDeleted { get; set; }
+	}
 }
