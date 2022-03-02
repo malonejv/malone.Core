@@ -1,6 +1,7 @@
 ﻿using System;
 using malone.Core.Commons.DI;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
+using malone.Core.IoC;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;

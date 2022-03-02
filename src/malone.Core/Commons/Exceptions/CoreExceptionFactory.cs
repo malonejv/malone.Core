@@ -3,11 +3,11 @@
 
 using System;
 using System.Reflection;
-using malone.Core.Commons.DI;
+using malone.Core.IoC;
 
 namespace malone.Core.Commons.Exceptions
-{
-    internal static class CoreExceptionFactory
+	{
+	internal static class CoreExceptionFactory
     {
         internal static IErrorLocalizationHandler errorLocalizationHandler;
 

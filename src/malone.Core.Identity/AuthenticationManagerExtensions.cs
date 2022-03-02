@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using malone.Core.Commons.Helpers.Threading;
+using malone.Core.Async.Threading;
 using malone.Core.Commons.Threading;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
 namespace malone.Core.Identity
-{
-    public static class AuthenticationManagerExtensions
+	{
+	public static class AuthenticationManagerExtensions
     {
 
         public static async Task<bool> TwoFactorBrowserRememberedAsync<TKey>(this IAuthenticationManager manager,

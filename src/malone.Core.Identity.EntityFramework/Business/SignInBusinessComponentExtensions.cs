@@ -1,11 +1,11 @@
 ﻿using System;
-using malone.Core.Commons.Helpers.Threading;
+using malone.Core.Async.Threading;
 using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace malone.Core.Identity.EntityFramework.Business
-{
-    public static class SignInBusinessComponentExtensions
+	{
+	public static class SignInBusinessComponentExtensions
     {
         public static SignInStatus PasswordUserNameOrEmailSignIn<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, TUserManager>(this SignInBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, TUserManager> signInManager, string email, string password, bool isPersistent, bool shouldLockout)
             where TKey : IEquatable<TKey>

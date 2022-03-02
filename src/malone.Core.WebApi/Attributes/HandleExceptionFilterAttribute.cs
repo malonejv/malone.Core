@@ -8,6 +8,7 @@ using System.Web.Http.Filters;
 using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Localization;
+using malone.Core.IoC;
 
 namespace malone.Core.WebApi.Attributes
 {

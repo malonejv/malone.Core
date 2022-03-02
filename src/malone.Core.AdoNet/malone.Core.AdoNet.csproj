@@ -83,6 +83,18 @@
     <Compile Include="Repositories\BaseRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\malone.Core.Configuration\malone.Core.Configuration.csproj">
+      <Project>{0A219127-6F7F-4061-8F7A-EE4566C11139}</Project>
+      <Name>malone.Core.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.IoC\malone.Core.IoC.csproj">
+      <Project>{DA7951EB-AE13-4FBB-8E0A-1DF44096456A}</Project>
+      <Name>malone.Core.IoC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.Logging\malone.Core.Logging.csproj">
+      <Project>{A7E8A33D-0703-4A8A-82E4-50E119A502AA}</Project>
+      <Name>malone.Core.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\malone.Core\malone.Core.csproj">
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
       <Name>malone.Core</Name>

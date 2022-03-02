@@ -2,13 +2,13 @@
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
-using malone.Core.Commons.Configurations;
-using malone.Core.Commons.Configurations.DbFactory;
 using malone.Core.Commons.Helpers.Extensions;
+using malone.Core.Configuration;
+using malone.Core.Configuration.DbFactory;
 
 namespace malone.Core.AdoNet.Database
-{
-    public class DatabaseFactory
+	{
+	public class DatabaseFactory
     {
         private ICoreConfiguration Configuration { get; set; }
         private DatabaseConfigurationElement DatabaseConfiguration { get; set; }

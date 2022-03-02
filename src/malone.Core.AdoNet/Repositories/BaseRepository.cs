@@ -7,24 +7,24 @@ using malone.Core.AdoNet.Database;
 using malone.Core.AdoNet.Entities;
 using malone.Core.AdoNet.Entities.Filters;
 using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.Entities.Filters;
 using malone.Core.Entities.Model;
+using malone.Core.Logging;
 
 namespace malone.Core.AdoNet.Repositories
-{
+	{
 
-    public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
+	public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
         where TEntity : class
     {
         protected CoreDbContext Context { get; private set; }
-        protected ILogger Logger { get; }
+        protected ICoreLogger Logger { get; }
 
         #region Constructor
 
-        public BaseRepository(IContext context, ILogger logger)
+        public BaseRepository(IContext context, ICoreLogger logger)
         {
             CheckContext(context);
             CheckLogger(logger);
@@ -280,7 +280,7 @@ namespace malone.Core.AdoNet.Repositories
 
         #region Private And Protected Methods
 
-        private void CheckLogger(ILogger logger)
+        private void CheckLogger(ICoreLogger logger)
         {
             if (logger == null)
             {

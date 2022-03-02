@@ -114,6 +114,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\malone.Core.Configuration\malone.Core.Configuration.csproj">
+      <Project>{0A219127-6F7F-4061-8F7A-EE4566C11139}</Project>
+      <Name>malone.Core.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.IoC\malone.Core.IoC.csproj">
+      <Project>{DA7951EB-AE13-4FBB-8E0A-1DF44096456A}</Project>
+      <Name>malone.Core.IoC</Name>
+    </ProjectReference>
     <ProjectReference Include="..\malone.Core.Unity.IdentityAdoNetSqlServerInitializer\malone.Core.Unity.IdentityAdoNetSqlServerInitializer.csproj">
       <Project>{1c1a8c42-f043-4d14-b522-e501580d3364}</Project>
       <Name>malone.Core.Unity.IdentityAdoNetSqlServerInitializer</Name>

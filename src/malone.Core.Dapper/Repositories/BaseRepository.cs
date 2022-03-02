@@ -5,8 +5,6 @@ using System.Linq;
 using Dapper;
 using malone.Core.AdoNet.Context;
 using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Commons.Log;
 using malone.Core.Dapper.Attributes;
 using malone.Core.Dapper.Entities;
 using malone.Core.Dapper.Entities.Filters;
@@ -14,22 +12,23 @@ using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.Entities.Filters;
 using malone.Core.Entities.Model;
+using malone.Core.Logging;
 
 namespace malone.Core.Dapper.Repositories
-{
+	{
 
-    public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
+	public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
         where TEntity : class
     {
         protected CoreDbContext Context { get; private set; }
         protected IDbConnection Connection => Context.Connection;
-        protected ILogger Logger { get; }
+        protected ICoreLogger Logger { get; }
 
         protected Type TEntityType { get; set; }
 
         #region Constructor
 
-        public BaseRepository(IContext context, ILogger logger)
+        public BaseRepository(IContext context, ICoreLogger logger)
         {
             CheckContext(context);
             CheckLogger(logger);
@@ -353,7 +352,7 @@ namespace malone.Core.Dapper.Repositories
 
         #region Private And Protected Methods
 
-        private void CheckLogger(ILogger logger)
+        private void CheckLogger(ICoreLogger logger)
         {
             if (logger == null)
             {

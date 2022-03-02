@@ -3,15 +3,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using malone.Core.AdoNet.Context;
 using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using malone.Core.Identity.AdoNet.SqlServer.Entities.Filters;
+using malone.Core.Logging;
 using Microsoft.AspNet.Identity;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
-{
-    public class RoleStore<TKey, TRoleEntity, TUserRole> : IQueryableRoleStore<TRoleEntity, TKey>
+	{
+	public class RoleStore<TKey, TRoleEntity, TUserRole> : IQueryableRoleStore<TRoleEntity, TKey>
         where TKey : IEquatable<TKey>
         where TRoleEntity : CoreRole<TKey, TUserRole>, new()
         where TUserRole : CoreUserRole<TKey>
@@ -20,9 +20,9 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected IContext Context { get; private set; }
 
-        protected ILogger Logger { get; }
+        protected ICoreLogger Logger { get; }
 
-        public RoleStore(IContext context, ILogger logger)
+        public RoleStore(IContext context, ICoreLogger logger)
         {
             CheckContext(context);
             CheckLogger(logger);
@@ -82,7 +82,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         #region Private methods
 
-        private void CheckLogger(ILogger logger)
+        private void CheckLogger(ICoreLogger logger)
         {
             if (logger == null)
             {
@@ -143,7 +143,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
         where TUserRole : CoreUserRole
     {
 
-        public RoleStore(IContext context, ILogger logger) : base(context, logger)
+        public RoleStore(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
 

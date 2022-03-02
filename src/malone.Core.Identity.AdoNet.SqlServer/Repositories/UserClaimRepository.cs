@@ -2,17 +2,17 @@
 using System.Data;
 using malone.Core.AdoNet.Repositories;
 using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
+using malone.Core.Logging;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
-{
-    public class UserClaimRepository<TKey, TUserClaim> : Repository<TKey, TUserClaim>, IUserClaimRepository<TKey, TUserClaim>
+	{
+	public class UserClaimRepository<TKey, TUserClaim> : Repository<TKey, TUserClaim>, IUserClaimRepository<TKey, TUserClaim>
          where TKey : IEquatable<TKey>
          where TUserClaim : CoreUserClaim<TKey>, new()
     {
-        public UserClaimRepository(IContext context, ILogger logger) : base(context, logger)
+        public UserClaimRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
 
@@ -129,7 +129,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
     public class UserClaimRepository<TUserClaim> : UserClaimRepository<int, TUserClaim>, IUserClaimRepository<TUserClaim>
         where TUserClaim : CoreUserClaim, new()
     {
-        public UserClaimRepository(IContext context, ILogger logger) : base(context, logger)
+        public UserClaimRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
     }

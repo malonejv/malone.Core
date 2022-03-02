@@ -5,15 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.DataAccess.UnitOfWork;
 using malone.Core.Entities.Filters;
 using malone.Core.Entities.Model;
+using malone.Core.Logging;
 
 namespace malone.Core.Business.Components
-{
-    public abstract class BaseBusinessComponent<TEntity, TValidator> : IBaseBusinessComponent<TEntity, TValidator>
+	{
+	public abstract class BaseBusinessComponent<TEntity, TValidator> : IBaseBusinessComponent<TEntity, TValidator>
         where TEntity : class
         where TValidator : IBaseBusinessValidator<TEntity>
     {
@@ -21,9 +21,9 @@ namespace malone.Core.Business.Components
 
         public TValidator BusinessValidator { get; set; }
 
-        public ILogger Logger { get; set; }
+        public ICoreLogger Logger { get; set; }
 
-        public BaseBusinessComponent(TValidator businessValidator, IBaseRepository<TEntity> repository, ILogger logger)
+        public BaseBusinessComponent(TValidator businessValidator, IBaseRepository<TEntity> repository, ICoreLogger logger)
         {
             BusinessValidator = businessValidator;
             Repository = repository;
@@ -275,9 +275,9 @@ where TValidator : IBusinessValidator<TKey, TEntity>
 
         public TValidator BusinessValidator { get; set; }
 
-        public ILogger Logger { get; set; }
+        public ICoreLogger Logger { get; set; }
 
-        public BusinessComponent(TValidator businessValidator, IRepository<TKey, TEntity> repository, ILogger logger) : base(businessValidator, repository, logger)
+        public BusinessComponent(TValidator businessValidator, IRepository<TKey, TEntity> repository, ICoreLogger logger) : base(businessValidator, repository, logger)
         {
             BusinessValidator = businessValidator;
             Repository = repository;
@@ -444,7 +444,7 @@ string includeProperties = "")
 where TEntity : class, IBaseEntity
 where TValidator : IBusinessValidator<TEntity>
     {
-        public BusinessComponent(TValidator businessValidator, IRepository<TEntity> repository, ILogger logger)
+        public BusinessComponent(TValidator businessValidator, IRepository<TEntity> repository, ICoreLogger logger)
 : base(businessValidator, repository, logger)
         {
         }

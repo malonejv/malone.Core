@@ -128,6 +128,14 @@
       <Project>{0992b1b6-be12-4b9f-9b15-4d1b03ecd306}</Project>
       <Name>malone.Core.Identity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\malone.Core.IoC\malone.Core.IoC.csproj">
+      <Project>{DA7951EB-AE13-4FBB-8E0A-1DF44096456A}</Project>
+      <Name>malone.Core.IoC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.Logging\malone.Core.Logging.csproj">
+      <Project>{A7E8A33D-0703-4A8A-82E4-50E119A502AA}</Project>
+      <Name>malone.Core.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\malone.Core\malone.Core.csproj">
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
       <Name>malone.Core</Name>

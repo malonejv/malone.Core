@@ -1,15 +1,15 @@
 ﻿using System;
-using malone.Core.Commons.DI;
 using malone.Core.Identity.EntityFramework.Business;
 using malone.Core.Identity.EntityFramework.Entities;
+using malone.Core.IoC;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 
 namespace malone.Core.Identity.EntityFramework
-{
+	{
 
-    public class UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim> : UserManager<TUserEntity, TKey>
+	public class UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim> : UserManager<TUserEntity, TKey>
         where TKey : IEquatable<TKey>
         where TUserLogin : CoreUserLogin<TKey>, new()
         where TUserRole : CoreUserRole<TKey>, new()

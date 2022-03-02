@@ -2,12 +2,12 @@
 //<date>25/11/2020 02:48:15</date>
 
 using System;
-using malone.Core.Commons.DI;
 using malone.Core.DataAccess.Context;
+using malone.Core.IoC;
 
 namespace malone.Core.DataAccess.UnitOfWork
-{
-    public class UnitOfWork : IUnitOfWork
+	{
+	public class UnitOfWork : IUnitOfWork
     {
         public IContext Context { get; protected set; }
 

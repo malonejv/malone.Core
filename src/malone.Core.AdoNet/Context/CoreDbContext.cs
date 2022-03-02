@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using malone.Core.AdoNet.Database;
-using malone.Core.Commons.DI;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.DataAccess.Context;
+using malone.Core.IoC;
 
 namespace malone.Core.AdoNet.Context
-{
-    public class CoreDbContext : IDisposable, IContext
+	{
+	public class CoreDbContext : IDisposable, IContext
     {
         private IDatabase _db;
         private bool _isDisposed;

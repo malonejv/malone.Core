@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
-using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Log;
 using malone.Core.Identity.EntityFramework.Entities;
+using malone.Core.IoC;
+using malone.Core.Logging;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 
 namespace malone.Core.Identity.EntityFramework
-{
-    // Configure the application sign-in manager which is used in this application.
-    public class SignInBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, TUserManager> : SignInManager<TUserEntity, TKey>
+	{
+	// Configure the application sign-in manager which is used in this application.
+	public class SignInBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, TUserManager> : SignInManager<TUserEntity, TKey>
         where TKey : IEquatable<TKey>
         where TUserLogin : CoreUserLogin<TKey>, new()
         where TUserRole : CoreUserRole<TKey>, new()
@@ -20,9 +20,9 @@ namespace malone.Core.Identity.EntityFramework
         where TUserEntity : CoreUser<TKey, TUserLogin, TUserRole, TUserClaim>, new()
         where TUserManager : UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>
     {
-        public ILogger Logger { get; set; }
+        public ICoreLogger Logger { get; set; }
 
-        public SignInBusinessComponent(TUserManager userManager, IAuthenticationManager authenticationManager, ILogger logger) : base(userManager, authenticationManager)
+        public SignInBusinessComponent(TUserManager userManager, IAuthenticationManager authenticationManager, ICoreLogger logger) : base(userManager, authenticationManager)
         {
             Logger = logger;
         }
@@ -30,7 +30,7 @@ namespace malone.Core.Identity.EntityFramework
 
         public static SignInBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, TUserManager> Create(IdentityFactoryOptions<SignInBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, TUserManager>> options, IOwinContext context)
         {
-            var logger = ServiceLocator.Current.Get<ILogger>();
+            var logger = ServiceLocator.Current.Get<ICoreLogger>();
             var userManager = context.GetUserManager<TUserManager>();
             var instance = new SignInBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim, TUserManager>(userManager, context.Authentication, logger);
             return instance;
@@ -72,13 +72,13 @@ namespace malone.Core.Identity.EntityFramework
 
     public class SignInBusinessComponent : SignInBusinessComponent<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim, UserBusinessComponent>
     {
-        public SignInBusinessComponent(UserBusinessComponent userManager, IAuthenticationManager authenticationManager, ILogger logger) : base(userManager, authenticationManager, logger)
+        public SignInBusinessComponent(UserBusinessComponent userManager, IAuthenticationManager authenticationManager, ICoreLogger logger) : base(userManager, authenticationManager, logger)
         {
         }
 
         public static SignInBusinessComponent Create(IdentityFactoryOptions<SignInBusinessComponent> options, IOwinContext context)
         {
-            var logger = ServiceLocator.Current.Get<ILogger>();
+            var logger = ServiceLocator.Current.Get<ICoreLogger>();
             var userManager = context.GetUserManager<UserBusinessComponent>();
             var instance = new SignInBusinessComponent(userManager, context.Authentication, logger);
 

@@ -75,6 +75,10 @@
       <Project>{492F80C1-E1F2-4CC9-8DBE-83BA63E7DE4C}</Project>
       <Name>malone.Core.AdoNet</Name>
     </ProjectReference>
+    <ProjectReference Include="..\malone.Core.Logging\malone.Core.Logging.csproj">
+      <Project>{A7E8A33D-0703-4A8A-82E4-50E119A502AA}</Project>
+      <Name>malone.Core.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\malone.Core\malone.Core.csproj">
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
       <Name>malone.Core</Name>
