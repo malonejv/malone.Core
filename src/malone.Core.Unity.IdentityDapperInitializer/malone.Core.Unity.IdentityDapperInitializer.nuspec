@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<package >
+<package>
 	<metadata>
 		<id>$id$</id>
 		<version>$version$</version>
@@ -10,7 +10,7 @@
 		<license type="expression">MIT</license>
 		<projectUrl>https://github.com/malonejv/malone.Core</projectUrl>
 		<description>$description$</description>
-		<copyright>Copyright 2020</copyright>
+		<copyright>$copyright$</copyright>
 		<repository type="git" url="https://github.com/malonejv/malone.Core.git" branch="development" />
 		<icon>capibara.png</icon>
 		<readme>docs\readme.md</readme>

@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="capibara.png" Pack="true" PackagePath="\" />
+    <None Include="malone.Core.Unity.ModulesInitializers.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

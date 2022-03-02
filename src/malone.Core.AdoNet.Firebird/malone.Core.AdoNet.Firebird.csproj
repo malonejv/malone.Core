@@ -77,6 +77,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="malone.Core.AdoNet.Firebird.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

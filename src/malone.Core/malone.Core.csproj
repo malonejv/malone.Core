@@ -256,7 +256,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == DebugNuget (
-powershell -NoProfile -ExecutionPolicy RemoteSigned -Command "$(SolutionDir)BuildScripts\Post-BuildEvent.ps1 -SolutionPath $(SolutionPath) -Environment "$env:MALONECORE_ENVIRONMENT" -Configuration $(ConfigurationName) -OutputDir "$env:MALONECORE_PKGOUTDIR" -ShouldPack:([bool]::parse("$env:MALONECORE_SHOULDPACK")) -Verbose:([bool]::parse("$env:MALONECORE_VERBOSE"))"
+powershell -NoProfile -ExecutionPolicy RemoteSigned -Command "$(SolutionDir)BuildScripts\Post-BuildEvent.ps1 -SolutionPath $(SolutionPath) -Environment "$env:MALONECORE_ENVIRONMENT" -Configuration $(ConfigurationName) -OutputDir "$env:PKG_ARTIFACTS_DIR" -ShouldPack:([bool]::parse("$env:MALONECORE_SHOULDPACK")) -Verbose:([bool]::parse("$env:MALONECORE_VERBOSE"))"
 )</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

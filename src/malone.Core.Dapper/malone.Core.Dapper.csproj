@@ -81,6 +81,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="malone.Core.Dapper.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
