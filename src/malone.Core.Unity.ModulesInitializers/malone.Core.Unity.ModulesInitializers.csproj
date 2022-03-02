@@ -72,9 +72,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\malone.Core.Configuration\malone.Core.Configuration.csproj">
+      <Project>{0A219127-6F7F-4061-8F7A-EE4566C11139}</Project>
+      <Name>malone.Core.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\malone.Core.EF\malone.Core.EF.csproj">
       <Project>{B3A99961-88EB-4256-984A-01C346541183}</Project>
       <Name>malone.Core.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.Localization\malone.Core.Localization.csproj">
+      <Project>{9015886E-81B4-44C2-BE50-8B799568627B}</Project>
+      <Name>malone.Core.Localization</Name>
     </ProjectReference>
     <ProjectReference Include="..\malone.Core\malone.Core.csproj">
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>

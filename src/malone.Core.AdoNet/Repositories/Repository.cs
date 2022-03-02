@@ -5,18 +5,18 @@ using System.Linq;
 using malone.Core.AdoNet.Database;
 using malone.Core.AdoNet.Entities;
 using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.Entities.Model;
+using malone.Core.Logging;
 
 namespace malone.Core.AdoNet.Repositories
-{
-    public abstract class Repository<TKey, TEntity> : BaseRepository<TEntity>, IRepository<TKey, TEntity>, IDisposable
+	{
+	public abstract class Repository<TKey, TEntity> : BaseRepository<TEntity>, IRepository<TKey, TEntity>, IDisposable
         where TKey : IEquatable<TKey>
         where TEntity : class, IBaseEntity<TKey>
     {
-        public Repository(IContext context, ILogger logger) : base(context, logger) { }
+        public Repository(IContext context, ICoreLogger logger) : base(context, logger) { }
 
         #region CRUD Operations
 
@@ -119,7 +119,7 @@ namespace malone.Core.AdoNet.Repositories
     public abstract class Repository<TEntity> : Repository<int, TEntity>, IRepository<TEntity>
         where TEntity : class, IBaseEntity
     {
-        public Repository(IContext context, ILogger logger) : base(context, logger)
+        public Repository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
     }

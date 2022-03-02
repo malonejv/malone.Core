@@ -3,6 +3,7 @@ using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Initializers;
 using malone.Core.Commons.Localization;
+using malone.Core.Configuration;
 using malone.Core.DataAccess.UnitOfWork;
 using Unity;
 using Unity.Lifetime;

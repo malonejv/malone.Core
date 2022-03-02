@@ -3,7 +3,7 @@
 
 using System;
 using System.Text;
-using malone.Core.Business.Components;
+using malone.Core.Services;
 
 namespace malone.Core.Commons.Exceptions
 {

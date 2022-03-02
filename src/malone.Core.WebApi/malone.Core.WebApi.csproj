@@ -94,6 +94,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\malone.Core.IoC\malone.Core.IoC.csproj">
+      <Project>{DA7951EB-AE13-4FBB-8E0A-1DF44096456A}</Project>
+      <Name>malone.Core.IoC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.Localization\malone.Core.Localization.csproj">
+      <Project>{9015886E-81B4-44C2-BE50-8B799568627B}</Project>
+      <Name>malone.Core.Localization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\malone.Core\malone.Core.csproj">
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
       <Name>malone.Core</Name>

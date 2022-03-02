@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Data;
 using malone.Core.AdoNet.Context;
-using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
+using malone.Core.Logging;
 
 namespace malone.Core.Dapper.Repositories
-{
-    public abstract class CustomRepository<TEntity> : ICustomRepository<TEntity>, IDisposable
+	{
+	public abstract class CustomRepository<TEntity> : ICustomRepository<TEntity>, IDisposable
         where TEntity : class
     {
         protected CoreDbContext Context { get; private set; }
         protected IDbConnection Connection => Context.Connection;
-        protected ILogger Logger { get; }
+        protected ICoreLogger Logger { get; }
 
         protected Type TEntityType { get; set; }
 
         #region Constructor
 
-        public CustomRepository(IContext context, ILogger logger)
+        public CustomRepository(IContext context, ICoreLogger logger)
         {
             CheckContext(context);
             CheckLogger(logger);
@@ -34,7 +34,7 @@ namespace malone.Core.Dapper.Repositories
 
         protected abstract TEntity Map(DataRow row);
 
-        private void CheckLogger(ILogger logger)
+        private void CheckLogger(ICoreLogger logger)
         {
             if (logger == null)
             {

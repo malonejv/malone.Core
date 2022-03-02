@@ -115,6 +115,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\malone.Core.Async\malone.Core.Async.csproj">
+      <Project>{53b1fb4d-1325-487c-8c8d-e63949f3f45e}</Project>
+      <Name>malone.Core.Async</Name>
+    </ProjectReference>
     <ProjectReference Include="..\malone.Core\malone.Core.csproj">
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
       <Name>malone.Core</Name>

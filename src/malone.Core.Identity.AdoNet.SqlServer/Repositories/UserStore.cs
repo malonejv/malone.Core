@@ -7,16 +7,16 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using malone.Core.AdoNet.Context;
 using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.Entities.Model;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using malone.Core.Identity.AdoNet.SqlServer.Entities.Filters;
+using malone.Core.Logging;
 using Microsoft.AspNet.Identity;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
-{
-    public abstract class UserStore<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim> :
+	{
+	public abstract class UserStore<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim> :
         IUserLoginStore<TUserEntity, TKey>,
         IUserClaimStore<TUserEntity, TKey>,
         IUserRoleStore<TUserEntity, TKey>,
@@ -43,11 +43,11 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected IContext Context { get; private set; }
 
-        protected ILogger Logger { get; }
+        protected ICoreLogger Logger { get; }
 
         public bool AutoSaveChanges { get; set; }
 
-        public UserStore(IUserLoginRepository<TKey, TUserLogin> logins, IUserClaimRepository<TKey, TUserClaim> userClaims, IUserRoleRepository<TKey, TUserRole> userRoles, IRoleRepository<TKey, TRoleEntity> roles, IUserRepository<TKey, TUserEntity> users, IContext context, ILogger logger)
+        public UserStore(IUserLoginRepository<TKey, TUserLogin> logins, IUserClaimRepository<TKey, TUserClaim> userClaims, IUserRoleRepository<TKey, TUserRole> userRoles, IRoleRepository<TKey, TRoleEntity> roles, IUserRepository<TKey, TUserEntity> users, IContext context, ICoreLogger logger)
         {
             CheckContext(context);
             CheckLogger(logger);
@@ -576,7 +576,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         #region Private methods
 
-        private void CheckLogger(ILogger logger)
+        private void CheckLogger(ICoreLogger logger)
         {
             if (logger == null)
             {
@@ -876,7 +876,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
             where TRoleEntity : CoreRole<TUserRole>
             where TUserEntity : CoreUser<TUserLogin, TUserRole, TUserClaim>
     {
-        public UserStore(IUserLoginRepository<TUserLogin> logins, IUserClaimRepository<TUserClaim> userClaims, IUserRoleRepository<TUserRole> userRoles, IRoleRepository<TRoleEntity> roles, IUserRepository<TUserEntity> users, IContext context, ILogger logger) : base(logins, userClaims, userRoles, roles, users, context, logger)
+        public UserStore(IUserLoginRepository<TUserLogin> logins, IUserClaimRepository<TUserClaim> userClaims, IUserRoleRepository<TUserRole> userRoles, IRoleRepository<TRoleEntity> roles, IUserRepository<TUserEntity> users, IContext context, ICoreLogger logger) : base(logins, userClaims, userRoles, roles, users, context, logger)
         {
         }
     }

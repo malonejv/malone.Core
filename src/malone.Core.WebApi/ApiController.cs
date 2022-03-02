@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections;
 using System.Web.Http;
-using malone.Core.Business.Components;
+using malone.Core.Services;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Entities.Model;
 
 namespace malone.Core.WebApi
 {
-    public abstract class ApiController<TKey, TParam, TEntity, TBusinessComponent, TBusinessValidator> : ApiController
+    public abstract class ApiController<TKey, TParam, TEntity, TService, TServiceValidator> : ApiController
         where TKey : IEquatable<TKey>
         where TParam : class, IGetRequestParam
         where TEntity : class, IBaseEntity<TKey>
-        where TBusinessValidator : IBusinessValidator<TKey, TEntity>
-        where TBusinessComponent : IBusinessComponent<TKey, TEntity, TBusinessValidator>
+        where TServiceValidator : IServiceValidator<TKey, TEntity>
+        where TService : IService<TKey, TEntity, TServiceValidator>
     {
-        protected TBusinessComponent BusinessComponent { get; set; }
+        protected TService Service { get; set; }
 
-        public ApiController(TBusinessComponent businessComponent)
+        public ApiController(TService businessComponent)
         {
-            BusinessComponent = businessComponent;
+            Service = businessComponent;
         }
 
         #region GET (GetAll)
@@ -47,7 +47,7 @@ namespace malone.Core.WebApi
 
         protected virtual IEnumerable GetAll()
         {
-            return BusinessComponent.GetAll();
+            return Service.GetAll();
         }
 
 
@@ -83,7 +83,7 @@ namespace malone.Core.WebApi
 
         protected virtual object GetById(TKey id)
         {
-            TEntity entity = BusinessComponent.GetById(id);
+            TEntity entity = Service.GetById(id);
             return AsViewModel(entity);
         }
 
@@ -98,7 +98,7 @@ namespace malone.Core.WebApi
 
         public virtual IHttpActionResult Post([FromBody] TEntity entity)
         {
-            BusinessComponent.Add(entity);
+            Service.Add(entity);
 
             var location = new Uri(Request.RequestUri + entity.Id.ToString());
 
@@ -111,7 +111,7 @@ namespace malone.Core.WebApi
 
         public virtual IHttpActionResult Put(TKey id, [FromBody] TEntity entity)
         {
-            BusinessComponent.Update(entity);
+            Service.Update(entity);
             return Ok();
         }
 
@@ -121,21 +121,21 @@ namespace malone.Core.WebApi
 
         public virtual IHttpActionResult Delete(TKey id)
         {
-            BusinessComponent.Delete(id);
+            Service.Delete(id);
             return Ok();
         }
 
         #endregion
     }
 
-    public abstract class ApiController<TParam, TEntity, TBusinessComponent, TBusinessValidator>
-    : ApiController<int, TParam, TEntity, TBusinessComponent, TBusinessValidator>
+    public abstract class ApiController<TParam, TEntity, TService, TServiceValidator>
+    : ApiController<int, TParam, TEntity, TService, TServiceValidator>
    where TParam : class, IGetRequestParam
    where TEntity : class, IBaseEntity
-   where TBusinessValidator : IBusinessValidator<TEntity>
-   where TBusinessComponent : IBusinessComponent<TEntity, TBusinessValidator>
+   where TServiceValidator : IServiceValidator<TEntity>
+   where TService : IService<TEntity, TServiceValidator>
     {
-        public ApiController(TBusinessComponent businessComponent) : base(businessComponent)
+        public ApiController(TService businessComponent) : base(businessComponent)
         {
         }
 

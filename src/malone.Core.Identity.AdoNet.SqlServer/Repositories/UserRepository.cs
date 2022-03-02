@@ -4,20 +4,20 @@ using System.Data;
 using System.Linq;
 using malone.Core.AdoNet.Repositories;
 using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
+using malone.Core.Logging;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
-{
-    public class UserRepository<TKey, TUserEntity, TUserLogin, TUserRole, TUserClaim> : Repository<TKey, TUserEntity>, IUserRepository<TKey, TUserEntity>
+	{
+	public class UserRepository<TKey, TUserEntity, TUserLogin, TUserRole, TUserClaim> : Repository<TKey, TUserEntity>, IUserRepository<TKey, TUserEntity>
          where TKey : IEquatable<TKey>
         where TUserLogin : CoreUserLogin<TKey>
         where TUserRole : CoreUserRole<TKey>
         where TUserClaim : CoreUserClaim<TKey>
          where TUserEntity : CoreUser<TKey, TUserLogin, TUserRole, TUserClaim>, new()
     {
-        public UserRepository(IContext context, ILogger logger) : base(context, logger)
+        public UserRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
 
@@ -198,7 +198,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
         where TUserClaim : CoreUserClaim
          where TUserEntity : CoreUser<TUserLogin, TUserRole, TUserClaim>, new()
     {
-        public UserRepository(IContext context, ILogger logger) : base(context, logger)
+        public UserRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
     }

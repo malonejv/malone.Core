@@ -3,16 +3,17 @@
 
 using System;
 using System.Configuration;
-using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
+using malone.Core.Configuration;
+using malone.Core.IoC;
 
 namespace malone.Core.Commons.Configurations
-{
-    public class CoreConfiguration : ICoreConfiguration
+	{
+	public class CoreConfiguration : ICoreConfiguration
     {
         internal IErrorLocalizationHandler ErrorLocalizationHandler { get; set; }
 
-        public CoreConfiguration()//(ILogger logger)
+        public CoreConfiguration()//(ICoreLogger logger)
         {
             ErrorLocalizationHandler = ServiceLocator.Current.Get<IErrorLocalizationHandler>();
         }

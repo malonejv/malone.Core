@@ -3,24 +3,24 @@
 
 using System;
 using System.Configuration;
-using malone.Core.Commons.Configurations.Attributes;
-using malone.Core.Commons.DI;
 using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Log;
+using malone.Core.Configuration.Attributes;
+using malone.Core.IoC;
+using malone.Core.Logging;
 
 namespace malone.Core.Commons.Configurations
-{
-    public static class ConfigurationExtensions
+	{
+	public static class ConfigurationExtensions
     {
-        internal static ILogger logger;
+        internal static ICoreLogger logger;
 
-        internal static ILogger Logger
+        internal static ICoreLogger Logger
         {
             get
             {
                 if (logger == null)
                 {
-                    logger = ServiceLocator.Current.Get<ILogger>();
+                    logger = ServiceLocator.Current.Get<ICoreLogger>();
                 }
                 return logger;
             }

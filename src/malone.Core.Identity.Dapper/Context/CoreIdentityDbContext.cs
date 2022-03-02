@@ -3,6 +3,7 @@ using malone.Core.AdoNet.Context;
 using malone.Core.Commons.DI;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.Dapper.Entities;
+using malone.Core.IoC;
 
 namespace malone.Core.Identity.Dapper.Context
 {

@@ -2,17 +2,17 @@
 using System.Data;
 using malone.Core.AdoNet.Repositories;
 using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
+using malone.Core.Logging;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
-{
-    public class UserRoleRepository<TKey, TUserRole> : BaseRepository<TUserRole>, IUserRoleRepository<TKey, TUserRole>
+	{
+	public class UserRoleRepository<TKey, TUserRole> : BaseRepository<TUserRole>, IUserRoleRepository<TKey, TUserRole>
         where TKey : IEquatable<TKey>
         where TUserRole : CoreUserRole<TKey>, new()
     {
-        public UserRoleRepository(IContext context, ILogger logger) : base(context, logger)
+        public UserRoleRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
 
@@ -119,7 +119,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
     public class UserRoleRepository<TUserRole> : UserRoleRepository<int, TUserRole>, IUserRoleRepository<TUserRole>
         where TUserRole : CoreUserRole, new()
     {
-        public UserRoleRepository(IContext context, ILogger logger) : base(context, logger)
+        public UserRoleRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
     }

@@ -4,18 +4,18 @@ using System.Data;
 using System.Security.Claims;
 using Dapper;
 using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Commons.Log;
 using malone.Core.Dapper.Repositories;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.Dapper.Entities;
+using malone.Core.Logging;
 
 namespace malone.Core.Identity.Dapper.Repositories
-{
-    public class UserClaimRepository<TKey, TUserClaim> : CustomRepository<TUserClaim>, IUserClaimRepository<TKey, TUserClaim>
+	{
+	public class UserClaimRepository<TKey, TUserClaim> : CustomRepository<TUserClaim>, IUserClaimRepository<TKey, TUserClaim>
          where TKey : IEquatable<TKey>
          where TUserClaim : CoreUserClaim<TKey>, new()
     {
-        public UserClaimRepository(IContext context, ILogger logger) : base(context, logger)
+        public UserClaimRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
 
@@ -93,7 +93,7 @@ where TUserKey : IEquatable<TUserKey>
     public class UserClaimRepository<TUserClaim> : UserClaimRepository<int, TUserClaim>, IUserClaimRepository<TUserClaim>
         where TUserClaim : CoreUserClaim, new()
     {
-        public UserClaimRepository(IContext context, ILogger logger) : base(context, logger)
+        public UserClaimRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
     }

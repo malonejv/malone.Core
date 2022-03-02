@@ -4,26 +4,26 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.EF.Entities.Filters;
 using malone.Core.Entities.Filters;
 using malone.Core.Entities.Model;
+using malone.Core.Logging;
 
 namespace malone.Core.EF.Repositories
-{
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
+	{
+	public class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
         where TEntity : class
     {
         protected DbSet<TEntity> EntityDbSet { get; private set; }
         protected DbContext Context { get; private set; }
 
-        protected ILogger Logger { get; set; }
+        protected ICoreLogger Logger { get; set; }
 
         #region Constructor
 
-        public BaseRepository(IContext context, ILogger logger)
+        public BaseRepository(IContext context, ICoreLogger logger)
         {
             CheckContext(context);
             CheckLogger(logger);
@@ -229,7 +229,7 @@ namespace malone.Core.EF.Repositories
 
         #region Private And Protected Methods
 
-        private void CheckLogger(ILogger logger)
+        private void CheckLogger(ICoreLogger logger)
         {
             if (logger == null)
             {

@@ -126,30 +126,14 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Business\Components\BusinessComponent.cs" />
-    <Compile Include="Business\Components\BusinessValidator.cs" />
-    <Compile Include="Business\Components\IBusinessComponent.cs" />
-    <Compile Include="Business\Components\IBusinessValidator.cs" />
-    <Compile Include="Business\Components\Validations.cs" />
-    <Compile Include="Commons\Configurations\Attributes\SectionNameAttribute.cs" />
-    <Compile Include="Commons\Configurations\CoreModules.cs" />
+    <Compile Include="Services\Service.cs" />
+    <Compile Include="Services\ServiceValidator.cs" />
+    <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\IServiceValidator.cs" />
+    <Compile Include="Services\Validations.cs" />
     <Compile Include="Commons\Configurations\ConfigurationExtensions.cs" />
-    <Compile Include="Commons\Configurations\CoreSettingsSection.cs" />
-    <Compile Include="Commons\Configurations\DbFactory\DatabaseConfigurationElement.cs" />
-    <Compile Include="Commons\Configurations\DbFactory\DatabaseProviderElementCollection.cs" />
-    <Compile Include="Commons\Configurations\DbFactory\DatabaseProviderElement.cs" />
-    <Compile Include="Commons\Configurations\Features\FeatureDescriptionAttribute.cs" />
     <Compile Include="Commons\Configurations\CoreConfiguration.cs" />
-    <Compile Include="Commons\Configurations\Features\FeatureExtensions.cs" />
-    <Compile Include="Commons\Configurations\Features\FeatureSettingsSection.cs" />
-    <Compile Include="Commons\Configurations\ICoreConfiguration.cs" />
-    <Compile Include="Commons\Configurations\Features\BehaviorElement.cs" />
-    <Compile Include="Commons\Configurations\Features\BehaviorElementCollection.cs" />
-    <Compile Include="Commons\Configurations\Features\FeatureElement.cs" />
-    <Compile Include="Commons\Configurations\Features\FeaturesElementCollection.cs" />
-    <Compile Include="Commons\Configurations\Features\FeatureSettings.cs" />
-    <Compile Include="Commons\Configurations\Modules\ModuleElement.cs" />
-    <Compile Include="Commons\Configurations\Modules\ModulesElementCollection.cs" />
+    <Compile Include="Commons\Configurations\CoreModules.cs" />
     <Compile Include="Commons\Exceptions\BaseException.cs" />
     <Compile Include="Commons\Exceptions\BusinessValidationException.cs" />
     <Compile Include="Commons\Exceptions\EntityNotFoundException.cs" />
@@ -168,11 +152,8 @@
     <Compile Include="Commons\Initializers\AppInitializer.cs" />
     <Compile Include="Commons\Initializers\IInitializer.cs" />
     <Compile Include="Commons\Initializers\IInjectorInitializer.cs" />
-    <Compile Include="Commons\DI\ServiceLocator.cs" />
     <Compile Include="Commons\Exceptions\BusinessRulesValidationException.cs" />
     <Compile Include="Commons\Exceptions\CoreErrors.cs" />
-    <Compile Include="Commons\Localization\LocalizationHandler.cs" />
-    <Compile Include="Commons\Localization\ILocalizationHandler.cs" />
     <Compile Include="Commons\Exceptions\Resources\Exceptions.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -182,7 +163,6 @@
     <Compile Include="Commons\Extensions\CharExtensions.cs" />
     <Compile Include="Commons\Extensions\EnumExtensions.cs" />
     <Compile Include="Commons\Extensions\StringExtensions.cs" />
-    <Compile Include="Commons\Helpers\Threading\AsyncHelper.cs" />
     <Compile Include="Commons\Extensions\TaskExtensions.cs" />
     <Compile Include="Commons\Initializers\IModuleInitializer.cs" />
     <Compile Include="Commons\Localization\Resources\Contents.Designer.cs">
@@ -190,19 +170,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Contents.resx</DependentUpon>
     </Compile>
-    <Compile Include="Commons\Log\IFactoryResolver.cs" />
-    <Compile Include="Commons\Log\ILogger.cs" />
-    <Compile Include="Commons\Log\LoggerBase.cs" />
-    <Compile Include="Commons\Log\LoggerFactory.cs" />
-    <Compile Include="Commons\Log\LogItem.cs" />
-    <Compile Include="Commons\Log\LogLevel.cs" />
     <Compile Include="Commons\Initializers\LayersInitializer.cs" />
     <Compile Include="Commons\Initializers\ILayerInitializer.cs" />
-    <Compile Include="Commons\Security\HashServiceFactory.cs" />
-    <Compile Include="Commons\Security\HashService.cs" />
-    <Compile Include="Commons\Security\SecurityStringExtensions.cs" />
-    <Compile Include="Commons\Security\SymCryptoService.cs" />
-    <Compile Include="Commons\Security\SymCryptoServiceFactory.cs" />
     <Compile Include="DataAccess\Context\IContext.cs" />
     <Compile Include="DataAccess\Repositories\ICustomRepository.cs" />
     <Compile Include="DataAccess\Repositories\IRepository.cs" />
@@ -224,7 +193,22 @@
     <Compile Include="Resources\Exceptions.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commons\Attributes\" />
+    <ProjectReference Include="..\malone.Core.Configuration\malone.Core.Configuration.csproj">
+      <Project>{0A219127-6F7F-4061-8F7A-EE4566C11139}</Project>
+      <Name>malone.Core.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.IoC\malone.Core.IoC.csproj">
+      <Project>{DA7951EB-AE13-4FBB-8E0A-1DF44096456A}</Project>
+      <Name>malone.Core.IoC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.Localization\malone.Core.Localization.csproj">
+      <Project>{9015886E-81B4-44C2-BE50-8B799568627B}</Project>
+      <Name>malone.Core.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\malone.Core.Logging\malone.Core.Logging.csproj">
+      <Project>{a7e8a33d-0703-4a8a-82e4-50e119a502aa}</Project>
+      <Name>malone.Core.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -253,6 +237,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == DebugNuget (

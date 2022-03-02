@@ -4,19 +4,19 @@ using Microsoft.AspNet.Identity;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Business
 {
-    public class RoleBusinessComponent<TKey, TRoleEntity, TUserRole> : RoleManager<TRoleEntity, TKey>
+    public class RoleService<TKey, TRoleEntity, TUserRole> : RoleManager<TRoleEntity, TKey>
         where TKey : IEquatable<TKey>
         where TUserRole : CoreUserRole<TKey>, new()
         where TRoleEntity : CoreRole<TKey, TUserRole>, IRole<TKey>, new()
     {
-        public RoleBusinessComponent(IRoleStore<TRoleEntity, TKey> store) : base(store)
+        public RoleService(IRoleStore<TRoleEntity, TKey> store) : base(store)
         {
         }
     }
 
-    public class RoleBusinessComponent : RoleBusinessComponent<int, CoreRole, CoreUserRole>
+    public class RoleService : RoleService<int, CoreRole, CoreUserRole>
     {
-        public RoleBusinessComponent(IRoleStore<CoreRole, int> store) : base(store)
+        public RoleService(IRoleStore<CoreRole, int> store) : base(store)
         {
         }
     }

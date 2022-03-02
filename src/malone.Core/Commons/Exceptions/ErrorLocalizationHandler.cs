@@ -3,6 +3,7 @@
 
 using System.Resources;
 using malone.Core.Commons.Localization;
+using malone.Core.Localization;
 
 namespace malone.Core.Commons.Exceptions
 {

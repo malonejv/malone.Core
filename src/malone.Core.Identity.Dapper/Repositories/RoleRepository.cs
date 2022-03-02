@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Data;
 using Dapper;
 using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Commons.Log;
 using malone.Core.Dapper.Repositories;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.Dapper.Entities;
+using malone.Core.Logging;
 
 namespace malone.Core.Identity.Dapper.Repositories
-{
-    public class RoleRepository<TKey, TRoleEntity, TUserRole> : CustomRepository<TRoleEntity>, IRoleRepository<TKey, TRoleEntity>
+	{
+	public class RoleRepository<TKey, TRoleEntity, TUserRole> : CustomRepository<TRoleEntity>, IRoleRepository<TKey, TRoleEntity>
          where TKey : IEquatable<TKey>
          where TUserRole : CoreUserRole<TKey>, new()
          where TRoleEntity : CoreRole<TKey, TUserRole>, new()
     {
-        public RoleRepository(IContext context, ILogger logger) : base(context, logger)
+        public RoleRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
 
@@ -124,7 +124,7 @@ namespace malone.Core.Identity.Dapper.Repositories
              where TUserRole : CoreUserRole, new()
              where TRoleEntity : CoreRole<TUserRole>, new()
     {
-        public RoleRepository(IContext context, ILogger logger) : base(context, logger)
+        public RoleRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
     }

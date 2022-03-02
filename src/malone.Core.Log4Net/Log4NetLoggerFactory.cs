@@ -1,10 +1,10 @@
 ﻿using log4net;
 using log4net.Config;
-using malone.Core.Commons.Log;
+using malone.Core.Logging;
 
 namespace malone.Core.Log4Net
-{
-    public class Log4NetLoggerFactory : LoggerFactory
+	{
+	public class Log4NetLoggerFactory : LoggerFactory
     {
         static Log4NetLoggerFactory()
         {
@@ -12,12 +12,12 @@ namespace malone.Core.Log4Net
             XmlConfigurator.Configure();
         }
 
-        public override ILogger GetLogger()
+        public override ICoreLogger GetLogger()
         {
             return new Log4netLogger(LogManager.GetLogger(typeof(ILog)));
         }
 
-        public override ILogger GetLogger(string name)
+        public override ICoreLogger GetLogger(string name)
         {
             return new Log4netLogger(LogManager.GetLogger(name));
         }

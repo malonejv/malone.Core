@@ -3,12 +3,12 @@
 
 using System;
 using System.Reflection;
-using malone.Core.Commons.DI;
-using malone.Core.Commons.Localization;
+using malone.Core.IoC;
+using malone.Core.Localization;
 
 namespace malone.Core.Commons.Exceptions
-{
-    public static class ExceptionFactory<TCode, TErrorLocalizationHandler>
+	{
+	public static class ExceptionFactory<TCode, TErrorLocalizationHandler>
         where TCode : Enum
         where TErrorLocalizationHandler : ILocalizationHandler<TCode>
     {

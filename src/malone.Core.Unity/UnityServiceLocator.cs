@@ -1,10 +1,10 @@
 ﻿using System;
-using malone.Core.Commons.DI;
+using malone.Core.IoC;
 using Unity;
 
 namespace malone.Core.Unity
-{
-    public class UnityServiceLocator : IServiceLocator
+	{
+	public class UnityServiceLocator : IServiceLocator
     {
         private readonly IUnityContainer _container;
 

@@ -81,6 +81,10 @@
     <Compile Include="Repositories\BaseRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\malone.Core.Logging\malone.Core.Logging.csproj">
+      <Project>{a7e8a33d-0703-4a8a-82e4-50e119a502aa}</Project>
+      <Name>malone.Core.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\malone.Core\malone.Core.csproj">
       <Project>{B59A92F9-ABDC-4200-A80D-58A5AB936591}</Project>
       <Name>malone.Core</Name>

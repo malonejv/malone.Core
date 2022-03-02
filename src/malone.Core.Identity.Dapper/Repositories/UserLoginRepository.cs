@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Data;
 using Dapper;
 using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Commons.Log;
 using malone.Core.Dapper.Repositories;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.Dapper.Entities;
+using malone.Core.Logging;
 using Microsoft.AspNet.Identity;
 
 namespace malone.Core.Identity.Dapper.Repositories
-{
-    public class UserLoginRepository<TKey, TUserLogin> : CustomRepository<TUserLogin>, IUserLoginRepository<TKey, TUserLogin>
+	{
+	public class UserLoginRepository<TKey, TUserLogin> : CustomRepository<TUserLogin>, IUserLoginRepository<TKey, TUserLogin>
         where TKey : IEquatable<TKey>
         where TUserLogin : CoreUserLogin<TKey>, new()
     {
-        public UserLoginRepository(IContext context, ILogger logger) : base(context, logger)
+        public UserLoginRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
 
@@ -103,7 +103,7 @@ where TUserKey : IEquatable<TUserKey>
     public class UserLoginRepository<TUserLogin> : UserLoginRepository<int, TUserLogin>, IUserLoginRepository<TUserLogin>
         where TUserLogin : CoreUserLogin, new()
     {
-        public UserLoginRepository(IContext context, ILogger logger) : base(context, logger)
+        public UserLoginRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
     }
