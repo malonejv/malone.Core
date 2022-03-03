@@ -12,7 +12,7 @@ namespace malone.Core.DataAccess.Repositories
 	/// Defines the <see cref="IBaseRepository{T}" />.
 	/// </summary>
 	/// <typeparam name="T">.</typeparam>
-	public interface IBaseRepository<T> : IBaseQueryOperationsRepository<T>, IBaseDataOperationsRepository<T>
+	public interface IBaseRepository<T> : IBaseQueryRepository<T>, IBaseDataManipulationRepository<T>
 		where T : class
 	{
 	}

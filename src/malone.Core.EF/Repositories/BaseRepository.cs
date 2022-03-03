@@ -20,17 +20,17 @@ namespace malone.Core.EF.Repositories
 		protected DbSet<T> EntityDbSet { get; private set; }
 		protected DbContext Context { get; private set; }
 		protected ICoreLogger Logger { get; set; }
-		public IBaseQueryOperationsRepository<T> QueryOperationsRepository { get; }
-		public IBaseDataOperationsRepository<T> DataOperationsRepository { get; }
+		public IBaseQueryRepository<T> QueryRepository { get; }
+		public IBaseDataManipulationRepository<T> DataManipulationRepository { get; }
 
 		#region Constructor
 
-		public BaseRepository(IContext context, ICoreLogger logger, IBaseQueryOperationsRepository<T> queryOperationsRepository, IBaseDataOperationsRepository<T> dataOperationsRepository)
+		public BaseRepository(IContext context, ICoreLogger logger, IBaseQueryRepository<T> queryRepository, IBaseDataManipulationRepository<T> dataManipulationRepository)
 		{
 			Context = context.ThrowIfNull().ThrowIfNotOfType<IContext, DbContext>();
 			Logger = logger.ThrowIfNull();
-			QueryOperationsRepository = queryOperationsRepository.ThrowIfNull();
-			DataOperationsRepository = dataOperationsRepository.ThrowIfNull();
+			QueryRepository = queryRepository.ThrowIfNull();
+			DataManipulationRepository = dataManipulationRepository.ThrowIfNull();
 			EntityDbSet = Context.Set<T>();
 		}
 
@@ -42,38 +42,38 @@ namespace malone.Core.EF.Repositories
 			where TFilter : class, IFilterExpression
 		{
 			ThrowIfDisposed();
-			return QueryOperationsRepository.Get(filter, orderBy, includeDeleted, includeProperties);
+			return QueryRepository.Get(filter, orderBy, includeDeleted, includeProperties);
 		}
 
 		public IEnumerable<T> GetAll(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, bool includeDeleted = false, string includeProperties = "")
 		{
 			ThrowIfDisposed();
-			return QueryOperationsRepository.GetAll(orderBy, includeDeleted, includeProperties);
+			return QueryRepository.GetAll(orderBy, includeDeleted, includeProperties);
 		}
 
 		public T GetEntity<TFilter>(TFilter filter, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy, bool includeDeleted, string includeProperties)
 			where TFilter : class, IFilterExpression
 		{
 			ThrowIfDisposed();
-			return QueryOperationsRepository.GetEntity(filter, orderBy, includeDeleted, includeProperties);
+			return QueryRepository.GetEntity(filter, orderBy, includeDeleted, includeProperties);
 		}
 
 		public void Insert(T entity)
 		{
 			ThrowIfDisposed();
-			DataOperationsRepository.Insert(entity);
+			DataManipulationRepository.Insert(entity);
 		}
 
 		public void Delete(T entity)
 		{
 			ThrowIfDisposed();
-			DataOperationsRepository.Delete(entity);
+			DataManipulationRepository.Delete(entity);
 		}
 
 		public void Update(T oldValues, T newValues)
 		{
 			ThrowIfDisposed();
-			DataOperationsRepository.Update(oldValues, newValues);
+			DataManipulationRepository.Update(oldValues, newValues);
 		}
 
 		#endregion

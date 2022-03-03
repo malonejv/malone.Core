@@ -14,7 +14,7 @@ using malone.Core.Logging;
 
 namespace malone.Core.EF.Repositories
 {
-	public class BaseQueryOperationsRepository<T> : IBaseQueryOperationsRepository<T>, IDisposable
+	public class BaseQueryRepository<T> : IBaseQueryRepository<T>, IDisposable
 		where T : class
 	{
 		protected DbSet<T> EntityDbSet { get; private set; }
@@ -23,7 +23,7 @@ namespace malone.Core.EF.Repositories
 
 		#region Constructor
 
-		public BaseQueryOperationsRepository(IContext context, ICoreLogger logger)
+		public BaseQueryRepository(IContext context, ICoreLogger logger)
 		{
 			context.ThrowIfNull().ThrowIfNotOfType<IContext, DbContext>();
 			logger.ThrowIfNull();

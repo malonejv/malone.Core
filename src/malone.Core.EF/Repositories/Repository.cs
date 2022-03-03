@@ -15,13 +15,13 @@ namespace malone.Core.EF.Repositories.Implementations
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
 	{
-		public new IQueryOperationsRepository<TKey, TEntity> QueryOperationsRepository { get; }
-		public new IDataOperationsRepository<TKey, TEntity> DataOperationsRepository { get; }
+		public new IQueryRepository<TKey, TEntity> QueryRepository { get; }
+		public new IDataManipulationRepository<TKey, TEntity> DataManipulationRepository { get; }
 
 		#region Constructor
 
-		public Repository(IContext context, ICoreLogger logger, IQueryOperationsRepository<TKey, TEntity> queryOperationsRepository, IDataOperationsRepository<TKey, TEntity> dataOperationsRepository) :
-			base(context, logger, queryOperationsRepository, dataOperationsRepository)
+		public Repository(IContext context, ICoreLogger logger, IQueryRepository<TKey, TEntity> QueryRepository, IDataManipulationRepository<TKey, TEntity> DataManipulationRepository) :
+			base(context, logger, QueryRepository, DataManipulationRepository)
 		{ }
 
 		#endregion
@@ -30,7 +30,7 @@ namespace malone.Core.EF.Repositories.Implementations
 
 		public TEntity GetById(TKey id, bool includeDeleted = false, string includeProperties = "")
 		{
-			return QueryOperationsRepository.GetById(id, includeDeleted, includeProperties);
+			return QueryRepository.GetById(id, includeDeleted, includeProperties);
 		}
 
 		public void SetAddOrUpdate<T>(IEnumerable<T> entities)
@@ -52,8 +52,8 @@ namespace malone.Core.EF.Repositories.Implementations
 		IRepository<TEntity>
 		where TEntity : class, IBaseEntity
 	{
-		public Repository(IContext context, ICoreLogger logger, IQueryOperationsRepository<int, TEntity> queryOperationsRepository, IDataOperationsRepository<int, TEntity> dataOperationsRepository) :
-			base(context, logger, queryOperationsRepository, dataOperationsRepository)
+		public Repository(IContext context, ICoreLogger logger, IQueryRepository<int, TEntity> QueryRepository, IDataManipulationRepository<int, TEntity> DataManipulationRepository) :
+			base(context, logger, QueryRepository, DataManipulationRepository)
 		{
 		}
 	}

@@ -8,13 +8,13 @@ using malone.Core.Logging;
 
 namespace malone.Core.EF.Repositories
 {
-	class DataOperationsRepository<TKey, TEntity> : BaseDataOperationsRepository<TEntity>, IDataOperationsRepository<TKey, TEntity>, IDisposable
+	public class DataManipulationRepository<TKey, TEntity> : BaseDataManipulationRepository<TEntity>, IDataManipulationRepository<TKey, TEntity>, IDisposable
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
 	{
 		#region Constructor
 
-		public DataOperationsRepository(IContext context, ICoreLogger logger) : base(context, logger) { }
+		public DataManipulationRepository(IContext context, ICoreLogger logger) : base(context, logger) { }
 
 		#endregion
 

@@ -7,7 +7,7 @@ using malone.Core.Entities.Model;
 
 namespace malone.Core.DataAccess.Repositories
 {
-	public interface IDataOperationsRepository<TKey, TEntity> : IBaseDataOperationsRepository<TEntity>
+	public interface IDataManipulationRepository<TKey, TEntity> : IBaseDataManipulationRepository<TEntity>
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
 	{

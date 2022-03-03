@@ -1,26 +1,30 @@
-﻿namespace malone.Core.WebApi
-{
-	using System;
-	using System.Collections;
-	using System.Web.Http;
-	using malone.Core.Commons.Exceptions;
-	using malone.Core.Entities.Model;
-	using malone.Core.Services;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Http;
+using malone.Core.Commons.Exceptions;
+using malone.Core.Entities.Model;
+using malone.Core.Services;
 
+namespace malone.Core.WebApi
+{
 	/// <summary>
-	/// Defines the <see cref="ApiController{TKey, TParam, TEntity, TService, TServiceValidator}" />.
+	/// Defines the <see cref="FullApiController{TKey, TParam, TEntity, TService, TServiceValidator}" />.
 	/// </summary>
 	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	/// <typeparam name="TParam">.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TService">.</typeparam>
 	/// <typeparam name="TServiceValidator">.</typeparam>
-	public abstract class ApiController<TKey, TParam, TEntity, TService, TServiceValidator> : ApiController
+	public abstract class ReadApiController<TKey, TParam, TEntity, TService, TServiceValidator> : ApiController
 		where TKey : IEquatable<TKey>
 		where TParam : class, IGetRequestParam
 		where TEntity : class, IBaseEntity<TKey>
 		where TServiceValidator : IServiceValidator<TKey, TEntity>
-		where TService : IService<TKey, TEntity, TServiceValidator>
+		where TService : IQueryService<TKey, TEntity, TServiceValidator>
 	{
 		/// <summary>
 		/// Gets or sets the Service.
@@ -28,10 +32,10 @@
 		protected TService Service { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ApiController{TKey, TParam, TEntity, TService, TServiceValidator}"/> class.
+		/// Initializes a new instance of the <see cref="ReadApiController{TKey, TParam, TEntity, TService, TServiceValidator}"/> class.
 		/// </summary>
 		/// <param name="businessComponent">The businessComponent<see cref="TService"/>.</param>
-		public ApiController(TService businessComponent)
+		public ReadApiController(TService businessComponent)
 		{
 			Service = businessComponent;
 		}
@@ -95,7 +99,6 @@
 		{
 			return list;
 		}
-
 		/// <summary>
 		/// The Get.
 		/// </summary>
@@ -137,63 +140,27 @@
 			return entity;
 		}
 
-		/// <summary>
-		/// The Post.
-		/// </summary>
-		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
-		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
-		public virtual IHttpActionResult Post([FromBody] TEntity entity)
-		{
-			Service.Add(entity);
-
-			var location = new Uri(Request.RequestUri + entity.Id.ToString());
-
-			return Created(location, entity);
-		}
-
-		/// <summary>
-		/// The Put.
-		/// </summary>
-		/// <param name="id">The id<see cref="TKey"/>.</param>
-		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
-		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
-		public virtual IHttpActionResult Put(TKey id, [FromBody] TEntity entity)
-		{
-			Service.Update(entity);
-			return Ok();
-		}
-
-		/// <summary>
-		/// The Delete.
-		/// </summary>
-		/// <param name="id">The id<see cref="TKey"/>.</param>
-		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
-		public virtual IHttpActionResult Delete(TKey id)
-		{
-			Service.Delete(id);
-			return Ok();
-		}
 	}
 
 	/// <summary>
-	/// Defines the <see cref="ApiController{TParam, TEntity, TService, TServiceValidator}" />.
+	/// Defines the <see cref="ReadApiController{TParam, TEntity, TService, TServiceValidator}" />.
 	/// </summary>
 	/// <typeparam name="TParam">.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TService">.</typeparam>
 	/// <typeparam name="TServiceValidator">.</typeparam>
-	public abstract class ApiController<TParam, TEntity, TService, TServiceValidator>
-	: ApiController<int, TParam, TEntity, TService, TServiceValidator>
-   where TParam : class, IGetRequestParam
-   where TEntity : class, IBaseEntity
-   where TServiceValidator : IServiceValidator<TEntity>
-   where TService : IService<TEntity, TServiceValidator>
+	public abstract class ReadApiController<TParam, TEntity, TService, TServiceValidator>
+		: ReadApiController<int, TParam, TEntity, TService, TServiceValidator>
+		where TParam : class, IGetRequestParam
+		where TEntity : class, IBaseEntity
+		where TServiceValidator : IServiceValidator<TEntity>
+		where TService : IQueryService<TEntity, TServiceValidator>
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ApiController{TParam, TEntity, TService, TServiceValidator}"/> class.
+		/// Initializes a new instance of the <see cref="ReadApiController{TParam, TEntity, TService, TServiceValidator}"/> class.
 		/// </summary>
 		/// <param name="businessComponent">The businessComponent<see cref="TService"/>.</param>
-		public ApiController(TService businessComponent) : base(businessComponent)
+		public ReadApiController(TService businessComponent) : base(businessComponent)
 		{
 		}
 

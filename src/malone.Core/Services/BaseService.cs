@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using malone.Core.Commons.Exceptions;
+using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.DataAccess.UnitOfWork;
 using malone.Core.Entities.Filters;
@@ -23,9 +24,14 @@ namespace malone.Core.Services
 		where TValidator : IBaseServiceValidator<TEntity>
 	{
 		/// <summary>
-		/// Gets or sets the Repository.
+		/// Gets or sets the QueryRepository.
 		/// </summary>
-		public IBaseRepository<TEntity> Repository { get; set; }
+		private IBaseQueryService<TEntity, TValidator> QueryService { get; }
+
+		/// <summary>
+		/// Gets or sets the DataManipulationRepository.
+		/// </summary>
+		private IBaseDataManipulationService<TEntity, TValidator> DataManipulationService { get; }
 
 		/// <summary>
 		/// Gets or sets the ServiceValidator.
@@ -41,305 +47,49 @@ namespace malone.Core.Services
 		/// Initializes a new instance of the <see cref="BaseService{TEntity, TValidator}"/> class.
 		/// </summary>
 		/// <param name="businessValidator">The businessValidator<see cref="TValidator"/>.</param>
-		/// <param name="repository">The repository<see cref="IBaseRepository{TEntity}"/>.</param>
+		/// <param name="queryRepository">The repository<see cref="IBaseQueryRepository{TEntity}"/>.</param>
+		/// <param name="dataManipulationRepository">The repository<see cref="IBaseDataManipulationRepository{TEntity}"/>.</param>
 		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
-		public BaseService(TValidator businessValidator, IBaseRepository<TEntity> repository, ICoreLogger logger)
+		protected BaseService(TValidator businessValidator, IBaseQueryService<TEntity, TValidator> queryService, IBaseDataManipulationService<TEntity, TValidator> dataManipulationService, ICoreLogger logger)
 		{
-			ServiceValidator = businessValidator;
-			Repository = repository;
-			Logger = logger;
+			ServiceValidator = businessValidator.ThrowIfNull();
+			QueryService = queryService.ThrowIfNull();
+			DataManipulationService = dataManipulationService.ThrowIfNull();
+			Logger = logger.ThrowIfNull();
 		}
 
-		/// <summary>
-		/// The GetAll.
-		/// </summary>
-		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
-		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
-		/// <returns>The <see cref="IEnumerable{TEntity}"/>.</returns>
-		public virtual IEnumerable<TEntity> GetAll(
-Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-bool includeDeleted = false,
-string includeProperties = ""
-)
+
+		public IEnumerable<TEntity> GetAll(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "")
 		{
-			try
-			{
-				var result = Repository.GetAll(orderBy, includeDeleted, includeProperties);
-
-				return result;
-			}
-			catch (TechnicalException) { throw; }
-			catch (Exception ex)
-			{
-				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
-				if (Logger != null)
-				{
-					Logger.Error(techEx);
-				}
-
-				throw techEx;
-			}
+			return QueryService.GetAll(orderBy, includeDeleted, includeProperties);
 		}
 
-		/// <summary>
-		/// The Get.
-		/// </summary>
-		/// <typeparam name="TFilter">.</typeparam>
-		/// <param name="filter">The filter<see cref="TFilter"/>.</param>
-		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
-		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
-		/// <returns>The <see cref="IEnumerable{TEntity}"/>.</returns>
-		public virtual IEnumerable<TEntity> Get<TFilter>(
-TFilter filter = default(TFilter),
-Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-bool includeDeleted = false,
-string includeProperties = "")
-where TFilter : class, IFilterExpression
+		public IEnumerable<TEntity> Get<TFilter>(TFilter filter = default(TFilter), Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, bool includeDeleted = false,
+			string includeProperties = "") where TFilter : class, IFilterExpression
 		{
-			try
-			{
-				var result = Repository.Get(filter, orderBy, includeDeleted, includeProperties);
-
-				return result;
-			}
-			catch (TechnicalException) { throw; }
-			catch (Exception ex)
-			{
-				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
-				if (Logger != null)
-				{
-					Logger.Error(techEx);
-				}
-
-				throw techEx;
-			}
+			return QueryService.Get(filter, orderBy, includeDeleted, includeProperties);
 		}
 
-		/// <summary>
-		/// The GetEntity.
-		/// </summary>
-		/// <typeparam name="TFilter">.</typeparam>
-		/// <param name="filter">The filter<see cref="TFilter"/>.</param>
-		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
-		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
-		/// <returns>The <see cref="TEntity"/>.</returns>
-		public TEntity GetEntity<TFilter>(
-TFilter filter = default(TFilter),
-Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-bool includeDeleted = false,
-string includeProperties = "")
-where TFilter : class, IFilterExpression
+		public TEntity GetEntity<TFilter>(TFilter filter = default(TFilter), Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, bool includeDeleted = false,
+			string includeProperties = "") where TFilter : class, IFilterExpression
 		{
-			try
-			{
-				var result = Repository.GetEntity(filter, orderBy, includeDeleted, includeProperties);
-
-				return result;
-			}
-			catch (TechnicalException) { throw; }
-			catch (Exception ex)
-			{
-				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
-				if (Logger != null)
-				{
-					Logger.Error(techEx);
-				}
-
-				throw techEx;
-			}
+			return QueryService.GetEntity(filter, orderBy, includeDeleted, includeProperties);
 		}
 
-		/// <summary>
-		/// The Add.
-		/// </summary>
-		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
-		/// <param name="saveChanges">The saveChanges<see cref="bool"/>.</param>
-		/// <param name="disposeUoW">The disposeUoW<see cref="bool"/>.</param>
-		public virtual void Add(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
+		public void Add(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
 		{
-			try
-			{
-				var uow = UnitOfWork.Create();
-
-				CheckEntity(entity);
-
-				var validationResult = ServiceValidator.Validate(ServiceValidator.ExecuteAddValidationRules, ServiceValidator.AddValidationRules);
-				if (!validationResult.IsValid)
-				{
-					throw new BusinessRulesValidationException(validationResult);
-				}
-
-				Repository.Insert(entity);
-
-				if (saveChanges)
-				{
-					uow.SaveChanges();
-				}
-
-				if (disposeUoW)
-				{
-					uow.Dispose();
-				}
-			}
-			catch (BusinessRulesValidationException) { throw; }
-			catch (TechnicalException) { throw; }
-			catch (Exception ex)
-			{
-				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS401, typeof(TEntity));
-				if (Logger != null)
-				{
-					Logger.Error(techEx);
-				}
-
-				throw techEx;
-			}
+			DataManipulationService.Add(entity, saveChanges, disposeUoW);
 		}
 
-		/// <summary>
-		/// The Update.
-		/// </summary>
-		/// <param name="oldValues">The oldValues<see cref="TEntity"/>.</param>
-		/// <param name="newValues">The newValues<see cref="TEntity"/>.</param>
-		/// <param name="saveChanges">The saveChanges<see cref="bool"/>.</param>
-		/// <param name="disposeUoW">The disposeUoW<see cref="bool"/>.</param>
-		public virtual void Update(TEntity oldValues, TEntity newValues, bool saveChanges = true, bool disposeUoW = true)
+		public void Update(TEntity oldValues, TEntity newValues, bool saveChanges = true, bool disposeUoW = true)
 		{
-			try
-			{
-				var uow = UnitOfWork.Create();
-				CheckEntity(oldValues);
-				CheckEntityId(oldValues);
-				CheckEntity(newValues);
-
-				var validationResult = ServiceValidator.Validate(ServiceValidator.ExecuteUpdateValidationRules, ServiceValidator.UpdateValidationRules);
-				if (!validationResult.IsValid)
-				{
-					throw new BusinessRulesValidationException(validationResult);
-				}
-
-				Repository.Update(oldValues, newValues);
-				if (saveChanges)
-				{
-					uow.SaveChanges();
-				}
-
-				if (disposeUoW)
-				{
-					uow.Dispose();
-				}
-			}
-			catch (EntityNotFoundException ex)
-			{
-				if (Logger != null)
-				{
-					Logger.Warn(ex);
-				}
-
-				throw;
-			}
-			catch (BusinessRulesValidationException ex)
-			{
-				if (Logger != null)
-				{
-					Logger.Warn(ex);
-				}
-
-				throw;
-			}
-			catch (TechnicalException) { throw; }
-			catch (Exception ex)
-			{
-				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS403, typeof(TEntity));
-				if (Logger != null)
-				{
-					Logger.Error(techEx);
-				}
-
-				throw techEx;
-			}
+			DataManipulationService.Update(oldValues, newValues, saveChanges, disposeUoW);
 		}
 
-		/// <summary>
-		/// The Delete.
-		/// </summary>
-		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
-		/// <param name="saveChanges">The saveChanges<see cref="bool"/>.</param>
-		/// <param name="disposeUoW">The disposeUoW<see cref="bool"/>.</param>
-		public virtual void Delete(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
+		public void Delete(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
 		{
-			try
-			{
-				var uow = UnitOfWork.Create();
-				CheckEntity(entity);
-				CheckEntityId(entity);
-
-				var validationResult = ServiceValidator.Validate(ServiceValidator.ExecuteDeleteValidationRules, ServiceValidator.DeleteValidationRules);
-				if (!validationResult.IsValid)
-				{
-					throw new BusinessRulesValidationException(validationResult);
-				}
-
-				if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
-				{
-					var softDelete = entity as ISoftDelete;
-					softDelete.IsDeleted = true;
-					Repository.Update(entity, softDelete as TEntity);
-				}
-				else
-				{
-					Repository.Delete(entity);
-				}
-
-				if (saveChanges)
-				{
-					uow.SaveChanges();
-				}
-
-				if (disposeUoW)
-				{
-					uow.Dispose();
-				}
-			}
-			catch (BusinessRulesValidationException) { throw; }
-			catch (TechnicalException) { throw; }
-			catch (Exception ex)
-			{
-				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS402, typeof(TEntity));
-				if (Logger != null)
-				{
-					Logger.Error(techEx);
-				}
-
-				throw techEx;
-			}
+			DataManipulationService.Delete(entity, saveChanges, disposeUoW);
 		}
-
-		/// <summary>
-		/// The CheckEntity.
-		/// </summary>
-		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
-		protected void CheckEntity(TEntity entity)
-		{
-			if (entity == default(TEntity))
-			{
-				throw new ArgumentException(nameof(entity));
-			}
-		}
-
-		/// <summary>
-		/// The CheckEntityId.
-		/// </summary>
-		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
-		protected abstract void CheckEntityId(TEntity entity);
-
-		/// <summary>
-		/// The CheckId.
-		/// </summary>
-		/// <param name="args">The args<see cref="object[]"/>.</param>
-		protected abstract void CheckId(params object[] args);
 	}
 
 }

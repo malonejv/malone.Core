@@ -7,7 +7,7 @@ using malone.Core.Entities.Filters;
 
 namespace malone.Core.DataAccess.Repositories
 {
-	public interface IBaseQueryOperationsRepository<T>
+	public interface IBaseQueryRepository<T>
 		where T : class
 	{
 		/// <summary>

@@ -11,13 +11,13 @@ using malone.Core.Logging;
 
 namespace malone.Core.EF.Repositories
 {
-	class QueryOperationsRepository<TKey, TEntity>: BaseQueryOperationsRepository<TEntity>, IQueryOperationsRepository<TKey, TEntity>, IDisposable
+	public class QueryRepository<TKey, TEntity>: BaseQueryRepository<TEntity>, IQueryRepository<TKey, TEntity>, IDisposable
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
 	{
 		#region Constructor
 
-		public QueryOperationsRepository(IContext context, ICoreLogger logger) : base(context, logger) { }
+		public QueryRepository(IContext context, ICoreLogger logger) : base(context, logger) { }
 
 		#endregion
 

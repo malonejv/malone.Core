@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace malone.Core.DataAccess.Repositories
 {
-	public interface IBaseDataOperationsRepository<T>
+	public interface IBaseDataManipulationRepository<T>
 		where T : class
 	{
 		/// <summary>

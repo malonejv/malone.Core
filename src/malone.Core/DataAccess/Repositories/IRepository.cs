@@ -11,7 +11,7 @@ namespace malone.Core.DataAccess.Repositories
 	/// </summary>
 	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
-	public interface IRepository<TKey, TEntity> : IBaseRepository<TEntity>, IQueryOperationsRepository<TKey, TEntity>, IDataOperationsRepository<TKey, TEntity>
+	public interface IRepository<TKey, TEntity> : IBaseRepository<TEntity>, IQueryRepository<TKey, TEntity>, IDataManipulationRepository<TKey, TEntity>
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
 	{
