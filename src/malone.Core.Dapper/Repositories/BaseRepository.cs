@@ -50,10 +50,10 @@ namespace malone.Core.Dapper.Repositories
             string columns = TEntityType.GetColumnNames();
             string query = string.Format("SELECT {0} FROM {1}", columns, tableName);
 
-            DynamicParameters parameters = new DynamicParameters();
-            var allowSoftDelete = ConfigureParameterIsDelete(query, columns, tableName, parameters, includeDeleted);
+            var allowSoftDelete = ConfigureParameterIsDelete(query, columns, tableName);
             query += ";";
 
+            DynamicParameters parameters = new DynamicParameters();
             return new CommandDefinition(query, transaction: Context.Transaction, commandType: CommandType.Text, parameters: parameters);
         }
 
@@ -374,7 +374,7 @@ namespace malone.Core.Dapper.Repositories
             }
         }
 
-        protected bool ConfigureParameterIsDelete(string query, string columns, string tableName, DynamicParameters parameters, bool includeDeleted)
+        protected bool ConfigureParameterIsDelete(string query, string columns, string tableName)
         {
             var allowSoftDelete = typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity));
             if (allowSoftDelete)

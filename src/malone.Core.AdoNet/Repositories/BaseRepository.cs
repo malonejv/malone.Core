@@ -1,4 +1,6 @@
-﻿namespace malone.Core.AdoNet.Repositories
+﻿using System.Reflection;
+
+namespace malone.Core.AdoNet.Repositories
 {
 	using System;
 	using System.Collections.Generic;
@@ -46,6 +48,7 @@
 			Logger = logger;
 		}
 
+
 		/// <summary>
 		/// The ConfigureCommandForGetAll.
 		/// </summary>
@@ -73,6 +76,20 @@
 				IQueryable<TEntity> queryableResult;
 
 				var command = Context.CreateCommand();
+
+
+				var entityType = typeof(TEntity);
+				entityType = this.GetType().GetInterface("IBaseRepository`1").GetGenericArguments()[0];
+				string tableName = entityType.GetTableName();
+				List<string> columns = entityType.GetColumnNames();
+				
+				ConfigureParameterForSoftDelete(entityType, columns, includeDeleted);
+
+				//TODO: Continuar aquí 03/03/2022
+				string whereClause = "";
+				string columnNames = columns.Aggregate((i, j) => $"{i}, {j}");
+				string query = $"SELECT {columnNames} FROM {tableName} WHERE {whereClause}";
+				
 				ConfigureCommandForGetAll(command, includeDeleted, includeProperties);
 				queryableResult = GetQueryable(command, includeDeleted, orderBy);
 
@@ -437,6 +454,19 @@
 				}
 
 				throw techEx;
+			}
+		}
+
+		protected void ConfigureParameterForSoftDelete(Type entityType, List<string> columns, bool includeDeleted)
+		{
+			if (includeDeleted)
+			{
+				var allowSoftDelete = typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity));
+				var columnName = entityType.GetColumnName(nameof(ISoftDelete.IsDeleted));
+				if (allowSoftDelete && !columns.Contains(columnName))
+				{
+					columns.Add(columnName);
+				}
 			}
 		}
 

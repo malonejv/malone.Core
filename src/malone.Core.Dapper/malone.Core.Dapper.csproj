@@ -64,7 +64,6 @@
     <Compile Include="Entities\TypeDapperExtensions.cs" />
     <Compile Include="Entities\Filters\IFilterExpressionDapper.cs" />
     <Compile Include="Entities\Filters\IFilterExpressionsDapperExtensions.cs" />
-    <Compile Include="Entities\IBaseEntityDapperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CustomRepository.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />

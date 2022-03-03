@@ -12,6 +12,5 @@ namespace malone.Core.EF.Context
         public CoreDbContext(string connectionStringName) : base(connectionStringName)
         {
         }
-
     }
 }

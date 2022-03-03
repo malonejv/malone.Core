@@ -20,7 +20,7 @@ using System.Reflection;
 /*NO MODIFICAR*/
 /**************/
 [assembly: AssemblyVersion("2.1.11")]
-[assembly: AssemblyInformationalVersion("2.1.11.68-dev")]
+[assembly: AssemblyInformationalVersion("2.1.11.69-dev")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
