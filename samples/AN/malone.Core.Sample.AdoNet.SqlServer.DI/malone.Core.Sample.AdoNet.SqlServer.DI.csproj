@@ -73,11 +73,17 @@
     <Reference Include="malone.Core.AdoNet, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\malone.Core.AdoNet.2.1.11.82-dev\lib\net471\malone.Core.AdoNet.dll</HintPath>
     </Reference>
+    <Reference Include="malone.Core.AdoNet.SqlServer, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\malone.Core.AdoNet.SqlServer.2.1.11.82-dev\lib\net471\malone.Core.AdoNet.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="malone.Core.Async, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\malone.Core.Identity.2.1.11.82-dev\lib\net471\malone.Core.Async.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Configuration, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\malone.Core.AdoNet.2.1.11.82-dev\lib\net471\malone.Core.Configuration.dll</HintPath>
+      <HintPath>..\..\..\packages\malone.Core.Unity.ModulesInitializers.2.1.11.82-dev\lib\net471\malone.Core.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="malone.Core.EF, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\malone.Core.EF.2.1.11.82-dev\lib\net471\malone.Core.EF.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Identity, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\malone.Core.Identity.2.1.11.82-dev\lib\net471\malone.Core.Identity.dll</HintPath>
@@ -86,13 +92,16 @@
       <HintPath>..\..\..\packages\malone.Core.Identity.AdoNet.SqlServer.2.1.11.82-dev\lib\net471\malone.Core.Identity.AdoNet.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.IoC, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\malone.Core.WebApi.2.1.11.82-dev\lib\net471\malone.Core.IoC.dll</HintPath>
+      <HintPath>..\..\..\packages\malone.Core.Unity.ModulesInitializers.2.1.11.82-dev\lib\net471\malone.Core.IoC.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Localization, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\malone.Core.WebApi.2.1.11.82-dev\lib\net471\malone.Core.Localization.dll</HintPath>
+      <HintPath>..\..\..\packages\malone.Core.Unity.ModulesInitializers.2.1.11.82-dev\lib\net471\malone.Core.Localization.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Logging, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\malone.Core.Identity.AdoNet.SqlServer.2.1.11.82-dev\lib\net471\malone.Core.Logging.dll</HintPath>
+      <HintPath>..\..\..\packages\malone.Core.Unity.ModulesInitializers.2.1.11.82-dev\lib\net471\malone.Core.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="malone.Core.Unity.ModulesInitializers, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\malone.Core.Unity.ModulesInitializers.2.1.11.82-dev\lib\net471\malone.Core.Unity.ModulesInitializers.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.WebApi, Version=2.1.11.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\malone.Core.WebApi.2.1.11.82-dev\lib\net471\malone.Core.WebApi.dll</HintPath>

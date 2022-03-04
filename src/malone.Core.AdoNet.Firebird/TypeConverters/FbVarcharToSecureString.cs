@@ -1,7 +1,8 @@
-﻿namespace malone.Core.AdoNet.Oracle.TypeConverters
+﻿using malone.Core.Commons.Helpers.Extensions;
+
+namespace malone.Core.AdoNet.Oracle.TypeConverters
 {
 	using malone.Core.AdoNet.Parameters;
-	using malone.Core.Commons.Helpers.Extensions;
 
 	/// <summary>
 	/// Defines the <see cref="FbVarcharToSecureString" />.
