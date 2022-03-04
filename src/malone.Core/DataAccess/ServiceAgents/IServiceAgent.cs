@@ -3,7 +3,10 @@
 
 namespace malone.Core.DataAccess.ServiceAgents
 {
-    public interface IServiceAgent
-    {
-    }
+	/// <summary>
+	/// Defines the <see cref="IServiceAgent" />.
+	/// </summary>
+	public interface IServiceAgent
+	{
+	}
 }

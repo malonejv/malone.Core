@@ -6,7 +6,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Entities.Filters
 {
     public class RoleGetRequest : IFilterExpressionAdoNet
     {
-        [DbParameter("@Name", Type = SqlDbType.NVarChar, Order = 1, Direction = ParameterDirection.Input)]
+        [Column("@Name", Type = DbType.String, Order = 1, Direction = ParameterDirection.Input)]
         public string Name { get; set; }
 
     }

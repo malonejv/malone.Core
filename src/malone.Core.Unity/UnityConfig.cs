@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using malone.Core.Commons.Configurations;
-using malone.Core.Commons.Configurations.Modules;
-using malone.Core.Commons.DI;
 using malone.Core.Commons.Initializers;
+using malone.Core.Configuration;
+using malone.Core.Configuration.Modules;
+using malone.Core.IoC;
 using malone.Core.Unity.IdentityAdoNetSqlServerInitializer;
 using malone.Core.Unity.IdentityDapperInitializer;
 using malone.Core.Unity.IdentityEntityFramworkInitializer;

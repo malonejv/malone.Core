@@ -7,15 +7,15 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using malone.Core.AdoNet.Context;
 using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.Entities.Model;
 using malone.Core.Identity.Dapper.Entities;
+using malone.Core.Logging;
 using Microsoft.AspNet.Identity;
 
 namespace malone.Core.Identity.Dapper.Repositories
-{
-    public abstract class UserStore<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim> :
+	{
+	public abstract class UserStore<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim> :
         IUserLoginStore<TUserEntity, TKey>,
         IUserClaimStore<TUserEntity, TKey>,
         IUserRoleStore<TUserEntity, TKey>,
@@ -42,11 +42,11 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         protected IContext Context { get; private set; }
 
-        protected ILogger Logger { get; }
+        protected ICoreLogger Logger { get; }
 
         public bool AutoSaveChanges { get; set; }
 
-        public UserStore(IUserLoginRepository<TKey, TUserLogin> logins, IUserClaimRepository<TKey, TUserClaim> userClaims, IUserRoleRepository<TKey, TUserRole> userRoles, IRoleRepository<TKey, TRoleEntity> roles, IUserRepository<TKey, TUserEntity> users, IContext context, ILogger logger)
+        public UserStore(IUserLoginRepository<TKey, TUserLogin> logins, IUserClaimRepository<TKey, TUserClaim> userClaims, IUserRoleRepository<TKey, TUserRole> userRoles, IRoleRepository<TKey, TRoleEntity> roles, IUserRepository<TKey, TUserEntity> users, IContext context, ICoreLogger logger)
         {
             CheckContext(context);
             CheckLogger(logger);
@@ -505,7 +505,7 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         #region Private methods
 
-        private void CheckLogger(ILogger logger)
+        private void CheckLogger(ICoreLogger logger)
         {
             if (logger == null)
             {
@@ -575,24 +575,24 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         //Evaluar usar este tipo de objetos para reemplazar los IAdoNetFilterExpression
 
-        // We want to use FindAsync() when looking for an User.Id instead of LINQ to avoid extra 
-        // database roundtrips. This class cracks open the filter expression passed by 
-        // UserStore.FindByIdAsync() to obtain the value of the id we are looking for 
+        // We want to use FindAsync() when looking for an User.Id instead of LINQ to avoid extra
+        // database roundtrips. This class cracks open the filter expression passed by
+        // UserStore.FindByIdAsync() to obtain the value of the id we are looking for
         private static class FindByIdFilterParser
         {
             // expression pattern we need to match
             private static readonly Expression<Func<TUserEntity, bool>> Predicate = u => u.Id.Equals(default(TKey));
-            // method we need to match: Object.Equals() 
+            // method we need to match: Object.Equals()
             private static readonly MethodInfo EqualsMethodInfo = ((MethodCallExpression)Predicate.Body).Method;
-            // property access we need to match: User.Id 
+            // property access we need to match: User.Id
             private static readonly MemberInfo UserIdMemberInfo = ((MemberExpression)((MethodCallExpression)Predicate.Body).Object).Member;
 
             internal static bool TryMatchAndGetId(Expression<Func<TUserEntity, bool>> filter, out TKey id)
             {
-                // default value in case we can’t obtain it 
+                // default value in case we can’t obtain it
                 id = default(TKey);
 
-                // lambda body should be a call 
+                // lambda body should be a call
                 if (filter.Body.NodeType != ExpressionType.Call)
                 {
                     return false;
@@ -647,7 +647,7 @@ namespace malone.Core.Identity.Dapper.Repositories
                     return false;
                 }
 
-                // expression tree matched so we can now just get the value of the id 
+                // expression tree matched so we can now just get the value of the id
                 var fieldInfo = (FieldInfo)fieldAccess.Member;
                 var closure = ((ConstantExpression)fieldAccess.Expression).Value;
 
@@ -656,32 +656,32 @@ namespace malone.Core.Identity.Dapper.Repositories
             }
         }
 
-        // We want to use FindAsync() when looking for an User.UserName instead of LINQ to avoid extra 
-        // database roundtrips. This class cracks open the filter expression passed by 
-        // UserStore.FindByIdAsync() to obtain the value of the id we are looking for 
+        // We want to use FindAsync() when looking for an User.UserName instead of LINQ to avoid extra
+        // database roundtrips. This class cracks open the filter expression passed by
+        // UserStore.FindByIdAsync() to obtain the value of the id we are looking for
         private static class FindByUserNameOrEmailFilterParser
         {
             // expression pattern we need to match
             private static readonly Expression<Func<TUserEntity, bool>> UserNamePredicate = u => u.UserName.Equals(null);
-            // method we need to match: Object.Equals() 
+            // method we need to match: Object.Equals()
             private static readonly MethodInfo UserNameEqualsMethodInfo = ((MethodCallExpression)UserNamePredicate.Body).Method;
-            // property access we need to match: UserRequest.UserNameOrEmail 
+            // property access we need to match: UserRequest.UserNameOrEmail
             private static readonly MemberInfo UserNameMemberInfo = ((MemberExpression)((MethodCallExpression)UserNamePredicate.Body).Object).Member;
 
             // expression pattern we need to match
             private static readonly Expression<Func<TUserEntity, bool>> EmailPredicate = u => u.Email.Equals(null);
-            // method we need to match: Object.Equals() 
+            // method we need to match: Object.Equals()
             private static readonly MethodInfo EmailEqualsMethodInfo = ((MethodCallExpression)EmailPredicate.Body).Method;
-            // property access we need to match: UserRequest.UserNameOrEmail 
+            // property access we need to match: UserRequest.UserNameOrEmail
             private static readonly MemberInfo EmailMemberInfo = ((MemberExpression)((MethodCallExpression)EmailPredicate.Body).Object).Member;
 
 
             internal static bool TryMatchAndGetUserNameOrEmail(Expression<Func<TUserEntity, bool>> filter, out string userNameOrEmail)
             {
-                // default value in case we can’t obtain it 
+                // default value in case we can’t obtain it
                 userNameOrEmail = null;
 
-                // lambda body should be a call 
+                // lambda body should be a call
                 if (filter.Body.NodeType != ExpressionType.Call)
                 {
                     return false;
@@ -742,7 +742,7 @@ namespace malone.Core.Identity.Dapper.Repositories
                     return false;
                 }
 
-                // expression tree matched so we can now just get the value of the id 
+                // expression tree matched so we can now just get the value of the id
                 var fieldInfo = (FieldInfo)fieldAccess.Member;
                 var closure = ((ConstantExpression)fieldAccess.Expression).Value;
 
@@ -762,7 +762,7 @@ namespace malone.Core.Identity.Dapper.Repositories
             where TRoleEntity : CoreRole<TUserRole>
             where TUserEntity : CoreUser<TUserLogin, TUserRole, TUserClaim>
     {
-        public UserStore(IUserLoginRepository<TUserLogin> logins, IUserClaimRepository<TUserClaim> userClaims, IUserRoleRepository<TUserRole> userRoles, IRoleRepository<TRoleEntity> roles, IUserRepository<TUserEntity> users, IContext context, ILogger logger) : base(logins, userClaims, userRoles, roles, users, context, logger)
+        public UserStore(IUserLoginRepository<TUserLogin> logins, IUserClaimRepository<TUserClaim> userClaims, IUserRoleRepository<TUserRole> userRoles, IRoleRepository<TRoleEntity> roles, IUserRepository<TUserEntity> users, IContext context, ICoreLogger logger) : base(logins, userClaims, userRoles, roles, users, context, logger)
         {
         }
     }

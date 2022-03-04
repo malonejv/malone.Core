@@ -2,6 +2,9 @@ name: Deploy Workflow
 description: Deploy application
 
 inputs:
+   MALONECORE_ENVIRONMENT:
+     required: true
+     default: 'Development'
    MALONECORE_NUGET_PATTERN:
      required: true
      default: ''
@@ -23,12 +26,12 @@ inputs:
    NUGET_PASSWORD:
      required: true
      default: ''
-     
+
 runs:
   using: "composite"
 
-  steps: 
-  
+  steps:
+
   - name: Download packed artifacts
     uses: actions/download-artifact@v2
     with:
@@ -42,4 +45,4 @@ runs:
           nuget setApiKey ${{ inputs.NUGET_PASSWORD }} -Source ${{ inputs.NUGET_SOURCE }}
           cd "${{ inputs.PKG_ARTIFACTS_DIR }}"
           nuget push "${{ inputs.MALONECORE_NUGET_PATTERN }}" -SkipDuplicate -source "github"
-          if("${{ inputs.MALONECORE_NUGET_SYMBOL_PATTERN }}"-ne""){ nuget push "${{ inputs.MALONECORE_NUGET_SYMBOL_PATTERN }}" -SkipDuplicate -source "github"}
+          if("${{ inputs.MALONECORE_ENVIRONMENT }}" -eq "Development"){ nuget push "${{ inputs.MALONECORE_NUGET_SYMBOL_PATTERN }}" -SkipDuplicate -source "github"}

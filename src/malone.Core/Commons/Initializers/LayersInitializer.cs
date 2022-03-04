@@ -1,27 +1,38 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:48:03</date>
 
-using System;
-using System.Collections.Generic;
-using malone.Core.Commons.DI;
-
 namespace malone.Core.Commons.Initializers
 {
-    public abstract class LayersInitializer<TContainer> : ILayerInitializer<TContainer>
-    {
-        public abstract IEnumerable<IInitializer<TContainer>> Layers { get; }
+	using System;
+	using System.Collections.Generic;
+	using malone.Core.Commons.DI;
 
-        public void Initialize(TContainer container)
-        {
-            if (container == null)
-            {
-                throw new ArgumentNullException(nameof(container));
-            }
+	/// <summary>
+	/// Defines the <see cref="LayersInitializer{TContainer}" />.
+	/// </summary>
+	/// <typeparam name="TContainer">.</typeparam>
+	public abstract class LayersInitializer<TContainer> : ILayerInitializer<TContainer>
+	{
+		/// <summary>
+		/// Gets the Layers.
+		/// </summary>
+		public abstract IEnumerable<IInitializer<TContainer>> Layers { get; }
 
-            foreach (var layer in Layers)
-            {
-                layer.Initialize(container);
-            }
-        }
-    }
+		/// <summary>
+		/// The Initialize.
+		/// </summary>
+		/// <param name="container">The container<see cref="TContainer"/>.</param>
+		public void Initialize(TContainer container)
+		{
+			if (container == null)
+			{
+				throw new ArgumentNullException(nameof(container));
+			}
+
+			foreach (var layer in Layers)
+			{
+				layer.Initialize(container);
+			}
+		}
+	}
 }

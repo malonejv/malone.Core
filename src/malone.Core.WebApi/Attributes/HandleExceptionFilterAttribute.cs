@@ -1,142 +1,165 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web.Http.Filters;
-using malone.Core.Commons.DI;
-using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Localization;
-
-namespace malone.Core.WebApi.Attributes
+﻿namespace malone.Core.WebApi.Attributes
 {
-    public class HandleExceptionFilterAttribute : ExceptionFilterAttribute
-    {
-        private IContentLocalizationHandler ContentLocalizationHandler { get; set; }
-        private IErrorLocalizationHandler ErrorLocalizationHandler { get; set; }
+	using System;
+	using System.Net;
+	using System.Net.Http;
+	using System.Text;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using System.Web.Http.Filters;
+	using malone.Core.Commons.Exceptions;
+	using malone.Core.Commons.Localization;
+	using malone.Core.IoC;
 
-        public HandleExceptionFilterAttribute()
-        {
+	/// <summary>
+	/// Defines the <see cref="HandleExceptionFilterAttribute" />.
+	/// </summary>
+	public class HandleExceptionFilterAttribute : ExceptionFilterAttribute
+	{
+		/// <summary>
+		/// Gets or sets the ContentLocalizationHandler.
+		/// </summary>
+		private IContentLocalizationHandler ContentLocalizationHandler { get; set; }
 
-            ContentLocalizationHandler = ServiceLocator.Current.Get<IContentLocalizationHandler>();
-            ErrorLocalizationHandler = ServiceLocator.Current.Get<IErrorLocalizationHandler>();
-        }
+		/// <summary>
+		/// Gets or sets the ErrorLocalizationHandler.
+		/// </summary>
+		private IErrorLocalizationHandler ErrorLocalizationHandler { get; set; }
 
-        public override void OnException(HttpActionExecutedContext actionExecutedContext)
-        {
-            HttpStatusCode status = HttpStatusCode.InternalServerError;
-            String message = String.Empty;
-            var ex = actionExecutedContext.Exception;
-            var exceptionType = actionExecutedContext.Exception.GetType();
+		/// <summary>
+		/// Initializes a new instance of the <see cref="HandleExceptionFilterAttribute"/> class.
+		/// </summary>
+		public HandleExceptionFilterAttribute()
+		{
 
-            //Is BaseException
-            if (exceptionType == typeof(BusinessRulesValidationException))
-            {
-                var bvEx = ex as BusinessRulesValidationException;
-                StringBuilder sbMessage = new StringBuilder();
+			ContentLocalizationHandler = ServiceLocator.Current.Get<IContentLocalizationHandler>();
+			ErrorLocalizationHandler = ServiceLocator.Current.Get<IErrorLocalizationHandler>();
+		}
 
-                foreach (var val in bvEx.Results)
-                {
-                    sbMessage.AppendLine(val.Message);
-                }
+		/// <summary>
+		/// The OnException.
+		/// </summary>
+		/// <param name="actionExecutedContext">The actionExecutedContext<see cref="HttpActionExecutedContext"/>.</param>
+		public override void OnException(HttpActionExecutedContext actionExecutedContext)
+		{
+			HttpStatusCode status = HttpStatusCode.InternalServerError;
+			String message = String.Empty;
+			var ex = actionExecutedContext.Exception;
+			var exceptionType = actionExecutedContext.Exception.GetType();
 
-                message = sbMessage.ToString();
-                status = HttpStatusCode.BadRequest;
-            }
-            else if (exceptionType == typeof(EntityNotFoundException))
-            {
-                var notFoundEx = ex as EntityNotFoundException;
+			//Is BaseException
+			if (exceptionType == typeof(BusinessRulesValidationException))
+			{
+				var bvEx = ex as BusinessRulesValidationException;
+				StringBuilder sbMessage = new StringBuilder();
 
-                message = notFoundEx.Message;
-                status = HttpStatusCode.NotFound;
-            }
-            else if (exceptionType == typeof(BusinessValidationException))
-            {
-                var bvEx = ex as BusinessValidationException;
+				foreach (var val in bvEx.Results)
+				{
+					sbMessage.AppendLine(val.Message);
+				}
 
-                message = bvEx.Message;
-                status = HttpStatusCode.BadRequest;
-            }
-            else if (typeof(BaseException).IsAssignableFrom(exceptionType))
-            {
-                var baseEx = ex as BaseException;
+				message = sbMessage.ToString();
+				status = HttpStatusCode.BadRequest;
+			}
+			else if (exceptionType == typeof(EntityNotFoundException))
+			{
+				var notFoundEx = ex as EntityNotFoundException;
 
-                string supportText = ContentLocalizationHandler.GetString(CoreContents.Logging_SupportId);
-                var supporId = baseEx?.Data[BaseException.SUPPORT_ID]?.ToString();
+				message = notFoundEx.Message;
+				status = HttpStatusCode.NotFound;
+			}
+			else if (exceptionType == typeof(BusinessValidationException))
+			{
+				var bvEx = ex as BusinessValidationException;
 
-                message = ErrorLocalizationHandler.GetString(CoreErrors.TECH200, supportText, supporId);
-                status = HttpStatusCode.BadRequest;
-            }
-            else if (exceptionType == typeof(UnauthorizedAccessException))
-            {
-                message = ErrorLocalizationHandler.GetString(CoreErrors.SERVICE300);
-                status = HttpStatusCode.Unauthorized;
-            }
-            else
-            {
-                message = ErrorLocalizationHandler.GetString(CoreErrors.TECH201);
-                status = HttpStatusCode.BadRequest;
-            }
+				message = bvEx.Message;
+				status = HttpStatusCode.BadRequest;
+			}
+			else if (typeof(BaseException).IsAssignableFrom(exceptionType))
+			{
+				var baseEx = ex as BaseException;
 
-            actionExecutedContext.Response = new HttpResponseMessage()
-            {
-                Content = new StringContent(message, System.Text.Encoding.UTF8, "text/plain"),
-                StatusCode = status
-            };
+				string supportText = ContentLocalizationHandler.GetString(CoreContents.Logging_SupportId);
+				var supporId = baseEx?.Data[BaseException.SUPPORT_ID]?.ToString();
 
-            base.OnException(actionExecutedContext);
-        }
+				message = ErrorLocalizationHandler.GetString(CoreErrors.TECH200, supportText, supporId);
+				status = HttpStatusCode.BadRequest;
+			}
+			else if (exceptionType == typeof(UnauthorizedAccessException))
+			{
+				message = ErrorLocalizationHandler.GetString(CoreErrors.SERVICE300);
+				status = HttpStatusCode.Unauthorized;
+			}
+			else
+			{
+				message = ErrorLocalizationHandler.GetString(CoreErrors.TECH201);
+				status = HttpStatusCode.BadRequest;
+			}
 
-        public override Task OnExceptionAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
-        {
-            HttpStatusCode status = HttpStatusCode.InternalServerError;
-            String message = String.Empty;
-            var ex = actionExecutedContext.Exception;
-            var exceptionType = actionExecutedContext.Exception.GetType();
+			actionExecutedContext.Response = new HttpResponseMessage()
+			{
+				Content = new StringContent(message, System.Text.Encoding.UTF8, "text/plain"),
+				StatusCode = status
+			};
 
-            //Is BaseException
-            if (typeof(BaseException).IsAssignableFrom(exceptionType))
-            {
-                var baseEx = ex as BaseException;
+			base.OnException(actionExecutedContext);
+		}
 
-                string supportText = ContentLocalizationHandler.GetString(CoreContents.Logging_SupportId);
-                var supporId = baseEx?.Data[BaseException.SUPPORT_ID]?.ToString();
+		/// <summary>
+		/// The OnExceptionAsync.
+		/// </summary>
+		/// <param name="actionExecutedContext">The actionExecutedContext<see cref="HttpActionExecutedContext"/>.</param>
+		/// <param name="cancellationToken">The cancellationToken<see cref="CancellationToken"/>.</param>
+		/// <returns>The <see cref="Task"/>.</returns>
+		public override Task OnExceptionAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
+		{
+			HttpStatusCode status = HttpStatusCode.InternalServerError;
+			String message = String.Empty;
+			var ex = actionExecutedContext.Exception;
+			var exceptionType = actionExecutedContext.Exception.GetType();
 
-                message = ErrorLocalizationHandler.GetString(CoreErrors.TECH200, supportText, supporId);
-                status = HttpStatusCode.BadRequest;
-            }
-            else if (exceptionType == typeof(BusinessRulesValidationException))
-            {
-                var bvEx = ex as BusinessRulesValidationException;
-                StringBuilder sbMessage = new StringBuilder();
+			//Is BaseException
+			if (typeof(BaseException).IsAssignableFrom(exceptionType))
+			{
+				var baseEx = ex as BaseException;
 
-                foreach (var val in bvEx.Results)
-                {
-                    sbMessage.AppendLine(val.Message);
-                }
+				string supportText = ContentLocalizationHandler.GetString(CoreContents.Logging_SupportId);
+				var supporId = baseEx?.Data[BaseException.SUPPORT_ID]?.ToString();
 
-                message = sbMessage.ToString();
-                status = HttpStatusCode.BadRequest;
-            }
-            else if (exceptionType == typeof(UnauthorizedAccessException))
-            {
-                message = ErrorLocalizationHandler.GetString(CoreErrors.SERVICE300);
-                status = HttpStatusCode.Unauthorized;
-            }
-            else
-            {
-                message = ErrorLocalizationHandler.GetString(CoreErrors.TECH201);
-                status = HttpStatusCode.BadRequest;
-            }
+				message = ErrorLocalizationHandler.GetString(CoreErrors.TECH200, supportText, supporId);
+				status = HttpStatusCode.BadRequest;
+			}
+			else if (exceptionType == typeof(BusinessRulesValidationException))
+			{
+				var bvEx = ex as BusinessRulesValidationException;
+				StringBuilder sbMessage = new StringBuilder();
 
-            actionExecutedContext.Response = new HttpResponseMessage()
-            {
-                Content = new StringContent(message, System.Text.Encoding.UTF8, "text/plain"),
-                StatusCode = status
-            };
+				foreach (var val in bvEx.Results)
+				{
+					sbMessage.AppendLine(val.Message);
+				}
 
-            return base.OnExceptionAsync(actionExecutedContext, cancellationToken);
-        }
-    }
+				message = sbMessage.ToString();
+				status = HttpStatusCode.BadRequest;
+			}
+			else if (exceptionType == typeof(UnauthorizedAccessException))
+			{
+				message = ErrorLocalizationHandler.GetString(CoreErrors.SERVICE300);
+				status = HttpStatusCode.Unauthorized;
+			}
+			else
+			{
+				message = ErrorLocalizationHandler.GetString(CoreErrors.TECH201);
+				status = HttpStatusCode.BadRequest;
+			}
+
+			actionExecutedContext.Response = new HttpResponseMessage()
+			{
+				Content = new StringContent(message, System.Text.Encoding.UTF8, "text/plain"),
+				StatusCode = status
+			};
+
+			return base.OnExceptionAsync(actionExecutedContext, cancellationToken);
+		}
+	}
 }

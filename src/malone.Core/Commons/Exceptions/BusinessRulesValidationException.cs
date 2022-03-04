@@ -1,40 +1,56 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:47:51</date>
 
-using System;
-using System.Text;
-using malone.Core.Business.Components;
-
 namespace malone.Core.Commons.Exceptions
 {
-    public class BusinessRulesValidationException : Exception
-    {
-        public ValidationResultList Results { get; private set; }
+	using System;
+	using System.Text;
+	using malone.Core.Services;
 
-        public bool HideErrorCodes { get; protected set; }
+	/// <summary>
+	/// Defines the <see cref="BusinessRulesValidationException" />.
+	/// </summary>
+	public class BusinessRulesValidationException : Exception
+	{
+		/// <summary>
+		/// Gets the Results.
+		/// </summary>
+		public ValidationResultList Results { get; private set; }
 
-        public new string Message
-        {
-            get
-            {
-                StringBuilder msg = new StringBuilder();
-                if (Results != null)
-                {
-                    foreach (var e in Results)
-                    {
-                        msg.AppendLine(string.Format("[{0}] - {1}", e.ErrorCode.ToUpper(), e.Message));
-                    }
-                }
-                return msg.ToString();
-            }
-        }
+		/// <summary>
+		/// Gets or sets a value indicating whether HideErrorCodes.
+		/// </summary>
+		public bool HideErrorCodes { get; protected set; }
 
-        public BusinessRulesValidationException(ValidationResultList results)
+		/// <summary>
+		/// Gets the Message.
+		/// </summary>
+		public new string Message
+		{
+			get
+			{
+				StringBuilder msg = new StringBuilder();
+				if (Results != null)
+				{
+					foreach (var e in Results)
+					{
+						msg.AppendLine(string.Format("[{0}] - {1}", e.ErrorCode.ToUpper(), e.Message));
+					}
+				}
+				return msg.ToString();
+			}
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BusinessRulesValidationException"/> class.
+		/// </summary>
+		/// <param name="results">The results<see cref="ValidationResultList"/>.</param>
+		public BusinessRulesValidationException(ValidationResultList results)
 : base()
-        {
-            Results = results;
-            //TODO: Configurar desde web.config
-            HideErrorCodes = false;
-        }
-    }
+		{
+			Results = results;
+			//TODO: Configurar desde web.config
+			HideErrorCodes = false;
+		}
+	}
 }

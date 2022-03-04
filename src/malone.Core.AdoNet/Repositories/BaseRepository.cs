@@ -1,394 +1,519 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using malone.Core.AdoNet.Context;
-using malone.Core.AdoNet.Database;
-using malone.Core.AdoNet.Entities;
-using malone.Core.AdoNet.Entities.Filters;
-using malone.Core.Commons.Exceptions;
-using malone.Core.Commons.Log;
-using malone.Core.DataAccess.Context;
-using malone.Core.DataAccess.Repositories;
-using malone.Core.Entities.Filters;
-using malone.Core.Entities.Model;
+﻿using System.Reflection;
 
 namespace malone.Core.AdoNet.Repositories
 {
-
-    public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
-        where TEntity : class
-    {
-        protected CoreDbContext Context { get; private set; }
-        protected ILogger Logger { get; }
-
-        #region Constructor
-
-        public BaseRepository(IContext context, ILogger logger)
-        {
-            CheckContext(context);
-            CheckLogger(logger);
-
-            Context = (CoreDbContext)context;
-            Logger = logger;
-        }
-
-        #endregion
-
-        #region CRUD Operations
-
-        #region GET ALL
-
-        protected abstract void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties);
-
-        public virtual IEnumerable<TEntity> GetAll(
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            bool includeDeleted = false,
-            string includeProperties = ""
-           )
-        {
-            ThrowIfDisposed();
-            try
-            {
-                IQueryable<TEntity> queryableResult;
-
-                var command = Context.CreateCommand();
-                ConfigureCommandForGetAll(command, includeDeleted, includeProperties);
-                queryableResult = GetQueryable(command, includeDeleted, orderBy);
-
-                return queryableResult.ToList<TEntity>();
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
-
-                throw techEx;
-            }
-        }
-
-        #endregion
-
-        #region GET FILTERED
-
-        protected abstract void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties);
-
-        public virtual IEnumerable<TEntity> Get<TFilter>(
-           TFilter filter = default(TFilter),
-           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-           bool includeDeleted = false,
-           string includeProperties = "")
-            where TFilter : class, IFilterExpression
-        {
-            ThrowIfDisposed();
-            try
-            {
-                IQueryable<TEntity> queryableResult;
-
-                var command = Context.CreateCommand();
-                ConfigureCommandForGet(command, includeDeleted, includeProperties);
-
-                IEnumerable<DbParameterWithValue> parameters;
-
-                if (filter != default(TFilter) && typeof(IFilterExpressionAdoNet).IsAssignableFrom(typeof(TFilter)))
-                {
-                    parameters = (filter as IFilterExpressionAdoNet).GetParameters(command);
-                    Context.AddCommandParameters(command, parameters);
-                }
-
-                queryableResult = GetQueryable(command, includeDeleted, orderBy);
-
-                return queryableResult.ToList<TEntity>();
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
-
-                throw techEx;
-            }
-        }
-
-        #endregion
-
-        #region GET ENTITY
-
-        protected abstract void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties);
-
-        public virtual TEntity GetEntity<TFilter>(
-            TFilter filter = default(TFilter),
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            bool includeDeleted = false,
-            string includeProperties = "")
-            where TFilter : class, IFilterExpression
-        {
-            ThrowIfDisposed();
-            try
-            {
-                IQueryable<TEntity> queryableResult;
-
-                var command = Context.CreateCommand();
-                ConfigureCommandForGetEntity(command, includeDeleted, includeProperties);
-
-                IEnumerable<DbParameterWithValue> parameters;
-
-                if (filter != default(TFilter) && typeof(IFilterExpressionAdoNet).IsAssignableFrom(typeof(TFilter)))
-                {
-                    parameters = (filter as IFilterExpressionAdoNet).GetParameters(command);
-                    Context.AddCommandParameters(command, parameters);
-                }
-
-                queryableResult = GetQueryable(command, includeDeleted, orderBy);
-
-                return queryableResult.SingleOrDefault<TEntity>();
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
-
-                throw techEx;
-            }
-        }
-
-        #endregion
-
-        #region ADD
-
-        protected abstract void ConfigureCommandForInsert(IDbCommand command);
-
-        protected virtual List<DbParameterWithValue> GetInsertParameters(List<DbParameterWithValue> parameters, TEntity entity)
-        {
-            parameters = entity.GetParameters().ToList();
-            return parameters;
-        }
-
-        public virtual void Insert(TEntity entity)
-        {
-            ThrowIfDisposed();
-            try
-            {
-                var command = Context.CreateCommand();
-                ConfigureCommandForInsert(command);
-
-                List<DbParameterWithValue> parameters = new List<DbParameterWithValue>();
-                parameters = GetInsertParameters(parameters, entity);
-                Context.AddCommandParameters(command, parameters);
-
-                command.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS602, typeof(TEntity));
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
-
-                throw techEx;
-            }
-        }
-
-        #endregion
-
-        #region UPDATE
-
-        protected abstract void ConfigureCommandForUpdate(IDbCommand command);
-
-        protected virtual List<DbParameterWithValue> GetUpdateParameters(List<DbParameterWithValue> parameters, TEntity oldValues, TEntity newValues)
-        {
-            parameters = newValues.GetParameters().ToList();
-            return parameters;
-        }
-
-        public virtual void Update(TEntity oldValues, TEntity newValues)
-        {
-            ThrowIfDisposed();
-            try
-            {
-                var command = Context.CreateCommand();
-                ConfigureCommandForUpdate(command);
-
-                List<DbParameterWithValue> parameters = new List<DbParameterWithValue>();
-                parameters = GetUpdateParameters(parameters, oldValues, newValues);
-                Context.AddCommandParameters(command, parameters);
-
-                command.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
-
-                throw techEx;
-            }
-        }
-
-        #endregion
-
-        #region DELETE
-
-        protected abstract void ConfigureCommandForDelete(IDbCommand command);
-
-        protected virtual List<DbParameterWithValue> GetDeleteParameters(List<DbParameterWithValue> parameters, TEntity entity)
-        {
-            parameters = entity.GetParameters().ToList();
-            return parameters;
-        }
-
-        public virtual void Delete(TEntity entityToDelete)
-        {
-            ThrowIfDisposed();
-            try
-            {
-                var command = Context.CreateCommand();
-                ConfigureCommandForDelete(command);
-
-                List<DbParameterWithValue> parameters = new List<DbParameterWithValue>();
-                parameters = GetDeleteParameters(parameters, entityToDelete);
-                Context.AddCommandParameters(command, parameters);
-
-                command.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS603, typeof(TEntity));
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
-
-                throw techEx;
-            }
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Private And Protected Methods
-
-        private void CheckLogger(ILogger logger)
-        {
-            if (logger == null)
-            {
-                throw new ArgumentNullException(nameof(logger));
-            }
-        }
-
-        private void CheckContext(IContext context)
-        {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            if (!(context is CoreDbContext))
-            {
-                //TODO: Implementar excepciones del core
-                throw new ArgumentException();
-            }
-        }
-
-        protected IQueryable<TEntity> GetQueryable(
-           IDbCommand command,
-           bool includeDeleted = false,
-           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
-        {
-            try
-            {
-
-                if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
-                {
-                    //TODO: Implementar solucion
-                    //Context.Db.AddParameterIsDeleted(command, includeDeleted);
-                }
-
-                IDataAdapter adapter = Context.CreateAdapter(command);
-                DataSet ds = new DataSet();
-
-                adapter.Fill(ds);
-
-                command.Dispose();
-
-                List<TEntity> result = new List<TEntity>();
-                if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
-                {
-                    TEntity entityMapped;
-                    foreach (DataRow row in ds.Tables[0].Rows)
-                    {
-                        entityMapped = Map(row);
-                        result.Add(entityMapped);
-                    }
-                }
-
-                var queryableResult = result.AsQueryable<TEntity>();
-                if (orderBy != null && result.Count > 0)
-                {
-                    return orderBy(queryableResult);
-                }
-                else
-                {
-                    return queryableResult;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
-
-                throw techEx;
-            }
-        }
-
-        protected abstract TEntity Map(DataRow row);
-
-        #endregion
-
-        #region Dispose
-
-        protected bool _disposed;
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected void ThrowIfDisposed()
-        {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException(this.GetType().Name);
-            }
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing && Context != null)
-            {
-                Context.Dispose();
-            }
-            _disposed = true;
-            Context = null;
-        }
-
-        #endregion
-    }
+	using System;
+	using System.Collections.Generic;
+	using System.Data;
+	using System.Linq;
+	using malone.Core.AdoNet.Context;
+	using malone.Core.AdoNet.Database;
+	using malone.Core.AdoNet.Entities;
+	using malone.Core.AdoNet.Entities.Filters;
+	using malone.Core.Commons.Exceptions;
+	using malone.Core.DataAccess.Context;
+	using malone.Core.DataAccess.Repositories;
+	using malone.Core.Entities.Filters;
+	using malone.Core.Entities.Model;
+	using malone.Core.Logging;
+
+	/// <summary>
+	/// Defines the <see cref="BaseRepository{TEntity}" />.
+	/// </summary>
+	/// <typeparam name="TEntity">.</typeparam>
+	public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
+		where TEntity : class
+	{
+		/// <summary>
+		/// Gets the Context.
+		/// </summary>
+		protected CoreDbContext Context { get; private set; }
+
+		/// <summary>
+		/// Gets the Logger.
+		/// </summary>
+		protected ICoreLogger Logger { get; }
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BaseRepository{TEntity}"/> class.
+		/// </summary>
+		/// <param name="context">The context<see cref="IContext"/>.</param>
+		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
+		public BaseRepository(IContext context, ICoreLogger logger)
+		{
+			CheckContext(context);
+			CheckLogger(logger);
+
+			Context = (CoreDbContext)context;
+			Logger = logger;
+		}
+
+
+		/// <summary>
+		/// The ConfigureCommandForGetAll.
+		/// </summary>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
+		protected abstract void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties);
+
+		/// <summary>
+		/// The GetAll.
+		/// </summary>
+		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
+		/// <returns>The <see cref="IEnumerable{TEntity}"/>.</returns>
+		public virtual IEnumerable<TEntity> GetAll(
+			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+			bool includeDeleted = false,
+			string includeProperties = ""
+		   )
+		{
+			ThrowIfDisposed();
+			try
+			{
+				IQueryable<TEntity> queryableResult;
+
+				var command = Context.CreateCommand();
+
+
+				var entityType = typeof(TEntity);
+				entityType = this.GetType().GetInterface("IBaseRepository`1").GetGenericArguments()[0];
+				string tableName = entityType.GetTableName();
+				List<string> columns = entityType.GetColumnNames();
+				
+				ConfigureParameterForSoftDelete(entityType, columns, includeDeleted);
+
+				//TODO: Continuar aquí 03/03/2022
+				string whereClause = "";
+				string columnNames = columns.Aggregate((i, j) => $"{i}, {j}");
+				string query = $"SELECT {columnNames} FROM {tableName} WHERE {whereClause}";
+				
+				ConfigureCommandForGetAll(command, includeDeleted, includeProperties);
+				queryableResult = GetQueryable(command, includeDeleted, orderBy);
+
+				return queryableResult.ToList<TEntity>();
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
+		}
+
+		/// <summary>
+		/// The ConfigureCommandForGet.
+		/// </summary>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
+		protected abstract void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties);
+
+		/// <summary>
+		/// The Get.
+		/// </summary>
+		/// <typeparam name="TFilter">.</typeparam>
+		/// <param name="filter">The filter<see cref="TFilter"/>.</param>
+		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
+		/// <returns>The <see cref="IEnumerable{TEntity}"/>.</returns>
+		public virtual IEnumerable<TEntity> Get<TFilter>(
+		   TFilter filter = default(TFilter),
+		   Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+		   bool includeDeleted = false,
+		   string includeProperties = "")
+			where TFilter : class, IFilterExpression
+		{
+			ThrowIfDisposed();
+			try
+			{
+				IQueryable<TEntity> queryableResult;
+
+				var command = Context.CreateCommand();
+				ConfigureCommandForGet(command, includeDeleted, includeProperties);
+
+				IEnumerable<DbParameterWithValue> parameters;
+
+				if (filter != default(TFilter) && typeof(IFilterExpressionAdoNet).IsAssignableFrom(typeof(TFilter)))
+				{
+					parameters = (filter as IFilterExpressionAdoNet).GetParameters(command);
+					Context.AddCommandParameters(command, parameters);
+				}
+
+				queryableResult = GetQueryable(command, includeDeleted, orderBy);
+
+				return queryableResult.ToList<TEntity>();
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
+		}
+
+		/// <summary>
+		/// The ConfigureCommandForGetEntity.
+		/// </summary>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
+		protected abstract void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties);
+
+		/// <summary>
+		/// The GetEntity.
+		/// </summary>
+		/// <typeparam name="TFilter">.</typeparam>
+		/// <param name="filter">The filter<see cref="TFilter"/>.</param>
+		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
+		/// <returns>The <see cref="TEntity"/>.</returns>
+		public virtual TEntity GetEntity<TFilter>(
+			TFilter filter = default(TFilter),
+			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+			bool includeDeleted = false,
+			string includeProperties = "")
+			where TFilter : class, IFilterExpression
+		{
+			ThrowIfDisposed();
+			try
+			{
+				IQueryable<TEntity> queryableResult;
+
+				var command = Context.CreateCommand();
+				ConfigureCommandForGetEntity(command, includeDeleted, includeProperties);
+
+				IEnumerable<DbParameterWithValue> parameters;
+
+				if (filter != default(TFilter) && typeof(IFilterExpressionAdoNet).IsAssignableFrom(typeof(TFilter)))
+				{
+					parameters = (filter as IFilterExpressionAdoNet).GetParameters(command);
+					Context.AddCommandParameters(command, parameters);
+				}
+
+				queryableResult = GetQueryable(command, includeDeleted, orderBy);
+
+				return queryableResult.SingleOrDefault<TEntity>();
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
+		}
+
+		/// <summary>
+		/// The ConfigureCommandForInsert.
+		/// </summary>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		protected abstract void ConfigureCommandForInsert(IDbCommand command);
+
+		/// <summary>
+		/// The GetInsertParameters.
+		/// </summary>
+		/// <param name="parameters">The parameters<see cref="List{DbParameterWithValue}"/>.</param>
+		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
+		/// <returns>The <see cref="List{DbParameterWithValue}"/>.</returns>
+		protected virtual List<DbParameterWithValue> GetInsertParameters(List<DbParameterWithValue> parameters, TEntity entity)
+		{
+			parameters = entity.GetParameters().ToList();
+			return parameters;
+		}
+
+		/// <summary>
+		/// The Insert.
+		/// </summary>
+		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
+		public virtual void Insert(TEntity entity)
+		{
+			ThrowIfDisposed();
+			try
+			{
+				var command = Context.CreateCommand();
+				ConfigureCommandForInsert(command);
+
+				List<DbParameterWithValue> parameters = new List<DbParameterWithValue>();
+				parameters = GetInsertParameters(parameters, entity);
+				Context.AddCommandParameters(command, parameters);
+
+				command.ExecuteNonQuery();
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS602, typeof(TEntity));
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
+		}
+
+		/// <summary>
+		/// The ConfigureCommandForUpdate.
+		/// </summary>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		protected abstract void ConfigureCommandForUpdate(IDbCommand command);
+
+		/// <summary>
+		/// The GetUpdateParameters.
+		/// </summary>
+		/// <param name="parameters">The parameters<see cref="List{DbParameterWithValue}"/>.</param>
+		/// <param name="oldValues">The oldValues<see cref="TEntity"/>.</param>
+		/// <param name="newValues">The newValues<see cref="TEntity"/>.</param>
+		/// <returns>The <see cref="List{DbParameterWithValue}"/>.</returns>
+		protected virtual List<DbParameterWithValue> GetUpdateParameters(List<DbParameterWithValue> parameters, TEntity oldValues, TEntity newValues)
+		{
+			parameters = newValues.GetParameters().ToList();
+			return parameters;
+		}
+
+		/// <summary>
+		/// The Update.
+		/// </summary>
+		/// <param name="oldValues">The oldValues<see cref="TEntity"/>.</param>
+		/// <param name="newValues">The newValues<see cref="TEntity"/>.</param>
+		public virtual void Update(TEntity oldValues, TEntity newValues)
+		{
+			ThrowIfDisposed();
+			try
+			{
+				var command = Context.CreateCommand();
+				ConfigureCommandForUpdate(command);
+
+				List<DbParameterWithValue> parameters = new List<DbParameterWithValue>();
+				parameters = GetUpdateParameters(parameters, oldValues, newValues);
+				Context.AddCommandParameters(command, parameters);
+
+				command.ExecuteNonQuery();
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
+		}
+
+		/// <summary>
+		/// The ConfigureCommandForDelete.
+		/// </summary>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		protected abstract void ConfigureCommandForDelete(IDbCommand command);
+
+		/// <summary>
+		/// The GetDeleteParameters.
+		/// </summary>
+		/// <param name="parameters">The parameters<see cref="List{DbParameterWithValue}"/>.</param>
+		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
+		/// <returns>The <see cref="List{DbParameterWithValue}"/>.</returns>
+		protected virtual List<DbParameterWithValue> GetDeleteParameters(List<DbParameterWithValue> parameters, TEntity entity)
+		{
+			parameters = entity.GetParameters().ToList();
+			return parameters;
+		}
+
+		/// <summary>
+		/// The Delete.
+		/// </summary>
+		/// <param name="entityToDelete">The entityToDelete<see cref="TEntity"/>.</param>
+		public virtual void Delete(TEntity entityToDelete)
+		{
+			ThrowIfDisposed();
+			try
+			{
+				var command = Context.CreateCommand();
+				ConfigureCommandForDelete(command);
+
+				List<DbParameterWithValue> parameters = new List<DbParameterWithValue>();
+				parameters = GetDeleteParameters(parameters, entityToDelete);
+				Context.AddCommandParameters(command, parameters);
+
+				command.ExecuteNonQuery();
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS603, typeof(TEntity));
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
+		}
+
+		/// <summary>
+		/// The CheckLogger.
+		/// </summary>
+		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
+		private void CheckLogger(ICoreLogger logger)
+		{
+			if (logger == null)
+			{
+				throw new ArgumentNullException(nameof(logger));
+			}
+		}
+
+		/// <summary>
+		/// The CheckContext.
+		/// </summary>
+		/// <param name="context">The context<see cref="IContext"/>.</param>
+		private void CheckContext(IContext context)
+		{
+			if (context == null)
+			{
+				throw new ArgumentNullException(nameof(context));
+			}
+
+			if (!(context is CoreDbContext))
+			{
+				//TODO: Implementar excepciones del core
+				throw new ArgumentException();
+			}
+		}
+
+		/// <summary>
+		/// The GetQueryable.
+		/// </summary>
+		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
+		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
+		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
+		/// <returns>The <see cref="IQueryable{TEntity}"/>.</returns>
+		protected IQueryable<TEntity> GetQueryable(
+		   IDbCommand command,
+		   bool includeDeleted = false,
+		   Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
+		{
+			try
+			{
+
+				if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
+				{
+					//TODO: Implementar solucion
+					//Context.Db.AddParameterIsDeleted(command, includeDeleted);
+				}
+
+				IDataAdapter adapter = Context.CreateAdapter(command);
+				DataSet ds = new DataSet();
+
+				adapter.Fill(ds);
+
+				command.Dispose();
+
+				List<TEntity> result = new List<TEntity>();
+				if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
+				{
+					TEntity entityMapped;
+					foreach (DataRow row in ds.Tables[0].Rows)
+					{
+						entityMapped = Map(row);
+						result.Add(entityMapped);
+					}
+				}
+
+				var queryableResult = result.AsQueryable<TEntity>();
+				if (orderBy != null && result.Count > 0)
+				{
+					return orderBy(queryableResult);
+				}
+				else
+				{
+					return queryableResult;
+				}
+
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
+		}
+
+		protected void ConfigureParameterForSoftDelete(Type entityType, List<string> columns, bool includeDeleted)
+		{
+			if (includeDeleted)
+			{
+				var allowSoftDelete = typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity));
+				var columnName = entityType.GetColumnName(nameof(ISoftDelete.IsDeleted));
+				if (allowSoftDelete && !columns.Contains(columnName))
+				{
+					columns.Add(columnName);
+				}
+			}
+		}
+
+		/// <summary>
+		/// The Map.
+		/// </summary>
+		/// <param name="row">The row<see cref="DataRow"/>.</param>
+		/// <returns>The <see cref="TEntity"/>.</returns>
+		protected abstract TEntity Map(DataRow row);
+
+		/// <summary>
+		/// Defines the _disposed.
+		/// </summary>
+		protected bool _disposed;
+
+		/// <summary>
+		/// The Dispose.
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		/// <summary>
+		/// The ThrowIfDisposed.
+		/// </summary>
+		protected void ThrowIfDisposed()
+		{
+			if (_disposed)
+			{
+				throw new ObjectDisposedException(this.GetType().Name);
+			}
+		}
+
+		/// <summary>
+		/// The Dispose.
+		/// </summary>
+		/// <param name="disposing">The disposing<see cref="bool"/>.</param>
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing && Context != null)
+			{
+				Context.Dispose();
+			}
+			_disposed = true;
+			Context = null;
+		}
+	}
 }

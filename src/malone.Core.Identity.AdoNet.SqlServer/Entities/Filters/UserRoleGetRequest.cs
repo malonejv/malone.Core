@@ -9,11 +9,11 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Entities.Filters
         where TKey : IEquatable<TKey>
     {
         //TODO: Esto esta condicionando a usar int
-        [DbParameter("@UserId", Type = SqlDbType.Int, Order = 1, Direction = ParameterDirection.Input)]
+        [Column("@UserId", Type = DbType.Int32, Order = 1, Direction = ParameterDirection.Input)]
         public TKey UserId { get; set; }
 
         //TODO: Esto esta condicionando a usar int
-        [DbParameter("@RoleId", Type = SqlDbType.Int, Order = 2, Direction = ParameterDirection.Input)]
+        [Column("@RoleId", Type = DbType.Int32, Order = 2, Direction = ParameterDirection.Input)]
         public TKey RoleId { get; set; }
     }
 }

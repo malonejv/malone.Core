@@ -12,7 +12,7 @@ namespace malone.Core.Identity.Dapper.Business
         where TUserClaim : CoreUserClaim<TKey>, new()
         where TRoleEntity : CoreRole<TKey, TUserRole>
         where TUserEntity : CoreUser<TKey, TUserLogin, TUserRole, TUserClaim>
-        where TUserBC : UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>
+        where TUserBC : UserService<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>
     {
         public UserManagerConfiguration(
             IEmailMessageService emailMessageService,
@@ -33,11 +33,11 @@ namespace malone.Core.Identity.Dapper.Business
         public IIdentityValidator<TUserEntity> UserValidator { get; set; }
         public IIdentityValidator<string> PasswordValidator { get; set; }
 
-        public virtual void ConfigureUserManager(TUserBC userBusinessComponent, IdentityFactoryOptions<UserBusinessComponent> options)
+        public virtual void ConfigureUserManager(TUserBC userService, IdentityFactoryOptions<UserService> options)
         {
-            if (userBusinessComponent == null)
+            if (userService == null)
             {
-                throw new ArgumentNullException(nameof(userBusinessComponent));
+                throw new ArgumentNullException(nameof(userService));
             }
 
             var dataProtectionProvider = options.DataProtectionProvider;
@@ -47,39 +47,39 @@ namespace malone.Core.Identity.Dapper.Business
 
                 //var provider = new DpapiDataProtectionProvider();
                 //var entropy = "D4151DA419C4691E";
-                //userBusinessComponent.UserTokenProvider = new DataProtectorTokenProvider<TUserEntity, TKey>(provider.Create(entropy))
+                //userService.UserTokenProvider = new DataProtectorTokenProvider<TUserEntity, TKey>(provider.Create(entropy))
                 //{
                 //    TokenLifespan = TimeSpan.FromDays(1)
                 //};
 
                 var tokenProvider = TokenProvider<TKey, TUserEntity, TUserLogin, TUserRole, TUserClaim>.Provider;
-                userBusinessComponent.UserTokenProvider = tokenProvider;
+                userService.UserTokenProvider = tokenProvider;
             }
 
-            userBusinessComponent.EmailService = EmailService;
-            userBusinessComponent.SmsService = SmsService;
+            userService.EmailService = EmailService;
+            userService.SmsService = SmsService;
 
             //OPTION: Agregar todas estas configuraciones en el web.config
 
             // Configure validation logic for usernames
-            userBusinessComponent.UserValidator = UserValidator;
+            userService.UserValidator = UserValidator;
 
             // Configure validation logic for passwords
-            userBusinessComponent.PasswordValidator = PasswordValidator;
+            userService.PasswordValidator = PasswordValidator;
 
             // Configure user lockout defaults
-            userBusinessComponent.UserLockoutEnabledByDefault = true;
-            userBusinessComponent.DefaultAccountLockoutTimeSpan = TimeSpan.FromDays(365 * 100); //Tiempo que queda bloqueado 
-            userBusinessComponent.MaxFailedAccessAttemptsBeforeLockout = 5;
+            userService.UserLockoutEnabledByDefault = true;
+            userService.DefaultAccountLockoutTimeSpan = TimeSpan.FromDays(365 * 100); //Tiempo que queda bloqueado
+            userService.MaxFailedAccessAttemptsBeforeLockout = 5;
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
             // You can write your own provider and plug it in here.
-            userBusinessComponent.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<TUserEntity, TKey>
+            userService.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<TUserEntity, TKey>
             {
                 MessageFormat = "Your security code is {0}"
             });
 
-            userBusinessComponent.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<TUserEntity, TKey>
+            userService.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<TUserEntity, TKey>
             {
                 Subject = "Security Code",
                 BodyFormat = "Your security code is {0}"
@@ -88,7 +88,7 @@ namespace malone.Core.Identity.Dapper.Business
         }
     }
 
-    public class UserManagerConfiguration : UserManagerConfiguration<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim, UserBusinessComponent>, IUserManagerConfiguration
+    public class UserManagerConfiguration : UserManagerConfiguration<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim, UserService>, IUserManagerConfiguration
     {
         public UserManagerConfiguration(
             IEmailMessageService emailMessageService,

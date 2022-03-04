@@ -1,7 +1,11 @@
 ﻿namespace malone.Core.DataAccess.Repositories
 {
-    public interface ICustomRepository<T>
-        where T : class
-    {
-    }
+	/// <summary>
+	/// Defines the <see cref="ICustomRepository{T}" />.
+	/// </summary>
+	/// <typeparam name="T">.</typeparam>
+	public interface ICustomRepository<T>
+		where T : class
+	{
+	}
 }

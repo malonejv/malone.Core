@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using malone.Core.Identity.AdoNet.SqlServer.Business;
+using malone.Core.Identity.AdoNet.SqlServer.Services;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Entities
-{
-    public static class CoreUserExtensions
+	{
+	public static class CoreUserExtensions
     {
-        public static async Task<ClaimsIdentity> GenerateUserIdentityAsync<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>(this TUserEntity user, UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim> manager, string authenticationType)
+        public static async Task<ClaimsIdentity> GenerateUserIdentityAsync<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>(this TUserEntity user, UserService<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim> manager, string authenticationType)
         where TKey : IEquatable<TKey>
         where TUserLogin : CoreUserLogin<TKey>, new()
         where TUserRole : CoreUserRole<TKey>, new()

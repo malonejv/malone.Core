@@ -3,12 +3,31 @@
 
 namespace malone.Core.Resources.Admin
 {
-    public interface IResourceAdmin
-    {
-        string GetText(string clave);
+	/// <summary>
+	/// Defines the <see cref="IResourceAdmin" />.
+	/// </summary>
+	public interface IResourceAdmin
+	{
+		/// <summary>
+		/// The GetText.
+		/// </summary>
+		/// <param name="clave">The clave<see cref="string"/>.</param>
+		/// <returns>The <see cref="string"/>.</returns>
+		string GetText(string clave);
 
-        string GetText(string clave, params string[] parametros);
+		/// <summary>
+		/// The GetText.
+		/// </summary>
+		/// <param name="clave">The clave<see cref="string"/>.</param>
+		/// <param name="parametros">The parametros<see cref="string[]"/>.</param>
+		/// <returns>The <see cref="string"/>.</returns>
+		string GetText(string clave, params string[] parametros);
 
-        string GetResource(string clave);
-    }
+		/// <summary>
+		/// The GetResource.
+		/// </summary>
+		/// <param name="clave">The clave<see cref="string"/>.</param>
+		/// <returns>The <see cref="string"/>.</returns>
+		string GetResource(string clave);
+	}
 }

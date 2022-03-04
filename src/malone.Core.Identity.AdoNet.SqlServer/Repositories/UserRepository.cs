@@ -4,20 +4,20 @@ using System.Data;
 using System.Linq;
 using malone.Core.AdoNet.Repositories;
 using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Commons.Log;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
+using malone.Core.Logging;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
-{
-    public class UserRepository<TKey, TUserEntity, TUserLogin, TUserRole, TUserClaim> : Repository<TKey, TUserEntity>, IUserRepository<TKey, TUserEntity>
+	{
+	public class UserRepository<TKey, TUserEntity, TUserLogin, TUserRole, TUserClaim> : Repository<TKey, TUserEntity>, IUserRepository<TKey, TUserEntity>
          where TKey : IEquatable<TKey>
         where TUserLogin : CoreUserLogin<TKey>
         where TUserRole : CoreUserRole<TKey>
         where TUserClaim : CoreUserClaim<TKey>
          where TUserEntity : CoreUser<TKey, TUserLogin, TUserRole, TUserClaim>, new()
     {
-        public UserRepository(IContext context, ILogger logger) : base(context, logger)
+        public UserRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
 
@@ -131,7 +131,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected override void ConfigureCommandForUpdate(IDbCommand command)
         {
-            string query = @"UPDATE Users SET  
+            string query = @"UPDATE Users SET
                                     Email = @Email,
                                     EmailConfirmed = @EmailConfirmed,
                                     PasswordHash = @PasswordHash
@@ -155,7 +155,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected override void ConfigureCommandForDelete(IDbCommand command)
         {
-            string query = @"DELETE FROM Users 
+            string query = @"DELETE FROM Users
                               WHERE Id = @Id;";
 
             command.CommandText = query;
@@ -198,7 +198,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
         where TUserClaim : CoreUserClaim
          where TUserEntity : CoreUser<TUserLogin, TUserRole, TUserClaim>, new()
     {
-        public UserRepository(IContext context, ILogger logger) : base(context, logger)
+        public UserRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
     }

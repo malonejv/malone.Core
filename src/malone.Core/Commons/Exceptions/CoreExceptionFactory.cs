@@ -1,70 +1,94 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:47:53</date>
 
-using System;
-using System.Reflection;
-using malone.Core.Commons.DI;
-
 namespace malone.Core.Commons.Exceptions
 {
-    internal static class CoreExceptionFactory
-    {
-        internal static IErrorLocalizationHandler errorLocalizationHandler;
+	using System;
+	using System.Reflection;
+	using malone.Core.IoC;
 
-        internal static IErrorLocalizationHandler ErrorLocalizationHandler
-        {
-            get
-            {
-                if (errorLocalizationHandler == null)
-                {
-                    errorLocalizationHandler = ServiceLocator.Current.Get<IErrorLocalizationHandler>();
-                }
-                return errorLocalizationHandler;
-            }
-        }
+	/// <summary>
+	/// Defines the <see cref="CoreExceptionFactory" />.
+	/// </summary>
+	internal static class CoreExceptionFactory
+	{
+		/// <summary>
+		/// Defines the errorLocalizationHandler.
+		/// </summary>
+		internal static IErrorLocalizationHandler errorLocalizationHandler;
 
-        internal static TException CreateException<TException>(CoreErrors code, params object[] args) where TException : BaseException
-        {
-            var suportId = Guid.NewGuid();
-            string message = ErrorLocalizationHandler.GetString(code, args);
+		/// <summary>
+		/// Gets the ErrorLocalizationHandler.
+		/// </summary>
+		internal static IErrorLocalizationHandler ErrorLocalizationHandler
+		{
+			get
+			{
+				if (errorLocalizationHandler == null)
+				{
+					errorLocalizationHandler = ServiceLocator.Current.Get<IErrorLocalizationHandler>();
+				}
+				return errorLocalizationHandler;
+			}
+		}
 
-            // Find the class
-            Type exceptionType = typeof(TException);
+		/// <summary>
+		/// The CreateException.
+		/// </summary>
+		/// <typeparam name="TException">.</typeparam>
+		/// <param name="code">The code<see cref="CoreErrors"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
+		/// <returns>The <see cref="TException"/>.</returns>
+		internal static TException CreateException<TException>(CoreErrors code, params object[] args) where TException : BaseException
+		{
+			var suportId = Guid.NewGuid();
+			string message = ErrorLocalizationHandler.GetString(code, args);
 
-            // Get it's constructor
-            ConstructorInfo constructor = exceptionType.GetConstructor(new Type[] { typeof(string) });
+			// Find the class
+			Type exceptionType = typeof(TException);
 
-            // Invoke it's constructor, which returns an instance.
-            object[] constructorParams = { message };
+			// Get it's constructor
+			ConstructorInfo constructor = exceptionType.GetConstructor(new Type[] { typeof(string) });
 
-            TException baseException = (TException)constructor.Invoke(constructorParams);
+			// Invoke it's constructor, which returns an instance.
+			object[] constructorParams = { message };
 
-            baseException.Data.Add(BaseException.SUPPORT_ID, suportId);
-            baseException.Data.Add(BaseException.ERROR_CODE, code.ToString());
+			TException baseException = (TException)constructor.Invoke(constructorParams);
 
-            return baseException;
-        }
+			baseException.Data.Add(BaseException.SUPPORT_ID, suportId);
+			baseException.Data.Add(BaseException.ERROR_CODE, code.ToString());
 
-        internal static TException CreateException<TException>(Exception innerException, CoreErrors code, params object[] args) where TException : BaseException
-        {
-            var suportId = Guid.NewGuid();
-            string message = ErrorLocalizationHandler.GetString(code, args);
+			return baseException;
+		}
 
-            // Find the class
-            Type exceptionType = typeof(TException);
+		/// <summary>
+		/// The CreateException.
+		/// </summary>
+		/// <typeparam name="TException">.</typeparam>
+		/// <param name="innerException">The innerException<see cref="Exception"/>.</param>
+		/// <param name="code">The code<see cref="CoreErrors"/>.</param>
+		/// <param name="args">The args<see cref="object[]"/>.</param>
+		/// <returns>The <see cref="TException"/>.</returns>
+		internal static TException CreateException<TException>(Exception innerException, CoreErrors code, params object[] args) where TException : BaseException
+		{
+			var suportId = Guid.NewGuid();
+			string message = ErrorLocalizationHandler.GetString(code, args);
 
-            // Get it's constructor
-            ConstructorInfo constructor = exceptionType.GetConstructor(new Type[] { typeof(string), typeof(Exception) });
+			// Find the class
+			Type exceptionType = typeof(TException);
 
-            // Invoke it's constructor, which returns an instance.
-            object[] constructorParams = { message, innerException };
+			// Get it's constructor
+			ConstructorInfo constructor = exceptionType.GetConstructor(new Type[] { typeof(string), typeof(Exception) });
 
-            TException baseException = (TException)constructor.Invoke(constructorParams);
+			// Invoke it's constructor, which returns an instance.
+			object[] constructorParams = { message, innerException };
 
-            baseException.Data.Add(BaseException.SUPPORT_ID, suportId);
-            baseException.Data.Add(BaseException.ERROR_CODE, code.ToString());
+			TException baseException = (TException)constructor.Invoke(constructorParams);
 
-            return baseException;
-        }
-    }
+			baseException.Data.Add(BaseException.SUPPORT_ID, suportId);
+			baseException.Data.Add(BaseException.ERROR_CODE, code.ToString());
+
+			return baseException;
+		}
+	}
 }

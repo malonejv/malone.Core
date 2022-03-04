@@ -1,14 +1,23 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:48:16</date>
 
-using System;
-
 namespace malone.Core.Entities.Model
 {
-    public class DateRange : IDateRange
-    {
-        public DateTime? FromDate { get; set; }
+	using System;
 
-        public DateTime? ToDate { get; set; }
-    }
+	/// <summary>
+	/// Defines the <see cref="DateRange" />.
+	/// </summary>
+	public class DateRange : IDateRange
+	{
+		/// <summary>
+		/// Gets or sets the FromDate.
+		/// </summary>
+		public DateTime? FromDate { get; set; }
+
+		/// <summary>
+		/// Gets or sets the ToDate.
+		/// </summary>
+		public DateTime? ToDate { get; set; }
+	}
 }

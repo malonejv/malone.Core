@@ -34,22 +34,22 @@ inputs:
 
 runs:
   using: "composite"
-      
+
   steps:
 
   - uses: actions/checkout@v2
-  
+
   - name: Setup NuGet
     uses: NuGet/setup-nuget@v1.0.5
 
   - name: Add GitHub as Nuget Source
     shell: pwsh
     run: nuget sources add -name "github" -Source ${{ inputs.NUGET_SOURCE }} -Username ${{ inputs.NUGET_USERNAME }} -Password ${{ inputs.NUGET_PASSWORD }}
-   
+
   - name: Restore Nuget Packages
     shell: pwsh
     run:  nuget restore ${{ inputs.SOLUTION_PATH }}
-    
+
   - name: Download built artifacts
     uses: actions/download-artifact@v2
     with:
@@ -65,7 +65,7 @@ runs:
           $buildArtifactPath="${{ github.workspace }}\${{ inputs.BUILD_ARTIFACTS_NAME }}\*"
           $OutputDir="${{ inputs.PKG_ARTIFACTS_DIR }}"
           Invoke-Expression "$scriptsDir\Post-BuildEvent.ps1 -SolutionPath `"$solutionPath`" -Environment `"${{ inputs.MALONECORE_ENVIRONMENT }}`" -BuildArtifactsPath `"$buildArtifactPath`" -OutputDir `"$OutputDir`" -ShouldPack:([bool]::parse(`"$true`")) -Verbose:([bool]::parse(`"${{ inputs.MALONECORE_VERBOSE }}`"))"
-          
+
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
     with:

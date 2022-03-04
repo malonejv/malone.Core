@@ -16,10 +16,10 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Entities
             Users = new List<TUserRole>();
         }
 
-        [DbParameter("@Id", Type = SqlDbType.Int, Direction = ParameterDirection.Input)]
+        [Column("@Id", Type = DbType.Int32, Direction = ParameterDirection.Input)]
         public TKey Id { get; set; }
 
-        [DbParameter("@Name", Type = SqlDbType.NVarChar, Size = 256, Direction = ParameterDirection.Input)]
+        [Column("@Name", Type = DbType.String, Size = 256, Direction = ParameterDirection.Input)]
         public string Name { get; set; }
 
         public virtual ICollection<TUserRole> Users { get; internal set; }

@@ -10,53 +10,74 @@
 
 namespace malone.Core.Commons.Localization.Resources
 {
-                [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Contents
-    {
-                                private static global::System.Resources.ResourceManager resourceMan;
+	/// <summary>
+	/// Defines the <see cref="Contents" />.
+	/// </summary>
+	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+	[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	internal class Contents
+	{
+		/// <summary>
+		/// Defines the resourceMan.
+		/// </summary>
+		private static global::System.Resources.ResourceManager resourceMan;
 
-                                private static global::System.Globalization.CultureInfo resourceCulture;
+		/// <summary>
+		/// Defines the resourceCulture.
+		/// </summary>
+		private static global::System.Globalization.CultureInfo resourceCulture;
 
-                                [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Contents()
-        {
-        }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Contents"/> class.
+		/// </summary>
+		[global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+		internal Contents()
+		{
+		}
 
-                                        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if (object.ReferenceEquals(resourceMan, null))
-                {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("malone.Core.Commons.Localization.Resources.Contents", typeof(Contents).Assembly);
-                    resourceMan = temp;
-                }
-                return resourceMan;
-            }
-        }
+		/// <summary>
+		/// Gets the ResourceManager.
+		/// </summary>
+		[global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+		internal static global::System.Resources.ResourceManager ResourceManager
+		{
+			get
+			{
+				if (object.ReferenceEquals(resourceMan, null))
+				{
+					global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("malone.Core.Commons.Localization.Resources.Contents", typeof(Contents).Assembly);
+					resourceMan = temp;
+				}
+				return resourceMan;
+			}
+		}
 
-                                                [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
-                return resourceCulture;
-            }
-            set
-            {
-                resourceCulture = value;
-            }
-        }
+		/// <summary>
+		/// Gets or sets the Culture.
+		/// </summary>
+		[global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+		internal static global::System.Globalization.CultureInfo Culture
+		{
+			get
+			{
+				return resourceCulture;
+			}
+			set
+			{
+				resourceCulture = value;
+			}
+		}
 
-                                        internal static string Logging_SupportId
-        {
-            get
-            {
-                return ResourceManager.GetString("Logging_SupportId", resourceCulture);
-            }
-        }
-    }
+		/// <summary>
+		/// Gets the Logging_SupportId.
+		/// </summary>
+		internal static string Logging_SupportId
+		{
+			get
+			{
+				return ResourceManager.GetString("Logging_SupportId", resourceCulture);
+			}
+		}
+	}
 }

@@ -11,15 +11,15 @@ namespace malone.Core.Identity.Dapper.Business
         where TUserClaim : CoreUserClaim<TKey>, new()
         where TRoleEntity : CoreRole<TKey, TUserRole>
         where TUserEntity : CoreUser<TKey, TUserLogin, TUserRole, TUserClaim>
-        where TUserBC : UserBusinessComponent<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>
+        where TUserBC : UserService<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>
     {
         IEmailMessageService EmailService { get; set; }
         ISmsMessageService SmsService { get; set; }
 
-        void ConfigureUserManager(TUserBC userBusinessComponent, IdentityFactoryOptions<UserBusinessComponent> options);
+        void ConfigureUserManager(TUserBC userService, IdentityFactoryOptions<UserService> options);
     }
 
-    public interface IUserManagerConfiguration : IUserManagerConfiguration<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim, UserBusinessComponent>
+    public interface IUserManagerConfiguration : IUserManagerConfiguration<int, CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim, UserService>
     {
     }
 }

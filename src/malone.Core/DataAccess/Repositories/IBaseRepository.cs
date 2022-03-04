@@ -1,40 +1,19 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:48:13</date>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using malone.Core.Entities.Filters;
-
 namespace malone.Core.DataAccess.Repositories
 {
-    public interface IBaseRepository<T>
-        where T : class
-    {
-        IEnumerable<T> Get<TFilter>(
-TFilter filter = default(TFilter),
-Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-bool includeDeleted = false,
-string includeProperties = "")
-where TFilter : class, IFilterExpression;
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using malone.Core.Entities.Filters;
 
-        IEnumerable<T> GetAll(
-Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-bool includeDeleted = false,
-string includeProperties = ""
-);
-
-        T GetEntity<TFilter>(
-TFilter filter = default(TFilter),
-Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-bool includeDeleted = false,
-string includeProperties = "")
-where TFilter : class, IFilterExpression;
-
-        void Insert(T entity);
-
-        void Delete(T entity);
-
-        void Update(T oldValues, T newValues);
-    }
+	/// <summary>
+	/// Defines the <see cref="IBaseRepository{T}" />.
+	/// </summary>
+	/// <typeparam name="T">.</typeparam>
+	public interface IBaseRepository<T> : IBaseQueryRepository<T>, IBaseDataManipulationRepository<T>
+		where T : class
+	{
+	}
 }

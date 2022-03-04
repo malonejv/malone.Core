@@ -4,21 +4,21 @@ using System.Data;
 using System.Linq;
 using Dapper;
 using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Commons.Log;
 using malone.Core.Dapper.Repositories;
 using malone.Core.DataAccess.Context;
 using malone.Core.Identity.Dapper.Entities;
+using malone.Core.Logging;
 
 namespace malone.Core.Identity.Dapper.Repositories
-{
-    public class UserRepository<TKey, TUserEntity, TUserLogin, TUserRole, TUserClaim> : CustomRepository<TUserEntity>, IUserRepository<TKey, TUserEntity>
+	{
+	public class UserRepository<TKey, TUserEntity, TUserLogin, TUserRole, TUserClaim> : CustomRepository<TUserEntity>, IUserRepository<TKey, TUserEntity>
          where TKey : IEquatable<TKey>
         where TUserLogin : CoreUserLogin<TKey>
         where TUserRole : CoreUserRole<TKey>
         where TUserClaim : CoreUserClaim<TKey>
          where TUserEntity : CoreUser<TKey, TUserLogin, TUserRole, TUserClaim>, new()
     {
-        public UserRepository(IContext context, ILogger logger) : base(context, logger)
+        public UserRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
 
@@ -218,9 +218,9 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         public int Update(TUserEntity user)
         {
-            string commandText = @"Update Users set UserName = @userName, PasswordHash = @pswHash, SecurityStamp = @secStamp, 
+            string commandText = @"Update Users set UserName = @userName, PasswordHash = @pswHash, SecurityStamp = @secStamp,
                 Email=@email, EmailConfirmed=@emailconfirmed, PhoneNumber=@phonenumber, PhoneNumberConfirmed=@phonenumberconfirmed,
-                AccessFailedCount=@accesscount, LockoutEnabled=@lockoutenabled, LockoutEndDateUtc=@lockoutenddate, TwoFactorEnabled=@twofactorenabled  
+                AccessFailedCount=@accesscount, LockoutEnabled=@lockoutenabled, LockoutEndDateUtc=@lockoutenddate, TwoFactorEnabled=@twofactorenabled
                 WHERE Id = @userId";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("@userName", user.UserName);
@@ -250,7 +250,7 @@ namespace malone.Core.Identity.Dapper.Repositories
         where TUserClaim : CoreUserClaim
          where TUserEntity : CoreUser<TUserLogin, TUserRole, TUserClaim>, new()
     {
-        public UserRepository(IContext context, ILogger logger) : base(context, logger)
+        public UserRepository(IContext context, ICoreLogger logger) : base(context, logger)
         {
         }
     }

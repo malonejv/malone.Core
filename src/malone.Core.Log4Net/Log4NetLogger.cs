@@ -1,10 +1,10 @@
 ﻿using System;
 using log4net;
-using malone.Core.Commons.Log;
+using malone.Core.Logging;
 
 namespace malone.Core.Log4Net
-{
-    public class Log4netLogger : LoggerBase
+	{
+	public class Log4netLogger : LoggerBase
     {
         private readonly ILog logger;
 

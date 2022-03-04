@@ -2,15 +2,15 @@
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Initializers;
 using malone.Core.Identity;
-using malone.Core.Identity.AdoNet.SqlServer.Business;
 using malone.Core.Identity.AdoNet.SqlServer.Entities;
 using malone.Core.Identity.AdoNet.SqlServer.Repositories;
+using malone.Core.Identity.AdoNet.SqlServer.Services;
 using Microsoft.AspNet.Identity;
 using Unity;
 
 namespace malone.Core.Unity.IdentityAdoNetSqlServerInitializer
-{
-    public class IdentityAdoNetSqlServerModuleInitializer : IModuleInitializer<IUnityContainer>
+	{
+	public class IdentityAdoNetSqlServerModuleInitializer : IModuleInitializer<IUnityContainer>
     {
         public string Name => CoreModules.IdentityAdoNetSqlServer.GetDescription();
 
