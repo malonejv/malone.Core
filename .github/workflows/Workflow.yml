@@ -21,7 +21,7 @@ env:
   MALONECORE_VERBOSE: ''
   MALONECORE_SHOULDPACK: ''
   MALONECORE_NUGET_PATTERN: 'malone.Core*.nupkg'
-  MALONECORE_NUGET_SYMBOL_PATTERN: ''
+  MALONECORE_NUGET_SYMBOL_PATTERN: 'malone.Core*.snupkg'
   BRANCH: ${{ github.ref_name }}
   SHOULD_COMMIT: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/development' || github.ref == 'refs/heads/master')  }}
   SOLUTION_PATH: "${{ github.workspace }}\\src\\malone.Core.sln"
@@ -119,6 +119,7 @@ jobs:
       - uses: ./.github/actions/deploy
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
         with:
+              MALONECORE_ENVIRONMENT: "${env:MALONECORE_ENVIRONMENT}"
               MALONECORE_NUGET_PATTERN: "${env:MALONECORE_NUGET_PATTERN}"
               MALONECORE_NUGET_SYMBOL_PATTERN: "${env:MALONECORE_NUGET_SYMBOL_PATTERN}"
               PKG_ARTIFACTS_DIR: "${env:PKG_ARTIFACTS_DIR}"

@@ -87,5 +87,10 @@ param (
 		    -Status ("Packing project: [{0}]" -f ($projectsName)) `
 		    -Id 1
 
-        nuget pack "$projectPath" -Properties Configuration="$Configuration" -Symbols -SymbolPackageFormat snupkg -IncludeReferencedProjects -OutputDirectory "$OutputDir"
+        if (!$Configuration -eq 'Debug') {
+            nuget pack "$projectPath" -Properties Configuration="$Configuration" -Symbols -SymbolPackageFormat snupkg -IncludeReferencedProjects -OutputDirectory "$OutputDir"
+	    }else{
+            nuget pack "$projectPath" -Properties Configuration="$Configuration" -IncludeReferencedProjects -OutputDirectory "$OutputDir"
+        }
+        
     }
