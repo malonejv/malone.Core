@@ -7,22 +7,22 @@ namespace malone.Core.AdoNet.Attributes
     public sealed class ColumnAttribute : Attribute
     {
         private int _size;
-
+		
         public ColumnAttribute(string name = null, DbType type = DbType.String, ParameterDirection direction = ParameterDirection.Input, bool isKey = false)
         {
-            Name = name;
-            Type = type;
-            Direction = direction;
-            IsKey = isKey;
+	        Name = name;
+	        Type = type;
+	        Direction = direction;
+	        IsKey = isKey;
         }
 
-        public string Name { get; internal set; }
+		public string Name { get; internal set; }
 
         public int Order { get; set; }
 
         public ParameterDirection Direction { get; set; }
 
-        public DbType? Type { get; set; }
+        public DbType Type { get; set; }
 
         public bool IsKey { get; set; }
 

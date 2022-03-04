@@ -60,12 +60,12 @@ param (
 		    $Environment = 'Development'
 	    }
 
-        if($Environment -eq 'Local' -and $Configuration -ne "DebugNuget"){
-            return
-	    }elseif($Environment -eq 'Production'){
+        if($Environment -eq 'Production'){
             $Configuration = 'Release'
-        }else{
+        }elseif($Environment -eq 'Development'){
             $Configuration = 'Debug'
+        }elseif($Environment -eq 'Local' -and $Configuration -ne "DebugNuget"){
+            return
         }
 
 	    if($PSBoundParameters['Verbose']) {

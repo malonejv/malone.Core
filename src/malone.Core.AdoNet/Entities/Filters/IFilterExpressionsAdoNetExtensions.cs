@@ -25,7 +25,7 @@
 			foreach (var propertyInfo in properties)
 			{
 				// Get the stringvalue attributes
-				DbParameterAttribute dbParameterInfo = propertyInfo.GetCustomAttribute(typeof(DbParameterAttribute), false) as DbParameterAttribute;
+				ParameterAttribute dbParameterInfo = propertyInfo.GetCustomAttribute(typeof(ParameterAttribute), false) as ParameterAttribute;
 				object parameterValue = propertyInfo.GetValue(filter) != propertyInfo.GetType().GetDefault() ? propertyInfo.GetValue(filter) : DBNull.Value;
 				yield return new DbParameterWithValue
 				{

@@ -76,17 +76,17 @@ namespace malone.Core.Services
 			return QueryService.GetEntity(filter, orderBy, includeDeleted, includeProperties);
 		}
 
-		public void Add(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
+		public virtual void Add(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
 		{
 			DataManipulationService.Add(entity, saveChanges, disposeUoW);
 		}
 
-		public void Update(TEntity oldValues, TEntity newValues, bool saveChanges = true, bool disposeUoW = true)
+		public virtual void Update(TEntity oldValues, TEntity newValues, bool saveChanges = true, bool disposeUoW = true)
 		{
 			DataManipulationService.Update(oldValues, newValues, saveChanges, disposeUoW);
 		}
 
-		public void Delete(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
+		public virtual void Delete(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
 		{
 			DataManipulationService.Delete(entity, saveChanges, disposeUoW);
 		}

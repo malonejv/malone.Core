@@ -37,7 +37,7 @@
 				if (propertyInfo.Name != ID)
 				{
 					// Get the stringvalue attributes
-					DbParameterAttribute dbParameterInfo = propertyInfo.GetCustomAttribute(typeof(DbParameterAttribute), false) as DbParameterAttribute;
+					ParameterAttribute dbParameterInfo = propertyInfo.GetCustomAttribute(typeof(ParameterAttribute), false) as ParameterAttribute;
 					if (dbParameterInfo != null)
 					{
 						object parameterValue = propertyInfo.GetValue(entity) != propertyInfo.GetType().GetDefault() ? propertyInfo.GetValue(entity) : DBNull.Value;
@@ -72,7 +72,7 @@
 										 && prop.Name == ID
 									  select prop).Single();
 
-				DbParameterAttribute dbParameterInfo = propertyInfoId.GetCustomAttribute(typeof(DbParameterAttribute), false) as DbParameterAttribute;
+				ParameterAttribute dbParameterInfo = propertyInfoId.GetCustomAttribute(typeof(ParameterAttribute), false) as ParameterAttribute;
 
 				// Get the stringvalue attributes
 				//DbParameterIdAttribute dbParameterInfo = entityType.GetCustomAttribute(typeof(DbParameterIdAttribute), false) as DbParameterIdAttribute;

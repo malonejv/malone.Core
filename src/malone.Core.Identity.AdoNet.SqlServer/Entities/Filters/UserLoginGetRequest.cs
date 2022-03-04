@@ -10,15 +10,15 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Entities.Filters
         where TKey : IEquatable<TKey>
     {
         [StringLength(100)]
-        [DbParameter("@LoginProvider", Type = SqlDbType.NVarChar, Order = 1, Direction = ParameterDirection.Input)]
+        [Column("@LoginProvider", Type = DbType.String, Order = 1, Direction = ParameterDirection.Input)]
         public string LoginProvider { get; set; }
 
         [StringLength(100)]
-        [DbParameter("@ProviderKey", Type = SqlDbType.NVarChar, Order = 2, Direction = ParameterDirection.Input)]
+        [Column("@ProviderKey", Type = DbType.String, Order = 2, Direction = ParameterDirection.Input)]
         public string ProviderKey { get; set; }
 
         //TODO: Esto esta condicionando a usar int
-        [DbParameter("@UserId", Type = SqlDbType.Int, Order = 3, Direction = ParameterDirection.Input)]
+        [Column("@UserId", Type = DbType.Int32, Order = 3, Direction = ParameterDirection.Input)]
         public TKey UserId { get; set; }
     }
 }

@@ -10,7 +10,7 @@
 		/// <summary>
 		/// Gets or sets the DbParameter.
 		/// </summary>
-		public DbParameterAttribute DbParameter { get; set; }
+		public ParameterAttribute DbParameter { get; set; }
 
 		/// <summary>
 		/// Gets or sets the Value.
