@@ -83,6 +83,7 @@ runs:
   - name: Update Version Number
     shell: pwsh
     run: |
+        $scriptsDir="${{ inputs.SCRIPTS_DIR }}"
         $solutionDir= "${{ inputs.SOLUTION_PATH }}" | Split-Path
         $Environment= "${{ inputs.MALONECORE_ENVIRONMENT }}"
         $Verbose= "${{ inputs.MALONECORE_VERBOSE }}"
