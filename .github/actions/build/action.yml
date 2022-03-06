@@ -86,7 +86,7 @@ runs:
         $solutionDir= "${{ inputs.SOLUTION_PATH }}" | Split-Path
         $Environment= "${{ inputs.MALONECORE_ENVIRONMENT }}"
         $Verbose= "${{ inputs.MALONECORE_VERBOSE }}"
-        .\BuildScripts\Pre-BuildEvent.ps1 -SolutionDir $SolutionDir -Environment $Environment -Verbose:([bool]::parse($Verbose))
+        Invoke-Expression "$scriptsDir\Pre-BuildEvent.ps1 -SolutionDir `"$SolutionDir`" -Environment `"$Environment`" -Verbose:([bool]::parse($Verbose))"
     
   - name: Build application
     shell: pwsh
