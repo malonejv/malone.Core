@@ -75,7 +75,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="capibara.png" Pack="true" PackagePath="\" />
     <None Include="malone.Core.AdoNet.Oracle.nuspec">
       <TransformOnBuild>true</TransformOnBuild>
     </None>

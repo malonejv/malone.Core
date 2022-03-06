@@ -80,9 +80,6 @@
     <None Include="packages.config" />
     <None Include="readme.md" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="capibara.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

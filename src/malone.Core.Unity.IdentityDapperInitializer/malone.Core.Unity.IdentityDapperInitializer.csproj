@@ -15,6 +15,7 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>false</Deterministic>
+    <PackageIcon>capibara.png</PackageIcon>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -76,7 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="capibara.png" />
     <None Include="malone.Core.Unity.IdentityDapperInitializer.nuspec" />
     <None Include="packages.config" />
     <None Include="readme.md" />

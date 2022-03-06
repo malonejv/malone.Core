@@ -125,7 +125,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="capibara.png" Pack="true" PackagePath="\" />
     <None Include="malone.Core.Identity.EntityFramework.nuspec">
       <TransformOnBuild>true</TransformOnBuild>
     </None>

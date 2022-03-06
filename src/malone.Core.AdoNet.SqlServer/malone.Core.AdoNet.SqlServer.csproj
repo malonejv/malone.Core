@@ -65,7 +65,6 @@
     <Compile Include="SqlDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="capibara.png" Pack="true" PackagePath="\" />
     <None Include="malone.Core.AdoNet.SqlServer.nuspec">
       <TransformOnBuild>true</TransformOnBuild>
     </None>

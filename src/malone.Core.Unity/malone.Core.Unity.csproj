@@ -110,7 +110,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="capibara.png" Pack="true" PackagePath="\" />
     <None Include="malone.Core.Unity.nuspec">
       <TransformOnBuild>true</TransformOnBuild>
     </None>

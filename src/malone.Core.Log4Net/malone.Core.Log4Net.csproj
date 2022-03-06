@@ -69,7 +69,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="capibara.png" Pack="true" PackagePath="\" />
     <None Include="malone.Core.Log4Net.nuspec">
       <TransformOnBuild>true</TransformOnBuild>
     </None>
