@@ -134,19 +134,17 @@ param (
 				$newAssemblyVersionPatch=([int]$currentPatch)+1
 			}elseif($assemblyVersionMinor -gt $currentMinor){
 				$newAssemblyVersionMinor=$assemblyVersionMinor
-				$newAssemblyVersionPatch=0
 			}elseif($assemblyVersionMinor -eq $currentMinor){
 				$newAssemblyVersionMinor=$currentMinor
 
 				if([int]$assemblyVersionPatch -gt [int]$currentPatch){
 					$newAssemblyVersionPatch=$assemblyVersionPatch
-					$newAssemblyVersionRevision=0
 				}else{
-					$newAssemblyVersionPatch=$currentPatch
-					$newAssemblyVersionRevision=([int]$currentRevision)+1
+					$newAssemblyVersionPatch=([int]$currentPatch)+1
 				}
 			}
 		}
+		$newAssemblyVersionRevision=0
 	}elseif($Environment -eq "Local"){
 		$newAssemblyVersionMajor=$assemblyVersionMajor
 		$newAssemblyVersionMinor=$assemblyVersionMinor
