@@ -59,8 +59,8 @@ param (
     $GetAssemblyScript="$ScriptsDir\Get-AssemblyVersion.ps1"
     $UpdAssemblyScript="$ScriptsDir\Upd-AssemblyVersion.ps1"
 
-    $AssemblyVersionPath="$($SolutionDir)GlobalAssemblyInfo.cs"
-    $CurrentVersionPath="$($SolutionDir)CurrentVersion"
+    $AssemblyVersionPath="$($SolutionDir)\GlobalAssemblyInfo.cs"
+    $CurrentVersionPath="$($SolutionDir)\CurrentVersion"
 
 	if (!$Environment) {
 		$Environment = 'Development'
