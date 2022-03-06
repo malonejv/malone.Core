@@ -5,14 +5,11 @@ Runs pre-buildevent tasks.
 .PARAMETER SolutionDir
 Path where the solution file (.sln) is located.
 
-.PARAMETER TargetDir
-Path of the output files of the build.
-
 .PARAMETER Environment
 Environment in which the version number would be updated (by default 'Development').
 
 .EXAMPLE
-.\Pre-BuildEvent -SolutionDir $SolutionDir -TargetDir $TargetDir -Environment $Environment'
+.\Pre-BuildEvent -SolutionDir $SolutionDir -Environment $Environment'
 
 #>
 [CmdletBinding()]
@@ -20,9 +17,7 @@ param (
     [parameter(Mandatory=$true)]
     [string]
     $SolutionDir,
-    [parameter(Mandatory=$true)]
-    [string]
-    $TargetDir,
+	
 	[ValidateSet('Development','Production','Local')]
 	[string]
 	$Environment="Development"

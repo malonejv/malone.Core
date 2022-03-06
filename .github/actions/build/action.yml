@@ -80,7 +80,14 @@ runs:
               git config user.email "${{ inputs.GIT_USERMAIL }}"
               git config user.name "${{ inputs.GIT_USERNAME }}"
               git pull origin "${{ inputs.BRANCH }}"}
-
+  - name: Update Version Number
+    shell: pwsh
+    run: |
+        $solutionDir= "${{ inputs.SOLUTION_PATH }}" | Split-Path
+        $Environment= "${{ inputs.MALONECORE_ENVIRONMENT }}"
+        $Verbose= "${{ inputs.MALONECORE_VERBOSE }}"
+        .\BuildScripts\Pre-BuildEvent.ps1 -SolutionDir $SolutionDir -Environment $Environment -Verbose:([bool]::parse($Verbose))
+    
   - name: Build application
     shell: pwsh
     run: msbuild ${{ inputs.SOLUTION_PATH }} /t:Build /p:Configuration="${{ inputs.MALONECORE_CONFIGURATION }}"
@@ -93,7 +100,8 @@ runs:
            $solutionDir = "${{ inputs.SOLUTION_PATH }}" | Split-Path
            $scriptsDir="${{ inputs.SCRIPTS_DIR }}"
            $solutionPath="${{ inputs.SOLUTION_PATH }}"
-           Invoke-Expression "$scriptsDir\Get-ProjectsInSolution.ps1 -Path `"$solutionPath`" -Type `"NonTestProjects`" -Verbose" -Outvariable projects
+           $Verbose= "${{ inputs.MALONECORE_VERBOSE }}"
+           Invoke-Expression "$scriptsDir\Get-ProjectsInSolution.ps1 -Path `"$solutionPath`" -Type `"NonTestProjects`" -Verbose:([bool]::parse($Verbose))" -Outvariable projects
            $projects | ForEach-Object {
               $projectName = Split-Path $_ -Leaf
               $folderName = $projectName.substring(0,$projectName.lastIndexOf('.'))

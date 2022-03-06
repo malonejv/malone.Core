@@ -37,13 +37,16 @@ param (
 	}
 
 	$PropagateVerbose=($PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent -eq $true)
-
-
-	$Environment = 'Local'
+	$Environment = $env:MALONECORE_ENVIRONMENT
+	$SolutionDir=".\"
 	$SolutionPath=".\malone.Core.sln"
 	$Configuration="DebugNuget"
 	$OutputDir=$env:PKG_ARTIFACTS_DIR
 	$ShouldPack=$env:MALONECORE_SHOULDPACK
 	$Verbose=$env:MALONECORE_VERBOSE
 	
-    .\BuildScripts\Post-BuildEvent.ps1 -SolutionPath $SolutionPath -Environment $env:MALONECORE_ENVIRONMENT -Configuration $Configuration -OutputDir $OutputDir -ShouldPack:([bool]::parse($ShouldPack)) -Verbose:([bool]::parse($Verbose))
+	.\BuildScripts\Pre-BuildEvent.ps1 -SolutionDir $SolutionDir -Environment $Environment -Verbose:([bool]::parse($Verbose))
+	
+	msbuild $SolutionPath /t:Build /p:Configuration=$Configuration
+	
+    .\BuildScripts\Post-BuildEvent.ps1 -SolutionPath $SolutionPath -Environment $Environment -Configuration $Configuration -OutputDir $OutputDir -ShouldPack:([bool]::parse($ShouldPack)) -Verbose:([bool]::parse($Verbose))

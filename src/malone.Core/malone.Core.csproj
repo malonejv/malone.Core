@@ -207,9 +207,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>powershell -NoProfile -ExecutionPolicy RemoteSigned -Command "$(SolutionDir)BuildScripts\Pre-BuildEvent.ps1 -SolutionDir $(SolutionDir) -TargetDir $(TargetDir) -Environment $env:MALONECORE_ENVIRONMENT -Verbose:([bool]::parse("$env:MALONECORE_VERBOSE"))"</PreBuildEvent>
-  </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
