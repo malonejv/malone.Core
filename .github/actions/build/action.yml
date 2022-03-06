@@ -86,7 +86,7 @@ runs:
         $solutionDir= "${{ inputs.SOLUTION_PATH }}" | Split-Path
         $Environment= "${{ inputs.MALONECORE_ENVIRONMENT }}"
         $Verbose= "${{ inputs.MALONECORE_VERBOSE }}"
-        Invoke-Expression "$scriptsDir\Pre-BuildEvent.ps1 -SolutionDir `"$SolutionDir`" -Environment `"$Environment`" -Verbose:([bool]::parse($Verbose))"
+        Invoke-Expression "$scriptsDir\Pre-BuildEvent.ps1 -SolutionDir `"$SolutionDir`" -Environment `"$Environment`" -Verbose"
     
   - name: Build application
     shell: pwsh
@@ -101,7 +101,7 @@ runs:
            $scriptsDir="${{ inputs.SCRIPTS_DIR }}"
            $solutionPath="${{ inputs.SOLUTION_PATH }}"
            $Verbose= "${{ inputs.MALONECORE_VERBOSE }}"
-           Invoke-Expression "$scriptsDir\Get-ProjectsInSolution.ps1 -Path `"$solutionPath`" -Type `"NonTestProjects`" -Verbose:([bool]::parse($Verbose))" -Outvariable projects
+           Invoke-Expression "$scriptsDir\Get-ProjectsInSolution.ps1 -Path `"$solutionPath`" -Type `"NonTestProjects`" -Verbose" -Outvariable projects
            $projects | ForEach-Object {
               $projectName = Split-Path $_ -Leaf
               $folderName = $projectName.substring(0,$projectName.lastIndexOf('.'))
