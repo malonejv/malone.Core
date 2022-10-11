@@ -3,10 +3,16 @@
 
 namespace malone.Core.DataAccess.ServiceAgents
 {
-    public abstract class ServiceAgent : IServiceAgent
-    {
-        public ServiceAgent()
-        {
-        }
-    }
+	/// <summary>
+	/// Defines the <see cref="ServiceAgent" />.
+	/// </summary>
+	public abstract class ServiceAgent : IServiceAgent
+	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ServiceAgent"/> class.
+		/// </summary>
+		public ServiceAgent()
+		{
+		}
+	}
 }

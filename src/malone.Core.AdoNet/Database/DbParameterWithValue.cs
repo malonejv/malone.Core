@@ -1,11 +1,20 @@
-﻿using malone.Core.AdoNet.Attributes;
-
-namespace malone.Core.AdoNet.Database
+﻿namespace malone.Core.AdoNet.Database
 {
-    public class DbParameterWithValue
-    {
-        public DbParameterAttribute DbParameter { get; set; }
+	using malone.Core.AdoNet.Attributes;
 
-        public object Value { get; set; }
-    }
+	/// <summary>
+	/// Defines the <see cref="DbParameterWithValue" />.
+	/// </summary>
+	public class DbParameterWithValue
+	{
+		/// <summary>
+		/// Gets or sets the DbParameter.
+		/// </summary>
+		public ParameterAttribute DbParameter { get; set; }
+
+		/// <summary>
+		/// Gets or sets the Value.
+		/// </summary>
+		public object Value { get; set; }
+	}
 }

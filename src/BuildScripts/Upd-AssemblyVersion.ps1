@@ -26,32 +26,32 @@ Environment in which the version number would be updated (by default 'Developmen
 
 [CmdletBinding()]
 param (
-	
+
 	[parameter(Mandatory=$true)]
 	[ValidateScript({ Test-Path -Path $_ -PathType Leaf })]
 	[string]
 	$CurrentVersionFilePath,
-	
+
 	[parameter(Mandatory=$true)]
 	[ValidateScript({ Test-Path -Path $_ -PathType Leaf })]
 	[string]
 	$AssemblyVersionFilePath,
-	
+
 	[parameter(Mandatory=$true)]
 	[string]
 	$AssemblyFileVersion,
-	
+
 	[string]
 	$AssemblyVersion,
-	
+
 	[string]
 	$AssemblyInformationalVersion,
-	
+
 	[parameter(Mandatory=$true)]
 	[ValidateSet('Development','Production','Local')]
 	[string]
 	$Environment="Development"
-	
+
 )
 	$ErrorActionPreference = 'Stop'
 
@@ -60,15 +60,15 @@ param (
 		Write-Verbose "VerbosePreference: $VerbosePreference"
 		$VerbosePreference = 'Continue'
 		Write-Verbose "VerbosePreference setted to: $VerbosePreference"
-		
+
 		Write-Host ""
 		Write-Host ""
 
 	}
-	
+
 	$ScriptsName = [System.IO.Path]::GetFileNameWithoutExtension($($MyInvocation.MyCommand.Path | Split-Path -Leaf))
 	Write-Verbose "Script name: $ScriptsName"
-	
+
 	if($PSBoundParameters['Verbose'] -and $VerbosePreference -ne 'Continue') {
 		Write-Host ""
 	}
@@ -77,38 +77,38 @@ param (
 	$PSBoundParameters.GetEnumerator() | ForEach {
 			Write-Verbose "  $_"
 	}
-	
+
 	if($PSBoundParameters['Verbose'] -and $VerbosePreference -ne 'Continue') {
 		Write-Host ""
 	}
 
 	$PropagateVerbose=($PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent -eq $true)
-    
+
 	Write-Verbose "Defined variables:"
 	$CurrentVersionPath = ($CurrentVersionFilePath | Resolve-Path).ProviderPath
 	Write-Verbose "  Current Version Path: $CurrentVersionPath"
-	
+
 	$currentVersion=Get-Content "$CurrentVersionPath" | ConvertFrom-Json
 	Write-Verbose "  Current Version: $currentVersion"
 
 	$regexExpression="(\d+)\.(\d+)\.(\d+)\.(\d+)"
 	Write-Verbose "  Regular expression: $regexExpression"
-	
+
 	if($PSBoundParameters['Verbose'] -and $VerbosePreference -ne 'Continue') {
 		Write-Host ""
 	}
-		
+
 	$assemblyVersionMatch=[regex]::Match($AssemblyFileVersion,$regexExpression).captures
 	$assemblyVersionMajor=$assemblyVersionMatch.Groups[1].value
 	$assemblyVersionMinor=$assemblyVersionMatch.Groups[2].value
 	$assemblyVersionPatch=$assemblyVersionMatch.Groups[3].value
 	$assemblyVersionRevision=$assemblyVersionMatch.Groups[4].value
-	
+
 	$newAssemblyVersionMajor=0
 	$newAssemblyVersionMinor=0
 	$newAssemblyVersionPatch=0
 	$newAssemblyVersionRevision=0
-	
+
 	if($Environment -eq "Development"){
 		$currentVersionMatch=[regex]::Match($currentVersion.development,$regexExpression).captures
 		Write-Verbose "Current Version match: $($currentVersionMatch.count)"
@@ -134,19 +134,17 @@ param (
 				$newAssemblyVersionPatch=([int]$currentPatch)+1
 			}elseif($assemblyVersionMinor -gt $currentMinor){
 				$newAssemblyVersionMinor=$assemblyVersionMinor
-				$newAssemblyVersionPatch=0
 			}elseif($assemblyVersionMinor -eq $currentMinor){
 				$newAssemblyVersionMinor=$currentMinor
-				
+
 				if([int]$assemblyVersionPatch -gt [int]$currentPatch){
 					$newAssemblyVersionPatch=$assemblyVersionPatch
-					$newAssemblyVersionRevision=0
 				}else{
-					$newAssemblyVersionPatch=$currentPatch
-					$newAssemblyVersionRevision=([int]$currentRevision)+1
+					$newAssemblyVersionPatch=([int]$currentPatch)+1
 				}
 			}
 		}
+		$newAssemblyVersionRevision=0
 	}elseif($Environment -eq "Local"){
 		$newAssemblyVersionMajor=$assemblyVersionMajor
 		$newAssemblyVersionMinor=$assemblyVersionMinor
@@ -166,7 +164,7 @@ param (
 		Write-Verbose "Current match groups: $currentMajor.$currentMinor.$currentPatch.$currentRevision"
 
 		$newAssemblyVersionRevision=0
-		
+
 		if($assemblyVersionMajor -lt $currentMajor){
 			$newAssemblyVersionMajor=$currentMajor
 			$newAssemblyVersionMinor=$currentMinor
@@ -193,15 +191,15 @@ param (
 			}
 		}
 	}
-	
+
 	$newAssemblyVersion="$newAssemblyVersionMajor.$newAssemblyVersionMinor.$newAssemblyVersionPatch"
 	$newAssemblyFileVersion="$newAssemblyVersionMajor.$newAssemblyVersionMinor.$newAssemblyVersionPatch.$newAssemblyVersionRevision"
-	
+
 	#Change AssemblyInformationalVersion
 	if($AssemblyInformationalVersion -and ($AssemblyFileVersion -ne $AssemblyInformationalVersion)){
 		if($Environment -eq "Production"){
 			$newAssemblyInformationalVersion=$newAssemblyVersion
-			
+
 			(Get-Content "$AssemblyVersionFilePath").replace("AssemblyInformationalVersion(`"$AssemblyVersion`")", "AssemblyInformationalVersion(`"$newAssemblyInformationalVersion`")") | Set-Content "$AssemblyVersionFilePath"
 			(Get-Content "$AssemblyVersionFilePath").replace("AssemblyInformationalVersion(`"$AssemblyFileVersion-dev`")", "AssemblyInformationalVersion(`"$newAssemblyInformationalVersion`")") | Set-Content "$AssemblyVersionFilePath"
 			(Get-Content "$AssemblyVersionFilePath").replace("AssemblyInformationalVersion(`"$AssemblyFileVersion-beta`")", "AssemblyInformationalVersion(`"$newAssemblyInformationalVersion`")") | Set-Content "$AssemblyVersionFilePath"
@@ -233,7 +231,7 @@ param (
 	if($AssemblyVersion){
 		(Get-Content "$AssemblyVersionFilePath").replace("$AssemblyVersion", "$newAssemblyVersion") | Set-Content "$AssemblyVersionFilePath"
 	}
-	
+
 	Write-Verbose "New Assembly Version: $newAssemblyVersion"
 	Write-Verbose "New Assembly File Version: $newAssemblyFileVersion"
 	Write-Verbose "New Assembly Informational Version: $newAssemblyInformationalVersion"
@@ -245,7 +243,7 @@ param (
 			$currentVersion.production=$newAssemblyVersion
 		}
 		Write-Verbose "Updated Current Version File: $currentVersion"
-		Set-Content -Value ($currentVersion | convertTo-Json) -Path "$CurrentVersionFilePath"	
+		Set-Content -Value ($currentVersion | convertTo-Json) -Path "$CurrentVersionFilePath"
 	}
 
 	return $newAssemblyVersion

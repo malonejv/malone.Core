@@ -69,7 +69,7 @@ namespace malone.Core.Identity.Dapper.Business
 
             // Configure user lockout defaults
             userService.UserLockoutEnabledByDefault = true;
-            userService.DefaultAccountLockoutTimeSpan = TimeSpan.FromDays(365 * 100); //Tiempo que queda bloqueado 
+            userService.DefaultAccountLockoutTimeSpan = TimeSpan.FromDays(365 * 100); //Tiempo que queda bloqueado
             userService.MaxFailedAccessAttemptsBeforeLockout = 5;
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user

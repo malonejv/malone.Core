@@ -24,7 +24,7 @@ param(
 	[Parameter(Mandatory=$true)]
 	[string]
 	$Path,
-	
+
 	[Parameter(Mandatory=$false)]
 	[string]
 	[ValidateSet($null, 'AssemblyVersion', 'AssemblyFileVersion', 'AssemblyInformationalVersion')]
@@ -33,10 +33,10 @@ param(
 	[Parameter(Mandatory=$false)]
 	[string]
 	$FileMask = 'AssemblyInfo.cs'
-	
+
 )
 	$ErrorActionPreference = 'Stop'
-	
+
 	Write-Host ""
 
 	Write-Verbose "Verbose: '$($PSBoundParameters['Verbose'])'"
@@ -44,7 +44,7 @@ param(
 		Write-Verbose "VerbosePreference: $VerbosePreference"
 		$VerbosePreference = 'Continue'
 		Write-Verbose "VerbosePreference setted to: $VerbosePreference"
-    
+
 		Write-Host ""
 		Write-Host ""
 	}
@@ -55,12 +55,12 @@ param(
 	if($PSBoundParameters['Verbose'] -and $VerbosePreference -ne 'Continue') {
 	Write-Host ""
 	}
-   
+
 	Write-Verbose "Input Patameters:"
 	$PSBoundParameters.GetEnumerator() | ForEach {
 			Write-Verbose "  $_"
 	}
-	
+
 	if($PSBoundParameters['Verbose'] -and $VerbosePreference -ne 'Continue') {
 		Write-Host ""
 	}
@@ -71,13 +71,13 @@ param(
 	if (!$FileMask) {
 		$FileMask = 'AssemblyInfo.cs'
 	}
-	
+
 	if($PSBoundParameters['Verbose'] -and $VerbosePreference -ne 'Continue') {
 		Write-Host ""
 	}
 
 	$PropagateVerbose=($PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent -eq $true)
-        
+
 	Write-Verbose "Resolving path"
 	$Path = ($Path | Resolve-Path).ProviderPath
 	Write-Verbose "Resolved path: $Path"
@@ -108,6 +108,6 @@ param(
 	return $result
 
 
-	
+
 	$regex = '{0}\(\"([^\"]*)\"\)' -f $VersionAttribute
 	$match = Select-String -Path "D:\Apps\GitHub\Otros\Prueba-BuildEvent\src\GlobalAssemblyInfo.cs" -Encoding UTF8 -Pattern $regex

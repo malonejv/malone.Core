@@ -1,81 +1,99 @@
-﻿using System;
-using System.Configuration;
-using System.Linq;
-using System.Reflection;
-using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Configuration;
-using malone.Core.Configuration.DbFactory;
+﻿namespace malone.Core.AdoNet.Database
+{
+	using System;
+	using System.Configuration;
+	using System.Linq;
+	using System.Reflection;
+	using malone.Core.Commons.Helpers.Extensions;
+	using malone.Core.Configuration;
+	using malone.Core.Configuration.DbFactory;
 
-namespace malone.Core.AdoNet.Database
-	{
+	/// <summary>
+	/// Defines the <see cref="DatabaseFactory" />.
+	/// </summary>
 	public class DatabaseFactory
-    {
-        private ICoreConfiguration Configuration { get; set; }
-        private DatabaseConfigurationElement DatabaseConfiguration { get; set; }
+	{
+		/// <summary>
+		/// Gets or sets the Configuration.
+		/// </summary>
+		private ICoreConfiguration Configuration { get; set; }
 
-        public DatabaseFactory(ICoreConfiguration configuration)
-        {
-            if (configuration == null)
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
+		/// <summary>
+		/// Gets or sets the DatabaseConfiguration.
+		/// </summary>
+		private DatabaseConfigurationElement DatabaseConfiguration { get; set; }
 
-            Configuration = configuration;
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DatabaseFactory"/> class.
+		/// </summary>
+		/// <param name="configuration">The configuration<see cref="ICoreConfiguration"/>.</param>
+		public DatabaseFactory(ICoreConfiguration configuration)
+		{
+			if (configuration == null)
+			{
+				throw new ArgumentNullException(nameof(configuration));
+			}
 
-            var coreSettings = Configuration.GetSection<CoreSettingsSection>();
-            if (coreSettings == null)
-            {
-                throw new ConfigurationErrorsException(nameof(coreSettings));
-            }
+			Configuration = configuration;
 
-            DatabaseConfiguration = coreSettings.DatabaseConfiguration;
-        }
+			var coreSettings = Configuration.GetSection<CoreSettingsSection>();
+			if (coreSettings == null)
+			{
+				throw new ConfigurationErrorsException(nameof(coreSettings));
+			}
 
-        public IDatabase CreateDatabase(string connectionStringName)
-        {
-            // Verify a DatabaseFactoryConfiguration line exists in the web.config.
-            if (DatabaseConfiguration.Providers == null || DatabaseConfiguration.Providers.Count == 0)
-            {
-                //TODO: Utilizar errores del Core
-                throw new Exception("Database Provider not defined in DatabaseFactoryConfiguration section of config file.");
-            }
+			DatabaseConfiguration = coreSettings.DatabaseConfiguration;
+		}
 
-            try
-            {
-                DatabaseProviderElement providerElement = DatabaseConfiguration.Providers
-                                                                        .Cast<DatabaseProviderElement>()
-                                                                        .Where(p => p.ConnectionStringName == connectionStringName)
-                                                                        .FirstOrDefault();
+		/// <summary>
+		/// The CreateDatabase.
+		/// </summary>
+		/// <param name="connectionStringName">The connectionStringName<see cref="string"/>.</param>
+		/// <returns>The <see cref="IDatabase"/>.</returns>
+		public IDatabase CreateDatabase(string connectionStringName)
+		{
+			// Verify a DatabaseFactoryConfiguration line exists in the web.config.
+			if (DatabaseConfiguration.Providers == null || DatabaseConfiguration.Providers.Count == 0)
+			{
+				//TODO: Utilizar errores del Core
+				throw new Exception("Database Provider not defined in DatabaseFactoryConfiguration section of config file.");
+			}
 
-                DatabaseProvider provider = default(DatabaseProvider);
-                Enum.TryParse<DatabaseProvider>(providerElement.Name, out provider);
+			try
+			{
+				DatabaseProviderElement providerElement = DatabaseConfiguration.Providers
+																		.Cast<DatabaseProviderElement>()
+																		.Where(p => p.ConnectionStringName == connectionStringName)
+																		.FirstOrDefault();
 
-                // Find the class
-                Type databaseType = Type.GetType(provider.GetDescription());
+				DatabaseProvider provider = default(DatabaseProvider);
+				Enum.TryParse<DatabaseProvider>(providerElement.Name, out provider);
 
-                // Get it's constructor
-                ConstructorInfo constructor = databaseType.GetConstructor(new Type[] { typeof(string) });
+				// Find the class
+				Type databaseType = Type.GetType(provider.GetDescription());
 
-                var connectionString = Configuration.GetConnectionString(connectionStringName);
+				// Get it's constructor
+				ConstructorInfo constructor = databaseType.GetConstructor(new Type[] { typeof(string) });
 
-                // Invoke it's constructor, which returns an instance.
-                object[] args = { connectionString };
-                IDatabase database = (IDatabase)constructor.Invoke(args);
+				var connectionString = Configuration.GetConnectionString(connectionStringName);
 
-                // Pass back the instance as a Database
-                return database;
-            }
-            catch (ArgumentException)
-            {
-                //TODO: Utilizar errores del Core
-                throw new Exception("Not a valid Database Provider Name.");
-            }
-            catch (Exception excep)
-            {
-                //TODO: Utilizar errores del Core
-                throw new Exception("Error instantiating database " + connectionStringName + ". " + excep.Message);
-            }
-        }
-    }
+				// Invoke it's constructor, which returns an instance.
+				object[] args = { connectionString };
+				IDatabase database = (IDatabase)constructor.Invoke(args);
 
+				// Pass back the instance as a Database
+				return database;
+			}
+			catch (ArgumentException)
+			{
+				//TODO: Utilizar errores del Core
+				throw new Exception("Not a valid Database Provider Name.");
+			}
+			catch (Exception excep)
+			{
+				//TODO: Utilizar errores del Core
+				throw new Exception("Error instantiating database " + connectionStringName + ". " + excep.Message);
+			}
+		}
+	}
 }

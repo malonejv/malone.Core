@@ -131,7 +131,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected override void ConfigureCommandForUpdate(IDbCommand command)
         {
-            string query = @"UPDATE Users SET  
+            string query = @"UPDATE Users SET
                                     Email = @Email,
                                     EmailConfirmed = @EmailConfirmed,
                                     PasswordHash = @PasswordHash
@@ -155,7 +155,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected override void ConfigureCommandForDelete(IDbCommand command)
         {
-            string query = @"DELETE FROM Users 
+            string query = @"DELETE FROM Users
                               WHERE Id = @Id;";
 
             command.CommandText = query;

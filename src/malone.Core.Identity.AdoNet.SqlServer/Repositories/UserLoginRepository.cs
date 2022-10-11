@@ -71,11 +71,11 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
         protected override void ConfigureCommandForUpdate(IDbCommand command)
         {
-            string query = @"UPDATE UsersLogins SET 
+            string query = @"UPDATE UsersLogins SET
                                      LoginProvider = @LoginProvider,
                                      ProviderKey = @ProviderKey
                               WHERE LoginProvider = @LoginProvider
-                                AND ProviderKey = @ProviderKey 
+                                AND ProviderKey = @ProviderKey
                                 AND UserId = @UserId;";
 
             command.CommandText = query;
@@ -90,7 +90,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
         {
             string query = "";
 
-            query = @"DELETE FROM UsersLogins 
+            query = @"DELETE FROM UsersLogins
                             WHERE LoginProvider = @LoginProvider
                               AND ProviderKey = @ProviderKey
                               AND UserId = @UserId;";

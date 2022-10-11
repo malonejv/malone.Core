@@ -575,24 +575,24 @@ namespace malone.Core.Identity.Dapper.Repositories
 
         //Evaluar usar este tipo de objetos para reemplazar los IAdoNetFilterExpression
 
-        // We want to use FindAsync() when looking for an User.Id instead of LINQ to avoid extra 
-        // database roundtrips. This class cracks open the filter expression passed by 
-        // UserStore.FindByIdAsync() to obtain the value of the id we are looking for 
+        // We want to use FindAsync() when looking for an User.Id instead of LINQ to avoid extra
+        // database roundtrips. This class cracks open the filter expression passed by
+        // UserStore.FindByIdAsync() to obtain the value of the id we are looking for
         private static class FindByIdFilterParser
         {
             // expression pattern we need to match
             private static readonly Expression<Func<TUserEntity, bool>> Predicate = u => u.Id.Equals(default(TKey));
-            // method we need to match: Object.Equals() 
+            // method we need to match: Object.Equals()
             private static readonly MethodInfo EqualsMethodInfo = ((MethodCallExpression)Predicate.Body).Method;
-            // property access we need to match: User.Id 
+            // property access we need to match: User.Id
             private static readonly MemberInfo UserIdMemberInfo = ((MemberExpression)((MethodCallExpression)Predicate.Body).Object).Member;
 
             internal static bool TryMatchAndGetId(Expression<Func<TUserEntity, bool>> filter, out TKey id)
             {
-                // default value in case we can’t obtain it 
+                // default value in case we can’t obtain it
                 id = default(TKey);
 
-                // lambda body should be a call 
+                // lambda body should be a call
                 if (filter.Body.NodeType != ExpressionType.Call)
                 {
                     return false;
@@ -647,7 +647,7 @@ namespace malone.Core.Identity.Dapper.Repositories
                     return false;
                 }
 
-                // expression tree matched so we can now just get the value of the id 
+                // expression tree matched so we can now just get the value of the id
                 var fieldInfo = (FieldInfo)fieldAccess.Member;
                 var closure = ((ConstantExpression)fieldAccess.Expression).Value;
 
@@ -656,32 +656,32 @@ namespace malone.Core.Identity.Dapper.Repositories
             }
         }
 
-        // We want to use FindAsync() when looking for an User.UserName instead of LINQ to avoid extra 
-        // database roundtrips. This class cracks open the filter expression passed by 
-        // UserStore.FindByIdAsync() to obtain the value of the id we are looking for 
+        // We want to use FindAsync() when looking for an User.UserName instead of LINQ to avoid extra
+        // database roundtrips. This class cracks open the filter expression passed by
+        // UserStore.FindByIdAsync() to obtain the value of the id we are looking for
         private static class FindByUserNameOrEmailFilterParser
         {
             // expression pattern we need to match
             private static readonly Expression<Func<TUserEntity, bool>> UserNamePredicate = u => u.UserName.Equals(null);
-            // method we need to match: Object.Equals() 
+            // method we need to match: Object.Equals()
             private static readonly MethodInfo UserNameEqualsMethodInfo = ((MethodCallExpression)UserNamePredicate.Body).Method;
-            // property access we need to match: UserRequest.UserNameOrEmail 
+            // property access we need to match: UserRequest.UserNameOrEmail
             private static readonly MemberInfo UserNameMemberInfo = ((MemberExpression)((MethodCallExpression)UserNamePredicate.Body).Object).Member;
 
             // expression pattern we need to match
             private static readonly Expression<Func<TUserEntity, bool>> EmailPredicate = u => u.Email.Equals(null);
-            // method we need to match: Object.Equals() 
+            // method we need to match: Object.Equals()
             private static readonly MethodInfo EmailEqualsMethodInfo = ((MethodCallExpression)EmailPredicate.Body).Method;
-            // property access we need to match: UserRequest.UserNameOrEmail 
+            // property access we need to match: UserRequest.UserNameOrEmail
             private static readonly MemberInfo EmailMemberInfo = ((MemberExpression)((MethodCallExpression)EmailPredicate.Body).Object).Member;
 
 
             internal static bool TryMatchAndGetUserNameOrEmail(Expression<Func<TUserEntity, bool>> filter, out string userNameOrEmail)
             {
-                // default value in case we can’t obtain it 
+                // default value in case we can’t obtain it
                 userNameOrEmail = null;
 
-                // lambda body should be a call 
+                // lambda body should be a call
                 if (filter.Body.NodeType != ExpressionType.Call)
                 {
                     return false;
@@ -742,7 +742,7 @@ namespace malone.Core.Identity.Dapper.Repositories
                     return false;
                 }
 
-                // expression tree matched so we can now just get the value of the id 
+                // expression tree matched so we can now just get the value of the id
                 var fieldInfo = (FieldInfo)fieldAccess.Member;
                 var closure = ((ConstantExpression)fieldAccess.Expression).Value;
 

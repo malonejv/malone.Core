@@ -48,17 +48,17 @@ inputs:
      default: ''
 
 outputs:
-  version_number: 
+  version_number:
     description: "Version number"
     value: ${{ steps.version_number.outputs.version_number }}
 
 runs:
   using: "composite"
-      
+
   steps:
 
   - uses: actions/checkout@v2
-  
+
   - name: Setup MSBuild
     uses: microsoft/setup-msbuild@v1.1
 
@@ -68,11 +68,11 @@ runs:
   - name: Add GitHub as Nuget Source
     shell: pwsh
     run: nuget sources add -name "github" -Source ${{ inputs.NUGET_SOURCE }} -Username ${{ inputs.NUGET_USERNAME }} -Password ${{ inputs.NUGET_PASSWORD }}
-    
+
   - name: Restore Nuget Packages
     shell: pwsh
     run:  nuget restore ${{ inputs.SOLUTION_PATH }}
-  
+
   - name: Pull before version updated
     shell: pwsh
     run: |
@@ -80,7 +80,15 @@ runs:
               git config user.email "${{ inputs.GIT_USERMAIL }}"
               git config user.name "${{ inputs.GIT_USERNAME }}"
               git pull origin "${{ inputs.BRANCH }}"}
-              
+  - name: Update Version Number
+    shell: pwsh
+    run: |
+        $scriptsDir="${{ inputs.SCRIPTS_DIR }}"
+        $solutionDir= "${{ inputs.SOLUTION_PATH }}" | Split-Path
+        $Environment= "${{ inputs.MALONECORE_ENVIRONMENT }}"
+        $Verbose= "${{ inputs.MALONECORE_VERBOSE }}"
+        Invoke-Expression "$scriptsDir\Pre-BuildEvent.ps1 -SolutionDir `"$SolutionDir`" -Environment `"$Environment`" -Verbose"
+    
   - name: Build application
     shell: pwsh
     run: msbuild ${{ inputs.SOLUTION_PATH }} /t:Build /p:Configuration="${{ inputs.MALONECORE_CONFIGURATION }}"
@@ -93,14 +101,15 @@ runs:
            $solutionDir = "${{ inputs.SOLUTION_PATH }}" | Split-Path
            $scriptsDir="${{ inputs.SCRIPTS_DIR }}"
            $solutionPath="${{ inputs.SOLUTION_PATH }}"
+           $Verbose= "${{ inputs.MALONECORE_VERBOSE }}"
            Invoke-Expression "$scriptsDir\Get-ProjectsInSolution.ps1 -Path `"$solutionPath`" -Type `"NonTestProjects`" -Verbose" -Outvariable projects
-           $projects | ForEach-Object { 
+           $projects | ForEach-Object {
               $projectName = Split-Path $_ -Leaf
               $folderName = $projectName.substring(0,$projectName.lastIndexOf('.'))
               Write-Verbose "$folderName"
-              New-Item -Path "${{ github.workspace }}\$buildObjects" -Name $folderName -ItemType Directory 
+              New-Item -Path "${{ github.workspace }}\$buildObjects" -Name $folderName -ItemType Directory
               Copy-Item "$solutionDir\$folderName\bin\" -Destination "${{ github.workspace }}\$buildObjects\$folderName" -Recurse -Container }
-           
+
   - name: Upload artifacts
     uses: actions/upload-artifact@v2
     with:

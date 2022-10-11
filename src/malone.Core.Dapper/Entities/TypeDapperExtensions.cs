@@ -9,7 +9,7 @@ using malone.Core.Entities.Model;
 
 namespace malone.Core.Dapper.Entities
 {
-    public static class TypeDapperExtensions
+	internal static class TypeDapperExtensions
     {
         public static IEnumerable<ColumnAttribute> GetColumnsInfo(this Type entityType)
         {

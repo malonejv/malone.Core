@@ -20,34 +20,34 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Entities
             Claims = null;
         }
 
-        [DbParameter("@Email", Type = SqlDbType.NVarChar, Size = 256, Direction = ParameterDirection.Input)]
+        [Column("@Email", Type = DbType.String, Size = 256, Direction = ParameterDirection.Input)]
         public virtual string Email { get; set; }
 
-        [DbParameter("@EmailConfirmed", Type = SqlDbType.Bit, Direction = ParameterDirection.Input)]
+        [Column("@EmailConfirmed", Type = DbType.Boolean, Direction = ParameterDirection.Input)]
         public virtual bool EmailConfirmed { get; set; }
 
-        [DbParameter("@PasswordHash", Type = SqlDbType.NVarChar, Size = 4000, Direction = ParameterDirection.Input)]
+        [Column("@PasswordHash", Type = DbType.String, Size = 4000, Direction = ParameterDirection.Input)]
         public virtual string PasswordHash { get; set; }
 
-        [DbParameter("@SecurityStamp", Type = SqlDbType.NVarChar, Size = 4000, Direction = ParameterDirection.Input)]
+        [Column("@SecurityStamp", Type = DbType.String, Size = 4000, Direction = ParameterDirection.Input)]
         public virtual string SecurityStamp { get; set; }
 
-        [DbParameter("@PhoneNumber", Type = SqlDbType.NVarChar, Size = 4000, Direction = ParameterDirection.Input)]
+        [Column("@PhoneNumber", Type = DbType.String, Size = 4000, Direction = ParameterDirection.Input)]
         public virtual string PhoneNumber { get; set; }
 
-        [DbParameter("@PhoneNumberConfirmed", Type = SqlDbType.Bit, Direction = ParameterDirection.Input)]
+        [Column("@PhoneNumberConfirmed", Type = DbType.Boolean, Direction = ParameterDirection.Input)]
         public virtual bool PhoneNumberConfirmed { get; set; }
 
-        [DbParameter("@TwoFactorEnabled", Type = SqlDbType.Bit, Direction = ParameterDirection.Input)]
+        [Column("@TwoFactorEnabled", Type = DbType.Boolean, Direction = ParameterDirection.Input)]
         public virtual bool TwoFactorEnabled { get; set; }
 
-        [DbParameter("@LockoutEndDateUtc", Type = SqlDbType.DateTime, Direction = ParameterDirection.Input)]
+        [Column("@LockoutEndDateUtc", Type = DbType.DateTime, Direction = ParameterDirection.Input)]
         public virtual DateTime? LockoutEndDateUtc { get; set; }
 
-        [DbParameter("@LockoutEnabled", Type = SqlDbType.Bit, Direction = ParameterDirection.Input)]
+        [Column("@LockoutEnabled", Type = DbType.Boolean, Direction = ParameterDirection.Input)]
         public virtual bool LockoutEnabled { get; set; }
 
-        [DbParameter("@AccessFailedCount", Type = SqlDbType.Int, Direction = ParameterDirection.Input)]
+        [Column("@AccessFailedCount", Type = DbType.Int32, Direction = ParameterDirection.Input)]
         public virtual int AccessFailedCount { get; set; }
 
         public virtual ICollection<TUserRole> Roles { get; internal set; }
@@ -56,10 +56,10 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Entities
 
         public virtual ICollection<TUserLogin> Logins { get; internal set; }
 
-        [DbParameter("@Id", Type = SqlDbType.Int, Direction = ParameterDirection.Input)]
+        [Column("@Id", Type = DbType.Int32, Direction = ParameterDirection.Input)]
         public virtual TKey Id { get; set; }
 
-        [DbParameter("@UserName", Type = SqlDbType.NVarChar, Size = 256, Direction = ParameterDirection.Input)]
+        [Column("@UserName", Type = DbType.String, Size = 256, Direction = ParameterDirection.Input)]
         public string UserName { get; set; }
     }
 

@@ -3,13 +3,27 @@
 
 namespace malone.Core.Logging
 {
-    public enum LoggerFactories
-    {
-        Log4Net
-    }
+	/// <summary>
+	/// Defines the LoggerFactories.
+	/// </summary>
+	public enum LoggerFactories
+	{
+		/// <summary>
+		/// Defines the Log4Net.
+		/// </summary>
+		Log4Net
+	}
 
-    public interface IFactoryResolver
-    {
-        LoggerFactory GetFactory(LoggerFactories factory);
-    }
+	/// <summary>
+	/// Defines the <see cref="IFactoryResolver" />.
+	/// </summary>
+	public interface IFactoryResolver
+	{
+		/// <summary>
+		/// The GetFactory.
+		/// </summary>
+		/// <param name="factory">The factory<see cref="LoggerFactories"/>.</param>
+		/// <returns>The <see cref="LoggerFactory"/>.</returns>
+		LoggerFactory GetFactory(LoggerFactories factory);
+	}
 }

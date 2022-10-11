@@ -12,7 +12,7 @@ namespace malone.Core.Configuration.Modules
 
 		public ModuleElement this[int index]
 		{
-		
+
 			get
 			{
 				return (ModuleElement)BaseGet(index);

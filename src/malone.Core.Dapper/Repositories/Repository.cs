@@ -33,7 +33,7 @@ namespace malone.Core.Dapper.Repositories
             string query = string.Format("SELECT {0} FROM {1}", columns, tableName);
 
             DynamicParameters parameters = new DynamicParameters();
-            var allowSoftDelete = ConfigureParameterIsDelete(query, columns, tableName, parameters, includeDeleted);
+            var allowSoftDelete = ConfigureParameterIsDelete(query, columns, tableName);
 
             var whereClause = "";
             ParameterAttribute parametersInfo;

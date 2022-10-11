@@ -2,16 +2,16 @@
 <#
 .SYNOPSIS
 Gets the projects of the visual studio solution.
- 
+
 .PARAMETER $Path
 Path of the solution file (.sln).
- 
+
 .PARAMETER Type
 Type of projects to return, by default All but could be NonTestProjects or TestProjects
- 
+
 .EXAMPLE
 .\Get-ProjectsInSolution -Path $Path -Type $Type'
- 
+
 #>
 [CmdletBinding()]
 param (
@@ -23,19 +23,19 @@ param (
 	[string]
 	$Type = "All"
 )
- 
+
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
- 
+
 $Path = ($Path | Resolve-Path).ProviderPath
- 
+
 $SolutionRoot = $Path | Split-Path
- 
+
 $result = @()
 
 
-if ($Type -eq "NonTestProjects") 
-{ 
+if ($Type -eq "NonTestProjects")
+{
 $SolutionProjectPattern = @"
 (?x)
 ^ Project \( " \{ FAE04EC0-301F-11D3-BF4B-00C04F79EFBC \} " \)
@@ -43,8 +43,8 @@ $SolutionProjectPattern = @"
 " (?<name> (?!.*Test.*)[^"]* ) " , \s+
 " (?<path> [^"]* ) " , \s+
 "@
-} elseif ($Type -eq "TestProjects") 
-{ 
+} elseif ($Type -eq "TestProjects")
+{
 $SolutionProjectPattern = @"
 (?x)
 ^ Project \( " \{ FAE04EC0-301F-11D3-BF4B-00C04F79EFBC \} " \)
@@ -62,7 +62,7 @@ else{
 " (?<path> [^"]* ) " , \s+
 "@
 }
- 
+
 Get-Content -Path $Path |
     ForEach-Object {
         if ($_ -match $SolutionProjectPattern) {

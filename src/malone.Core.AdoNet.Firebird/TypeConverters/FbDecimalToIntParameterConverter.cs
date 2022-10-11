@@ -1,15 +1,23 @@
-﻿using FirebirdSql.Data.FirebirdClient;
-using malone.Core.AdoNet.Parameters;
-
-namespace malone.Core.AdoNet.Oracle.Parameters
+﻿namespace malone.Core.AdoNet.Oracle.Parameters
 {
-    public class FbDecimalToIntParameterConverter : IParameterConverter
-    {
-        public object Convert(object value)
-        {
-            var fbType = ((FbDbType)value);
+	using FirebirdSql.Data.FirebirdClient;
+	using malone.Core.AdoNet.Parameters;
 
-            return System.Convert.ToDecimal(fbType.ToString());
-        }
-    }
+	/// <summary>
+	/// Defines the <see cref="FbDecimalToIntParameterConverter" />.
+	/// </summary>
+	public class FbDecimalToIntParameterConverter : IParameterConverter
+	{
+		/// <summary>
+		/// The Convert.
+		/// </summary>
+		/// <param name="value">The value<see cref="object"/>.</param>
+		/// <returns>The <see cref="object"/>.</returns>
+		public object Convert(object value)
+		{
+			var fbType = ((FbDbType)value);
+
+			return System.Convert.ToDecimal(fbType.ToString());
+		}
+	}
 }

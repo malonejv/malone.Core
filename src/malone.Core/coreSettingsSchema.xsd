@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema id="coreSettingsSchema"
-    targetNamespace="urn:malone.Core.Commons.Configurations"
+    targetNamespace="urn:malone.Core.Configuration"
     elementFormDefault="unqualified"
     attributeFormDefault="unqualified"
-    xmlns="urn:malone.Core.Commons.Configurations"
-    xmlns:mstns="urn:malone.Core.Commons.Configurations"
+    xmlns="urn:malone.Core.Configuration"
+    xmlns:mstns="urn:malone.Core.Configuration"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
   <xs:element name="coreSettings">

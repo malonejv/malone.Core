@@ -6,10 +6,10 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Entities.Filters
 {
     public class UserGetRequest : IFilterExpressionAdoNet
     {
-        [DbParameter("@UserNameOrEmail", Type = SqlDbType.NVarChar, Order = 1, Direction = ParameterDirection.Input)]
+        [Column("@UserNameOrEmail", Type = DbType.String, Order = 1, Direction = ParameterDirection.Input)]
         public string UserNameOrEmail { get; set; }
 
-        //[DbParameter("@Email", Type = SqlDbType.NVarChar, Order = 2, Direction = ParameterDirection.Input)]
+        //[Column("@Email", Type = DbType.String, Order = 2, Direction = ParameterDirection.Input)]
         //public string Email { get; set; }
     }
 }
