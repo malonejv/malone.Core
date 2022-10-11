@@ -10,16 +10,16 @@ using Unity.Lifetime;
 
 namespace malone.Core.Unity.ModulesInitializers
 {
-    public class BasicModulesInitializer : IModuleInitializer<IUnityContainer>
-    {
-        public string Name => CoreModules.Basics.GetDescription();
+	public class BasicModulesInitializer : IModuleInitializer<IUnityContainer>
+	{
+		public string Name => CoreModules.Basics.GetDescription();
 
-        public void Initialize(IUnityContainer container)
-        {
-            container.RegisterType<ICoreConfiguration, CoreConfiguration>();
-            container.RegisterType<IUnitOfWork, UnitOfWork>(new SingletonLifetimeManager());
-            container.RegisterType<IContentLocalizationHandler, ContentLocalizationHandler>();
-            container.RegisterType<IErrorLocalizationHandler, ErrorLocalizationHandler>();
-        }
-    }
+		public void Initialize(IUnityContainer container)
+		{
+			container.RegisterType<ICoreConfiguration, CoreConfiguration>();
+			container.RegisterType<IUnitOfWork, UnitOfWork>(new SingletonLifetimeManager());
+			container.RegisterType<IContentLocalizationHandler, ContentLocalizationHandler>();
+			container.RegisterType<IErrorLocalizationHandler, ErrorLocalizationHandler>();
+		}
+	}
 }

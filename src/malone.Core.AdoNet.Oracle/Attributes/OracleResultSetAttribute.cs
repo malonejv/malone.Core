@@ -1,8 +1,5 @@
 ﻿namespace malone.Core.AdoNet.Oracle.Attributes
 {
-	using System;
-	using System.Data;
-	using malone.Core.AdoNet.Attributes;
 
 	///// <summary>
 	///// Defines the <see cref="OracleResultSetAttribute" />.

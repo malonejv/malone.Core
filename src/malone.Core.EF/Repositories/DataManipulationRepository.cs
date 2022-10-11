@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
-using malone.Core.Commons.Exceptions;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.Entities.Model;
@@ -8,13 +6,13 @@ using malone.Core.Logging;
 
 namespace malone.Core.EF.Repositories
 {
-	public class DataManipulationRepository<TKey, TEntity> : BaseDataManipulationRepository<TEntity>, IDataManipulationRepository<TKey, TEntity>, IDisposable
+	public class CUDRepository<TKey, TEntity> : BaseCUDRepository<TEntity>, ICUDRepository<TKey, TEntity>, IDisposable
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
 	{
 		#region Constructor
 
-		public DataManipulationRepository(IContext context, ICoreLogger logger) : base(context, logger) { }
+		public CUDRepository(IContext context, ICoreLogger logger) : base(context, logger) { }
 
 		#endregion
 

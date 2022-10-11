@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.DataAccess.Repositories;
@@ -12,22 +8,22 @@ using malone.Core.Logging;
 
 namespace malone.Core.Services
 {
-	public class DataManipulationService<TKey, TEntity, TValidator> : BaseDataManipulationService<TEntity, TValidator>, IDataManipulationService<TKey, TEntity, TValidator>
+	public class CUDService<TKey, TEntity, TValidator> : BaseCUDService<TEntity, TValidator>, ICUDService<TKey, TEntity, TValidator>
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
 		where TValidator : IServiceValidator<TKey, TEntity>
 	{
-		public IDataManipulationRepository<TKey, TEntity> Repository { get; }
+		public ICUDRepository<TKey, TEntity> Repository { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Service{TKey, TEntity, TValidator}"/> class.
 		/// </summary>
-		/// <param name="businessValidator">The businessValidator<see cref="TValidator"/>.</param>
+		/// <param name="validator">The validator<see cref="TValidator"/>.</param>
 		/// <param name="repository">The repository<see cref="IRepository{TKey, TEntity}"/>.</param>
 		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
-		public DataManipulationService(TValidator businessValidator, IDataManipulationRepository<TKey, TEntity> repository, ICoreLogger logger) : base(businessValidator, repository, logger)
+		public CUDService(TValidator validator, ICUDRepository<TKey, TEntity> repository, ICoreLogger logger) : base(validator, repository, logger)
 		{
-			ServiceValidator = businessValidator;
+			ServiceValidator = validator;
 			Repository = repository;
 			Logger = logger;
 		}
@@ -46,7 +42,7 @@ namespace malone.Core.Services
 				entity.Id.ThrowIfNull();
 
 				var uow = UnitOfWork.Create();
-				
+
 				var validationResult = ServiceValidator.Validate(ServiceValidator.ExecuteUpdateValidationRules, ServiceValidator.UpdateValidationRules);
 				if (!validationResult.IsValid)
 				{
@@ -131,6 +127,6 @@ namespace malone.Core.Services
 				throw techEx;
 			}
 		}
-		
+
 	}
 }

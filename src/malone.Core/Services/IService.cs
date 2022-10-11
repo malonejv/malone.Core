@@ -4,10 +4,6 @@
 namespace malone.Core.Services
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using malone.Core.DataAccess.Repositories;
-	using malone.Core.Entities.Filters;
 	using malone.Core.Entities.Model;
 
 	/// <summary>
@@ -16,13 +12,13 @@ namespace malone.Core.Services
 	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TValidator">.</typeparam>
-	public interface IService<TKey, TEntity, TValidator> : IBaseService<TEntity, TValidator>, IQueryService<TKey, TEntity, TValidator>, IDataManipulationService<TKey, TEntity, TValidator>
+	public interface IService<TKey, TEntity, TValidator> : IBaseService<TEntity, TValidator>, IQueryService<TKey, TEntity, TValidator>, ICUDService<TKey, TEntity, TValidator>
 where TKey : IEquatable<TKey>
 where TEntity : class, IBaseEntity<TKey>
 where TValidator : IServiceValidator<TKey, TEntity>
 	{
 		//new IQueryService<TKey, TEntity, TValidator> QueryService { get; }
-		//new IDataManipulationService<TKey, TEntity, TValidator> DataManipulationService { get; }
+		//new ICUDService<TKey, TEntity, TValidator> CUDService { get; }
 
 	}
 

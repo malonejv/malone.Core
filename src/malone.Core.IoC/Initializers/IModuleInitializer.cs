@@ -3,8 +3,8 @@
 
 namespace malone.Core.IoC.Initializers
 {
-    public interface IModuleInitializer<TContainer> : IInitializer<TContainer>
-    {
-        string Name { get; }
-    }
+	public interface IModuleInitializer<TContainer> : IInitializer<TContainer>
+	{
+		string Name { get; }
+	}
 }

@@ -5,13 +5,13 @@ using System;
 
 namespace malone.Core.Configuration.Attributes
 {
-    public class SectionNameAttribute : Attribute
-    {
-        public SectionNameAttribute(string name)
-        {
-            Name = name;
-        }
+	public class SectionNameAttribute : Attribute
+	{
+		public SectionNameAttribute(string name)
+		{
+			Name = name;
+		}
 
-        public string Name { get; private set; }
-    }
+		public string Name { get; private set; }
+	}
 }

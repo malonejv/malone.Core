@@ -9,142 +9,142 @@ using malone.Core.Logging;
 using Microsoft.AspNet.Identity;
 
 namespace malone.Core.Identity.Dapper.Repositories
-	{
+{
 	public class RoleStore<TKey, TRoleEntity, TUserRole> : IQueryableRoleStore<TRoleEntity, TKey>
-        where TKey : IEquatable<TKey>
-        where TRoleEntity : CoreRole<TKey, TUserRole>, new()
-        where TUserRole : CoreUserRole<TKey>
-    {
-        protected IRoleRepository<TKey, TRoleEntity> _roles;
+		where TKey : IEquatable<TKey>
+		where TRoleEntity : CoreRole<TKey, TUserRole>, new()
+		where TUserRole : CoreUserRole<TKey>
+	{
+		protected IRoleRepository<TKey, TRoleEntity> _roles;
 
-        protected IContext Context { get; private set; }
+		protected IContext Context { get; private set; }
 
-        protected ICoreLogger Logger { get; }
+		protected ICoreLogger Logger { get; }
 
-        public RoleStore(IContext context, ICoreLogger logger)
-        {
-            CheckContext(context);
-            CheckLogger(logger);
+		public RoleStore(IContext context, ICoreLogger logger)
+		{
+			CheckContext(context);
+			CheckLogger(logger);
 
-            Context = context;
-            Logger = logger;
-        }
+			Context = context;
+			Logger = logger;
+		}
 
 
-        #region IQueryableRoleStore
+		#region IQueryableRoleStore
 
-        public IQueryable<TRoleEntity> Roles => throw new NotImplementedException();
+		public IQueryable<TRoleEntity> Roles => throw new NotImplementedException();
 
-        public async Task<TRoleEntity> FindByIdAsync(TKey roleId)
-        {
-            ThrowIfDisposed();
-            TRoleEntity result = _roles.GetRoleById(roleId);
-            return await Task.FromResult<TRoleEntity>(result);
-        }
+		public async Task<TRoleEntity> FindByIdAsync(TKey roleId)
+		{
+			ThrowIfDisposed();
+			TRoleEntity result = _roles.GetRoleById(roleId);
+			return await Task.FromResult<TRoleEntity>(result);
+		}
 
-        public async Task<TRoleEntity> FindByNameAsync(string roleName)
-        {
-            ThrowIfDisposed();
-            TRoleEntity result = _roles.GetRoleByName(roleName);
-            return await Task.FromResult<TRoleEntity>(result);
-        }
+		public async Task<TRoleEntity> FindByNameAsync(string roleName)
+		{
+			ThrowIfDisposed();
+			TRoleEntity result = _roles.GetRoleByName(roleName);
+			return await Task.FromResult<TRoleEntity>(result);
+		}
 
-        public async Task CreateAsync(TRoleEntity role)
-        {
-            ThrowIfDisposed();
-            role.ThrowIfNull(nameof(role));
+		public async Task CreateAsync(TRoleEntity role)
+		{
+			ThrowIfDisposed();
+			role.ThrowIfNull(nameof(role));
 
-            _roles.Insert(role);
-            await Task.FromResult(Context.SaveChanges());
-        }
+			_roles.Insert(role);
+			await Task.FromResult(Context.SaveChanges());
+		}
 
-        public async Task UpdateAsync(TRoleEntity role)
-        {
-            ThrowIfDisposed();
-            role.ThrowIfNull(nameof(role));
+		public async Task UpdateAsync(TRoleEntity role)
+		{
+			ThrowIfDisposed();
+			role.ThrowIfNull(nameof(role));
 
-            _roles.Update(role);
-            await Task.FromResult(Context.SaveChanges());
-        }
+			_roles.Update(role);
+			await Task.FromResult(Context.SaveChanges());
+		}
 
-        public async Task DeleteAsync(TRoleEntity role)
-        {
-            ThrowIfDisposed();
-            role.ThrowIfNull(nameof(role));
+		public async Task DeleteAsync(TRoleEntity role)
+		{
+			ThrowIfDisposed();
+			role.ThrowIfNull(nameof(role));
 
-            _roles.Delete(role.Id);
-            await Task.FromResult(Context.SaveChanges());
-        }
+			_roles.Delete(role.Id);
+			await Task.FromResult(Context.SaveChanges());
+		}
 
-        #endregion
+		#endregion
 
-        #region Private methods
+		#region Private methods
 
-        private void CheckLogger(ICoreLogger logger)
-        {
-            if (logger == null)
-            {
-                throw new ArgumentNullException(nameof(logger));
-            }
-        }
+		private void CheckLogger(ICoreLogger logger)
+		{
+			if (logger == null)
+			{
+				throw new ArgumentNullException(nameof(logger));
+			}
+		}
 
-        private void CheckContext(IContext context)
-        {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
+		private void CheckContext(IContext context)
+		{
+			if (context == null)
+			{
+				throw new ArgumentNullException(nameof(context));
+			}
 
-            if (!(context is CoreDbContext))
-            {
-                //TODO: Implementar excepciones del core
-                throw new ArgumentException();
-            }
-        }
+			if (!(context is CoreDbContext))
+			{
+				//TODO: Implementar excepciones del core
+				throw new ArgumentException();
+			}
+		}
 
-        #endregion
+		#endregion
 
-        #region Dispose
+		#region Dispose
 
-        protected bool _disposed;
+		protected bool _disposed;
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
 
-        protected void ThrowIfDisposed()
-        {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException(GetType().Name);
-            }
-        }
+		protected void ThrowIfDisposed()
+		{
+			if (_disposed)
+			{
+				throw new ObjectDisposedException(GetType().Name);
+			}
+		}
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing && Context != null)
-            {
-                Context.Dispose();
-            }
-            _disposed = true;
-            Context = null;
-        }
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing && Context != null)
+			{
+				Context.Dispose();
+			}
+			_disposed = true;
+			Context = null;
+		}
 
-        #endregion
+		#endregion
 
-    }
+	}
 
-    public class RoleStore<TRoleEntity, TUserRole> : RoleStore<int, TRoleEntity, TUserRole>
-        where TRoleEntity : CoreRole<TUserRole>, new()
-        where TUserRole : CoreUserRole
-    {
+	public class RoleStore<TRoleEntity, TUserRole> : RoleStore<int, TRoleEntity, TUserRole>
+		where TRoleEntity : CoreRole<TUserRole>, new()
+		where TUserRole : CoreUserRole
+	{
 
-        public RoleStore(IContext context, ICoreLogger logger) : base(context, logger)
-        {
-        }
+		public RoleStore(IContext context, ICoreLogger logger) : base(context, logger)
+		{
+		}
 
-    }
+	}
 
 }

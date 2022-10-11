@@ -1,31 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.DataAccess.UnitOfWork;
-using malone.Core.Entities.Filters;
 using malone.Core.Entities.Model;
 using malone.Core.Logging;
 
 namespace malone.Core.Services
 {
 	/// <summary>
-	/// Defines the <see cref="BaseDataManipulationService{TEntity, TValidator}" />.
+	/// Defines the <see cref="BaseCUDService{TEntity, TValidator}" />.
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TValidator">.</typeparam>
-	public abstract class BaseDataManipulationService<TEntity, TValidator> : IBaseDataManipulationService<TEntity, TValidator>
+	public abstract class BaseCUDService<TEntity, TValidator> : IBaseCUDService<TEntity, TValidator>
 		where TEntity : class
 		where TValidator : IBaseServiceValidator<TEntity>
 	{
 		/// <summary>
-		/// Gets or sets the DataManipulationRepository.
+		/// Gets or sets the CUDRepository.
 		/// </summary>
-		public IBaseDataManipulationRepository<TEntity> DataManipulationRepository { get; set; }
+		public IBaseCUDRepository<TEntity> CUDRepository { get; set; }
 
 		/// <summary>
 		/// Gets or sets the ServiceValidator.
@@ -40,13 +35,13 @@ namespace malone.Core.Services
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BaseService{TEntity, TValidator}"/> class.
 		/// </summary>
-		/// <param name="businessValidator">The businessValidator<see cref="TValidator"/>.</param>
-		/// <param name="repository">The repository<see cref="IBaseRepository{TEntity}"/>.</param>
-		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
-		protected BaseDataManipulationService(TValidator businessValidator, IBaseDataManipulationRepository<TEntity> repository, ICoreLogger logger)
+		/// <param name="validator">The validator <see cref="TValidator"/>.</param>
+		/// <param name="repository">The repository <see cref="IBaseRepository{TEntity}"/>.</param>
+		/// <param name="logger">The logger <see cref="ICoreLogger"/>.</param>
+		protected BaseCUDService(TValidator validator, IBaseCUDRepository<TEntity> repository, ICoreLogger logger)
 		{
-			ServiceValidator = businessValidator.ThrowIfNull();
-			DataManipulationRepository = repository.ThrowIfNull();
+			ServiceValidator = validator.ThrowIfNull();
+			CUDRepository = repository.ThrowIfNull();
 			Logger = logger.ThrowIfNull();
 		}
 
@@ -63,14 +58,14 @@ namespace malone.Core.Services
 				entity.ThrowIfNull();
 
 				var uow = UnitOfWork.Create();
-				
+
 				var validationResult = ServiceValidator.Validate(ServiceValidator.ExecuteAddValidationRules, ServiceValidator.AddValidationRules);
 				if (!validationResult.IsValid)
 				{
 					throw new BusinessRulesValidationException(validationResult);
 				}
 
-				DataManipulationRepository.Insert(entity);
+				CUDRepository.Insert(entity);
 
 				if (saveChanges)
 				{
@@ -118,7 +113,7 @@ namespace malone.Core.Services
 					throw new BusinessRulesValidationException(validationResult);
 				}
 
-				DataManipulationRepository.Update(oldValues, newValues);
+				CUDRepository.Update(oldValues, newValues);
 				if (saveChanges)
 				{
 					uow.SaveChanges();
@@ -184,11 +179,11 @@ namespace malone.Core.Services
 				{
 					var softDelete = (ISoftDelete)entity;
 					softDelete.IsDeleted = true;
-					DataManipulationRepository.Update(entity, softDelete as TEntity);
+					CUDRepository.Update(entity, softDelete as TEntity);
 				}
 				else
 				{
-					DataManipulationRepository.Delete(entity);
+					CUDRepository.Delete(entity);
 				}
 
 				if (saveChanges)

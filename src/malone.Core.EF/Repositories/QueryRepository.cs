@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using malone.Core.Commons.Exceptions;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
@@ -11,7 +8,7 @@ using malone.Core.Logging;
 
 namespace malone.Core.EF.Repositories
 {
-	public class QueryRepository<TKey, TEntity>: BaseQueryRepository<TEntity>, IQueryRepository<TKey, TEntity>, IDisposable
+	public class QueryRepository<TKey, TEntity> : BaseQueryRepository<TEntity>, IQueryRepository<TKey, TEntity>, IDisposable
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
 	{

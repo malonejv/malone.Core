@@ -5,12 +5,12 @@ using System.Configuration;
 
 namespace malone.Core.Configuration
 {
-    public interface ICoreConfiguration
-    {
-        string GetConnectionString(string connectionStringName);
+	public interface ICoreConfiguration
+	{
+		string GetConnectionString(string connectionStringName);
 
-        T GetSection<T>() where T : ConfigurationSection;
+		T GetSection<T>() where T : ConfigurationSection;
 
-        T GetSection<T>(string sectionName) where T : ConfigurationSection;
-    }
+		T GetSection<T>(string sectionName) where T : ConfigurationSection;
+	}
 }

@@ -7,19 +7,19 @@ using Unity;
 using ICoreLogger = malone.Core.Logging.ICoreLogger;
 
 namespace malone.Core.Unity.Log4NetInitializer
-	{
+{
 	public class Log4NetModuleInitializer : IModuleInitializer<IUnityContainer>
-    {
-        public string Name => CoreModules.Log4NetLogger.GetDescription();
+	{
+		public string Name => CoreModules.Log4NetLogger.GetDescription();
 
-        public void Initialize(IUnityContainer container)
-        {
-            container.RegisterType<LoggerFactory, Log4NetLoggerFactory>();
+		public void Initialize(IUnityContainer container)
+		{
+			container.RegisterType<LoggerFactory, Log4NetLoggerFactory>();
 
-            LoggerFactory loggerFactory = container.Resolve<LoggerFactory>();
+			LoggerFactory loggerFactory = container.Resolve<LoggerFactory>();
 
-            ICoreLogger logger = loggerFactory.GetLogger();
-            container.RegisterInstance(logger);
-        }
-    }
+			ICoreLogger logger = loggerFactory.GetLogger();
+			container.RegisterInstance(logger);
+		}
+	}
 }

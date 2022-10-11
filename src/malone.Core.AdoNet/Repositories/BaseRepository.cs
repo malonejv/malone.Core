@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace malone.Core.AdoNet.Repositories
+﻿namespace malone.Core.AdoNet.Repositories
 {
 	using System;
 	using System.Collections.Generic;
@@ -82,14 +80,14 @@ namespace malone.Core.AdoNet.Repositories
 				entityType = this.GetType().GetInterface("IBaseRepository`1").GetGenericArguments()[0];
 				string tableName = entityType.GetTableName();
 				List<string> columns = entityType.GetColumnNames();
-				
+
 				ConfigureParameterForSoftDelete(entityType, columns, includeDeleted);
 
 				//TODO: Continuar aquí 03/03/2022
 				string whereClause = "";
 				string columnNames = columns.Aggregate((i, j) => $"{i}, {j}");
 				string query = $"SELECT {columnNames} FROM {tableName} WHERE {whereClause}";
-				
+
 				ConfigureCommandForGetAll(command, includeDeleted, includeProperties);
 				queryableResult = GetQueryable(command, includeDeleted, orderBy);
 

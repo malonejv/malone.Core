@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using malone.Core.Commons.Exceptions;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.EF.Entities;
@@ -16,12 +13,12 @@ namespace malone.Core.EF.Repositories.Implementations
 		where TEntity : class, IBaseEntity<TKey>
 	{
 		public new IQueryRepository<TKey, TEntity> QueryRepository { get; }
-		public new IDataManipulationRepository<TKey, TEntity> DataManipulationRepository { get; }
+		public new ICUDRepository<TKey, TEntity> CUDRepository { get; }
 
 		#region Constructor
 
-		public Repository(IContext context, ICoreLogger logger, IQueryRepository<TKey, TEntity> QueryRepository, IDataManipulationRepository<TKey, TEntity> DataManipulationRepository) :
-			base(context, logger, QueryRepository, DataManipulationRepository)
+		public Repository(IContext context, ICoreLogger logger, IQueryRepository<TKey, TEntity> queryRepository, ICUDRepository<TKey, TEntity> cudRepository) :
+			base(context, logger, queryRepository, cudRepository)
 		{ }
 
 		#endregion
@@ -52,8 +49,8 @@ namespace malone.Core.EF.Repositories.Implementations
 		IRepository<TEntity>
 		where TEntity : class, IBaseEntity
 	{
-		public Repository(IContext context, ICoreLogger logger, IQueryRepository<int, TEntity> QueryRepository, IDataManipulationRepository<int, TEntity> DataManipulationRepository) :
-			base(context, logger, QueryRepository, DataManipulationRepository)
+		public Repository(IContext context, ICoreLogger logger, IQueryRepository<int, TEntity> queryRepository, ICUDRepository<int, TEntity> cudRepository) :
+			base(context, logger, queryRepository, cudRepository)
 		{
 		}
 	}

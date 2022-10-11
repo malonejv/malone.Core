@@ -4,7 +4,6 @@
 namespace malone.Core.Commons.Exceptions
 {
 	using System.Resources;
-	using malone.Core.Commons.Localization;
 	using malone.Core.Localization;
 
 	/// <summary>

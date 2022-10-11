@@ -3,8 +3,8 @@
 
 namespace malone.Core.IoC.Initializers
 {
-    public interface IInitializer<TContainer>
-    {
-        void Initialize(TContainer container);
-    }
+	public interface IInitializer<TContainer>
+	{
+		void Initialize(TContainer container);
+	}
 }

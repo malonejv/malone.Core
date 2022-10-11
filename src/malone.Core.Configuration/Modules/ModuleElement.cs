@@ -4,14 +4,14 @@
 using System.Configuration;
 
 namespace malone.Core.Configuration.Modules
+{
+	public class ModuleElement : ConfigurationElement
 	{
-    public class ModuleElement : ConfigurationElement
-    {
-        [ConfigurationProperty("name", IsRequired = true, IsKey = true)]
-        public string Name
-        {
-            get { return (string)this["name"]; }
-            set { this["name"] = value; }
-        }
-    }
+		[ConfigurationProperty("name", IsRequired = true, IsKey = true)]
+		public string Name
+		{
+			get { return (string)this["name"]; }
+			set { this["name"] = value; }
+		}
+	}
 }

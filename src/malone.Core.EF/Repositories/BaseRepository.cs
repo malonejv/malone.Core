@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
 using System.Linq;
-using System.Linq.Expressions;
-using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
-using malone.Core.EF.Entities.Filters;
 using malone.Core.Entities.Filters;
-using malone.Core.Entities.Model;
 using malone.Core.Logging;
 
 namespace malone.Core.EF.Repositories
@@ -22,16 +17,16 @@ namespace malone.Core.EF.Repositories
 		protected DbContext Context { get; private set; }
 		protected ICoreLogger Logger { get; set; }
 		public IBaseQueryRepository<T> QueryRepository { get; }
-		public IBaseDataManipulationRepository<T> DataManipulationRepository { get; }
+		public IBaseCUDRepository<T> CUDRepository { get; }
 
 		#region Constructor
 
-		public BaseRepository(IContext context, ICoreLogger logger, IBaseQueryRepository<T> queryRepository, IBaseDataManipulationRepository<T> dataManipulationRepository)
+		public BaseRepository(IContext context, ICoreLogger logger, IBaseQueryRepository<T> queryRepository, IBaseCUDRepository<T> cudRepository)
 		{
 			Context = context.ThrowIfNull().ThrowIfNotOfType<IContext, DbContext>();
 			Logger = logger.ThrowIfNull();
 			QueryRepository = queryRepository.ThrowIfNull();
-			DataManipulationRepository = dataManipulationRepository.ThrowIfNull();
+			CUDRepository = cudRepository.ThrowIfNull();
 			EntityDbSet = Context.Set<T>();
 		}
 
@@ -62,19 +57,19 @@ namespace malone.Core.EF.Repositories
 		public void Insert(T entity)
 		{
 			ThrowIfDisposed();
-			DataManipulationRepository.Insert(entity);
+			CUDRepository.Insert(entity);
 		}
 
 		public void Delete(T entity)
 		{
 			ThrowIfDisposed();
-			DataManipulationRepository.Delete(entity);
+			CUDRepository.Delete(entity);
 		}
 
 		public void Update(T oldValues, T newValues)
 		{
 			ThrowIfDisposed();
-			DataManipulationRepository.Update(oldValues, newValues);
+			CUDRepository.Update(oldValues, newValues);
 		}
 
 		#endregion

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
 using malone.Core.Entities.Model;
 using malone.Core.Services;
@@ -22,7 +18,7 @@ namespace malone.Core.WebApi
 		where TParam : class, IGetRequestParam
 		where TEntity : class, IBaseEntity<TKey>
 		where TServiceValidator : IServiceValidator<TKey, TEntity>
-		where TService : IDataManipulationService<TKey, TEntity, TServiceValidator>
+		where TService : ICUDService<TKey, TEntity, TServiceValidator>
 	{
 		/// <summary>
 		/// Gets or sets the Service.
@@ -89,7 +85,7 @@ namespace malone.Core.WebApi
 		where TParam : class, IGetRequestParam
 		where TEntity : class, IBaseEntity
 		where TServiceValidator : IServiceValidator<TEntity>
-		where TService : IDataManipulationService<TEntity, TServiceValidator>
+		where TService : ICUDService<TEntity, TServiceValidator>
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WriteApiController{TParam, TEntity, TService, TServiceValidator}"/> class.

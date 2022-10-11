@@ -3,16 +3,11 @@
 
 namespace malone.Core.DataAccess.Repositories
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using malone.Core.Entities.Filters;
-
 	/// <summary>
 	/// Defines the <see cref="IBaseRepository{T}" />.
 	/// </summary>
 	/// <typeparam name="T">.</typeparam>
-	public interface IBaseRepository<T> : IBaseQueryRepository<T>, IBaseDataManipulationRepository<T>
+	public interface IBaseRepository<T> : IBaseQueryRepository<T>, IBaseCUDRepository<T>
 		where T : class
 	{
 	}

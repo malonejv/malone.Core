@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace malone.Core.Services
 {
 	/// <summary>
-	/// Defines the <see cref="BaseServiceValidator{TEntity}" />.
+	/// Defines the <see cref="BaseValidator{TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
-	public class BaseServiceValidator<TEntity> : IBaseServiceValidator<TEntity>
+	public class BaseValidator<TEntity> : IBaseServiceValidator<TEntity>
 		   where TEntity : class
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="BaseServiceValidator{TEntity}"/> class.
+		/// Initializes a new instance of the <see cref="BaseValidator{TEntity}"/> class.
 		/// </summary>
-		public BaseServiceValidator()
+		public BaseValidator()
 		{
 			AddValidationRules = new List<ValidationRule>();
 			UpdateValidationRules = new List<ValidationRule>();

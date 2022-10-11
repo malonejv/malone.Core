@@ -11,163 +11,163 @@ using malone.Core.Entities.Model;
 using malone.Core.Logging;
 
 namespace malone.Core.Dapper.Repositories
-	{
+{
 	public abstract class Repository<TKey, TEntity> : BaseRepository<TEntity>, IRepository<TKey, TEntity>, IDisposable
-        where TKey : IEquatable<TKey>
-        where TEntity : class, IBaseEntity<TKey>
-    {
-        //protected AdoNetDbContext Context { get; private set; }
-        //protected ICoreLogger Logger { get; }
+		where TKey : IEquatable<TKey>
+		where TEntity : class, IBaseEntity<TKey>
+	{
+		//protected AdoNetDbContext Context { get; private set; }
+		//protected ICoreLogger Logger { get; }
 
 
-        public Repository(IContext context, ICoreLogger logger) : base(context, logger) { }
+		public Repository(IContext context, ICoreLogger logger) : base(context, logger) { }
 
-        #region CRUD Operations
+		#region CRUD Operations
 
-        #region GET BY ID
+		#region GET BY ID
 
-        protected virtual CommandDefinition ConfigureCommandForGetById(TKey id, bool includeDeleted, string includeProperties)
-        {
-            string tableName = typeof(TEntity).GetTableName();
-            string columns = typeof(TEntity).GetColumnNames();
-            string query = string.Format("SELECT {0} FROM {1}", columns, tableName);
+		protected virtual CommandDefinition ConfigureCommandForGetById(TKey id, bool includeDeleted, string includeProperties)
+		{
+			string tableName = typeof(TEntity).GetTableName();
+			string columns = typeof(TEntity).GetColumnNames();
+			string query = string.Format("SELECT {0} FROM {1}", columns, tableName);
 
-            DynamicParameters parameters = new DynamicParameters();
-            var allowSoftDelete = ConfigureParameterIsDelete(query, columns, tableName);
+			DynamicParameters parameters = new DynamicParameters();
+			var allowSoftDelete = ConfigureParameterIsDelete(query, columns, tableName);
 
-            var whereClause = "";
-            ParameterAttribute parametersInfo;
+			var whereClause = "";
+			ParameterAttribute parametersInfo;
 
-            var IdColumnAttribute = typeof(TEntity).GetKeyColumnInfo();
-            IdColumnAttribute.Value = id;
+			var IdColumnAttribute = typeof(TEntity).GetKeyColumnInfo();
+			IdColumnAttribute.Value = id;
 
-            int? size = IdColumnAttribute.IsSizeDefined ? new int?(IdColumnAttribute.Size) : null;
-            parameters.Add(IdColumnAttribute.Name, IdColumnAttribute.Value, IdColumnAttribute.Type, IdColumnAttribute.Direction, size);
+			int? size = IdColumnAttribute.IsSizeDefined ? new int?(IdColumnAttribute.Size) : null;
+			parameters.Add(IdColumnAttribute.Name, IdColumnAttribute.Value, IdColumnAttribute.Type, IdColumnAttribute.Direction, size);
 
-            if (allowSoftDelete)
-            {
-                whereClause = " AND ";
-            }
-            else
-            {
-                whereClause = " WHERE ";
-            }
+			if (allowSoftDelete)
+			{
+				whereClause = " AND ";
+			}
+			else
+			{
+				whereClause = " WHERE ";
+			}
 
-            int i = 0;
-            var ColumnNames = columns.Split(',');
-            foreach (var parameterName in parameters.ParameterNames)
-            {
-                var exists = ColumnNames.Contains(parameterName);
-                if (exists)
-                {
-                    if (i == 0)
-                    {
-                        whereClause += $"@{parameterName} = {parameterName}";
-                    }
-                    else
-                    {
-                        whereClause += $" AND @{parameterName} = {parameterName}";
-                    }
-                }
+			int i = 0;
+			var ColumnNames = columns.Split(',');
+			foreach (var parameterName in parameters.ParameterNames)
+			{
+				var exists = ColumnNames.Contains(parameterName);
+				if (exists)
+				{
+					if (i == 0)
+					{
+						whereClause += $"@{parameterName} = {parameterName}";
+					}
+					else
+					{
+						whereClause += $" AND @{parameterName} = {parameterName}";
+					}
+				}
 
-                i++;
-            }
-            query += $"{whereClause};";
+				i++;
+			}
+			query += $"{whereClause};";
 
-            return new CommandDefinition(query, transaction: Context.Transaction, commandType: CommandType.Text, parameters: parameters);
-        }
+			return new CommandDefinition(query, transaction: Context.Transaction, commandType: CommandType.Text, parameters: parameters);
+		}
 
-        public virtual TEntity GetById(
-            TKey id,
-            bool includeDeleted = false,
-            string includeProperties = "")
-        {
-            ThrowIfDisposed();
-            try
-            {
-                IQueryable<TEntity> query;
+		public virtual TEntity GetById(
+			TKey id,
+			bool includeDeleted = false,
+			string includeProperties = "")
+		{
+			ThrowIfDisposed();
+			try
+			{
+				IQueryable<TEntity> query;
 
-                var command = ConfigureCommandForGetById(id, includeDeleted, includeProperties);
-                query = GetQueryable(command);
+				var command = ConfigureCommandForGetById(id, includeDeleted, includeProperties);
+				query = GetQueryable(command);
 
-                return query.SingleOrDefault<TEntity>();
-            }
-            catch (Exception ex)
-            {
-                var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
-                if (Logger != null)
-                {
-                    Logger.Error(techEx);
-                }
+				return query.SingleOrDefault<TEntity>();
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
 
-                throw techEx;
-            }
-        }
+				throw techEx;
+			}
+		}
 
-        #endregion
+		#endregion
 
-        #region UPDATE
+		#region UPDATE
 
-        //protected virtual List<DbParameterWithValue> GetUpdateParameters(List<DbParameterWithValue> parameters, TEntity entity)
-        //{
-        //    DbParameterWithValue parameter = typeof(TEntity).GetKeyParameter<TKey>(entity.Id);
-        //    parameters.Add(parameter);
+		//protected virtual List<DbParameterWithValue> GetUpdateParameters(List<DbParameterWithValue> parameters, TEntity entity)
+		//{
+		//    DbParameterWithValue parameter = typeof(TEntity).GetKeyParameter<TKey>(entity.Id);
+		//    parameters.Add(parameter);
 
-        //    parameters.AddRange(entity.GetNotKeyParameters<TKey, TEntity>().ToList());
+		//    parameters.AddRange(entity.GetNotKeyParameters<TKey, TEntity>().ToList());
 
-        //    return parameters;
-        //}
+		//    return parameters;
+		//}
 
-        public virtual void Update(TEntity entity)
-        {
-            //ThrowIfDisposed();
-            //try
-            //{
-            //    var command = Context.CreateCommand();
-            //    ConfigureCommandForUpdate(command);
+		public virtual void Update(TEntity entity)
+		{
+			//ThrowIfDisposed();
+			//try
+			//{
+			//    var command = Context.CreateCommand();
+			//    ConfigureCommandForUpdate(command);
 
-            //    List<DbParameterWithValue> parameters = new List<DbParameterWithValue>();
-            //    parameters = GetUpdateParameters(parameters, entity);
-            //    Context.AddCommandParameters(command, parameters);
+			//    List<DbParameterWithValue> parameters = new List<DbParameterWithValue>();
+			//    parameters = GetUpdateParameters(parameters, entity);
+			//    Context.AddCommandParameters(command, parameters);
 
-            //    command.ExecuteNonQuery();
-            //}
-            //catch (Exception ex)
-            //{
-            //    var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
-            //    if (Logger != null) Logger.Error(techEx);
+			//    command.ExecuteNonQuery();
+			//}
+			//catch (Exception ex)
+			//{
+			//    var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
+			//    if (Logger != null) Logger.Error(techEx);
 
-            //    throw techEx;
-            //}
-        }
+			//    throw techEx;
+			//}
+		}
 
-        #endregion
+		#endregion
 
-        #region DELETE
+		#region DELETE
 
-        //protected override List<DbParameterWithValue> GetDeleteParameters(List<DbParameterWithValue> parameters, TEntity entity)
-        //{
-        //    DbParameterWithValue parameter = typeof(TEntity).GetKeyParameter<TKey>(entity.Id);
-        //    parameters.Add(parameter);
-        //    return parameters;
-        //}
+		//protected override List<DbParameterWithValue> GetDeleteParameters(List<DbParameterWithValue> parameters, TEntity entity)
+		//{
+		//    DbParameterWithValue parameter = typeof(TEntity).GetKeyParameter<TKey>(entity.Id);
+		//    parameters.Add(parameter);
+		//    return parameters;
+		//}
 
-        #endregion
+		#endregion
 
-        #endregion
+		#endregion
 
-        #region Private And Protected Methods
+		#region Private And Protected Methods
 
-        #endregion
+		#endregion
 
-    }
+	}
 
 
-    public abstract class Repository<TEntity> : Repository<int, TEntity>, IRepository<TEntity>
-        where TEntity : class, IBaseEntity
-    {
-        public Repository(IContext context, ICoreLogger logger) : base(context, logger)
-        {
-        }
-    }
+	public abstract class Repository<TEntity> : Repository<int, TEntity>, IRepository<TEntity>
+		where TEntity : class, IBaseEntity
+	{
+		public Repository(IContext context, ICoreLogger logger) : base(context, logger)
+		{
+		}
+	}
 }

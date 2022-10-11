@@ -8,7 +8,7 @@ using malone.Core.Logging;
 
 namespace malone.Core.EF.Repositories
 {
-	public class BaseDataManipulationRepository<T> : IBaseDataManipulationRepository<T>, IDisposable
+	public class BaseCUDRepository<T> : IBaseCUDRepository<T>, IDisposable
 		where T : class
 	{
 		protected DbSet<T> EntityDbSet { get; private set; }
@@ -17,7 +17,7 @@ namespace malone.Core.EF.Repositories
 
 		#region Constructor
 
-		public BaseDataManipulationRepository(IContext context, ICoreLogger logger)
+		public BaseCUDRepository(IContext context, ICoreLogger logger)
 		{
 			Context = context.ThrowIfNull().ThrowIfNotOfType<IContext, DbContext>();
 			Logger = logger.ThrowIfNull();

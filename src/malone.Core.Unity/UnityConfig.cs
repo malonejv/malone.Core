@@ -14,13 +14,14 @@ using Unity;
 using Unity.Injection;
 
 namespace malone.Core.Unity
-	{
+{
 	public class UnityConfig
-		{
+	{
 		#region Unity Container Static
 
 		private static Lazy<IUnityContainer> container =
-		  new Lazy<IUnityContainer>(() => {
+		  new Lazy<IUnityContainer>(() =>
+		  {
 			  UnityContainer container = new UnityContainer();
 #if DEBUG
 			  container.AddExtension(new Diagnostic());
@@ -43,11 +44,11 @@ namespace malone.Core.Unity
 		#endregion
 
 		public UnityConfig()
-			{
-			}
+		{
+		}
 
 		public static void RegisterCoreTypes(IUnityContainer container)
-			{
+		{
 			//Inicialización de módulos base del core
 			var basicModules = new BasicModulesInitializer();
 			basicModules.Initialize(container);
@@ -55,23 +56,23 @@ namespace malone.Core.Unity
 			var coreConfiguration = container.Resolve<ICoreConfiguration>();
 			var coreSettings = coreConfiguration.GetSection<CoreSettingsSection>();
 			if (coreSettings != null)
-				{
+			{
 				//Inicialización de módulos configurables
 				foreach (ModuleElement module in coreSettings.Modules)
-					{
+				{
 					var moduleInitializer = Modules.Where(m => m.Name == module.Name).FirstOrDefault();
 					if (moduleInitializer != null)
-						{
+					{
 						moduleInitializer.Initialize(container);
-						}
 					}
 				}
 			}
+		}
 
 		private static IEnumerable<IModuleInitializer<IUnityContainer>> Modules
-			{
+		{
 			get
-				{
+			{
 				return new IModuleInitializer<IUnityContainer>[]
 			  {
 					new Log4NetModuleInitializer(),
@@ -80,7 +81,7 @@ namespace malone.Core.Unity
 					new IdentityAdoNetSqlServerModuleInitializer(),
 					new IdentityDapperModuleInitializer()
 			  };
-				}
 			}
 		}
 	}
+}
