@@ -4,16 +4,16 @@
 using System.Reflection;
 
 [assembly: AssemblyTitle("malonejv.Core")]
-[assembly: AssemblyCompany("Javier L�pez Malone")]
-[assembly: AssemblyCopyright("Copyright � Javier L�pez Malone 2022")]
+[assembly: AssemblyCompany("Javier López Malone")]
 
+[assembly: AssemblyCopyright("Copyright ® Javier López Malone 2022")]
 
 /*
  * Actualizar siempre AssemblyFileVersion.
  * El script se encarga de actualizar el resto.
  * Al hacer merge tanto de feature -> development
  * como de master -> development y development -> master
- * SIEMPRE tomar la versi�n de development.
+ * SIEMPRE tomar la versión de development.
  */
 [assembly: AssemblyFileVersion("2.1.12.0")]
 
