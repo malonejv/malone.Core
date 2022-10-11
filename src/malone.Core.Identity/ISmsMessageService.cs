@@ -2,7 +2,7 @@
 
 namespace malone.Core.Identity
 {
-    public interface ISmsMessageService : IIdentityMessageService
-    {
-    }
+	public interface ISmsMessageService : IIdentityMessageService
+	{
+	}
 }

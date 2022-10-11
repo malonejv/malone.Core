@@ -2,7 +2,7 @@
 
 namespace malone.Core.Identity
 {
-    public interface IEmailMessageService : IIdentityMessageService
-    {
-    }
+	public interface IEmailMessageService : IIdentityMessageService
+	{
+	}
 }

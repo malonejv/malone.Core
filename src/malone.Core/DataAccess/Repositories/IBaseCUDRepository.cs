@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace malone.Core.DataAccess.Repositories
+﻿namespace malone.Core.DataAccess.Repositories
 {
-	public interface IBaseDataManipulationRepository<T>
+	public interface IBaseCUDRepository<T>
 		where T : class
 	{
 		/// <summary>

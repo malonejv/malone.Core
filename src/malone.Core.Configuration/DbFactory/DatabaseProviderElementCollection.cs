@@ -5,17 +5,17 @@ using System.Configuration;
 
 namespace malone.Core.Configuration.DbFactory
 {
-    [ConfigurationCollection(typeof(DatabaseProviderElement))]
-    public class DatabaseProviderElementCollection : ConfigurationElementCollection
-    {
-        protected override ConfigurationElement CreateNewElement()
-        {
-            return new DatabaseProviderElement();
-        }
+	[ConfigurationCollection(typeof(DatabaseProviderElement))]
+	public class DatabaseProviderElementCollection : ConfigurationElementCollection
+	{
+		protected override ConfigurationElement CreateNewElement()
+		{
+			return new DatabaseProviderElement();
+		}
 
-        protected override object GetElementKey(ConfigurationElement element)
-        {
-            return ((DatabaseProviderElement)element).Name;
-        }
-    }
+		protected override object GetElementKey(ConfigurationElement element)
+		{
+			return ((DatabaseProviderElement)element).Name;
+		}
+	}
 }

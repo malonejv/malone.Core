@@ -9,36 +9,36 @@ using Microsoft.AspNet.Identity;
 using Unity;
 
 namespace malone.Core.Unity.IdentityAdoNetSqlServerInitializer
-	{
+{
 	public class IdentityAdoNetSqlServerModuleInitializer : IModuleInitializer<IUnityContainer>
-    {
-        public string Name => CoreModules.IdentityAdoNetSqlServer.GetDescription();
+	{
+		public string Name => CoreModules.IdentityAdoNetSqlServer.GetDescription();
 
-        public void Initialize(IUnityContainer container)
-        {
-            //Identity Entities
-            container.RegisterType<CoreUser>();
-            container.RegisterType<CoreRole>();
-            container.RegisterType<CoreUserLogin>();
-            container.RegisterType<CoreUserRole>();
-            container.RegisterType<CoreUserClaim>();
+		public void Initialize(IUnityContainer container)
+		{
+			//Identity Entities
+			container.RegisterType<CoreUser>();
+			container.RegisterType<CoreRole>();
+			container.RegisterType<CoreUserLogin>();
+			container.RegisterType<CoreUserRole>();
+			container.RegisterType<CoreUserClaim>();
 
-            //IDENTITY REPOSITORIES
-            container.RegisterType<IUserLoginRepository<CoreUserLogin>, UserLoginRepository<CoreUserLogin>>();
-            container.RegisterType<IUserClaimRepository<CoreUserClaim>, UserClaimRepository<CoreUserClaim>>();
-            container.RegisterType<IUserRoleRepository<CoreUserRole>, UserRoleRepository<CoreUserRole>>();
-            container.RegisterType<IRoleRepository<CoreRole>, RoleRepository<CoreRole, CoreUserRole>>();
-            container.RegisterType<IUserRepository<CoreUser>, UserRepository<CoreUser, CoreUserLogin, CoreUserRole, CoreUserClaim>>();
-            container.RegisterType<IRoleStore<CoreRole, int>, RoleStore<CoreRole, CoreUserRole>>();
-            container.RegisterType<IUserStore<CoreUser, int>, UserStore<CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim>>();
+			//IDENTITY REPOSITORIES
+			container.RegisterType<IUserLoginRepository<CoreUserLogin>, UserLoginRepository<CoreUserLogin>>();
+			container.RegisterType<IUserClaimRepository<CoreUserClaim>, UserClaimRepository<CoreUserClaim>>();
+			container.RegisterType<IUserRoleRepository<CoreUserRole>, UserRoleRepository<CoreUserRole>>();
+			container.RegisterType<IRoleRepository<CoreRole>, RoleRepository<CoreRole, CoreUserRole>>();
+			container.RegisterType<IUserRepository<CoreUser>, UserRepository<CoreUser, CoreUserLogin, CoreUserRole, CoreUserClaim>>();
+			container.RegisterType<IRoleStore<CoreRole, int>, RoleStore<CoreRole, CoreUserRole>>();
+			container.RegisterType<IUserStore<CoreUser, int>, UserStore<CoreUser, CoreRole, CoreUserLogin, CoreUserRole, CoreUserClaim>>();
 
-            container.RegisterType<IEmailMessageService, EmailService>();
-            container.RegisterType<ISmsMessageService, SmsService>();
+			container.RegisterType<IEmailMessageService, EmailService>();
+			container.RegisterType<ISmsMessageService, SmsService>();
 
-            container.RegisterType<IIdentityValidator<CoreUser>, UserValidator<CoreUser, int>>();
-            container.RegisterType<IIdentityValidator<string>, PasswordValidator>();
-            container.RegisterType<IPasswordHasher, PasswordHasher>();
-            container.RegisterType<IUserManagerConfiguration, UserManagerConfiguration>();
-        }
-    }
+			container.RegisterType<IIdentityValidator<CoreUser>, UserValidator<CoreUser, int>>();
+			container.RegisterType<IIdentityValidator<string>, PasswordValidator>();
+			container.RegisterType<IPasswordHasher, PasswordHasher>();
+			container.RegisterType<IUserManagerConfiguration, UserManagerConfiguration>();
+		}
+	}
 }

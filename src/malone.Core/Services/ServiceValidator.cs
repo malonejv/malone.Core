@@ -4,7 +4,6 @@
 namespace malone.Core.Services
 {
 	using System;
-	using System.Collections.Generic;
 	using malone.Core.Entities.Model;
 
 	/// <summary>
@@ -12,7 +11,7 @@ namespace malone.Core.Services
 	/// </summary>
 	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
-	public class ServiceValidator<TKey, TEntity> : BaseServiceValidator<TEntity>, IServiceValidator<TKey, TEntity>
+	public class ServiceValidator<TKey, TEntity> : BaseValidator<TEntity>, IServiceValidator<TKey, TEntity>
 where TKey : IEquatable<TKey>
 where TEntity : class, IBaseEntity<TKey>
 	{

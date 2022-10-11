@@ -4,12 +4,7 @@
 namespace malone.Core.Services
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using malone.Core.Commons.Exceptions;
 	using malone.Core.DataAccess.Repositories;
-	using malone.Core.DataAccess.UnitOfWork;
-	using malone.Core.Entities.Filters;
 	using malone.Core.Entities.Model;
 	using malone.Core.Logging;
 
@@ -26,7 +21,7 @@ namespace malone.Core.Services
 		where TValidator : IServiceValidator<TKey, TEntity>
 	{
 		private IQueryService<TKey, TEntity, TValidator> QueryService { get; }
-		private IDataManipulationService<TKey, TEntity, TValidator> DataManipulationService { get; }
+		private ICUDService<TKey, TEntity, TValidator> CUDService { get; }
 
 		/// <summary>
 		/// Gets or sets the Logger.
@@ -36,16 +31,16 @@ namespace malone.Core.Services
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Service{TKey, TEntity, TValidator}"/> class.
 		/// </summary>
-		/// <param name="businessValidator">The businessValidator<see cref="TValidator"/>.</param>
+		/// <param name="validator">The validator<see cref="TValidator"/>.</param>
 		/// <param name="repository">The repository<see cref="IRepository{TKey, TEntity}"/>.</param>
 		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
-		public Service(TValidator businessValidator, IQueryService<TKey, TEntity, TValidator> queryService,
-			IDataManipulationService<TKey, TEntity, TValidator> dataManipulationService, ICoreLogger logger) :
-			base(businessValidator, queryService, dataManipulationService, logger)
+		public Service(TValidator validator, IQueryService<TKey, TEntity, TValidator> queryService,
+			ICUDService<TKey, TEntity, TValidator> cudService, ICoreLogger logger) :
+			base(validator, queryService, cudService, logger)
 		{
-			ServiceValidator = businessValidator;
+			ServiceValidator = validator;
 			QueryService = queryService;
-			DataManipulationService = dataManipulationService;
+			CUDService = cudService;
 			Logger = logger;
 		}
 
@@ -57,12 +52,12 @@ namespace malone.Core.Services
 
 		public void Update(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
 		{
-			DataManipulationService.Update(entity, saveChanges, disposeUoW);
+			CUDService.Update(entity, saveChanges, disposeUoW);
 		}
 
 		public void Delete(TKey id, bool saveChanges = true, bool disposeUoW = true)
 		{
-			DataManipulationService.Delete(id, saveChanges, disposeUoW);
+			CUDService.Delete(id, saveChanges, disposeUoW);
 		}
 
 	}
@@ -80,12 +75,12 @@ namespace malone.Core.Services
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Service{TEntity, TValidator}"/> class.
 		/// </summary>
-		/// <param name="businessValidator">The businessValidator<see cref="TValidator"/>.</param>
+		/// <param name="validator">The validator<see cref="TValidator"/>.</param>
 		/// <param name="repository">The repository<see cref="IRepository{TEntity}"/>.</param>
 		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
-		public Service(TValidator businessValidator, IQueryService<int, TEntity, TValidator> queryService,
-			IDataManipulationService<int, TEntity, TValidator> dataManipulationService, ICoreLogger logger) :
-			base(businessValidator, queryService, dataManipulationService, logger)
+		public Service(TValidator validator, IQueryService<int, TEntity, TValidator> queryService,
+			ICUDService<int, TEntity, TValidator> cudService, ICoreLogger logger) :
+			base(validator, queryService, cudService, logger)
 		{
 			{
 			}

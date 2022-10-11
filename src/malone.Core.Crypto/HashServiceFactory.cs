@@ -5,18 +5,18 @@ using System.Security.Cryptography;
 
 namespace malone.Core.Crypto
 {
-    public static class HashServiceFactory
-    {
-        public static HashService Create(HashAlgorithm algorithm = null)
-        {
-            if (algorithm == null)
-            {
-                return HashService.CreateSHA512();
-            }
-            else
-            {
-                return new HashService(algorithm);
-            }
-        }
-    }
+	public static class HashServiceFactory
+	{
+		public static HashService Create(HashAlgorithm algorithm = null)
+		{
+			if (algorithm == null)
+			{
+				return HashService.CreateSHA512();
+			}
+			else
+			{
+				return new HashService(algorithm);
+			}
+		}
+	}
 }

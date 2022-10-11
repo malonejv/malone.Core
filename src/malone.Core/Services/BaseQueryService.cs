@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.DataAccess.Repositories;
-using malone.Core.DataAccess.UnitOfWork;
 using malone.Core.Entities.Filters;
-using malone.Core.Entities.Model;
 using malone.Core.Logging;
 
 namespace malone.Core.Services
@@ -28,11 +24,6 @@ namespace malone.Core.Services
 		public IBaseQueryRepository<TEntity> QueryRepository { get; set; }
 
 		/// <summary>
-		/// Gets or sets the ServiceValidator.
-		/// </summary>
-		public TValidator ServiceValidator { get; set; }
-
-		/// <summary>
 		/// Gets or sets the Logger.
 		/// </summary>
 		public ICoreLogger Logger { get; set; }
@@ -40,13 +31,11 @@ namespace malone.Core.Services
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BaseService{TEntity, TValidator}"/> class.
 		/// </summary>
-		/// <param name="businessValidator">The businessValidator<see cref="TValidator"/>.</param>
 		/// <param name="repository">The repository<see cref="IBaseRepository{TEntity}"/>.</param>
 		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
-		protected BaseQueryService(TValidator businessValidator, IBaseQueryRepository<TEntity> repository,
+		protected BaseQueryService(IBaseQueryRepository<TEntity> repository,
 			ICoreLogger logger)
 		{
-			ServiceValidator = businessValidator.ThrowIfNull();
 			QueryRepository = repository.ThrowIfNull();
 			Logger = logger.ThrowIfNull();
 		}

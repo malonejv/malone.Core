@@ -5,13 +5,13 @@ using System.Reflection;
 
 namespace malone.Core.Configuration.Features
 {
-    public static class FeatureExtensions
-    {
-        public static bool IsEnabled(this MethodBase method)
-        {
-            FeatureDescriptionAttribute attr = (FeatureDescriptionAttribute)method.GetCustomAttributes(typeof(FeatureDescriptionAttribute), true)[0];
+	public static class FeatureExtensions
+	{
+		public static bool IsEnabled(this MethodBase method)
+		{
+			FeatureDescriptionAttribute attr = (FeatureDescriptionAttribute)method.GetCustomAttributes(typeof(FeatureDescriptionAttribute), true)[0];
 
-            return FeatureSettings.IsEnabled(attr.Feature, attr.Behavior);
-        }
-    }
+			return FeatureSettings.IsEnabled(attr.Feature, attr.Behavior);
+		}
+	}
 }

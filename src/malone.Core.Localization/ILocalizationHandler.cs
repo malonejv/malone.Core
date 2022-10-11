@@ -5,9 +5,9 @@ using System;
 
 namespace malone.Core.Localization
 {
-    public interface ILocalizationHandler<TCode>
-        where TCode : Enum
-    {
-        string GetString(TCode code, params object[] args);
-    }
+	public interface ILocalizationHandler<TCode>
+		where TCode : Enum
+	{
+		string GetString(TCode code, params object[] args);
+	}
 }

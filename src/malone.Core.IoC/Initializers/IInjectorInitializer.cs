@@ -3,10 +3,10 @@
 
 namespace malone.Core.IoC.Initializers
 {
-    public interface IInjectorInitializer<TContainer>
-    {
-        TContainer Initialize();
+	public interface IInjectorInitializer<TContainer>
+	{
+		TContainer Initialize();
 
-        void Terminate();
-    }
+		void Terminate();
+	}
 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.DataAccess.Repositories;
@@ -19,14 +15,13 @@ namespace malone.Core.Services
 		public IQueryRepository<TKey, TEntity> Repository { get; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Service{TKey, TEntity, TValidator}"/> class.
+		/// Initializes a new instance of the <see cref="Service{TKey, TEntity, TServiceValidator}"/> class.
 		/// </summary>
-		/// <param name="businessValidator">The businessValidator<see cref="TValidator"/>.</param>
+		/// <param name="validator">The validator<see cref="TValidator"/>.</param>
 		/// <param name="repository">The repository<see cref="IRepository{TEntity}"/>.</param>
 		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
-		public QueryService(TValidator businessValidator, IQueryRepository<TKey, TEntity> repository, ICoreLogger logger) : base(businessValidator, repository, logger)
+		public QueryService(TValidator validator, IQueryRepository<TKey, TEntity> repository, ICoreLogger logger) : base(repository, logger)
 		{
-			ServiceValidator = businessValidator;
 			Repository = repository;
 			Logger = logger;
 		}

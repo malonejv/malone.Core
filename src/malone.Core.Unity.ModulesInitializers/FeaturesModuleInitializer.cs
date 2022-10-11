@@ -5,17 +5,17 @@ using malone.Core.Configuration.Features;
 using Unity;
 
 namespace malone.Core.Unity.ModulesInitializers
-	{
+{
 	public class FeaturesModuleInitializer : IModuleInitializer<IUnityContainer>
-    {
-        public string Name => CoreModules.Features.GetDescription();
+	{
+		public string Name => CoreModules.Features.GetDescription();
 
-        public void Initialize(IUnityContainer container)
-        {
-            container.RegisterType<FeatureSettings>();
-            container.RegisterType<FeatureSettingsSection>();
-            var featureSettings = container.Resolve<FeatureSettings>();
-            container.RegisterInstance(featureSettings);
-        }
-    }
+		public void Initialize(IUnityContainer container)
+		{
+			container.RegisterType<FeatureSettings>();
+			container.RegisterType<FeatureSettingsSection>();
+			var featureSettings = container.Resolve<FeatureSettings>();
+			container.RegisterInstance(featureSettings);
+		}
+	}
 }

@@ -2,9 +2,9 @@
 
 namespace malone.Core.Dapper.Entities.Filters
 {
-    public interface IFilterExpressionDapper : IFilterExpression
-    {
-        //List<IFilterField> Fields { get; set; }
+	public interface IFilterExpressionDapper : IFilterExpression
+	{
+		//List<IFilterField> Fields { get; set; }
 
-    }
+	}
 }
