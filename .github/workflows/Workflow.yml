@@ -91,7 +91,7 @@ jobs:
 
       - uses: actions/checkout@v1
       - uses: ./.github/actions/pack
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
+        if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/development' || github.ref == 'refs/heads/master') }}
         with:
               MALONECORE_ENVIRONMENT: "${env:MALONECORE_ENVIRONMENT}"
               MALONECORE_VERBOSE: "${env:MALONECORE_VERBOSE}"
@@ -117,7 +117,7 @@ jobs:
 
       - uses: actions/checkout@v1
       - uses: ./.github/actions/deploy
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
+        if: ${{ github.event_name == 'push'&& (github.ref == 'refs/heads/development' || github.ref == 'refs/heads/master') }}
         with:
               MALONECORE_ENVIRONMENT: "${env:MALONECORE_ENVIRONMENT}"
               MALONECORE_NUGET_PATTERN: "${env:MALONECORE_NUGET_PATTERN}"
