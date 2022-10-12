@@ -43,7 +43,7 @@ jobs:
 
       steps:
 
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3.1.0
       - uses: ./.github/actions/setenv
         id: set_env
 
@@ -58,7 +58,7 @@ jobs:
           Write-Host "BRANCH: ${env:BRANCH}"
           Write-Host "SHOULD_COMMIT: ${env:SHOULD_COMMIT}"
 
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3.1.0
       - uses: ./.github/actions/build
         id: build_app
         with:
@@ -85,11 +85,11 @@ jobs:
 
       steps:
 
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3.1.0
       - uses: ./.github/actions/getenv
         id: get_env
 
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3.1.0
       - uses: ./.github/actions/pack
         if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/development' || github.ref == 'refs/heads/master') }}
         with:
@@ -111,13 +111,13 @@ jobs:
 
       steps:
 
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3.1.0
       - uses: ./.github/actions/getenv
         id: get_env
 
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3.1.0
       - uses: ./.github/actions/deploy
-        if: ${{ github.event_name == 'push'&& (github.ref == 'refs/heads/development' || github.ref == 'refs/heads/master') }}
+        if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/development' || github.ref == 'refs/heads/master') }}
         with:
               MALONECORE_ENVIRONMENT: "${env:MALONECORE_ENVIRONMENT}"
               MALONECORE_NUGET_PATTERN: "${env:MALONECORE_NUGET_PATTERN}"
@@ -127,3 +127,20 @@ jobs:
               NUGET_SOURCE: "${env:NUGET_SOURCE}"
               NUGET_USERNAME: "${env:NUGET_USERNAME}"
               NUGET_PASSWORD: "${env:NUGET_PASSWORD}"
+
+  create-release:
+      name: Create Release
+      runs-on: windows-latest
+      needs: deploy
+      
+      steps:
+
+      - uses: actions/checkout@v3.1.0
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master') }}
+        with:
+          tag: v${{needs.build.outputs.version_number}}
+          name: v${{ needs.build.outputs.version_number }}
+          artifacts: "${env:PKG_ARTIFACTS_DIR}"
+          token: ${{ secrets.GITHUB_TOKEN }} 
