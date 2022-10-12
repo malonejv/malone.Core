@@ -57,13 +57,13 @@ runs:
 
   steps:
 
-  - uses: actions/checkout@v2
+  - uses: actions/checkout@v3.1.0
 
   - name: Setup MSBuild
     uses: microsoft/setup-msbuild@v1.1
 
   - name: Setup NuGet
-    uses: NuGet/setup-nuget@v1.0.5
+    uses: NuGet/setup-nuget@v1.0.7
 
   - name: Add GitHub as Nuget Source
     shell: pwsh
@@ -111,7 +111,7 @@ runs:
               Copy-Item "$solutionDir\$folderName\bin\" -Destination "${{ github.workspace }}\$buildObjects\$folderName" -Recurse -Container }
 
   - name: Upload artifacts
-    uses: actions/upload-artifact@v2
+    uses: actions/upload-artifact@v3
     with:
       name: "${{ inputs.BUILD_ARTIFACTS_NAME }}"
       path: "${{ github.workspace }}\\${{ inputs.BUILD_ARTIFACTS_NAME }}\\*"

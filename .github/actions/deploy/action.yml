@@ -33,7 +33,7 @@ runs:
   steps:
 
   - name: Download packed artifacts
-    uses: actions/download-artifact@v2
+    uses: actions/download-artifact@v3
     with:
         name: "${{ inputs.PACK_ARTIFACTS_NAME }}"
         path: "${{ inputs.PACK_ARTIFACTS_NAME }}"
