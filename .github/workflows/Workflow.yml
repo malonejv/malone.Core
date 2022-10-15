@@ -138,12 +138,14 @@ jobs:
         id: read_version_number
         run: |
               $version = Get-Content -Raw .\src\CurrentVersion.json | ConvertFrom-Json
-              
+              $dev_version=$version.development
+              $prod_version=$version.production
+
               # Set the output named "dev_version"
-              Write-Host "::set-output name=dev_version::$version.development"
+              Write-Host "::set-output name=dev_version::$dev_version"
               
               # Set the output named "prod_version"
-              Write-Host "::set-output name=prod_version::$version.production"
+              Write-Host "::set-output name=prod_version::$prod_version"
 
       - name: Download packed artifacts
         uses: actions/download-artifact@v3
