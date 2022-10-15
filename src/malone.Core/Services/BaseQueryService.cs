@@ -10,33 +10,39 @@ using malone.Core.Logging;
 namespace malone.Core.Services
 {
 	/// <summary>
-	/// Defines the <see cref="BaseQueryService{TEntity, TValidator}" />.
+	/// Defines the <see cref="BaseQueryService{TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
-	/// <typeparam name="TValidator">.</typeparam>
-	public abstract class BaseQueryService<TEntity, TValidator> : IBaseQueryService<TEntity, TValidator>
+	public class BaseQueryService<TEntity> : IBaseQueryService<TEntity>
 		where TEntity : class
-		where TValidator : IBaseServiceValidator<TEntity>
 	{
 		/// <summary>
 		/// Gets or sets the QueryRepository.
 		/// </summary>
-		public IBaseQueryRepository<TEntity> QueryRepository { get; set; }
+		protected IBaseQueryRepository<TEntity> QueryRepository { get; private set; }
 
 		/// <summary>
 		/// Gets or sets the Logger.
 		/// </summary>
-		public ICoreLogger Logger { get; set; }
+		protected ICoreLogger Logger { get; private set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BaseService{TEntity, TValidator}"/> class.
 		/// </summary>
 		/// <param name="repository">The repository<see cref="IBaseRepository{TEntity}"/>.</param>
 		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
-		protected BaseQueryService(IBaseQueryRepository<TEntity> repository,
-			ICoreLogger logger)
+		internal BaseQueryService(IBaseQueryRepository<TEntity> repository, ICoreLogger logger)
+			:this(logger)
 		{
 			QueryRepository = repository.ThrowIfNull();
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BaseService{TEntity, TValidator}"/> class.
+		/// </summary>
+		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
+		internal BaseQueryService(ICoreLogger logger)
+		{
 			Logger = logger.ThrowIfNull();
 		}
 

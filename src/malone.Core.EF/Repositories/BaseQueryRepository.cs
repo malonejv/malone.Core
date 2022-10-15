@@ -25,13 +25,9 @@ namespace malone.Core.EF.Repositories
 
 		public BaseQueryRepository(IContext context, ICoreLogger logger)
 		{
-			context.ThrowIfNull().ThrowIfNotOfType<IContext, DbContext>();
-			logger.ThrowIfNull();
-
-			Context = (DbContext)context;
+			Context = context.ThrowIfNull().ThrowIfNotOfType<DbContext>();
+			Logger = logger.ThrowIfNull();
 			EntityDbSet = Context.Set<T>();
-
-			Logger = logger;
 		}
 
 		#endregion

@@ -13,4 +13,8 @@ namespace malone.Core.DataAccess.Repositories
 		///// <param name="entity">The entity<see cref="TEntity"/>.</param>
 		//void Update(TEntity entity);
 	}
+	public interface ICUDRepository<TEntity> : ICUDRepository<int, TEntity>
+		where TEntity : class, IBaseEntity<int>
+	{
+	}
 }

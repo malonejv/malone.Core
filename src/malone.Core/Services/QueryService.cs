@@ -7,23 +7,20 @@ using malone.Core.Logging;
 
 namespace malone.Core.Services
 {
-	public class QueryService<TKey, TEntity, TValidator> : BaseQueryService<TEntity, TValidator>, IQueryService<TKey, TEntity, TValidator>
+	public class QueryService<TKey, TEntity> : BaseQueryService<TEntity>, IQueryService<TKey, TEntity>
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
-		where TValidator : IServiceValidator<TKey, TEntity>
 	{
-		public IQueryRepository<TKey, TEntity> Repository { get; }
+		protected IQueryRepository<TKey, TEntity> Repository { get; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Service{TKey, TEntity, TServiceValidator}"/> class.
+		/// Initializes a new instance of the <see cref="Service{TKey, TEntity}"/> class.
 		/// </summary>
-		/// <param name="validator">The validator<see cref="TValidator"/>.</param>
 		/// <param name="repository">The repository<see cref="IRepository{TEntity}"/>.</param>
 		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
-		public QueryService(TValidator validator, IQueryRepository<TKey, TEntity> repository, ICoreLogger logger) : base(repository, logger)
+		public QueryService(IQueryRepository<TKey, TEntity> repository, ICoreLogger logger) : base(logger)
 		{
 			Repository = repository;
-			Logger = logger;
 		}
 
 		/// <summary>

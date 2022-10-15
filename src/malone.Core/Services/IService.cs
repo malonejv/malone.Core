@@ -12,14 +12,11 @@ namespace malone.Core.Services
 	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TValidator">.</typeparam>
-	public interface IService<TKey, TEntity, TValidator> : IBaseService<TEntity, TValidator>, IQueryService<TKey, TEntity, TValidator>, ICUDService<TKey, TEntity, TValidator>
-where TKey : IEquatable<TKey>
-where TEntity : class, IBaseEntity<TKey>
-where TValidator : IServiceValidator<TKey, TEntity>
+	public interface IService<TKey, TEntity, TValidator> : IBaseService<TEntity, TValidator>, IQueryService<TKey, TEntity>, ICUDService<TKey, TEntity, TValidator>
+		where TKey : IEquatable<TKey>
+		where TEntity : class, IBaseEntity<TKey>
+		where TValidator : IServiceValidator<TKey, TEntity>
 	{
-		//new IQueryService<TKey, TEntity, TValidator> QueryService { get; }
-		//new ICUDService<TKey, TEntity, TValidator> CUDService { get; }
-
 	}
 
 	/// <summary>
@@ -28,8 +25,8 @@ where TValidator : IServiceValidator<TKey, TEntity>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TValidator">.</typeparam>
 	public interface IService<TEntity, TValidator> : IService<int, TEntity, TValidator>
-where TEntity : class, IBaseEntity
-where TValidator : IServiceValidator<TEntity>
+		where TEntity : class, IBaseEntity
+		where TValidator : IServiceValidator<TEntity>
 	{
 	}
 }

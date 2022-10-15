@@ -21,38 +21,51 @@ namespace malone.Core.Services
 		/// <summary>
 		/// Gets or sets the QueryRepository.
 		/// </summary>
-		private IBaseQueryService<TEntity, TValidator> QueryService { get; }
+		protected IBaseQueryService<TEntity> QueryService { get; private set; }
 
 		/// <summary>
 		/// Gets or sets the CUDRepository.
 		/// </summary>
-		private IBaseCUDService<TEntity, TValidator> CUDService { get; }
+		protected IBaseCUDService<TEntity, TValidator> CUDService { get; private set; }
 
 		/// <summary>
 		/// Gets or sets the ServiceValidator.
 		/// </summary>
-		public TValidator ServiceValidator { get; set; }
+		protected TValidator ServiceValidator { get; private set; }
 
 		/// <summary>
 		/// Gets or sets the Logger.
 		/// </summary>
-		public ICoreLogger Logger { get; set; }
+		protected ICoreLogger Logger { get; private set; }
+
+		#region Constructor 
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BaseService{TEntity, TValidator}"/> class.
 		/// </summary>
-		/// <param name="validator">The validator<see cref="TValidator"/>.</param>
-		/// <param name="queryService">The repository<see cref="IBaseQueryRepository{TEntity}"/>.</param>
-		/// <param name="cudService">The repository<see cref="IBaseCUDRepository{TEntity}"/>.</param>
-		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
-		protected BaseService(TValidator validator, IBaseQueryService<TEntity, TValidator> queryService, IBaseCUDService<TEntity, TValidator> cudService, ICoreLogger logger)
+		/// <param name="validator">The validator <typeparamref name="TValidator"/>.</param>
+		/// <param name="logger">The logger <see cref="ICoreLogger"/>.</param>
+		/// <param name="queryRepository">The queryRepository <see cref="IBaseQueryRepository{TEntity}"/>.</param>
+		/// <param name="cudRepository">The cudRepository <see cref="IBaseCUDRepository{TEntity}"/>.</param>
+		protected BaseService(TValidator validator, ICoreLogger logger, IBaseQueryRepository<TEntity> queryRepository, IBaseCUDRepository<TEntity> cudRepository)
+			:this(validator,logger)
+		{
+			QueryService = new BaseQueryService<TEntity>(queryRepository, logger);
+			CUDService = new BaseCUDService<TEntity, TValidator>(validator, cudRepository, logger);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BaseService{TEntity, TValidator}"/> class.
+		/// </summary>
+		/// <param name="validator">The validator <typeparamref name="TValidator"/>.</param>
+		/// <param name="logger">The logger <see cref="ICoreLogger"/>.</param>
+		protected BaseService(TValidator validator, ICoreLogger logger)
 		{
 			ServiceValidator = validator.ThrowIfNull();
-			QueryService = queryService.ThrowIfNull();
-			CUDService = cudService.ThrowIfNull();
 			Logger = logger.ThrowIfNull();
 		}
 
+		#endregion
 
 		public IEnumerable<TEntity> GetAll(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "")
 		{

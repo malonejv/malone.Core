@@ -13,35 +13,46 @@ namespace malone.Core.Services
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TValidator">.</typeparam>
-	public abstract class BaseCUDService<TEntity, TValidator> : IBaseCUDService<TEntity, TValidator>
+	public class BaseCUDService<TEntity, TValidator> : IBaseCUDService<TEntity, TValidator>
 		where TEntity : class
 		where TValidator : IBaseServiceValidator<TEntity>
 	{
 		/// <summary>
 		/// Gets or sets the CUDRepository.
 		/// </summary>
-		public IBaseCUDRepository<TEntity> CUDRepository { get; set; }
+		protected IBaseCUDRepository<TEntity> CUDRepository { get; private set; }
 
 		/// <summary>
 		/// Gets or sets the ServiceValidator.
 		/// </summary>
-		public TValidator ServiceValidator { get; set; }
+		protected TValidator ServiceValidator { get; private set; }
 
 		/// <summary>
 		/// Gets or sets the Logger.
 		/// </summary>
-		public ICoreLogger Logger { get; set; }
+		protected ICoreLogger Logger { get; private set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BaseService{TEntity, TValidator}"/> class.
 		/// </summary>
-		/// <param name="validator">The validator <see cref="TValidator"/>.</param>
+		/// <param name="validator">The validator <typeparamref name="TValidator"/>.</param>
 		/// <param name="repository">The repository <see cref="IBaseRepository{TEntity}"/>.</param>
 		/// <param name="logger">The logger <see cref="ICoreLogger"/>.</param>
-		protected BaseCUDService(TValidator validator, IBaseCUDRepository<TEntity> repository, ICoreLogger logger)
+		internal BaseCUDService(TValidator validator, IBaseCUDRepository<TEntity> repository, ICoreLogger logger)
+			: this(validator,logger)
+		{
+			CUDRepository = repository.ThrowIfNull();
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BaseService{TEntity, TValidator}"/> class.
+		/// </summary>
+		/// <param name="validator">The validator <typeparamref name="TValidator"/>.</param>
+		/// <param name="repository">The repository <see cref="IBaseRepository{TEntity}"/>.</param>
+		/// <param name="logger">The logger <see cref="ICoreLogger"/>.</param>
+		internal BaseCUDService(TValidator validator, ICoreLogger logger)
 		{
 			ServiceValidator = validator.ThrowIfNull();
-			CUDRepository = repository.ThrowIfNull();
 			Logger = logger.ThrowIfNull();
 		}
 

@@ -46,12 +46,7 @@ inputs:
    NUGET_PASSWORD:
      required: true
      default: ''
-
-outputs:
-  version_number:
-    description: "Version number"
-    value: ${{ steps.version_number.outputs.version_number }}
-
+     
 runs:
   using: "composite"
 

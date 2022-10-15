@@ -25,4 +25,10 @@ namespace malone.Core.DataAccess.Repositories
 			string includeProperties = "");
 
 	}
+
+	public interface IQueryRepository<TEntity> : IQueryRepository<int, TEntity>
+		where TEntity : class, IBaseEntity<int>
+	{
+
+	}
 }

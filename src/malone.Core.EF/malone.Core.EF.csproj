@@ -76,9 +76,9 @@
     </Compile>
     <Compile Include="Context\CoreDbContext.cs" />
     <Compile Include="Entities\IBaseEntityExtensions.cs" />
-    <Compile Include="Repositories\BaseDataManipulationRepository.cs" />
+    <Compile Include="Repositories\BaseCUDRepository.cs" />
     <Compile Include="Repositories\BaseQueryRepository.cs" />
-    <Compile Include="Repositories\DataManipulationRepository.cs" />
+    <Compile Include="Repositories\CUDRepository.cs" />
     <Compile Include="Repositories\QueryRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Entities\Filters\FilterExpression.cs" />

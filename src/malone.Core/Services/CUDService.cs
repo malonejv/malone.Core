@@ -13,7 +13,7 @@ namespace malone.Core.Services
 		where TEntity : class, IBaseEntity<TKey>
 		where TValidator : IServiceValidator<TKey, TEntity>
 	{
-		public ICUDRepository<TKey, TEntity> Repository { get; }
+		protected ICUDRepository<TKey, TEntity> Repository { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Service{TKey, TEntity, TValidator}"/> class.
@@ -21,11 +21,9 @@ namespace malone.Core.Services
 		/// <param name="validator">The validator<see cref="TValidator"/>.</param>
 		/// <param name="repository">The repository<see cref="IRepository{TKey, TEntity}"/>.</param>
 		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
-		public CUDService(TValidator validator, ICUDRepository<TKey, TEntity> repository, ICoreLogger logger) : base(validator, repository, logger)
+		public CUDService(TValidator validator, ICUDRepository<TKey, TEntity> repository, ICoreLogger logger) : base(validator, logger)
 		{
-			ServiceValidator = validator;
 			Repository = repository;
-			Logger = logger;
 		}
 
 		/// <summary>

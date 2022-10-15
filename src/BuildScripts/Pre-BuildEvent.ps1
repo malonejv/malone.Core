@@ -60,7 +60,7 @@ param (
     $UpdAssemblyScript="$ScriptsDir\Upd-AssemblyVersion.ps1"
 
     $AssemblyVersionPath="$($SolutionDir)\GlobalAssemblyInfo.cs"
-    $CurrentVersionPath="$($SolutionDir)\CurrentVersion"
+    $CurrentVersionPath="$($SolutionDir)\CurrentVersion.json"
 
 	if (!$Environment) {
 		$Environment = 'Development'

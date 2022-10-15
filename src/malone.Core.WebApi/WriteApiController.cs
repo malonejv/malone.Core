@@ -28,10 +28,10 @@ namespace malone.Core.WebApi
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WriteApiController{TKey, TParam, TEntity, TService, TServiceValidator}"/> class.
 		/// </summary>
-		/// <param name="businessComponent">The businessComponent<see cref="TService"/>.</param>
-		public WriteApiController(TService businessComponent)
+		/// <param name="service">The service<see cref="TService"/>.</param>
+		public WriteApiController(TService service)
 		{
-			Service = businessComponent;
+			Service = service;
 		}
 
 		/// <summary>
@@ -90,8 +90,8 @@ namespace malone.Core.WebApi
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WriteApiController{TParam, TEntity, TService, TServiceValidator}"/> class.
 		/// </summary>
-		/// <param name="businessComponent">The businessComponent<see cref="TService"/>.</param>
-		public WriteApiController(TService businessComponent) : base(businessComponent)
+		/// <param name="service">The service<see cref="TService"/>.</param>
+		public WriteApiController(TService service) : base(service)
 		{
 		}
 

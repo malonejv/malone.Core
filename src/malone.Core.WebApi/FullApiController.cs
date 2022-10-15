@@ -30,10 +30,10 @@
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FullApiController{TKey, TParam, TEntity, TService, TServiceValidator}"/> class.
 		/// </summary>
-		/// <param name="businessComponent">The businessComponent<see cref="TService"/>.</param>
-		public FullApiController(TService businessComponent)
+		/// <param name="service">The service<see cref="TService"/>.</param>
+		public FullApiController(TService service)
 		{
-			Service = businessComponent;
+			Service = service;
 		}
 
 		/// <summary>
@@ -191,8 +191,8 @@
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FullApiController{TParam, TEntity, TService, TServiceValidator}"/> class.
 		/// </summary>
-		/// <param name="businessComponent">The businessComponent<see cref="TService"/>.</param>
-		public FullApiController(TService businessComponent) : base(businessComponent)
+		/// <param name="service">The service<see cref="TService"/>.</param>
+		public FullApiController(TService service) : base(service)
 		{
 		}
 

@@ -79,6 +79,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DataAccess\Context\IContextExtensions.cs" />
     <Compile Include="DataAccess\Repositories\IBaseCUDRepository.cs" />
     <Compile Include="DataAccess\Repositories\IBaseQueryRepository.cs" />
     <Compile Include="DataAccess\Repositories\ICUDRepository.cs" />
@@ -86,7 +87,7 @@
     <Compile Include="Services\BaseCUDService.cs" />
     <Compile Include="Services\BaseQueryService.cs" />
     <Compile Include="Services\BaseService.cs" />
-    <Compile Include="Services\BaseValidator.cs" />
+    <Compile Include="Services\BaseServiceValidator.cs" />
     <Compile Include="Services\CUDService.cs" />
     <Compile Include="Services\IBaseCUDService.cs" />
     <Compile Include="Services\IBaseQueryService.cs" />

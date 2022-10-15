@@ -37,10 +37,7 @@ jobs:
   build:
       name: Build
       runs-on: windows-latest
-
-      outputs:
-        version_number: ${{steps.build_app.outputs.version_number}}
-
+      
       steps:
 
       - uses: actions/checkout@v3.1.0
@@ -134,13 +131,42 @@ jobs:
       needs: deploy
       
       steps:
+      
+      - name: Reading Version Number
+        shell: pwsh
+        id: read_version_number
+        run: |
+              $version = Get-Content -Raw .\src\CurrentVersion.json | ConvertFrom-Json
+              
+              # Set the output named "dev_version"
+              Write-Host "::set-output name=dev_version::$version.development"
+              
+              # Set the output named "prod_version"
+              Write-Host "::set-output name=prod_version::$version.production"
+
+      - name: Download packed artifacts
+        uses: actions/download-artifact@v3
+        with:
+            name: "pack-artifacts"
+            path: "pack-artifacts"
+
+      - uses: actions/checkout@v3.1.0
+      - name: Create Prerelease
+        uses: ncipollo/release-action@v1
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
+        with:
+          tag: v${{ steps.read_version_number.outputs.dev_version }}
+          name: v${{ steps.read_version_number.outputs.dev_version }}
+          prerelease: true
+          artifacts: "pack-artifacts"
+          token: ${{ secrets.GITHUB_TOKEN }} 
 
       - uses: actions/checkout@v3.1.0
       - name: Create Release
         uses: ncipollo/release-action@v1
-        if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master') }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         with:
-          tag: v${{needs.build.outputs.version_number}}
-          name: v${{ needs.build.outputs.version_number }}
-          artifacts: "${env:PKG_ARTIFACTS_DIR}"
+          tag: v${{ steps.read_version_number.outputs.prod_version }}
+          name: v${{ steps.read_version_number.outputs.prod_version }}
+          artifacts: "pack-artifacts"
           token: ${{ secrets.GITHUB_TOKEN }} 

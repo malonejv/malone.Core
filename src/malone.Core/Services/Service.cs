@@ -20,30 +20,26 @@ namespace malone.Core.Services
 		where TEntity : class, IBaseEntity<TKey>
 		where TValidator : IServiceValidator<TKey, TEntity>
 	{
-		private IQueryService<TKey, TEntity, TValidator> QueryService { get; }
-		private ICUDService<TKey, TEntity, TValidator> CUDService { get; }
+		protected new IQueryService<TKey, TEntity> QueryService { get; }
+		protected new ICUDService<TKey, TEntity, TValidator> CUDService { get; }
 
-		/// <summary>
-		/// Gets or sets the Logger.
-		/// </summary>
-		public ICoreLogger Logger { get; set; }
+		#region Constructor
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Service{TKey, TEntity, TValidator}"/> class.
 		/// </summary>
-		/// <param name="validator">The validator<see cref="TValidator"/>.</param>
-		/// <param name="repository">The repository<see cref="IRepository{TKey, TEntity}"/>.</param>
-		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
-		public Service(TValidator validator, IQueryService<TKey, TEntity, TValidator> queryService,
-			ICUDService<TKey, TEntity, TValidator> cudService, ICoreLogger logger) :
-			base(validator, queryService, cudService, logger)
+		/// <param name="validator">The validator <typeparamref name="TValidator"/>.</param>
+		/// <param name="queryRepository">The repository <see cref="IRepository{TKey, TEntity}"/>.</param>
+		/// <param name="cudRepository">The repository <see cref="IRepository{TKey, TEntity}"/>.</param>
+		/// <param name="logger">The logger <see cref="ICoreLogger"/>.</param>
+		public Service(TValidator validator, ICoreLogger logger, IQueryRepository<TKey, TEntity> queryRepository, ICUDRepository<TKey, TEntity> cudRepository) :
+			base(validator, logger)
 		{
-			ServiceValidator = validator;
-			QueryService = queryService;
-			CUDService = cudService;
-			Logger = logger;
+			QueryService = new QueryService<TKey, TEntity>(queryRepository, logger);
+			CUDService = new CUDService<TKey, TEntity, TValidator>(validator, cudRepository, logger);
 		}
 
+		#endregion
 
 		public TEntity GetById(TKey id, bool includeDeleted = false, string includeProperties = "")
 		{
@@ -62,28 +58,17 @@ namespace malone.Core.Services
 
 	}
 
-	/// <summary>
-	/// Defines the <see cref="Service{TEntity, TValidator}" />.
-	/// </summary>
-	/// <typeparam name="TEntity">.</typeparam>
-	/// <typeparam name="TValidator">.</typeparam>
-	public abstract class Service<TEntity, TValidator> : Service<int, TEntity, TValidator>,
+
+	///<inheritdoc />
+	public class Service<TEntity, TValidator> : Service<int, TEntity, TValidator>,
 		IService<TEntity, TValidator>
 		where TEntity : class, IBaseEntity
 		where TValidator : IServiceValidator<TEntity>
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Service{TEntity, TValidator}"/> class.
-		/// </summary>
-		/// <param name="validator">The validator<see cref="TValidator"/>.</param>
-		/// <param name="repository">The repository<see cref="IRepository{TEntity}"/>.</param>
-		/// <param name="logger">The logger<see cref="ICoreLogger"/>.</param>
-		public Service(TValidator validator, IQueryService<int, TEntity, TValidator> queryService,
-			ICUDService<int, TEntity, TValidator> cudService, ICoreLogger logger) :
-			base(validator, queryService, cudService, logger)
+		///<inheritdoc />
+		public Service(TValidator validator, ICoreLogger logger, IQueryRepository<TEntity> queryRepository, ICUDRepository<int, TEntity> cudRepository) :
+			base(validator, logger, queryRepository, cudRepository )
 		{
-			{
-			}
 		}
 	}
 }

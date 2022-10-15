@@ -4,15 +4,13 @@ using malone.Core.Entities.Model;
 namespace malone.Core.Services
 {
 	/// <summary>
-	/// Defines the <see cref="IQueryService{TKey, TEntity, TValidator}" />.
+	/// Defines the <see cref="IQueryService{TKey, TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
-	/// <typeparam name="TValidator">.</typeparam>
-	public interface IQueryService<TKey, TEntity, TValidator> : IBaseQueryService<TEntity, TValidator>
+	public interface IQueryService<TKey, TEntity> : IBaseQueryService<TEntity>
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
-		where TValidator : IServiceValidator<TKey, TEntity>
 	{
 		/// <summary>
 		/// The GetById.
@@ -29,14 +27,11 @@ namespace malone.Core.Services
 	}
 
 	/// <summary>
-	/// Defines the <see cref="IQueryService{TKey, TEntity, TValidator}" />.
+	/// Defines the <see cref="IQueryService{TKey, TEntity}" />.
 	/// </summary>
-	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
-	/// <typeparam name="TValidator">.</typeparam>
-	public interface IQueryService<TEntity, TValidator> : IQueryService<int, TEntity, TValidator>
+	public interface IQueryService<TEntity> : IQueryService<int, TEntity>
 		where TEntity : class, IBaseEntity
-		where TValidator : IServiceValidator<TEntity>
 	{
 
 	}

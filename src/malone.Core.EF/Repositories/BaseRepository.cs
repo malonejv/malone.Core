@@ -13,21 +13,26 @@ namespace malone.Core.EF.Repositories
 	public class BaseRepository<T> : IBaseRepository<T>, IDisposable
 		where T : class
 	{
+		protected DbContext Context { get; set; }
 		protected DbSet<T> EntityDbSet { get; private set; }
-		protected DbContext Context { get; private set; }
 		protected ICoreLogger Logger { get; set; }
-		public IBaseQueryRepository<T> QueryRepository { get; }
-		public IBaseCUDRepository<T> CUDRepository { get; }
+		protected IBaseQueryRepository<T> QueryRepository { get; private set; }
+		protected IBaseCUDRepository<T> CUDRepository { get; private set; }
 
-		#region Constructor
+		#region Constructor & Initializer
 
-		public BaseRepository(IContext context, ICoreLogger logger, IBaseQueryRepository<T> queryRepository, IBaseCUDRepository<T> cudRepository)
+		public BaseRepository(IContext context, ICoreLogger logger)
 		{
-			Context = context.ThrowIfNull().ThrowIfNotOfType<IContext, DbContext>();
+			Context = context.ThrowIfNull().ThrowIfNotOfType<DbContext>();
 			Logger = logger.ThrowIfNull();
-			QueryRepository = queryRepository.ThrowIfNull();
-			CUDRepository = cudRepository.ThrowIfNull();
 			EntityDbSet = Context.Set<T>();
+			InitializeRepositories(context,logger);
+		}
+
+		protected virtual void InitializeRepositories(IContext context, ICoreLogger logger)
+		{
+			QueryRepository = new BaseQueryRepository<T>(context, logger);
+			CUDRepository = new BaseCUDRepository<T>(context, logger);
 		}
 
 		#endregion

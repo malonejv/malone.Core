@@ -8,19 +8,17 @@ using malone.Core.Services;
 namespace malone.Core.WebApi
 {
 	/// <summary>
-	/// Defines the <see cref="FullApiController{TKey, TParam, TEntity, TService, TServiceValidator}" />.
+	/// Defines the <see cref="FullApiController{TKey, TParam, TEntity, TService}" />.
 	/// </summary>
 	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	/// <typeparam name="TParam">.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TService">.</typeparam>
-	/// <typeparam name="TServiceValidator">.</typeparam>
-	public abstract class ReadApiController<TKey, TParam, TEntity, TService, TServiceValidator> : ApiController
+	public abstract class ReadApiController<TKey, TParam, TEntity, TService> : ApiController
 		where TKey : IEquatable<TKey>
 		where TParam : class, IGetRequestParam
 		where TEntity : class, IBaseEntity<TKey>
-		where TServiceValidator : IServiceValidator<TKey, TEntity>
-		where TService : IQueryService<TKey, TEntity, TServiceValidator>
+		where TService : IQueryService<TKey, TEntity>
 	{
 		/// <summary>
 		/// Gets or sets the Service.
@@ -28,12 +26,12 @@ namespace malone.Core.WebApi
 		protected TService Service { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ReadApiController{TKey, TParam, TEntity, TService, TServiceValidator}"/> class.
+		/// Initializes a new instance of the <see cref="ReadApiController{TKey, TParam, TEntity, TService}"/> class.
 		/// </summary>
-		/// <param name="businessComponent">The businessComponent<see cref="TService"/>.</param>
-		public ReadApiController(TService businessComponent)
+		/// <param name="service">The service<see cref="TService"/>.</param>
+		public ReadApiController(TService service)
 		{
-			Service = businessComponent;
+			Service = service;
 		}
 
 		/// <summary>
@@ -139,24 +137,23 @@ namespace malone.Core.WebApi
 	}
 
 	/// <summary>
-	/// Defines the <see cref="ReadApiController{TParam, TEntity, TService, TServiceValidator}" />.
+	/// Defines the <see cref="ReadApiController{TParam, TEntity, TService}" />.
 	/// </summary>
 	/// <typeparam name="TParam">.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TService">.</typeparam>
 	/// <typeparam name="TServiceValidator">.</typeparam>
-	public abstract class ReadApiController<TParam, TEntity, TService, TServiceValidator>
-		: ReadApiController<int, TParam, TEntity, TService, TServiceValidator>
+	public abstract class ReadApiController<TParam, TEntity, TService>
+		: ReadApiController<int, TParam, TEntity, TService>
 		where TParam : class, IGetRequestParam
 		where TEntity : class, IBaseEntity
-		where TServiceValidator : IServiceValidator<TEntity>
-		where TService : IQueryService<TEntity, TServiceValidator>
+		where TService : IQueryService<TEntity>
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ReadApiController{TParam, TEntity, TService, TServiceValidator}"/> class.
+		/// Initializes a new instance of the <see cref="ReadApiController{TParam, TEntity, TService}"/> class.
 		/// </summary>
-		/// <param name="businessComponent">The businessComponent<see cref="TService"/>.</param>
-		public ReadApiController(TService businessComponent) : base(businessComponent)
+		/// <param name="service">The service<see cref="TService"/>.</param>
+		public ReadApiController(TService service) : base(service)
 		{
 		}
 

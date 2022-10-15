@@ -49,4 +49,12 @@ namespace malone.Core.EF.Repositories
 		#endregion
 
 	}
+
+	public class QueryRepository<TEntity> : QueryRepository<int, TEntity>, IQueryRepository<TEntity>, IDisposable
+		where TEntity : class, IBaseEntity
+	{
+		public QueryRepository(IContext context, ICoreLogger logger) : base(context, logger)
+		{
+		}
+	}
 }
