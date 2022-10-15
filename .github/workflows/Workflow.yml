@@ -132,6 +132,7 @@ jobs:
       
       steps:
       
+      - uses: actions/checkout@v3.1.0
       - name: Reading Version Number
         shell: pwsh
         id: read_version_number
