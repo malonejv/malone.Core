@@ -1,43 +1,80 @@
-﻿using malone.Core.Services;
-using malone.Core.Logging;
+﻿using System;
+using System.Linq;
+using malone.Core.Commons.Exceptions;
+using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.DataAccess.Repositories;
+using malone.Core.DataAccess.UnitOfWork;
+using malone.Core.EF.Entities.Filters;
+using malone.Core.Logging;
+using malone.Core.Sample.EF.SqlServer.Middle.CL.Exceptions;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
-using System;
-using System.Collections.Generic;
+using malone.Core.Services;
 
 namespace malone.Core.Sample.EF.SqlServer.Middle.BL.Implementations
 {
-    public class TodoListBC : Service<TodoList, ITodoListBV>, ITodoListBC
+    public class TodoListBC : Service<TodoList>, ITodoListBC
     {
-        public TodoListBC(ITodoListBV businessValidator, IRepository<TodoList> repository, ICoreLogger logger)
-            : base(businessValidator, repository, logger)
-        { }
+        protected IErrorLocalizationHandler ErrorLocalizationHandler { get; }
 
-        public override void Add(TodoList entity, bool saveChanges = true, bool disposeUoW = true)
+        public TodoListBC(IRepository<TodoList> repository,IUnitOfWork uow, ICoreLogger logger, IErrorLocalizationHandler errorLocalizationHandler)
+            : base(logger, uow,repository)
         {
-            if (!entity.Date.HasValue) entity.Date = DateTime.Now.Date;
-            entity.IsDeleted = false;
+            ErrorLocalizationHandler = errorLocalizationHandler;
+        }
 
-            ServiceValidator.AddValidationRules
-                .AddRange(new List<ValidationRule> {
-                        new ValidationRule()
-                        {
-                            Method = ServiceValidator.ValidarCaracteresEspeciales,
-                            Arguments = new List<object>() { entity }
-                        },
-                        new ValidationRule()
-                        {
-                            Method = ServiceValidator.ValidarNombreRepetido,
-                            Arguments = new List<object>() { entity }
-                        }
-                });
+        protected override ValidationResultList BeforeAddingValidation(TodoList entity)
+        {
+            var validationList = base.BeforeAddingValidation(entity);
 
-            //var user = entity.User;
-            //entity.User = null;
-            base.Add(entity, disposeUoW: false);
+            validationList.Add(ValidarCaracteresEspeciales(entity));
+            validationList.Add(ValidarNombreRepetido(entity));
 
-            //entity.User = user;
-            //base.Update(entity.Id, entity);
+            return validationList;
+        }
+
+        private ValidationResult ValidarCaracteresEspeciales(TodoList entity)
+        {
+            try
+            {
+                bool tieneCaracteresEspeciales = entity.Name.HasSpecialCharacters();
+
+                if (tieneCaracteresEspeciales)
+                {
+                    string message = ErrorLocalizationHandler.GetString(ErrorCode.BUSVAL5000);
+                    return new ValidationResult(ErrorCode.BUSVAL5000.ToString(), message);
+                }
+
+                return new ValidationResult();
+            }
+            catch (Exception ex)
+            {
+                var techEx = ExceptionFactory<ErrorCode, IErrorLocalizationHandler>.CreateException<TechnicalException>(ex, ErrorCode.TECH1000);
+                if (logger != null) logger.Error(techEx);
+
+                throw techEx;
+            }
+        }
+
+        private ValidationResult ValidarNombreRepetido(TodoList entity)
+        {
+            bool existe = false;
+
+            existe = repository.Get(
+                new FilterExpression<TodoList>()
+                {
+                    Expression = f => f.Name == entity.Name &&
+                                  f.IsDeleted == false &&
+                                  f.User.Id == entity.User.Id &&
+                                  f.Id != entity.Id
+                }).Any();
+
+            if (existe)
+            {
+                var message = ErrorLocalizationHandler.GetString(ErrorCode.BUSVAL5001);
+                return new ValidationResult(ErrorCode.BUSVAL5001.ToString(), message);
+            }
+
+            return new ValidationResult();
         }
 
     }

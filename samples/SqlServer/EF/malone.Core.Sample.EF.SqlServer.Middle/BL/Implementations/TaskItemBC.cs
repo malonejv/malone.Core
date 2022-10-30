@@ -2,13 +2,14 @@
 using malone.Core.Logging;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
+using malone.Core.DataAccess.UnitOfWork;
 
 namespace malone.Core.Sample.EF.SqlServer.Middle.BL.Implementations
 {
-    public class TaskItemBC : Service<TaskItem, IServiceValidator<TaskItem>>, ITaskItemBC
+    public class TaskItemBC : Service<TaskItem>, ITaskItemBC
     {
-        public TaskItemBC(IServiceValidator<TaskItem> businessValidator, IRepository<TaskItem> repository, ICoreLogger logger)
-            : base(businessValidator, repository, logger)
+        public TaskItemBC(IRepository<TaskItem> repository, IUnitOfWork unitOfWork, ICoreLogger logger)
+            : base(logger, unitOfWork,repository)
         {
 
         }

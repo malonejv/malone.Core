@@ -253,7 +253,7 @@ namespace malone.Core.Dapper.Repositories
 		//    return parameters;
 		//}
 
-		public virtual void Insert(TEntity entity)
+		public virtual void Add(TEntity entity)
 		{
 			//ThrowIfDisposed();
 			//try
@@ -288,7 +288,7 @@ namespace malone.Core.Dapper.Repositories
 		//    return parameters;
 		//}
 
-		public virtual void Update(TEntity oldValues, TEntity newValues)
+		public virtual void Update(TEntity entity)
 		{
 			//ThrowIfDisposed();
 			//try

@@ -2,48 +2,50 @@
 using System.Web.Http;
 using malone.Core.Entities.Model;
 using malone.Core.Services;
+using malone.Core.Services.Requests;
+using malone.Core.WebApi.Params;
 
 namespace malone.Core.WebApi
 {
 	/// <summary>
-	/// Defines the <see cref="FullApiController{TKey, TParam, TEntity, TService, TServiceValidator}" />.
+	/// Defines the <see cref="ApiController{TKey,  TAdd, TUpdate, TEntity, TService}" />.
 	/// </summary>
 	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	/// <typeparam name="TParam">.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TService">.</typeparam>
-	/// <typeparam name="TServiceValidator">.</typeparam>
-	public abstract class WriteApiController<TKey, TParam, TEntity, TService, TServiceValidator> : ApiController
+	public abstract class WriteApiController<TKey, TAdd, TUpdate, TEntity, TService> : ApiController
 		where TKey : IEquatable<TKey>
-		where TParam : class, IGetRequestParam
+		where TAdd : class, IAddParam<TKey, TEntity>
+		where TUpdate : class, IUpdParam<TKey, TEntity>
 		where TEntity : class, IBaseEntity<TKey>
-		where TServiceValidator : IServiceValidator<TKey, TEntity>
-		where TService : ICUDService<TKey, TEntity, TServiceValidator>
+		where TService : IService<TKey, TEntity>
 	{
 		/// <summary>
 		/// Gets or sets the Service.
 		/// </summary>
-		protected TService Service { get; set; }
+		protected TService service;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="WriteApiController{TKey, TParam, TEntity, TService, TServiceValidator}"/> class.
+		/// Initializes a new instance of the <see cref="WriteApiController{TKey, TAdd, TUpdate, TEntity, TService}"/> class.
 		/// </summary>
 		/// <param name="service">The service<see cref="TService"/>.</param>
 		public WriteApiController(TService service)
 		{
-			Service = service;
+			this.service = service;
 		}
 
 		/// <summary>
 		/// The Post.
 		/// </summary>
-		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
+		/// <param name="param">The request <see cref="IRequest{TEntity}"/>.</param>
 		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
-		public virtual IHttpActionResult Post([FromBody] TEntity entity)
+		public virtual IHttpActionResult Post([FromBody] TAdd param)
 		{
-			Service.Add(entity);
+			var entity = param.ToEntity();
+			var id = service.Add(entity);
 
-			var location = new Uri(Request.RequestUri + entity.Id.ToString());
+			var location = new Uri(Request.RequestUri + id.ToString());
 
 			return Created(location, entity);
 		}
@@ -51,12 +53,12 @@ namespace malone.Core.WebApi
 		/// <summary>
 		/// The Put.
 		/// </summary>
-		/// <param name="id">The id<see cref="TKey"/>.</param>
-		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
+		/// <param name="param">The request <see cref="IRequest{TEntity}"/>.</param>
 		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
-		public virtual IHttpActionResult Put(TKey id, [FromBody] TEntity entity)
+		public virtual IHttpActionResult Put([FromBody] TUpdate param)
 		{
-			Service.Update(entity);
+			var entity = service.GetById(param.Id);
+			service.Update(param.ToEntity(entity));
 			return Ok();
 		}
 
@@ -67,28 +69,27 @@ namespace malone.Core.WebApi
 		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
 		public virtual IHttpActionResult Delete(TKey id)
 		{
-			Service.Delete(id);
+			service.Delete(id);
 			return Ok();
 		}
 	}
 
 
 	/// <summary>
-	/// Defines the <see cref="WriteApiController{TParam, TEntity, TService, TServiceValidator}" />.
+	/// Defines the <see cref="WriteApiController{TParam, TEntity, TService}" />.
 	/// </summary>
 	/// <typeparam name="TParam">.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TService">.</typeparam>
-	/// <typeparam name="TServiceValidator">.</typeparam>
-	public abstract class WriteApiController<TParam, TEntity, TService, TServiceValidator>
-		: WriteApiController<int, TParam, TEntity, TService, TServiceValidator>
-		where TParam : class, IGetRequestParam
+	public abstract class WriteApiController<TAdd, TUpdate, TEntity, TService>
+		: WriteApiController<int, TAdd, TUpdate, TEntity, TService>
+		where TAdd : class, IAddParam<TEntity>
+		where TUpdate : class, IUpdParam<TEntity>
 		where TEntity : class, IBaseEntity
-		where TServiceValidator : IServiceValidator<TEntity>
-		where TService : ICUDService<TEntity, TServiceValidator>
+		where TService : IService<TEntity>
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="WriteApiController{TParam, TEntity, TService, TServiceValidator}"/> class.
+		/// Initializes a new instance of the <see cref="WriteApiController{TParam, TEntity, TService}"/> class.
 		/// </summary>
 		/// <param name="service">The service<see cref="TService"/>.</param>
 		public WriteApiController(TService service) : base(service)

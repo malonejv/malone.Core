@@ -1,5 +1,6 @@
 using malone.Core.Commons.Initializers;
 using malone.Core.Sample.EF.SqlServer.Api;
+using malone.Core.Sample.EF.SqlServer.Api.Initializers;
 using malone.Core.Sample.EF.SqlServer.Middle.Initializers;
 using malone.Core.Unity.WebApi;
 using System.Web;

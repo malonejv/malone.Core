@@ -14,6 +14,6 @@ namespace malone.Core.Entities.Model
 		/// <summary>
 		/// Gets or sets the Version.
 		/// </summary>
-		int Version { get; set; }
+		int Version { get; }
 	}
 }

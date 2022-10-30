@@ -1,103 +1,272 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.DataAccess.Repositories;
+using malone.Core.DataAccess.UnitOfWork;
 using malone.Core.Entities.Filters;
+using malone.Core.Entities.Model;
 using malone.Core.Logging;
+using malone.Core.Services.Requests;
 
 namespace malone.Core.Services
 {
 
 	/// <summary>
-	/// Defines the <see cref="BaseService{TEntity, TValidator}" />.
+	/// Defines the <see cref="BaseService{TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
-	/// <typeparam name="TValidator">.</typeparam>
-	public abstract class BaseService<TEntity, TValidator> : IBaseService<TEntity, TValidator>
+	public abstract class BaseService<TEntity> : IBaseService<TEntity>
 		where TEntity : class
-		where TValidator : IBaseServiceValidator<TEntity>
 	{
-		/// <summary>
-		/// Gets or sets the QueryRepository.
-		/// </summary>
-		protected IBaseQueryService<TEntity> QueryService { get; private set; }
-
-		/// <summary>
-		/// Gets or sets the CUDRepository.
-		/// </summary>
-		protected IBaseCUDService<TEntity, TValidator> CUDService { get; private set; }
-
-		/// <summary>
-		/// Gets or sets the ServiceValidator.
-		/// </summary>
-		protected TValidator ServiceValidator { get; private set; }
-
-		/// <summary>
-		/// Gets or sets the Logger.
-		/// </summary>
-		protected ICoreLogger Logger { get; private set; }
+		protected readonly IBaseRepository<TEntity> repository;
+		protected readonly IUnitOfWork uow;
+		protected readonly ICoreLogger logger;
 
 		#region Constructor 
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="BaseService{TEntity, TValidator}"/> class.
+		/// Initializes a new instance of the <see cref="BaseService{TEntity}"/> class.
 		/// </summary>
-		/// <param name="validator">The validator <typeparamref name="TValidator"/>.</param>
 		/// <param name="logger">The logger <see cref="ICoreLogger"/>.</param>
-		/// <param name="queryRepository">The queryRepository <see cref="IBaseQueryRepository{TEntity}"/>.</param>
-		/// <param name="cudRepository">The cudRepository <see cref="IBaseCUDRepository{TEntity}"/>.</param>
-		protected BaseService(TValidator validator, ICoreLogger logger, IBaseQueryRepository<TEntity> queryRepository, IBaseCUDRepository<TEntity> cudRepository)
-			:this(validator,logger)
+		/// <param name="repository">The repository <see cref="IBaseRepository{TEntity}"/>.</param>
+		protected BaseService(IBaseRepository<TEntity> repository, IUnitOfWork uow, ICoreLogger logger)
 		{
-			QueryService = new BaseQueryService<TEntity>(queryRepository, logger);
-			CUDService = new BaseCUDService<TEntity, TValidator>(validator, cudRepository, logger);
+			this.repository = repository.ThrowIfNull();
+			this.uow = uow.ThrowIfNull();
+			this.logger = logger.ThrowIfNull();
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="BaseService{TEntity, TValidator}"/> class.
-		/// </summary>
-		/// <param name="validator">The validator <typeparamref name="TValidator"/>.</param>
-		/// <param name="logger">The logger <see cref="ICoreLogger"/>.</param>
-		protected BaseService(TValidator validator, ICoreLogger logger)
-		{
-			ServiceValidator = validator.ThrowIfNull();
-			Logger = logger.ThrowIfNull();
-		}
 
 		#endregion
 
-		public IEnumerable<TEntity> GetAll(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "")
+		///<inheritdoc/>
+		public virtual IEnumerable<TEntity> GetAll(
+			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+			bool includeDeleted = false,
+			string includeProperties = ""
+		)
 		{
-			return QueryService.GetAll(orderBy, includeDeleted, includeProperties);
+			try
+			{
+				var result = repository.GetAll(orderBy, includeDeleted, includeProperties);
+
+				return result;
+			}
+			catch (TechnicalException) { throw; }
+			catch (Exception ex)
+			{
+				var techEx =
+					CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400,
+						typeof(TEntity));
+				if (logger != null)
+				{
+					logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
 		}
 
-		public IEnumerable<TEntity> Get<TFilter>(TFilter filter = default(TFilter), Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, bool includeDeleted = false,
-			string includeProperties = "") where TFilter : class, IFilterExpression
+		///<inheritdoc/>
+		public virtual IEnumerable<TEntity> Get<TFilter>(
+			TFilter filter = default(TFilter),
+			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+			bool includeDeleted = false,
+			string includeProperties = "")
+			where TFilter : class, IFilterExpression
 		{
-			return QueryService.Get(filter, orderBy, includeDeleted, includeProperties);
+			try
+			{
+				var result = repository.Get(filter, orderBy, includeDeleted, includeProperties);
+
+				return result;
+			}
+			catch (TechnicalException) { throw; }
+			catch (Exception ex)
+			{
+				var techEx =
+					CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400,
+						typeof(TEntity));
+				if (logger != null)
+				{
+					logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
 		}
 
-		public TEntity GetEntity<TFilter>(TFilter filter = default(TFilter), Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, bool includeDeleted = false,
-			string includeProperties = "") where TFilter : class, IFilterExpression
+		///<inheritdoc/>
+		public TEntity GetEntity<TFilter>(
+			TFilter filter = default(TFilter),
+			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+			bool includeDeleted = false,
+			string includeProperties = "")
+			where TFilter : class, IFilterExpression
 		{
-			return QueryService.GetEntity(filter, orderBy, includeDeleted, includeProperties);
+			try
+			{
+				var result = repository.GetEntity(filter, orderBy, includeDeleted, includeProperties);
+
+				return result;
+			}
+			catch (TechnicalException) { throw; }
+			catch (Exception ex)
+			{
+				var techEx =
+					CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400,
+						typeof(TEntity));
+				if (logger != null)
+				{
+					logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
 		}
 
-		public virtual void Add(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
+
+		protected virtual ValidationResultList BeforeAddingValidation(TEntity entity)
+			=> new ValidationResultList();
+
+		///<inheritdoc/>
+		public virtual void Add(TEntity entity, bool saveChanges = true)
 		{
-			CUDService.Add(entity, saveChanges, disposeUoW);
+			try
+			{
+				entity.ThrowIfNull();
+
+				var validationResult = BeforeAddingValidation(entity);
+				if (!validationResult.IsValid)
+				{
+					throw new BusinessRulesValidationException(validationResult);
+				}
+
+				repository.Add(entity);
+
+				if (saveChanges)
+				{
+					uow.SaveChanges();
+				}
+			}
+			catch (BusinessRulesValidationException) { throw; }
+			catch (TechnicalException) { throw; }
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS401, typeof(TEntity));
+				if (logger != null)
+				{
+					logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
 		}
 
-		public virtual void Update(TEntity oldValues, TEntity newValues, bool saveChanges = true, bool disposeUoW = true)
+		protected virtual ValidationResultList BeforeUpdatingValidation(TEntity entity)
+			=> new ValidationResultList();
+
+		///<inheritdoc/>
+		public virtual void Update(TEntity entity, bool saveChanges = true)
 		{
-			CUDService.Update(oldValues, newValues, saveChanges, disposeUoW);
+			try
+			{
+				entity.ThrowIfNull();
+
+				var validationResult = BeforeUpdatingValidation(entity);
+				if (!validationResult.IsValid)
+				{
+					throw new BusinessRulesValidationException(validationResult);
+				}
+
+				repository.Add(entity);
+
+				if (saveChanges)
+				{
+					uow.SaveChanges();
+				}
+			}
+			catch (EntityNotFoundException ex)
+			{
+				if (logger != null)
+				{
+					logger.Warn(ex);
+				}
+
+				throw;
+			}
+			catch (BusinessRulesValidationException ex)
+			{
+				if (logger != null)
+				{
+					logger.Warn(ex);
+				}
+
+				throw;
+			}
+			catch (TechnicalException) { throw; }
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS403, typeof(TEntity));
+				if (logger != null)
+				{
+					logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
 		}
 
-		public virtual void Delete(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
+		protected virtual ValidationResultList BeforeDeletingValidation(TEntity entity)
+			=> new ValidationResultList();
+
+		///<inheritdoc/>
+		public virtual void Delete(TEntity entity, bool saveChanges = true)
 		{
-			CUDService.Delete(entity, saveChanges, disposeUoW);
+			try
+			{
+				entity.ThrowIfNull();
+
+				var validationResult = BeforeDeletingValidation(entity);
+				if (!validationResult.IsValid)
+				{
+					throw new BusinessRulesValidationException(validationResult);
+				}
+
+				if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
+				{
+					var softDelete = (ISoftDelete)entity;
+					var field = entity.GetType().GetField(nameof(ISoftDelete.IsDeleted), BindingFlags.Instance | BindingFlags.NonPublic);
+					field.SetValue(entity, true);
+					repository.Add(softDelete as TEntity);
+				}
+				else
+				{
+					repository.Delete(entity);
+				}
+
+				if (saveChanges)
+				{
+					uow.SaveChanges();
+				}
+			}
+			catch (BusinessRulesValidationException) { throw; }
+			catch (TechnicalException) { throw; }
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS402, typeof(TEntity));
+				if (logger != null)
+				{
+					logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
 		}
+
 	}
 
 }

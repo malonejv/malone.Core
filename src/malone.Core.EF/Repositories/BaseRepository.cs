@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
+using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
+using malone.Core.EF.Entities.Filters;
 using malone.Core.Entities.Filters;
+using malone.Core.Entities.Model;
 using malone.Core.Logging;
 
 namespace malone.Core.EF.Repositories
@@ -16,65 +20,233 @@ namespace malone.Core.EF.Repositories
 		protected DbContext Context { get; set; }
 		protected DbSet<T> EntityDbSet { get; private set; }
 		protected ICoreLogger Logger { get; set; }
-		protected IBaseQueryRepository<T> QueryRepository { get; private set; }
-		protected IBaseCUDRepository<T> CUDRepository { get; private set; }
 
-		#region Constructor & Initializer
+		#region Constructor
 
 		public BaseRepository(IContext context, ICoreLogger logger)
 		{
-			Context = context.ThrowIfNull().ThrowIfNotOfType<DbContext>();
+			Context = context.ThrowIfNull().ThrowIfNotDeriveOfType<DbContext>(nameof(context));
 			Logger = logger.ThrowIfNull();
 			EntityDbSet = Context.Set<T>();
-			InitializeRepositories(context,logger);
-		}
-
-		protected virtual void InitializeRepositories(IContext context, ICoreLogger logger)
-		{
-			QueryRepository = new BaseQueryRepository<T>(context, logger);
-			CUDRepository = new BaseCUDRepository<T>(context, logger);
 		}
 
 		#endregion
 
 		#region Public methods
 
-		public IEnumerable<T> Get<TFilter>(TFilter filter, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy, bool includeDeleted, string includeProperties)
+		public virtual IEnumerable<T> GetAll(
+			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+			bool includeDeleted = false,
+			string includeProperties = ""
+		   )
+		{
+			ThrowIfDisposed();
+			try
+			{
+				IQueryable<T> query = EntityDbSet;
+
+				query = Get(query, orderBy, includeDeleted, includeProperties);
+
+				return query.ToList();
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(T));
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
+		}
+
+		public virtual IEnumerable<T> Get<TFilter>(
+		   TFilter filter = default(TFilter),
+		   Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+		   bool includeDeleted = false,
+		   string includeProperties = "")
 			where TFilter : class, IFilterExpression
 		{
 			ThrowIfDisposed();
-			return QueryRepository.Get(filter, orderBy, includeDeleted, includeProperties);
+			try
+			{
+				IQueryable<T> query = EntityDbSet;
+
+				Expression<Func<T, bool>> filterExp = null;
+				if (filter != null)
+				{
+					var filterEF = (filter as IFilterExpressionEF<T>);
+					filterExp = filterEF?.Expression;
+				}
+
+				if (filterExp != null)
+				{
+					query = query.Where(filterExp);
+				}
+
+				query = Get(query, orderBy, includeDeleted, includeProperties);
+
+				return query.ToList();
+			}
+			catch (Exception ex)
+			{
+
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(T));
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
 		}
 
-		public IEnumerable<T> GetAll(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, bool includeDeleted = false, string includeProperties = "")
-		{
-			ThrowIfDisposed();
-			return QueryRepository.GetAll(orderBy, includeDeleted, includeProperties);
-		}
-
-		public T GetEntity<TFilter>(TFilter filter, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy, bool includeDeleted, string includeProperties)
+		public virtual T GetEntity<TFilter>(
+			TFilter filter = default(TFilter),
+			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+			bool includeDeleted = false,
+			string includeProperties = "")
 			where TFilter : class, IFilterExpression
 		{
 			ThrowIfDisposed();
-			return QueryRepository.GetEntity(filter, orderBy, includeDeleted, includeProperties);
+			try
+			{
+				IQueryable<T> query = EntityDbSet;
+
+				query = Get(query, orderBy, includeDeleted, includeProperties);
+
+				Expression<Func<T, bool>> filterExp = null;
+				if (filter != null)
+				{
+					filterExp = ((IFilterExpressionEF<T>)filter).Expression;
+				}
+
+				if (filterExp != null)
+				{
+					query = query.Where(filterExp);
+				}
+
+				return query.FirstOrDefault();
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS601, typeof(T));
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
 		}
 
-		public void Insert(T entity)
+		public virtual void Add(T entity)
 		{
 			ThrowIfDisposed();
-			CUDRepository.Insert(entity);
+			try
+			{
+					EntityDbSet.Add(entity);
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS602, typeof(T));
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
 		}
 
-		public void Delete(T entity)
+		public virtual void Update(T entity)
 		{
 			ThrowIfDisposed();
-			CUDRepository.Delete(entity);
+			try
+			{
+				Context.Entry(entity).State = EntityState.Modified;
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(T));
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
 		}
 
-		public void Update(T oldValues, T newValues)
+		public virtual void Delete(T entity)
 		{
 			ThrowIfDisposed();
-			CUDRepository.Update(oldValues, newValues);
+			try
+			{
+				EntityDbSet.Remove(entity);
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS603, typeof(T));
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
+		}
+
+		#endregion
+
+		#region Private And Protected Methods
+
+		protected IQueryable<T> Get(
+		   IQueryable<T> query,
+		   Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+		   bool includeDeleted = false,
+		   string includeProperties = "")
+		{
+			try
+			{
+				if (typeof(ISoftDelete).IsAssignableFrom(typeof(T)))
+				{
+					if (!includeDeleted)
+					{
+						query = ((IQueryable<ISoftDelete>)query)
+							.Where(e => e.IsDeleted == includeDeleted)
+							.Cast<T>();
+					}
+				}
+
+				if (!string.IsNullOrEmpty(includeProperties))
+				{
+					foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+					{
+						query = query.Include(includeProperty);
+					}
+				}
+
+				if (orderBy != null)
+				{
+					return orderBy(query).AsNoTracking<T>();
+				}
+				else
+				{
+					return query.AsNoTracking<T>();
+				}
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(T));
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
 		}
 
 		#endregion

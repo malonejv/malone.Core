@@ -16,8 +16,8 @@ namespace malone.Core.Unity.ModulesInitializers
 
 		public void Initialize(IUnityContainer container)
 		{
+			container.RegisterType<IUnitOfWork, UnitOfWork>();
 			container.RegisterType<ICoreConfiguration, CoreConfiguration>();
-			container.RegisterType<IUnitOfWork, UnitOfWork>(new SingletonLifetimeManager());
 			container.RegisterType<IContentLocalizationHandler, ContentLocalizationHandler>();
 			container.RegisterType<IErrorLocalizationHandler, ErrorLocalizationHandler>();
 		}

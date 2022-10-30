@@ -14,21 +14,21 @@ namespace malone.Core.Entities.Model
 		/// <summary>
 		/// Gets or sets the CreatedById.
 		/// </summary>
-		Guid CreatedById { get; set; }
+		Guid CreatedById { get; }
 
 		/// <summary>
 		/// Gets or sets the CreatedDateTime.
 		/// </summary>
-		DateTime CreatedDateTime { get; set; }
+		DateTime CreatedDateTime { get; }
 
 		/// <summary>
 		/// Gets or sets the EditedById.
 		/// </summary>
-		Guid EditedById { get; set; }
+		Guid EditedById { get; }
 
 		/// <summary>
 		/// Gets or sets the EditedDateTime.
 		/// </summary>
-		DateTime EditedDateTime { get; set; }
+		DateTime EditedDateTime { get; }
 	}
 }

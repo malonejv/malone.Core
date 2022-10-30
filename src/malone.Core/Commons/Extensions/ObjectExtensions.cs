@@ -8,7 +8,7 @@ namespace malone.Core.Commons.Helpers.Extensions
 	/// <summary>
 	/// Defines the <c>ObjectExtensions</c>.
 	/// </summary>
-	internal static class ObjectExtensions
+	public static class ObjectExtensions
 	{
 		/// <summary>
 		/// The IsNull.
@@ -16,7 +16,7 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <typeparam name="T">Type to treat.</typeparam>
 		/// <param name="instance">The instance of type <c>T</c>.</param>
 		/// <returns>The <see cref="bool"/>.</returns>
-		internal static bool IsNull<T>(this T instance)
+		public static bool IsNull<T>(this T instance)
 		{
 			return instance == null;
 		}
@@ -27,7 +27,7 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <typeparam name="T">Type to treat.</typeparam>
 		/// <param name="instance">The instance of type <c>T</c>.</param>
 		/// <returns>The <see cref="bool"/>.</returns>
-		internal static bool IsNotNull<T>(this T instance)
+		public static bool IsNotNull<T>(this T instance)
 		{
 			return instance != null;
 		}
@@ -38,7 +38,7 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <typeparam name="T">Type to treat.</typeparam>
 		/// <param name="instance">The instance of type <c>T</c>.</param>
 		/// <returns>The <see cref="bool"/>.</returns>
-		internal static bool IsDefault<T>(this T instance)
+		public static bool IsDefault<T>(this T instance)
 		{
 			return instance.Equals(default(T));
 		}
@@ -48,7 +48,7 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// </summary>
 		/// <typeparam name="T">Type to treat.</typeparam>
 		/// <param name="instance">The instance of type <c>T</c>.</param>
-		internal static T ThrowIfNull<T>(this T instance)
+		public static T ThrowIfNull<T>(this T instance)
 		{
 			return ThrowIfNull<T>(instance, nameof(instance));
 		}
@@ -59,7 +59,7 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <typeparam name="T">Type to treat.</typeparam>
 		/// <param name="instance">The instance of type <c>T</c>.</param>
 		/// <param name="paramName">The paramName <see cref="string"/>.</param>
-		internal static T ThrowIfNull<T>(this T instance, string paramName)
+		public static T ThrowIfNull<T>(this T instance, string paramName)
 		{
 			if (instance == null)
 			{
@@ -75,7 +75,7 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <typeparam name="T">Type to treat in the validation.</typeparam>
 		/// <typeparam name="TCheckType">Type used to check if parameter <paramref name="instance">instance</paramref> is of this type.</typeparam>
 		/// <param name="instance">The instance of type <c>T</c>.</param>
-		internal static TCheckType ThrowIfNotOfType<T, TCheckType>(this T instance)
+		public static TCheckType ThrowIfNotOfType<T, TCheckType>(this T instance)
 		{
 			return ThrowIfNotOfType<T, TCheckType>(instance, nameof(instance));
 		}
@@ -88,13 +88,48 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <typeparam name="TCheckType">Type used to check if parameter <paramref name="instance">instance</paramref> is of this type.</typeparam>
 		/// <param name="instance">The instance of type <c>T</c>.</param>
 		/// <param name="paramName">The paramName <see cref="string"/>.</param>
-		internal static TCheckType ThrowIfNotOfType<T, TCheckType>(this T instance, string paramName)
+		public static TCheckType ThrowIfNotOfType<T, TCheckType>(this T instance, string paramName)
 		{
 			if (!(instance is TCheckType))
 			{
 				throw new ArgumentException(paramName, $"Parameter {paramName} cannot be null.");
 			}
 			return (TCheckType)Convert.ChangeType(instance, typeof(TCheckType));
+		}
+
+		/// <summary>
+		/// Validates wether the instances derives of type defined with <typeparamref name="TCheckType">TCheckType</typeparamref>.
+		/// If it corresponds returns the same instance of type <typeparamref name="T">TReturn</typeparamref>, in other case returns ArgumentException.
+		/// </summary>
+		/// <typeparam name="TCheckType">Type used to check if parameter <paramref name="instance">instance</paramref> is of this type.</typeparam>
+		/// <typeparam name="T">Return type.</typeparam>
+		/// <param name="instance">The instance of type <typeparamref name="T"/>.</param>
+		/// <param name="paramName">The parameter name <see cref="string"/>.</param>
+		public static T ThrowIfNotDeriveOfType<T, TCheckType>(this T instance, string paramName)
+		{
+			if (!(instance is TCheckType))
+			{
+				throw new ArgumentNullException(paramName, $"Parameter {paramName} cannot be null.");
+			}
+
+			var typeCheck = typeof(TCheckType);
+			var instanceType = instance.GetType();
+
+			if (instanceType != typeof(TCheckType))
+			{
+				var derived = instanceType.BaseType;
+				while (derived != null)
+				{
+					if (derived == typeof(TCheckType))
+						return (T)Convert.ChangeType(instance, typeof(T));
+
+					derived = derived.BaseType;
+				}
+			}
+			else
+				return (T)Convert.ChangeType(instance, typeof(T));
+
+			throw new ArgumentException(paramName, $"Parameter {paramName} must inherit of type {typeCheck.Name}.");
 		}
 	}
 }

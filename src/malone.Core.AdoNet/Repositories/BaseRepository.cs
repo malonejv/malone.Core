@@ -239,7 +239,7 @@
 		/// The Insert.
 		/// </summary>
 		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
-		public virtual void Insert(TEntity entity)
+		public virtual void Add(TEntity entity)
 		{
 			ThrowIfDisposed();
 			try
@@ -275,21 +275,19 @@
 		/// The GetUpdateParameters.
 		/// </summary>
 		/// <param name="parameters">The parameters<see cref="List{DbParameterWithValue}"/>.</param>
-		/// <param name="oldValues">The oldValues<see cref="TEntity"/>.</param>
-		/// <param name="newValues">The newValues<see cref="TEntity"/>.</param>
+		/// <param name="entity">The oldValues<see cref="TEntity"/>.</param>
 		/// <returns>The <see cref="List{DbParameterWithValue}"/>.</returns>
-		protected virtual List<DbParameterWithValue> GetUpdateParameters(List<DbParameterWithValue> parameters, TEntity oldValues, TEntity newValues)
+		protected virtual List<DbParameterWithValue> GetUpdateParameters(List<DbParameterWithValue> parameters, TEntity entity)
 		{
-			parameters = newValues.GetParameters().ToList();
+			parameters = entity.GetParameters().ToList();
 			return parameters;
 		}
 
 		/// <summary>
 		/// The Update.
 		/// </summary>
-		/// <param name="oldValues">The oldValues<see cref="TEntity"/>.</param>
-		/// <param name="newValues">The newValues<see cref="TEntity"/>.</param>
-		public virtual void Update(TEntity oldValues, TEntity newValues)
+		/// <param name="entity">The oldValues<see cref="TEntity"/>.</param>
+		public virtual void Update(TEntity entity)
 		{
 			ThrowIfDisposed();
 			try
@@ -298,7 +296,7 @@
 				ConfigureCommandForUpdate(command);
 
 				List<DbParameterWithValue> parameters = new List<DbParameterWithValue>();
-				parameters = GetUpdateParameters(parameters, oldValues, newValues);
+				parameters = GetUpdateParameters(parameters, entity);
 				Context.AddCommandParameters(command, parameters);
 
 				command.ExecuteNonQuery();

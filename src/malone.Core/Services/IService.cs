@@ -7,26 +7,33 @@ namespace malone.Core.Services
 	using malone.Core.Entities.Model;
 
 	/// <summary>
-	/// Defines the <see cref="IService{TKey, TEntity, TValidator}" />.
+	/// Defines the <see cref="IService{TKey, TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TKey">Type used for key property.</typeparam>
-	/// <typeparam name="TEntity">.</typeparam>
-	/// <typeparam name="TValidator">.</typeparam>
-	public interface IService<TKey, TEntity, TValidator> : IBaseService<TEntity, TValidator>, IQueryService<TKey, TEntity>, ICUDService<TKey, TEntity, TValidator>
+	/// <typeparam name="TEntity">Type of entity.</typeparam>
+	public interface IService<TKey, TEntity> : IBaseService<TEntity>
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
-		where TValidator : IServiceValidator<TKey, TEntity>
 	{
+		/// <summary>
+		/// Gets an entity by its id.
+		/// </summary>
+		/// <typeparam name="TEntity">.</typeparam>
+		TEntity GetById(
+			TKey id,
+			bool includeDeleted = false,
+			string includeProperties = "");
+
+		///<inheritdoc/>
+		new TKey Add(TEntity entity, bool saveChanges = true);
+
+		///<inheritdoc/>
+		void Delete(TKey id, bool saveChanges = true);
 	}
 
-	/// <summary>
-	/// Defines the <see cref="IService{TEntity, TValidator}" />.
-	/// </summary>
-	/// <typeparam name="TEntity">.</typeparam>
-	/// <typeparam name="TValidator">.</typeparam>
-	public interface IService<TEntity, TValidator> : IService<int, TEntity, TValidator>
+	///<inheritdoc/>
+	public interface IService<TEntity> : IService<int, TEntity>
 		where TEntity : class, IBaseEntity
-		where TValidator : IServiceValidator<TEntity>
 	{
 	}
 }

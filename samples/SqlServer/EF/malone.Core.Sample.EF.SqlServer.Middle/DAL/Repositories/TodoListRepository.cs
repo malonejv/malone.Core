@@ -12,20 +12,20 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Repositories
         {
         }
 
-        public override void Insert(TodoList entity)
+        public override void Add(TodoList entity)
         {
-            Context.Entry(entity).State = EntityState.Added;
-            if (entity.User != null) Context.Entry(entity.User).State = EntityState.Unchanged;
-            if (entity.User.Roles.Count > 0)
-                foreach (var role in entity.User.Roles) Context.Entry(role).State = EntityState.Unchanged;
+            //Context.Entry(entity).State = EntityState.Added;
+            //if (entity.User != null) Context.Entry(entity.User).State = EntityState.Unchanged;
+            //if (entity.User.Roles.Count > 0)
+            //    foreach (var role in entity.User.Roles) Context.Entry(role).State = EntityState.Unchanged;
 
-            base.Insert(entity);
+            base.Add(entity);
         }
 
         public override void Update(TodoList entity)
         {
             Context.Entry(entity).State = EntityState.Modified;
-            if (entity.Items != null) SetAddOrUpdate(entity.Items);
+            //if (entity.Items != null) Update(entity.Items);
             if (entity.User != null) Context.Entry(entity.User).State = EntityState.Unchanged;
         }
     }

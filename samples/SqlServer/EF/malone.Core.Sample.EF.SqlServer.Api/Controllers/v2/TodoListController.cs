@@ -1,34 +1,35 @@
-﻿using AutoMapper;
-using malone.Core.EF.Entities.Filters;
-using malone.Core.Sample.EF.SqlServer.Middle.BL;
-using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
-using malone.Core.Sample.EF.SqlServer.Middle.EL.RequestParams;
-using malone.Core.Sample.EF.SqlServer.Middle.EL.ViewModel;
-using malone.Core.WebApi;
-using Microsoft.Web.Http;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using AutoMapper;
+using malone.Core.EF.Entities.Filters;
+using malone.Core.Sample.EF.SqlServer.Api.Controllers.v2.Params;
+using malone.Core.Sample.EF.SqlServer.Api.ViewModel;
+using malone.Core.Sample.EF.SqlServer.Middle.BL;
+using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
+using malone.Core.WebApi;
+using Microsoft.Web.Http;
 
 namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v2
 {
     [Authorize]
     [ApiVersion("2.0")]
     [RoutePrefix("v{version:apiVersion}/List")]
-    public class TodoListController : FullApiController<TodoListGetRequestParam, TodoList, ITodoListBC, ITodoListBV>
+    public class TodoListController : ApiController<GetListParam, AddListParam, UpdListParam, TodoList, ITodoListBC>
     {
-        public Mapper Mapper { get; set; }
+        public Mapper mapper;
 
-        public TodoListController(ITodoListBC businessComponent, Mapper mapperInstance) : base(businessComponent)
+        public TodoListController(ITodoListBC service, Mapper mapper) : base(service)
         {
+            this.mapper = mapper;
         }
 
         //GET entity
         [HttpPost()]
         //[Route("~/TodoList/FilterBy")]
         [Route("FilterBy")]
-        public IHttpActionResult FilterBy(TodoListGetRequestParam parameters)
+        public IHttpActionResult FilterBy(GetListParam parameters)
         {
             IEnumerable list = GetList(parameters);
 
@@ -37,10 +38,10 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v2
 
 
 
-        protected override IEnumerable GetFiltered(TodoListGetRequestParam parameters)
+        protected override IEnumerable GetFiltered(GetListParam parameters)
         {
-            var todoListParams = parameters as TodoListGetRequestParam;
-            var list = Service.Get(new FilterExpression<TodoList>()
+            var todoListParams = parameters;
+            var list = service.Get(new FilterExpression<TodoList>()
             {
                 Expression = (x => x.Name.Contains(todoListParams.Name))
             });
@@ -51,14 +52,14 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v2
         protected override IEnumerable AsViewModelList(IEnumerable list)
         {
             var castedList = list.Cast<TodoList>();
-            var mappedList = Mapper.Map<IEnumerable<TodoList>, IEnumerable<TodoListViewModel>>(castedList);
+            var mappedList = mapper.Map<IEnumerable<TodoList>, IEnumerable<TodoListViewModel>>(castedList);
 
             return mappedList.ToList();
         }
 
         protected override object AsViewModel(TodoList entity)
         {
-            var mappedEntity = Mapper.Map<TodoList, TodoListViewModel>(entity);
+            var mappedEntity = mapper.Map<TodoList, TodoListViewModel>(entity);
 
             return mappedEntity;
         }

@@ -5,8 +5,6 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Sample.EF.SqlServer.Api", "malone.Core.Sample.EF.SqlServer.Api\malone.Core.Sample.EF.SqlServer.Api.csproj", "{D5DF6461-F8FB-4B8B-96D5-2B8F968D20D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Sample.EF.SqlServer.DI", "malone.Core.Sample.EF.SqlServer.DI\malone.Core.Sample.EF.SqlServer.DI.csproj", "{4BABEC4C-780B-4393-AF09-656EBEA4A62E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Sample.EF.SqlServer.Middle", "malone.Core.Sample.EF.SqlServer.Middle\malone.Core.Sample.EF.SqlServer.Middle.csproj", "{13E35096-AC30-4D5E-8834-8B8D0CD53774}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "malone.Core.Sample.EF.SqlServer.mvc", "malone.Core.Sample.EF.SqlServer.mvc\malone.Core.Sample.EF.SqlServer.mvc.csproj", "{805080BC-7E25-4095-ADEF-968BB850752D}"
@@ -42,24 +40,6 @@ Global
 		{D5DF6461-F8FB-4B8B-96D5-2B8F968D20D5}.Release|x64.Build.0 = Release|Any CPU
 		{D5DF6461-F8FB-4B8B-96D5-2B8F968D20D5}.Release|x86.ActiveCfg = Release|Any CPU
 		{D5DF6461-F8FB-4B8B-96D5-2B8F968D20D5}.Release|x86.Build.0 = Release|Any CPU
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.Debug|x64.ActiveCfg = Debug|x64
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.Debug|x64.Build.0 = Debug|x64
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.Debug|x86.ActiveCfg = Debug|x86
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.Debug|x86.Build.0 = Debug|x86
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.DebugNuget|Any CPU.ActiveCfg = Debug|Any CPU
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.DebugNuget|Any CPU.Build.0 = Debug|Any CPU
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.DebugNuget|x64.ActiveCfg = Debug|x64
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.DebugNuget|x64.Build.0 = Debug|x64
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.DebugNuget|x86.ActiveCfg = Debug|x86
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.DebugNuget|x86.Build.0 = Debug|x86
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.Release|x64.ActiveCfg = Release|x64
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.Release|x64.Build.0 = Release|x64
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.Release|x86.ActiveCfg = Release|x86
-		{4BABEC4C-780B-4393-AF09-656EBEA4A62E}.Release|x86.Build.0 = Release|x86
 		{13E35096-AC30-4D5E-8834-8B8D0CD53774}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{13E35096-AC30-4D5E-8834-8B8D0CD53774}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13E35096-AC30-4D5E-8834-8B8D0CD53774}.Debug|x64.ActiveCfg = Debug|x64

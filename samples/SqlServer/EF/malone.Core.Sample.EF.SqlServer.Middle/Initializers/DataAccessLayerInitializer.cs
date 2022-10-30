@@ -19,7 +19,7 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.Initializers
         public void Initialize(IUnityContainer container)
         {
             //Context
-            container.RegisterType<IContext, SampleContext>(new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
+            container.RegisterType<IContext, SampleContext> (new PerRequestLifetimeManager(), new InjectionConstructor("SampleConnection"));
 
             //Agrego esta configuración por la siguiente configuracion: container.RegisterType<IRoleStore<CoreRole, int>, RoleRepository<EFIdentityDbContext>>();
             var context = ServiceLocator.Current.Get<IContext>();

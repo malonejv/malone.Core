@@ -36,7 +36,6 @@ param (
 	[ValidateSet('DebugNuget','Debug','Release')]
 	[string]
 	$Configuration="Debug",
-    [ValidateScript({ Test-Path -Path $_ -PathType Container })]
     [string]
     $BuildArtifactsPath,
     [string]

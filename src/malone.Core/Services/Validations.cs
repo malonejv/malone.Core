@@ -6,36 +6,36 @@ namespace malone.Core.Services
 	using System.Collections.Generic;
 	using System.Linq;
 
-	/// <summary>
-	/// The ValidationRuleDelegate.
-	/// </summary>
-	/// <param name="arguments">The arguments<see cref="object[]"/>.</param>
-	/// <returns>The <see cref="ValidationResult"/>.</returns>
-	public delegate ValidationResult ValidationRuleDelegate(params object[] arguments);
+	///// <summary>
+	///// The ValidationRuleDelegate.
+	///// </summary>
+	///// <param name="arguments">The arguments<see cref="object[]"/>.</param>
+	///// <returns>The <see cref="ValidationResult"/>.</returns>
+	//public delegate ValidationResult ValidationRuleDelegate(params object[] arguments);
 
-	/// <summary>
-	/// Defines the <see cref="ValidationRule" />.
-	/// </summary>
-	public class ValidationRule
-	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ValidationRule"/> class.
-		/// </summary>
-		public ValidationRule()
-		{
-			Arguments = new List<object>();
-		}
+	///// <summary>
+	///// Defines the <see cref="ValidationRule" />.
+	///// </summary>
+	//public class ValidationRule
+	//{
+	//	/// <summary>
+	//	/// Initializes a new instance of the <see cref="ValidationRule"/> class.
+	//	/// </summary>
+	//	public ValidationRule()
+	//	{
+	//		Arguments = new List<object>();
+	//	}
 
-		/// <summary>
-		/// Gets or sets the Method.
-		/// </summary>
-		public ValidationRuleDelegate Method { get; set; }
+	//	/// <summary>
+	//	/// Gets or sets the Method.
+	//	/// </summary>
+	//	public ValidationRuleDelegate Method { get; set; }
 
-		/// <summary>
-		/// Gets or sets the Arguments.
-		/// </summary>
-		public List<object> Arguments { get; set; }
-	}
+	//	/// <summary>
+	//	/// Gets or sets the Arguments.
+	//	/// </summary>
+	//	public List<object> Arguments { get; set; }
+	//}
 
 	/// <summary>
 	/// Defines the <see cref="ValidationResult" />.
@@ -51,30 +51,34 @@ namespace malone.Core.Services
 		{
 			ErrorCode = errorCode;
 			Message = message;
+			IsValid = false;
 		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ValidationResult"/> class.
 		/// </summary>
 		/// <param name="errorCode">The errorCode<see cref="string"/>.</param>
-		public ValidationResult(string errorCode) : this(errorCode, null)
+		public ValidationResult(string errorCode) : this(errorCode, null) { }
+
+		public ValidationResult()
 		{
+			IsValid = true;
 		}
 
 		/// <summary>
 		/// Gets or sets the Return.
 		/// </summary>
-		public object Return { get; set; }
+		public object Return { get; private set; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether IsValid.
 		/// </summary>
-		public bool IsValid { get; set; }
+		public bool IsValid { get; private set; }
 
 		/// <summary>
 		/// Gets or sets the ErrorCode.
 		/// </summary>
-		public string ErrorCode { get; set; }
+		public string ErrorCode { get; private set; }
 
 		/// <summary>
 		/// Gets or sets the Message.
@@ -90,26 +94,11 @@ namespace malone.Core.Services
 		/// <summary>
 		/// Gets a value indicating whether IsValid.
 		/// </summary>
-		public bool IsValid
-		{
-			get
-			{
-				if (this.Count > 0 && this.Any(item => item.IsValid == false))
-				{
-					return false;
-				}
-				else
-				{
-					return true;
-				}
-			}
-		}
+		public bool IsValid => Count == 0 || (Count > 0 && !this.Any(validationResult => validationResult.IsValid == false));
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ValidationResultList"/> class.
 		/// </summary>
-		public ValidationResultList()
-		{
-		}
+		public ValidationResultList() { }
 	}
 }

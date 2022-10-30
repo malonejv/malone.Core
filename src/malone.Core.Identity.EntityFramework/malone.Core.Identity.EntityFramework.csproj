@@ -107,7 +107,6 @@
     <Compile Include="Business\SignInBusinessComponentExtensions.cs" />
     <Compile Include="Business\TokenProvider.cs" />
     <Compile Include="Business\UserBusinessComponent.cs" />
-    <Compile Include="Business\UserBussinessValidator.cs" />
     <Compile Include="Context\CoreIdentityDbContext.cs" />
     <Compile Include="Mappings\CoreRoleMapping.cs" />
     <Compile Include="Mappings\CoreUserClaimMapping.cs" />

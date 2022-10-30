@@ -56,7 +56,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			ThrowIfDisposed();
 			role.ThrowIfNull(nameof(role));
 
-			_roles.Insert(role);
+			_roles.Add(role);
 			await Task.FromResult(Context.SaveChanges());
 		}
 
@@ -66,7 +66,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			role.ThrowIfNull(nameof(role));
 
 			//TODO: Revisar
-			_roles.Update(role, null);
+			_roles.Update(role);
 			await Task.FromResult(Context.SaveChanges());
 		}
 

@@ -11,10 +11,22 @@ namespace malone.Core.DataAccess.Repositories
 	/// </summary>
 	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
-	public interface IRepository<TKey, TEntity> : IBaseRepository<TEntity>, IQueryRepository<TKey, TEntity>, ICUDRepository<TKey, TEntity>
+	public interface IRepository<TKey, TEntity> : IBaseRepository<TEntity>
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
 	{
+		/// <summary>
+		/// The GetById.
+		/// </summary>
+		/// <param name="id">The id <typeparamref name="TKey">TKey</typeparamref>.</param>
+		/// <param name="includeDeleted">The includeDeleted <see cref="bool"/>.</param>
+		/// <param name="includeProperties">The includeProperties <see cref="string"/>.</param>
+		/// <returns>The <typeparamref name="TEntity">TEntity</typeparamref>.</returns>
+		TEntity GetById(
+			TKey id,
+			bool includeDeleted = false,
+			string includeProperties = "");
+
 	}
 
 	/// <summary>
@@ -22,7 +34,7 @@ namespace malone.Core.DataAccess.Repositories
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
 	public interface IRepository<TEntity> : IRepository<int, TEntity>
-where TEntity : class, IBaseEntity
+		where TEntity : class, IBaseEntity
 	{
 	}
 }

@@ -93,7 +93,6 @@
     <Compile Include="Business\SignInBusinessComponent.cs" />
     <Compile Include="Business\TokenProvider.cs" />
     <Compile Include="Business\UserBusinessComponent.cs" />
-    <Compile Include="Business\UserBussinessValidator.cs" />
     <Compile Include="Business\UserManagerConfiguration.cs" />
     <Compile Include="Context\CoreIdentityDbContext.cs" />
     <Compile Include="Entities\CoreRole.cs" />

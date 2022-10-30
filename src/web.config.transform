@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <configSections>
-    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler,log4net"/>
-    <section name="coreSettings" type="malone.Core.Commons.Configurations.CoreSettingsSection,malone.Core" allowDefinition="Everywhere" allowLocation="true" />
+    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net"/>
+    <section name="coreSettings" type="malone.Core.Configuration.CoreSettingsSection, malone.Core.Configuration" allowDefinition="Everywhere" allowLocation="true" />
   </configSections>
 
   <log4net debug="true">

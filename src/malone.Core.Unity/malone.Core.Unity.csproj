@@ -125,22 +125,6 @@
       <Project>{DA7951EB-AE13-4FBB-8E0A-1DF44096456A}</Project>
       <Name>malone.Core.IoC</Name>
     </ProjectReference>
-    <ProjectReference Include="..\malone.Core.Unity.IdentityAdoNetSqlServerInitializer\malone.Core.Unity.IdentityAdoNetSqlServerInitializer.csproj">
-      <Project>{1c1a8c42-f043-4d14-b522-e501580d3364}</Project>
-      <Name>malone.Core.Unity.IdentityAdoNetSqlServerInitializer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\malone.Core.Unity.IdentityDapperInitializer\malone.Core.Unity.IdentityDapperInitializer.csproj">
-      <Project>{4d280359-094d-41bf-a2cd-5f0090f0ef69}</Project>
-      <Name>malone.Core.Unity.IdentityDapperInitializer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\malone.Core.Unity.IdentityEntityFrameworkInitializer\malone.Core.Unity.IdentityEntityFrameworkInitializer.csproj">
-      <Project>{AEF2E9DC-848A-42C9-9EB9-9A6F4CA1EB7D}</Project>
-      <Name>malone.Core.Unity.IdentityEntityFrameworkInitializer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\malone.Core.Unity.Log4NetInitializer\malone.Core.Unity.Log4NetInitializer.csproj">
-      <Project>{E3F7C799-234E-471C-A12B-B9BE04DA1B40}</Project>
-      <Name>malone.Core.Unity.Log4NetInitializer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\malone.Core.Unity.ModulesInitializers\malone.Core.Unity.ModulesInitializers.csproj">
       <Project>{87C16AD7-E22F-4118-BD34-A34041076975}</Project>
       <Name>malone.Core.Unity.ModulesInitializers</Name>

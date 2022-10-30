@@ -1,28 +1,29 @@
-﻿using AutoMapper;
-using malone.Core.EF.Entities.Filters;
-using malone.Core.Sample.EF.SqlServer.Middle.BL;
-using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
-using malone.Core.Sample.EF.SqlServer.Middle.EL.RequestParams;
-using malone.Core.Sample.EF.SqlServer.Middle.EL.ViewModel;
-using malone.Core.WebApi;
-using Microsoft.Web.Http;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
+using AutoMapper;
+using malone.Core.EF.Entities.Filters;
+using malone.Core.Sample.EF.SqlServer.Api.Controllers.v1.Params;
+using malone.Core.Sample.EF.SqlServer.Api.ViewModel;
+using malone.Core.Sample.EF.SqlServer.Middle.BL;
+using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
+using malone.Core.Services.Requests;
+using malone.Core.WebApi;
+using Microsoft.Web.Http;
 
 namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
 {
     [Authorize]
     [ApiVersion("1.0")]
     [RoutePrefix("v{version:apiVersion}/List")]
-    public class TodoListController : FullApiController<TodoListGetRequestParam, TodoList, ITodoListBC, ITodoListBV>
+    public class TodoListController : ApiController<GetListParam, AddListParam,UpdListParam, TodoList, ITodoListBC>
     {
 
         public Mapper Mapper { get; set; }
 
-        public TodoListController(ITodoListBC businessComponent, Mapper mapperInstance) : base(businessComponent)
+        public TodoListController(ITodoListBC service, Mapper mapperInstance) : base(service)
         {
             Mapper = mapperInstance;
         }
@@ -31,9 +32,9 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         [HttpPost()]
         [Route("FilterBy")]
         [ResponseType(typeof(IEnumerable<TodoListViewModel>))]
-        public IHttpActionResult FilterBy(TodoListGetRequestParam parameters)
+        public IHttpActionResult FilterBy(GetListParam param)
         {
-            IEnumerable list = GetList(parameters);
+            IEnumerable list = GetList(param);
 
             return Ok(list);
         }
@@ -53,15 +54,15 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         [ResponseType(typeof(TodoList))]
-        public override IHttpActionResult Post([FromBody] TodoList entity)
+        public override IHttpActionResult Post([FromBody] AddListParam param)
         {
-            return base.Post(entity);
+            return base.Post(param);
         }
 
         [ResponseType(typeof(void))]
-        public override IHttpActionResult Put(int id, [FromBody] TodoList entity)
+        public override IHttpActionResult Put(UpdListParam param)
         {
-            return base.Put(id, entity);
+            return base.Put(param);
         }
 
         [ResponseType(typeof(void))]
@@ -74,12 +75,11 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
 
         #region Overridden methods
 
-        protected override IEnumerable GetFiltered(TodoListGetRequestParam parameters)
+        protected override IEnumerable GetFiltered(GetListParam param)
         {
-            var todoListParams = parameters as TodoListGetRequestParam;
-            var list = Service.Get(new FilterExpression<TodoList>()
+            var list = service.Get(new FilterExpression<TodoList>()
             {
-                Expression = (x => x.Name.Contains(todoListParams.Name))
+                Expression = (x => x.Name.Contains(param.Name))
             });
 
             return list;

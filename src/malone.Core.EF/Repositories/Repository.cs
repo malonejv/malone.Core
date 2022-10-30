@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
+using malone.Core.Commons.Exceptions;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
-using malone.Core.EF.Entities;
 using malone.Core.Entities.Model;
 using malone.Core.Logging;
 
@@ -12,34 +12,38 @@ namespace malone.Core.EF.Repositories.Implementations
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
 	{
-		protected new IQueryRepository<TKey, TEntity> QueryRepository { get; private set; }
-		protected new ICUDRepository<TKey, TEntity> CUDRepository { get; private set; }
 
-		#region Constructor & Initializer
+		#region Constructor 
 
 		public Repository(IContext context, ICoreLogger logger) : base(context, logger) { }
-
-		protected override void InitializeRepositories(IContext context, ICoreLogger logger)
-		{
-			QueryRepository = new QueryRepository<TKey, TEntity>(context, logger);
-			CUDRepository = new CUDRepository<TKey, TEntity>(context, logger);
-		}
 
 		#endregion
 
 		#region Public methods
 
-		public TEntity GetById(TKey id, bool includeDeleted = false, string includeProperties = "")
+		public virtual TEntity GetById(
+			TKey id,
+			bool includeDeleted = false,
+			string includeProperties = "")
 		{
-			return QueryRepository.GetById(id, includeDeleted, includeProperties);
-		}
-
-		public void SetAddOrUpdate<T>(IEnumerable<T> entities)
-			where T : IBaseEntity
-		{
-			foreach (var entity in entities)
+			ThrowIfDisposed();
+			try
 			{
-				Context.Entry(entity).State = entity.AddOrUpdate();
+				IQueryable<TEntity> query = EntityDbSet;
+
+				query = Get(query, null, includeDeleted, includeProperties);
+
+				return query.FirstOrDefault(e => e.Id.Equals(id));
+			}
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS601, typeof(TEntity));
+				if (Logger != null)
+				{
+					Logger.Error(techEx);
+				}
+
+				throw techEx;
 			}
 		}
 
@@ -53,7 +57,7 @@ namespace malone.Core.EF.Repositories.Implementations
 		IRepository<TEntity>
 		where TEntity : class, IBaseEntity
 	{
-		public Repository(IContext context, ICoreLogger logger, IQueryRepository<int, TEntity> queryRepository, ICUDRepository<int, TEntity> cudRepository) :
+		public Repository(IContext context, ICoreLogger logger) :
 			base(context, logger)
 		{
 		}

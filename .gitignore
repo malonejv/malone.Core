@@ -359,3 +359,4 @@ MigrationBackup/
 # Ignore project
 samples/ErgaOmnes.Api/
 samples/ErgaOmnes.Core/
+*.exe

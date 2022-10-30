@@ -82,11 +82,13 @@
     </Compile>
     <Compile Include="Attributes\BasicAuthenticationAttribute.cs" />
     <Compile Include="Attributes\ValidateModelAttribute.cs" />
-    <Compile Include="FullApiController.cs" />
+    <Compile Include="ApiController.cs" />
     <Compile Include="Attributes\HandleExceptionFilterAttribute.cs" />
     <Compile Include="Attributes\RequireHttpsAttribute.cs" />
+    <Compile Include="Params\IAddParam.cs" />
+    <Compile Include="Params\IParam.cs" />
+    <Compile Include="Params\IUpdParam.cs" />
     <Compile Include="WriteApiController.cs" />
-    <Compile Include="IGetRequestParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadApiController.cs" />
   </ItemGroup>

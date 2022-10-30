@@ -1,5 +1,4 @@
-﻿@using malone.Core.Sample.EF.SqlServer.Middle.EL.Model.Extensions
-@model malone.Core.Sample.EF.SqlServer.mvc.Models.ListIndexViewModel
+﻿@model malone.Core.Sample.EF.SqlServer.mvc.Models.ListIndexViewModel
 
 @{
     ViewBag.Title = "Listas";
@@ -11,11 +10,11 @@
 
         @if (Model.EditarLista != null)
         {
-            @Html.Partial("_Edit", Model, ViewData)
+            @Html.Partial("_Edit", Model.EditarLista, ViewData)
         }
         else
         {
-            @Html.Partial("_Create", Model, ViewData)
+            @Html.Partial("_Create", Model.NuevaLista, ViewData)
         }
     </div>
 </div>
@@ -27,8 +26,8 @@
             <a href="@Url.Action("Details", new { id = list.Id })" data-id="@list.Id" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                 @Html.DisplayFor(modelItem => list.Name)
                 <span class="pull-right">
-                    <span class="badge bg-blue badge-pill" title="Pending">@list.PendingItems().Count</span>
-                    <span class="badge bg-orange badge-pill" title="Done">@list.DoneItems().Count</span>
+                    <span class="badge bg-blue badge-pill" title="Pending">@list.Pending</span>
+                    <span class="badge bg-orange badge-pill" title="Done">@list.Done</span>
                 </span>
             </a>
         }
@@ -66,7 +65,7 @@
 
 @if (Model.EliminarLista != null)
 {
-    @Html.Partial("_Delete", Model, ViewData)
+    @Html.Partial("_Delete", Model.EliminarLista, ViewData)
 }
 
 @section Scripts{

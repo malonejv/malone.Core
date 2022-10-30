@@ -11,10 +11,6 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.Initializers
     {
         public void Initialize(IUnityContainer container)
         {
-            //BUSINESS VALIDATORS
-            container.RegisterType<ITodoListBV, TodoListBV>();
-            container.RegisterType<IServiceValidator<TaskItem>, ServiceValidator<TaskItem>>();
-
             //BUSINESS COMPONENTS
             container.RegisterType<ITodoListBC, TodoListBC>();
             container.RegisterType<ITaskItemBC, TaskItemBC>();

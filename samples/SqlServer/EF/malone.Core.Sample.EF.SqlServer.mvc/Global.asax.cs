@@ -1,6 +1,7 @@
 using malone.Core.Commons.Initializers;
 using malone.Core.Sample.EF.SqlServer.Middle.Initializers;
 using malone.Core.Sample.EF.SqlServer.mvc;
+using malone.Core.Sample.EF.SqlServer.mvc.Initializers;
 using malone.Core.Unity;
 using System.Web;
 using System.Web.Mvc;

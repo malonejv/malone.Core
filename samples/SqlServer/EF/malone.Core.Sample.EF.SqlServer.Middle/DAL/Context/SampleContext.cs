@@ -20,10 +20,27 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Context
 {
     public class SampleContext : CoreIdentityDbContext //CoreDbContext
     {
-        public SampleContext() : base() { }
+        public SampleContext() : base("SampleConnection")
+        {
+            //TODO: Habilitar configuración
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
+
+            //OPTION: Habilita la clase SampleContextInitializer 
+            //Database.SetInitializer<SampleContext>(null);
+
+            //En lugar de habilitar o deshabilitar por codigo tambien se puede hacer por web.config con la siguiente configuracion
+            //<entityFramework>
+            //<contexts>
+            //  <context type="malone.Core.Sample.EF.SqlServer.Middle.DAL.Context.EF.SampleContext, malone.Core.Sample.EF.SqlServer.Middle">
+            //    <databaseInitializer type="malone.Core.Sample.EF.SqlServer.Middle.DAL.Context.EF.SampleContextInitializer, malone.Core.Sample.EF.SqlServer.Middle" />
+            //  </context>
+            //</contexts>
+            //</entityFramework>
+        }
 
         public SampleContext(string connectionStringName)
-            : base(connectionStringName)
+        : base(connectionStringName)
         {
             //TODO: Habilitar configuración
             Configuration.LazyLoadingEnabled = false;
@@ -136,26 +153,14 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Context
 
                 if (!existeListaEjemplo)
                 {
-                    TodoList list = new TodoList()
-                    {
-                        Name = "Sample List",
-                        Items = new List<TaskItem>()
+                    TodoList list = new TodoList(
+                        "Sample List",
+                        sampleUser,
+                        new List<TaskItem>()
                         {
-                            new TaskItem()
-                            {
-                                Description="Sample Item 1",
-                                IsDeleted = false
-                            },
-
-                            new TaskItem()
-                            {
-                                Description="Sample Item 2",
-                                IsDeleted = false
-                            }
-                        },
-                        IsDeleted = false,
-                        User = sampleUser
-                    };
+                            new TaskItem("Sample Item 1"),
+                            new TaskItem("Sample Item 2")
+                        });
                     context.Set<TodoList>().AddOrUpdate(list);
                     context.SaveChanges();
                 }

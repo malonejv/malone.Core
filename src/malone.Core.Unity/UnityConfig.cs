@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
-using malone.Core.Commons.Initializers;
+using System.Reflection;
 using malone.Core.Configuration;
 using malone.Core.Configuration.Modules;
 using malone.Core.IoC;
-using malone.Core.Unity.IdentityAdoNetSqlServerInitializer;
-using malone.Core.Unity.IdentityDapperInitializer;
-using malone.Core.Unity.IdentityEntityFramworkInitializer;
-using malone.Core.Unity.Log4NetInitializer;
 using malone.Core.Unity.ModulesInitializers;
 using Unity;
 using Unity.Injection;
@@ -17,6 +13,8 @@ namespace malone.Core.Unity
 {
 	public class UnityConfig
 	{
+		private const string INITIALIZE_METHOD = "Initialize";
+
 		#region Unity Container Static
 
 		private static Lazy<IUnityContainer> container =
@@ -60,27 +58,22 @@ namespace malone.Core.Unity
 				//Inicialización de módulos configurables
 				foreach (ModuleElement module in coreSettings.Modules)
 				{
-					var moduleInitializer = Modules.Where(m => m.Name == module.Name).FirstOrDefault();
-					if (moduleInitializer != null)
+					var type = module.Type.Split(',');
+					var typeDescription = type.First().Trim();
+					var assemblyDescription = type.Last().Trim();
+					var assemblyInfo = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().Name == assemblyDescription);
+					if (assemblyInfo != null)
 					{
-						moduleInitializer.Initialize(container);
+						Type typeInfo = assemblyInfo.GetType(typeDescription);
+						object instance = Activator.CreateInstance(typeInfo);
+						MethodInfo method = typeInfo.GetMethod(INITIALIZE_METHOD);
+						method.Invoke(instance, new object[] { container });
+					}
+					else
+					{
+						throw new ConfigurationException($"Could not load section {module.Type}");
 					}
 				}
-			}
-		}
-
-		private static IEnumerable<IModuleInitializer<IUnityContainer>> Modules
-		{
-			get
-			{
-				return new IModuleInitializer<IUnityContainer>[]
-			  {
-					new Log4NetModuleInitializer(),
-					new FeaturesModuleInitializer(),
-					new IdentityEntityFramworkModuleInitializer(),
-					new IdentityAdoNetSqlServerModuleInitializer(),
-					new IdentityDapperModuleInitializer()
-			  };
 			}
 		}
 	}

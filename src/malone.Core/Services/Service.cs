@@ -4,70 +4,167 @@
 namespace malone.Core.Services
 {
 	using System;
+	using System.Reflection;
+	using malone.Core.Commons.Exceptions;
+	using malone.Core.Commons.Helpers.Extensions;
 	using malone.Core.DataAccess.Repositories;
+	using malone.Core.DataAccess.UnitOfWork;
 	using malone.Core.Entities.Model;
 	using malone.Core.Logging;
+	using malone.Core.Services.Requests;
 
 	/// <summary>
-	/// Defines the <see cref="Service{TKey, TEntity, TValidator}" />.
+	/// Defines the <see cref="Service{TKey, TEntity}" />.
 	/// </summary>
 	/// <typeparam name="TKey">Type used for key property.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
-	/// <typeparam name="TValidator">.</typeparam>
-	public class Service<TKey, TEntity, TValidator> : BaseService<TEntity, TValidator>,
-		IService<TKey, TEntity, TValidator>
+	public class Service<TKey, TEntity> : BaseService<TEntity>, IService<TKey, TEntity>
 		where TKey : IEquatable<TKey>
 		where TEntity : class, IBaseEntity<TKey>
-		where TValidator : IServiceValidator<TKey, TEntity>
 	{
-		protected new IQueryService<TKey, TEntity> QueryService { get; }
-		protected new ICUDService<TKey, TEntity, TValidator> CUDService { get; }
+		/// <summary>
+		/// The repository <see cref="IRepository{TKey, TEntity}"/>
+		/// </summary>
+		protected new IRepository<TKey, TEntity> repository;
 
 		#region Constructor
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Service{TKey, TEntity, TValidator}"/> class.
+		/// Initializes a new instance of the <see cref="Service{TKey, TEntity}"/> class.
 		/// </summary>
-		/// <param name="validator">The validator <typeparamref name="TValidator"/>.</param>
-		/// <param name="queryRepository">The repository <see cref="IRepository{TKey, TEntity}"/>.</param>
-		/// <param name="cudRepository">The repository <see cref="IRepository{TKey, TEntity}"/>.</param>
+		/// <param name="repository">The repository <see cref="IRepository{TKey, TEntity}"/>.</param>
 		/// <param name="logger">The logger <see cref="ICoreLogger"/>.</param>
-		public Service(TValidator validator, ICoreLogger logger, IQueryRepository<TKey, TEntity> queryRepository, ICUDRepository<TKey, TEntity> cudRepository) :
-			base(validator, logger)
+		public Service(IRepository<TKey, TEntity> repository, IUnitOfWork uow, ICoreLogger logger)
+			: base(repository, uow, logger)
 		{
-			QueryService = new QueryService<TKey, TEntity>(queryRepository, logger);
-			CUDService = new CUDService<TKey, TEntity, TValidator>(validator, cudRepository, logger);
+			this.repository = repository.ThrowIfNull();
 		}
 
 		#endregion
 
-		public TEntity GetById(TKey id, bool includeDeleted = false, string includeProperties = "")
+		/// <inheritdoc />
+		public virtual TEntity GetById(
+			TKey id,
+			bool includeDeleted = false,
+			string includeProperties = "")
 		{
-			return QueryService.GetById(id, includeDeleted, includeProperties);
+			try
+			{
+				id.ThrowIfNull();
+
+				var result = repository.GetById(id, includeDeleted, includeProperties);
+
+				return result;
+			}
+			catch (TechnicalException) { throw; }
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS400, typeof(TEntity));
+				if (logger != null)
+				{
+					logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
 		}
 
-		public void Update(TEntity entity, bool saveChanges = true, bool disposeUoW = true)
+		///<inheritdoc/>
+		public new virtual TKey Add(TEntity entity, bool saveChanges = true)
 		{
-			CUDService.Update(entity, saveChanges, disposeUoW);
+			try
+			{
+				entity.ThrowIfNull();
+
+				var validationResult = BeforeAddingValidation(entity);
+				if (!validationResult.IsValid)
+				{
+					throw new BusinessRulesValidationException(validationResult);
+				}
+
+				repository.Add(entity);
+
+				if (saveChanges)
+				{
+					uow.SaveChanges();
+				}
+
+				return entity.Id;
+			}
+			catch (BusinessRulesValidationException) { throw; }
+			catch (TechnicalException) { throw; }
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS401, typeof(TEntity));
+				if (logger != null)
+				{
+					logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
 		}
 
-		public void Delete(TKey id, bool saveChanges = true, bool disposeUoW = true)
+		///<inheritdoc/>
+		public virtual void Delete(TKey id, bool saveChanges = true)
 		{
-			CUDService.Delete(id, saveChanges, disposeUoW);
-		}
+			try
+			{
+				id.ThrowIfNull();
 
+				TEntity entity = this.GetById(id);
+				if (entity == default(TEntity))
+				{
+					throw CoreExceptionFactory.CreateException<EntityNotFoundException>(CoreErrors.BUSVAL500, typeof(TEntity), id);
+				}
+
+				var validationResult = BeforeDeletingValidation(entity);
+				if (!validationResult.IsValid)
+				{
+					throw new BusinessRulesValidationException(validationResult);
+				}
+
+				if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
+				{
+					var softDelete = (ISoftDelete)entity;
+					var field = entity.GetType().GetField(nameof(ISoftDelete.IsDeleted), BindingFlags.Instance | BindingFlags.NonPublic);
+					field.SetValue(entity, true);
+					repository.Add(softDelete as TEntity);
+				}
+				else
+				{
+					repository.Delete(entity);
+				}
+
+				if (saveChanges)
+				{
+					uow.SaveChanges();
+				}
+			}
+			catch (BusinessRulesValidationException) { throw; }
+			catch (TechnicalException) { throw; }
+			catch (Exception ex)
+			{
+				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.BUSINESS402, typeof(TEntity));
+				if (logger != null)
+				{
+					logger.Error(techEx);
+				}
+
+				throw techEx;
+			}
+		}
 	}
 
 
 	///<inheritdoc />
-	public class Service<TEntity, TValidator> : Service<int, TEntity, TValidator>,
-		IService<TEntity, TValidator>
+	public class Service<TEntity> : Service<int, TEntity>,
+		IService<TEntity>
 		where TEntity : class, IBaseEntity
-		where TValidator : IServiceValidator<TEntity>
 	{
 		///<inheritdoc />
-		public Service(TValidator validator, ICoreLogger logger, IQueryRepository<TEntity> queryRepository, ICUDRepository<int, TEntity> cudRepository) :
-			base(validator, logger, queryRepository, cudRepository )
+		public Service(ICoreLogger logger, IUnitOfWork uow, IRepository<TEntity> repository) :
+			base( repository, uow, logger)
 		{
 		}
 	}

@@ -1,4 +1,5 @@
-﻿using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
+﻿using malone.Core.Identity.EntityFramework.Entities;
+using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
 using System.Data.Entity.ModelConfiguration;
 
 namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Context.Mappings
@@ -17,6 +18,8 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Context.Mappings
             Property(t => t.IsDeleted);
 
             HasMany(t => t.Items).WithRequired();
+
+            HasRequired(t=>t.User).WithMany().HasForeignKey(t => t.UserId);
         }
     }
 }

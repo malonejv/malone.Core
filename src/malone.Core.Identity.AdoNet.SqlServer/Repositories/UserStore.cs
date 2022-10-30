@@ -65,7 +65,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
 		#region IQueryableUserStore
 
-		public IQueryable<TUserEntity> Users => _users.GetAll().AsQueryable<TUserEntity>();
+		public IQueryable<TUserEntity> Users => _users.GetAll().AsQueryable();
 
 		#endregion
 
@@ -77,7 +77,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			user.ThrowIfNull(nameof(user));
 			login.ThrowIfNull(nameof(login));
 
-			_logins.Insert(new TUserLogin
+			_logins.Add(new TUserLogin
 			{
 				UserId = user.Id,
 				ProviderKey = login.ProviderKey,
@@ -142,7 +142,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			ThrowIfDisposed();
 			user.ThrowIfNull(nameof(user));
 
-			_users.Insert(user);
+			_users.Add(user);
 			await SaveChanges();
 		}
 
@@ -152,7 +152,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			user.ThrowIfNull(nameof(user));
 
 			//TODO: Revisar
-			_users.Update(user, null);
+			_users.Update(user);
 			await SaveChanges();
 		}
 
@@ -196,7 +196,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			user.ThrowIfNull(nameof(user));
 			claim.ThrowIfNull(nameof(claim));
 
-			_userClaims.Insert(new TUserClaim { UserId = user.Id, ClaimType = claim.Type, ClaimValue = claim.Value });
+			_userClaims.Add(new TUserClaim { UserId = user.Id, ClaimType = claim.Type, ClaimValue = claim.Value });
 			return Task.FromResult(0);
 		}
 
@@ -248,7 +248,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			}
 
 			var ur = new TUserRole { UserId = user.Id, RoleId = roleEntity.Id };
-			_userRoles.Insert(ur);
+			_userRoles.Add(ur);
 
 			return Task.FromResult(0);
 		}

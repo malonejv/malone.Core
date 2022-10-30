@@ -1,5 +1,5 @@
 ﻿using malone.Core.Commons.Initializers;
-using malone.Core.Commons.Localization;
+using malone.Core.Localization;
 using malone.Core.Sample.EF.SqlServer.Middle.CL.Exceptions;
 using malone.Core.Sample.EF.SqlServer.Middle.CL.Localization;
 using Unity;

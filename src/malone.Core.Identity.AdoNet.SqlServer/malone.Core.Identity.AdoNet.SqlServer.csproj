@@ -97,7 +97,6 @@
     <Compile Include="Services\SignInService.cs" />
     <Compile Include="Services\TokenProvider.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="Services\UserServiceValidator.cs" />
     <Compile Include="Services\UserManagerConfiguration.cs" />
     <Compile Include="Context\CoreIdentityDbContext.cs" />
     <Compile Include="Entities\CoreRole.cs" />

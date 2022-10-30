@@ -9,106 +9,109 @@ namespace malone.Core.Commons.Exceptions
 	internal enum CoreErrors
 	{
 		/// <summary>
-		/// Defines the CONF1.
+		/// An error occurred while trying to get the section name of type {0}
 		/// </summary>
 		CONF1 = 1,
 
 		/// <summary>
-		/// Defines the CONF2.
+		/// The section for type {0} is not configured.
 		/// </summary>
 		CONF2 = 2,
 
 		/// <summary>
-		/// Defines the TECH200.
+		/// Sorry, something went wrong.
+		/// {0}: {1}
 		/// </summary>
 		TECH200 = 200,
 
 		/// <summary>
-		/// Defines the TECH201.
+		/// An unexpected error has ocured.
 		/// </summary>
 		TECH201 = 201,
 
 		/// <summary>
-		/// Defines the TECH202.
+		/// Method {0} of class {1} is not implemented.
 		/// </summary>
 		TECH202 = 202,
 		//TECH3 = 3,
 
-		//TECH4 = 4,
+		/// <summary>
+		/// Unauthorized user.
+		/// </summary>
 		SERVICE300 = 300,
 
 		/// <summary>
-		/// Defines the BUSINESS400.
+		/// An error occurred while trying to get the requested data.
 		/// </summary>
 		BUSINESS400 = 400,
 
 		/// <summary>
-		/// Defines the BUSINESS401.
+		/// An error occurred while trying to save the requested data.
 		/// </summary>
 		BUSINESS401 = 401,
 
 		/// <summary>
-		/// Defines the BUSINESS402.
+		/// An error occurred while trying to delete the requested data.
 		/// </summary>
 		BUSINESS402 = 402,
 
 		/// <summary>
-		/// Defines the BUSINESS403.
+		/// An error occurred while trying to update the requested data.
 		/// </summary>
 		BUSINESS403 = 403,
 
 		/// <summary>
-		/// Defines the BUSINESS404.
+		/// No results were found for the query made.
 		/// </summary>
 		BUSINESS404 = 404,
 
 		/// <summary>
-		/// Defines the BUSINESS405.
+		/// Invalid username or password.
 		/// </summary>
 		BUSINESS405 = 405,
 
 		/// <summary>
-		/// Defines the BUSINESS406.
+		/// You must confirm the email first.
 		/// </summary>
 		BUSINESS406 = 406,
 
 		/// <summary>
-		/// Defines the BUSVAL500.
+		/// The query to get an entity of type {0}, for id {1} returned no results.
 		/// </summary>
 		BUSVAL500 = 500,
 
 		/// <summary>
-		/// Defines the DATAACCESS600.
+		/// Failed to get an ordered list of type {0}.
 		/// </summary>
 		DATAACCESS600 = 600,
 
 		/// <summary>
-		/// Defines the DATAACCESS601.
+		/// Failed to get an entity of type {0}.
 		/// </summary>
 		DATAACCESS601 = 601,
 
 		/// <summary>
-		/// Defines the DATAACCESS602.
+		/// Error inserting an entity of type {0}.
 		/// </summary>
 		DATAACCESS602 = 602,
 
 		/// <summary>
-		/// Defines the DATAACCESS603.
+		/// Failed to delete an entity of type {0}.
 		/// </summary>
 		DATAACCESS603 = 603,
 
 		/// <summary>
-		/// Defines the DATAACCESS604.
+		/// Failed to update an entity of type {0}.
 		/// </summary>
 		DATAACCESS604 = 604,
 
 		/// <summary>
-		/// Defines the DATAACCESS605.
+		/// Error en la validación de CommandText {0}.
 		/// </summary>
 		DATAACCESS605 = 605,
 
 		/// <summary>
-		/// Defines the SERVAG700.
+		/// An error occurred in the service call {0}.
 		/// </summary>
 		SERVAG700 = 700
 	}

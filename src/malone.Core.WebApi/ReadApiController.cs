@@ -4,26 +4,27 @@ using System.Web.Http;
 using malone.Core.Commons.Exceptions;
 using malone.Core.Entities.Model;
 using malone.Core.Services;
+using malone.Core.WebApi.Params;
 
 namespace malone.Core.WebApi
 {
 	/// <summary>
-	/// Defines the <see cref="FullApiController{TKey, TParam, TEntity, TService}" />.
+	/// Defines the <see cref="ApiController{TKey, TParam, TEntity, TService}" />.
 	/// </summary>
 	/// <typeparam name="TKey">Type used for key property.</typeparam>
-	/// <typeparam name="TParam">.</typeparam>
+	/// <typeparam name="TFilter">.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TService">.</typeparam>
-	public abstract class ReadApiController<TKey, TParam, TEntity, TService> : ApiController
+	public abstract class ReadApiController<TKey, TFilter, TEntity, TService> : ApiController
 		where TKey : IEquatable<TKey>
-		where TParam : class, IGetRequestParam
+		where TFilter : class, IParam
 		where TEntity : class, IBaseEntity<TKey>
-		where TService : IQueryService<TKey, TEntity>
+		where TService : IService<TKey, TEntity>
 	{
 		/// <summary>
 		/// Gets or sets the Service.
 		/// </summary>
-		protected TService Service { get; set; }
+		protected TService service;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ReadApiController{TKey, TParam, TEntity, TService}"/> class.
@@ -31,7 +32,7 @@ namespace malone.Core.WebApi
 		/// <param name="service">The service<see cref="TService"/>.</param>
 		public ReadApiController(TService service)
 		{
-			Service = service;
+			this.service = service;
 		}
 
 		/// <summary>
@@ -48,9 +49,9 @@ namespace malone.Core.WebApi
 		/// <summary>
 		/// The GetList.
 		/// </summary>
-		/// <param name="parameters">The parameters<see cref="TParam"/>.</param>
+		/// <param name="parameters">The parameters<see cref="TFilter"/>.</param>
 		/// <returns>The <see cref="IEnumerable"/>.</returns>
-		protected virtual IEnumerable GetList(TParam parameters = null)
+		protected virtual IEnumerable GetList(TFilter parameters = null)
 		{
 			IEnumerable list = null;
 
@@ -71,15 +72,15 @@ namespace malone.Core.WebApi
 		/// <returns>The <see cref="IEnumerable"/>.</returns>
 		protected virtual IEnumerable GetAll()
 		{
-			return Service.GetAll();
+			return service.GetAll();
 		}
 
 		/// <summary>
 		/// The GetFiltered.
 		/// </summary>
-		/// <param name="parameters">The parameters<see cref="TParam"/>.</param>
+		/// <param name="parameters">The parameters<see cref="TFilter"/>.</param>
 		/// <returns>The <see cref="IEnumerable"/>.</returns>
-		protected virtual IEnumerable GetFiltered(TParam parameters)
+		protected virtual IEnumerable GetFiltered(TFilter parameters)
 		{
 			throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.TECH202, "GetFiltered", this.GetType().Name);
 		}
@@ -93,6 +94,7 @@ namespace malone.Core.WebApi
 		{
 			return list;
 		}
+
 		/// <summary>
 		/// The Get.
 		/// </summary>
@@ -120,7 +122,7 @@ namespace malone.Core.WebApi
 		/// <returns>The <see cref="object"/>.</returns>
 		protected virtual object GetById(TKey id)
 		{
-			TEntity entity = Service.GetById(id);
+			TEntity entity = service.GetById(id);
 			return AsViewModel(entity);
 		}
 
@@ -139,15 +141,14 @@ namespace malone.Core.WebApi
 	/// <summary>
 	/// Defines the <see cref="ReadApiController{TParam, TEntity, TService}" />.
 	/// </summary>
-	/// <typeparam name="TParam">.</typeparam>
+	/// <typeparam name="TFilter">.</typeparam>
 	/// <typeparam name="TEntity">.</typeparam>
 	/// <typeparam name="TService">.</typeparam>
-	/// <typeparam name="TServiceValidator">.</typeparam>
-	public abstract class ReadApiController<TParam, TEntity, TService>
-		: ReadApiController<int, TParam, TEntity, TService>
-		where TParam : class, IGetRequestParam
+	public abstract class ReadApiController<TFilter, TEntity, TService>
+		: ReadApiController<int, TFilter, TEntity, TService>
+		where TFilter : class, IParam
 		where TEntity : class, IBaseEntity
-		where TService : IQueryService<TEntity>
+		where TService : IService<TEntity>
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ReadApiController{TParam, TEntity, TService}"/> class.
@@ -160,9 +161,9 @@ namespace malone.Core.WebApi
 		/// <summary>
 		/// The GetFiltered.
 		/// </summary>
-		/// <param name="parameters">The parameters<see cref="TParam"/>.</param>
+		/// <param name="parameters">The parameters<see cref="TFilter"/>.</param>
 		/// <returns>The <see cref="IEnumerable"/>.</returns>
-		protected override IEnumerable GetFiltered(TParam parameters)
+		protected override IEnumerable GetFiltered(TFilter parameters)
 		{
 			throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.TECH202, "GetFiltered", this.GetType().Name);
 		}

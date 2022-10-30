@@ -1,4 +1,10 @@
-using malone.Core.Commons.DI;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Text;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Initializers;
 using malone.Core.DataAccess.Context;
@@ -12,21 +18,16 @@ using malone.Core.Sample.EF.SqlServer.Middle.DAL.Repositories;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
 using malone.Core.Sample.EF.SqlServer.Middle.Initializers;
 using malone.Core.Unity;
+using malone.Core.Unity.IdentityEntityFrameworkInitializer;
+using malone.Core.Unity.Log4NetInitializer;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Data.Entity.Validation;
-using System.Linq;
-using System.Text;
 using Unity;
 using Unity.Injection;
 
 
 namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Migrations
 {
-                internal sealed class Configuration : DbMigrationsConfiguration<SampleContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<SampleContext>
     {
         public Configuration()
         {
@@ -42,7 +43,12 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Migrations
 
             try
             {
+                //Agrego estas líneas porque no me está cargando los assemblies dinámicamente cuando ejecuto el update-database
+                _ = ServiceLocator.Current.Get<Log4NetModuleInitializer>();
+                _ = ServiceLocator.Current.Get<IdentityEntityFrameworkModuleInitializer>();
+
                 AppInitializer<UnityActivator, IUnityContainer, ConfigurationInitializer>.Initialize();
+
 
                 var userManager = ServiceLocator.Current.Get<UserService>();
                 var AdminstradorDesc = RoleType.Administrador.GetDescription();
@@ -114,26 +120,14 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Migrations
 
                 if (!existeListaEjemplo)
                 {
-                    TodoList list = new TodoList()
-                    {
-                        Name = "Sample List",
-                        Items = new List<TaskItem>()
+                    TodoList list = new TodoList(
+                        "Sample List",
+                        sampleUser,
+                        new List<TaskItem>()
                         {
-                            new TaskItem()
-                            {
-                                Description="Sample Item 1",
-                                IsDeleted = false
-                            },
-
-                            new TaskItem()
-                            {
-                                Description="Sample Item 2",
-                                IsDeleted = false
-                            }
-                        },
-                        IsDeleted = false,
-                        User = sampleUser
-                    };
+                            new TaskItem("Sample Item 1"),
+                            new TaskItem("Sample Item 2")
+                        });
                     context.Set<TodoList>().AddOrUpdate(list);
                     context.SaveChanges();
                 }

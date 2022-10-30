@@ -108,7 +108,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="IdentityEntityFramworkModuleInitializer.cs" />
+    <Compile Include="IdentityEntityFrameworkModuleInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

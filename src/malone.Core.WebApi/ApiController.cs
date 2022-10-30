@@ -1,151 +1,214 @@
-﻿using System;
-using System.Collections;
-using System.Web.Http;
-using malone.Core.Services;
-using malone.Core.Commons.Exceptions;
-using malone.Core.Entities.Model;
-
-namespace malone.Core.WebApi
+﻿namespace malone.Core.WebApi
 {
-    public abstract class ApiController<TKey, TParam, TEntity, TService, TServiceValidator> : ApiController
-        where TKey : IEquatable<TKey>
-        where TParam : class, IGetRequestParam
-        where TEntity : class, IBaseEntity<TKey>
-        where TServiceValidator : IServiceValidator<TKey, TEntity>
-        where TService : IService<TKey, TEntity, TServiceValidator>
-    {
-        protected TService Service { get; set; }
+	using System;
+	using System.Collections;
+	using System.Web.Http;
+	using malone.Core.Commons.Exceptions;
+	using malone.Core.Entities.Model;
+	using malone.Core.Services;
+	using malone.Core.Services.Requests;
+	using malone.Core.WebApi.Params;
 
-        public ApiController(TService businessComponent)
-        {
-            Service = businessComponent;
-        }
+	/// <summary>Defines the <see cref="ApiController{TKey, TFilter, TEntity, TService}" />.</summary>
+	/// <typeparam name="TKey">Type used for key property.</typeparam>
+	/// <typeparam name="TFilter">Type used for filter parameters.</typeparam>
+	/// <typeparam name="TEntity">Entity type.</typeparam>
+	/// <typeparam name="TService">Service type.</typeparam>
 
-        #region GET (GetAll)
+	public abstract class ApiController<TKey, TFilter, TAdd, TUpdate, TEntity, TService> : ApiController
+		where TKey : IEquatable<TKey>
+		where TFilter : class, IParam
+		where TAdd : class, IAddParam<TKey, TEntity>
+		where TUpdate : class, IUpdParam<TKey, TEntity>
+		where TEntity : class, IBaseEntity<TKey>
+		where TService : IService<TKey, TEntity>
+	{
+		/// <summary>
+		/// Gets or sets the Service.
+		/// </summary>
+		protected TService service;
 
-        public virtual IHttpActionResult Get()
-        {
-            IEnumerable list = GetList(null);
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ApiController{TKey, TFilter, TEntity, TService}"/> class.
+		/// </summary>
+		/// <param name="service">The service<see cref="TService"/>.</param>
+		public ApiController(TService service)
+		{
+			this.service = service;
+		}
 
-            return Ok(list);
-        }
+		/// <summary>
+		/// The Get.
+		/// </summary>
+		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
+		public virtual IHttpActionResult Get()
+		{
+			IEnumerable list = GetList(null);
 
-        protected virtual IEnumerable GetList(TParam parameters = null)
-        {
-            IEnumerable list = null;
+			return Ok(list);
+		}
 
-            if (parameters == null)
-            {
-                list = GetAll();
-            }
-            else
-            {
-                list = GetFiltered(parameters);
-            }
-            return AsViewModelList(list);
-        }
+		/// <summary>
+		/// The GetList.
+		/// </summary>
+		/// <param name="parameters">The parameters <see cref="TFilter"/>.</param>
+		/// <returns>The <see cref="IEnumerable"/>.</returns>
+		protected virtual IEnumerable GetList(TFilter parameters = null)
+		{
+			IEnumerable list = null;
 
-        protected virtual IEnumerable GetAll()
-        {
-            return Service.GetAll();
-        }
+			if (parameters == null)
+			{
+				list = GetAll();
+			}
+			else
+			{
+				list = GetFiltered(parameters);
+			}
+			return AsViewModelList(list);
+		}
 
+		/// <summary>
+		/// The GetAll.
+		/// </summary>
+		/// <returns>The <see cref="IEnumerable"/>.</returns>
+		protected virtual IEnumerable GetAll()
+		{
+			return service.GetAll();
+		}
 
-        protected virtual IEnumerable GetFiltered(TParam parameters)
-        {
-            throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.TECH202, "GetFiltered", this.GetType().Name);
-        }
+		/// <summary>
+		/// The GetFiltered.
+		/// </summary>
+		/// <param name="parameters">The parameters <see cref="TFilter"/>.</param>
+		/// <returns>The <see cref="IEnumerable"/>.</returns>
+		protected virtual IEnumerable GetFiltered(TFilter parameters)
+		{
+			throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.TECH202, "GetFiltered", this.GetType().Name);
+		}
 
-        protected virtual IEnumerable AsViewModelList(IEnumerable list)
-        {
-            return list;
-        }
+		/// <summary>
+		/// The AsViewModelList.
+		/// </summary>
+		/// <param name="list">The list<see cref="IEnumerable"/>.</param>
+		/// <returns>The <see cref="IEnumerable"/>.</returns>
+		protected virtual IEnumerable AsViewModelList(IEnumerable list)
+		{
+			return list;
+		}
 
-        #endregion
+		/// <summary>
+		/// The Get.
+		/// </summary>
+		/// <param name="id">The id <see cref="TKey"/>.</param>
+		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
+		[HttpGet, HttpHead]
+		public virtual IHttpActionResult Get(TKey id)
+		{
+			object entity = GetById(id);
 
-        #region GET (GetById)
+			if (entity != null)
+			{
+				return Ok(entity);
+			}
+			else
+			{
+				return NotFound();
+			}
+		}
 
-        [HttpGet, HttpHead]
-        public virtual IHttpActionResult Get(TKey id)
-        {
-            object entity = GetById(id);
+		/// <summary>
+		/// The GetById.
+		/// </summary>
+		/// <param name="id">The id <see cref="TKey"/>.</param>
+		/// <returns>The <see cref="object"/>.</returns>
+		protected virtual object GetById(TKey id)
+		{
+			TEntity entity = service.GetById(id);
+			return AsViewModel(entity);
+		}
 
-            if (entity != null)
-            {
-                return Ok(entity);
-            }
-            else
-            {
-                return NotFound();
-            }
-        }
+		/// <summary>
+		/// The AsViewModel.
+		/// </summary>
+		/// <param name="entity">The entity<see cref="TEntity"/>.</param>
+		/// <returns>The <see cref="object"/>.</returns>
+		protected virtual object AsViewModel(TEntity entity)
+		{
+			return entity;
+		}
 
+		/// <summary>
+		/// The Post.
+		/// </summary>
+		/// <param name="param">The entity<see cref="TEntity"/>.</param>
+		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
+		public virtual IHttpActionResult Post([FromBody] TAdd param)
+		{
+			var entity = param.ToEntity();
+			var id = service.Add(entity);
 
-        protected virtual object GetById(TKey id)
-        {
-            TEntity entity = Service.GetById(id);
-            return AsViewModel(entity);
-        }
+			var location = new Uri(Request.RequestUri + id.ToString());
 
-        protected virtual object AsViewModel(TEntity entity)
-        {
-            return entity;
-        }
+			return Created(location, entity);
+		}
 
-        #endregion
+		/// <summary>
+		/// The Put.
+		/// </summary>
+		/// <param name="id">The id<see cref="TKey"/>.</param>
+		/// <param name="param">The request <see cref="IRequest{TEntity}"/>.</param>
+		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
+		public virtual IHttpActionResult Put(TUpdate param)
+		{
+			var entity = service.GetById(param.Id);
+			service.Update(param.ToEntity(entity));
+			return Ok();
+		}
 
-        #region POST (Add)
+		/// <summary>
+		/// The Delete.
+		/// </summary>
+		/// <param name="id">The id<see cref="TKey"/>.</param>
+		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
+		public virtual IHttpActionResult Delete(TKey id)
+		{
+			service.Delete(id);
+			return Ok();
+		}
+	}
 
-        public virtual IHttpActionResult Post([FromBody] TEntity entity)
-        {
-            Service.Add(entity);
+	/// <summary>
+	/// Defines the <see cref="FullApiController{TFilter, TEntity, TService}" />.
+	/// </summary>
+	/// <typeparam name="TFilter">.</typeparam>
+	/// <typeparam name="TEntity">.</typeparam>
+	/// <typeparam name="TService">.</typeparam>
 
-            var location = new Uri(Request.RequestUri + entity.Id.ToString());
+	public abstract class ApiController<TFilter, TAdd, TUpdate, TEntity, TService> :
+		ApiController<int, TFilter, TAdd, TUpdate, TEntity, TService>
+		where TFilter : class, IParam
+		where TAdd : class, IAddParam<TEntity>
+		where TUpdate : class, IUpdParam<TEntity>
+		where TEntity : class, IBaseEntity
+		where TService : IService<TEntity>
+	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FullApiController{TFilter, TEntity, TService}"/> class.
+		/// </summary>
+		/// <param name="service">The service<see cref="TService"/>.</param>
+		public ApiController(TService service) : base(service)
+		{
+		}
 
-            return Created(location, entity);
-        }
-
-        #endregion
-
-        #region PUT (Update)
-
-        public virtual IHttpActionResult Put(TKey id, [FromBody] TEntity entity)
-        {
-            Service.Update(entity);
-            return Ok();
-        }
-
-        #endregion
-
-        #region DELETE (Delete)
-
-        public virtual IHttpActionResult Delete(TKey id)
-        {
-            Service.Delete(id);
-            return Ok();
-        }
-
-        #endregion
-    }
-
-    public abstract class ApiController<TParam, TEntity, TService, TServiceValidator>
-    : ApiController<int, TParam, TEntity, TService, TServiceValidator>
-   where TParam : class, IGetRequestParam
-   where TEntity : class, IBaseEntity
-   where TServiceValidator : IServiceValidator<TEntity>
-   where TService : IService<TEntity, TServiceValidator>
-    {
-        public ApiController(TService businessComponent) : base(businessComponent)
-        {
-        }
-
-        #region GET (GetAll)
-
-        protected override IEnumerable GetFiltered(TParam parameters)
-        {
-            throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.TECH202, "GetFiltered", this.GetType().Name);
-        }
-
-        #endregion
-    }
+		/// <summary>
+		/// The GetFiltered.
+		/// </summary>
+		/// <param name="parameters">The parameters<see cref="TFilter"/>.</param>
+		/// <returns>The <see cref="IEnumerable"/>.</returns>
+		protected override IEnumerable GetFiltered(TFilter parameters)
+		{
+			throw CoreExceptionFactory.CreateException<TechnicalException>(CoreErrors.TECH202, "GetFiltered", this.GetType().Name);
+		}
+	}
 }

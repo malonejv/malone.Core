@@ -11,6 +11,6 @@ namespace malone.Core.Entities.Model
 		/// <summary>
 		/// Gets or sets a value indicating whether IsDeleted.
 		/// </summary>
-		bool IsDeleted { get; set; }
+		bool IsDeleted { get; }
 	}
 }

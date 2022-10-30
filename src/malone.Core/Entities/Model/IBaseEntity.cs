@@ -15,7 +15,7 @@ namespace malone.Core.Entities.Model
 		/// <summary>
 		/// Gets or sets the Id.
 		/// </summary>
-		TKey Id { get; set; }
+		TKey Id { get; }
 	}
 
 	/// <summary>
@@ -23,9 +23,5 @@ namespace malone.Core.Entities.Model
 	/// </summary>
 	public interface IBaseEntity : IBaseEntity<int>
 	{
-		/// <summary>
-		/// Gets or sets the Id.
-		/// </summary>
-		new int Id { get; set; }
 	}
 }
