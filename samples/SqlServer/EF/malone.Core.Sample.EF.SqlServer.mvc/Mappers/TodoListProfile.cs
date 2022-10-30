@@ -12,6 +12,8 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Mappers
                 .ForMember(dest => dest.Pending, opt => opt.MapFrom(src => src.PendingItems(false).Count))
                 .ForMember(dest => dest.Done, opt => opt.MapFrom(src => src.DoneItems(false).Count))
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
+
+            CreateMap<TaskItem, TaskItemViewModel>();
         }
     }
 }

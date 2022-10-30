@@ -274,6 +274,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\Identity\IdentityConfig.cs" />
     <Compile Include="BL\Implementations\TaskItemBC.cs" />
     <Compile Include="BL\Implementations\TodoListBC.cs" />
     <Compile Include="BL\ITaskItemBC.cs" />

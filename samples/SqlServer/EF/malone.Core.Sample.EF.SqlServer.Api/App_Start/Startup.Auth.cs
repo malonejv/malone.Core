@@ -1,13 +1,12 @@
-﻿using malone.Core.Identity.EntityFramework;
-using malone.Core.Sample.Api;
+﻿using System;
 using malone.Core.Sample.EF.SqlServer.Api.Providers;
+using malone.Core.Sample.EF.SqlServer.Middle;
 using malone.Core.Sample.EF.SqlServer.Middle.DAL.Context;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using System;
 
 namespace malone.Core.Sample.EF.SqlServer.Api
 {
