@@ -182,7 +182,7 @@ namespace malone.Core.Services
 					throw new BusinessRulesValidationException(validationResult);
 				}
 
-				repository.Update(entity);
+				repository.Add(entity);
 
 				if (saveChanges)
 				{
@@ -239,12 +239,9 @@ namespace malone.Core.Services
 				if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
 				{
 					var softDelete = (ISoftDelete)entity;
-					var fieldName = nameof(ISoftDelete.IsDeleted);
-					var field = entity.GetType()
-											  .GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
-											  .FirstOrDefault(f=>f.Name == fieldName || f.Name.Contains($"<{fieldName}>"));
+					var field = entity.GetType().GetField(nameof(ISoftDelete.IsDeleted), BindingFlags.Instance | BindingFlags.NonPublic);
 					field.SetValue(entity, true);
-					repository.Update(softDelete as TEntity);
+					repository.Add(softDelete as TEntity);
 				}
 				else
 				{

@@ -38,121 +38,121 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Migrations
         protected override void Seed(SampleContext context)
         {
 
-            //if (!System.Diagnostics.Debugger.IsAttached)
-            //    System.Diagnostics.Debugger.Launch();
+            if (!System.Diagnostics.Debugger.IsAttached)
+                System.Diagnostics.Debugger.Launch();
 
-            //try
-            //{
-            //    //Agrego estas líneas porque no me está cargando los assemblies dinámicamente cuando ejecuto el update-database
-            //    _ = ServiceLocator.Current.Get<Log4NetModuleInitializer>();
-            //    _ = ServiceLocator.Current.Get<IdentityEntityFrameworkModuleInitializer>();
+            try
+            {
+                //Agrego estas líneas porque no me está cargando los assemblies dinámicamente cuando ejecuto el update-database
+                _ = ServiceLocator.Current.Get<Log4NetModuleInitializer>();
+                _ = ServiceLocator.Current.Get<IdentityEntityFrameworkModuleInitializer>();
 
-            //    AppInitializer<UnityActivator, IUnityContainer, ConfigurationInitializer>.Initialize();
+                AppInitializer<UnityActivator, IUnityContainer, ConfigurationInitializer>.Initialize();
 
 
-            //    var userManager = ServiceLocator.Current.Get<UserService>();
-            //    var AdminstradorDesc = RoleType.Administrador.GetDescription();
-            //    var UsuarioDesc = RoleType.Usuario.GetDescription();
+                var userManager = ServiceLocator.Current.Get<UserService>();
+                var AdminstradorDesc = RoleType.Administrador.GetDescription();
+                var UsuarioDesc = RoleType.Usuario.GetDescription();
 
-            //    var existeRol = context.Set<CoreRole>().Where(r => r.Name == AdminstradorDesc).Any();
-            //    if (!existeRol)
-            //    {
-            //        // USUARIO Y ROL DE ADMINISTRADOR POR DEFECTO
-            //        // RoleTypes is a class containing constant string values for different roles
-            //        List<CoreRole> roles = new List<CoreRole>();
-            //        roles.Add(new CoreRole() { Name = AdminstradorDesc });
-            //        roles.Add(new CoreRole() { Name = UsuarioDesc });
+                var existeRol = context.Set<CoreRole>().Where(r => r.Name == AdminstradorDesc).Any();
+                if (!existeRol)
+                {
+                    // USUARIO Y ROL DE ADMINISTRADOR POR DEFECTO
+                    // RoleTypes is a class containing constant string values for different roles
+                    List<CoreRole> roles = new List<CoreRole>();
+                    roles.Add(new CoreRole() { Name = AdminstradorDesc });
+                    roles.Add(new CoreRole() { Name = UsuarioDesc });
 
-            //        context.Set<CoreRole>().AddOrUpdate(roles.ToArray());
-            //        context.SaveChanges();
-            //    }
+                    context.Set<CoreRole>().AddOrUpdate(roles.ToArray());
+                    context.SaveChanges();
+                }
 
-            //    var existeAdmin = context.Set<CoreUser>().Where(u => u.UserName == "admin").Any();
+                var existeAdmin = context.Set<CoreUser>().Where(u => u.UserName == "admin").Any();
 
-            //    if (!existeAdmin)
-            //    {
-            //        // Initialize default user
-            //        CoreUser admin = new CoreUser();
-            //        admin.Email = "admin@sample.com";
-            //        admin.UserName = "admin";
-            //        admin.EmailConfirmed = true;
+                if (!existeAdmin)
+                {
+                    // Initialize default user
+                    CoreUser admin = new CoreUser();
+                    admin.Email = "admin@sample.com";
+                    admin.UserName = "admin";
+                    admin.EmailConfirmed = true;
 
-            //        var adminRole = context.Set<CoreRole>().Where(r => r.Name == AdminstradorDesc).FirstOrDefault();
+                    var adminRole = context.Set<CoreRole>().Where(r => r.Name == AdminstradorDesc).FirstOrDefault();
 
-            //        admin.Roles.Add(new CoreUserRole()
-            //        {
-            //            RoleId = adminRole.Id
-            //        });
+                    admin.Roles.Add(new CoreUserRole()
+                    {
+                        RoleId = adminRole.Id
+                    });
 
-            //        userManager.Create(admin, "admin.1234");
+                    userManager.Create(admin, "admin.1234");
 
-            //        context.SaveChanges();
+                    context.SaveChanges();
 
-            //    }
+                }
 
-            //    var existeUser = context.Set<CoreUser>().Where(u => u.UserName == "user").Any();
+                var existeUser = context.Set<CoreUser>().Where(u => u.UserName == "user").Any();
 
-            //    if (!existeUser)
-            //    {
-            //        // Initialize default user
-            //        CoreUser user = new CoreUser();
-            //        user.Email = "user@sample.com";
-            //        user.UserName = "user";
-            //        user.EmailConfirmed = true;
+                if (!existeUser)
+                {
+                    // Initialize default user
+                    CoreUser user = new CoreUser();
+                    user.Email = "user@sample.com";
+                    user.UserName = "user";
+                    user.EmailConfirmed = true;
 
-            //        var usuarioRole = context.Set<CoreRole>().Where(r => r.Name == UsuarioDesc).FirstOrDefault();
+                    var usuarioRole = context.Set<CoreRole>().Where(r => r.Name == UsuarioDesc).FirstOrDefault();
 
-            //        user.Roles.Add(new CoreUserRole()
-            //        {
-            //            RoleId = usuarioRole.Id
-            //        });
+                    user.Roles.Add(new CoreUserRole()
+                    {
+                        RoleId = usuarioRole.Id
+                    });
 
-            //        userManager.Create(user, "user.1234");
+                    userManager.Create(user, "user.1234");
 
-            //        context.SaveChanges();
-            //    }
+                    context.SaveChanges();
+                }
 
-            //    //--------------------------------------------------------------------
-            //    //TEST LIST & ITEMS
+                //--------------------------------------------------------------------
+                //TEST LIST & ITEMS
 
-            //    var sampleUser = context.Set<CoreUser>().Where(u => u.UserName == "user").FirstOrDefault();
-            //    var existeListaEjemplo = context.Set<TodoList>().Where(r => r.Name == "Sample List").Any();
+                var sampleUser = context.Set<CoreUser>().Where(u => u.UserName == "user").FirstOrDefault();
+                var existeListaEjemplo = context.Set<TodoList>().Where(r => r.Name == "Sample List").Any();
 
-            //    if (!existeListaEjemplo)
-            //    {
-            //        TodoList list = new TodoList(
-            //            "Sample List",
-            //            sampleUser,
-            //            new List<TaskItem>()
-            //            {
-            //                new TaskItem("Sample Item 1"),
-            //                new TaskItem("Sample Item 2")
-            //            });
-            //        context.Set<TodoList>().AddOrUpdate(list);
-            //        context.SaveChanges();
-            //    }
-            //}
-            //catch (DbEntityValidationException ex)
-            //{
-            //    var sb = new StringBuilder();
-            //    foreach (var failure in ex.EntityValidationErrors)
-            //    {
-            //        sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
-            //        foreach (var error in failure.ValidationErrors)
-            //        {
-            //            sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
-            //            sb.AppendLine();
-            //        }
-            //    }
-            //    throw new DbEntityValidationException(
-            //        "Entity Validation Failed - errors follow:\n" +
-            //        sb.ToString(), ex
-            //    );
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
+                if (!existeListaEjemplo)
+                {
+                    TodoList list = new TodoList(
+                        "Sample List",
+                        sampleUser,
+                        new List<TaskItem>()
+                        {
+                            new TaskItem("Sample Item 1"),
+                            new TaskItem("Sample Item 2")
+                        });
+                    context.Set<TodoList>().AddOrUpdate(list);
+                    context.SaveChanges();
+                }
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var sb = new StringBuilder();
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+                throw new DbEntityValidationException(
+                    "Entity Validation Failed - errors follow:\n" +
+                    sb.ToString(), ex
+                );
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
         }
     }
@@ -192,7 +192,7 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Migrations
             container.RegisterType<IRepository<TodoList>, TodoListRepository>();
             container.RegisterType<IRepository<TaskItem>, Repository<TaskItem>>();
 
-            //container.RegisterInstance(UserService.CreateAndConfigure(new Microsoft.AspNet.Identity.Owin.IdentityFactoryOptions<UserService>(), null));
+            container.RegisterInstance(UserService.CreateAndConfigure(new Microsoft.AspNet.Identity.Owin.IdentityFactoryOptions<UserService>(), null));
         }
     }
 }

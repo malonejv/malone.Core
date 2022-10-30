@@ -1,23 +1,21 @@
 ﻿@model malone.Core.Sample.EF.SqlServer.mvc.Models.TodoListViewModel
 
-@{
-    var displayClear = !string.IsNullOrEmpty(Model.Name) ? "block" : "none";
-}
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "ListForm", role = "form" }))
+@using (Html.BeginForm("Edit", "List", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Id)
 
-    <div class="form-horizontal animate__animated animate__fadeIn">
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="input-group">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control default-control", placeholder = "Nombre de lista" } })
-            <button id="btnClear" style="display: @displayClear"><i class="far fa-times-circle"></i></button>
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre de lista" } })
             <div class="input-group-append">
-                <a href="@Url.Action("Index")" class="btn btn-outline-secondary">Cancelar</a>
-                <button id="btnEditList" class="btn btn-primary">
-                    Actualizar
-                </button>
+                @if (Model != null && !string.IsNullOrEmpty(Model.Name) && Model.Name.Length > 0)
+                {
+                    <a href="@Url.Action("Index")" class="btn btn-outline-secondary">X</a>
+                }
+                <input type="submit" value="Actualizar" class="btn btn-primary" />
             </div>
         </div>
         <div class="">@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })</div>

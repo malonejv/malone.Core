@@ -30,10 +30,5 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.EL.Model
         {
             Done = !Done;
         }
-
-        public void UpdateDescription(string description)
-        {
-            Description = description;
-        }
     }
 }

@@ -9,33 +9,30 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <div class="modal-body">
+                <p>Estas seguro de que quieres eliminar la lista?</p>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Pending) / @Html.DisplayNameFor(model => model.Done)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Pending) / @Html.DisplayFor(model => model.Done)
+                    </dd>
+
+                </dl>
+            </div>
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
-
-                @Html.HiddenFor(model => model.Id)
-
-                <div class="modal-body">
-                    <p>Estas seguro de que quieres eliminar la lista?</p>
-                    <dl class="dl-horizontal">
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Name)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Name)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Pending) / @Html.DisplayNameFor(model => model.Done)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Pending) / @Html.DisplayFor(model => model.Done)
-                        </dd>
-
-                    </dl>
-                </div>
 
                 <div class="form-group">
                     <div class="col-md-12">

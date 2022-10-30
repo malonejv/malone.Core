@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace malone.Core.Sample.EF.SqlServer.mvc.Models
 {
@@ -21,28 +20,8 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Models
 
         [DisplayName("Realizadas")]
         public int Done { get; set; }
-        public List<TaskItemViewModel> Items { get; set; }
+        public List<TaskItem> Items { get; set; }
 
-
-        public List<TaskItemViewModel> PendingItems(bool includeDeleted = false)
-        {
-            var items = new List<TaskItemViewModel>();
-            if (this.Items != null)
-            {
-                items = this.Items.Where(i => !i.Done && i.IsDeleted == includeDeleted).ToList();
-            }
-            return items;
-        }
-
-        public List<TaskItemViewModel> DoneItems(bool includeDeleted = false)
-        {
-            var items = new List<TaskItemViewModel>();
-            if (this.Items != null)
-            {
-                items = this.Items.Where(i => i.Done && i.IsDeleted == includeDeleted).ToList();
-            }
-            return items;
-        }
     }
 
     public class TaskItemViewModel
