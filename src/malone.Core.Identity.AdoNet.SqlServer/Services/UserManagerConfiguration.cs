@@ -12,7 +12,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Services
 		where TUserClaim : CoreUserClaim<TKey>, new()
 		where TRoleEntity : CoreRole<TKey, TUserRole>
 		where TUserEntity : CoreUser<TKey, TUserLogin, TUserRole, TUserClaim>
-		where TUserBC : UserService<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>, new()
+		where TUserBC : UserService<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim>
 	{
 		public UserManagerConfiguration(
 			IEmailMessageService emailMessageService,
