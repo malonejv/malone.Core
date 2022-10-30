@@ -18,16 +18,16 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
     [Authorize]
     public class ListController : Controller
     {
-        private UserService _userManager;
+        private ApplicationUserManager _userManager;
         private readonly ITodoListBC todoListBC;
         private readonly ITaskItemBC taskItemBC;
 
-        public UserService UserManager
+        public ApplicationUserManager UserManager
         {
             get
             {
                 if (_userManager == null)
-                    _userManager = HttpContext.GetOwinContext().Get<UserService>();
+                    _userManager = HttpContext.GetOwinContext().Get<ApplicationUserManager>();
                 return _userManager;
             }
         }

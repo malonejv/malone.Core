@@ -14,29 +14,29 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private SignInService _signInManager;
-        private UserService _userManager;
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
 
         public AccountController()
         {
         }
 
-        public SignInService SignInManager
+        public ApplicationSignInManager SignInManager
         {
             get
             {
                 if (_signInManager == null)
-                    _signInManager = HttpContext.GetOwinContext().Get<SignInService>();
+                    _signInManager = HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
                 return _signInManager;
             }
         }
 
-        public UserService UserManager
+        public ApplicationUserManager UserManager
         {
             get
             {
                 if (_userManager == null)
-                    _userManager = HttpContext.GetOwinContext().Get<UserService>();
+                    _userManager = HttpContext.GetOwinContext().Get<ApplicationUserManager>();
                 return _userManager;
             }
         }
@@ -66,7 +66,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             SignInStatus result;
 
-            result = await SignInManager.PasswordUserNameOrEmailSignInAsync(model.UserNameOrEmail, model.Password, model.RememberMe, shouldLockout: false);
+            result = await SignInManager.PasswordSignInAsync(model.UserNameOrEmail, model.Password, model.RememberMe, shouldLockout: false);
 
 
             switch (result)

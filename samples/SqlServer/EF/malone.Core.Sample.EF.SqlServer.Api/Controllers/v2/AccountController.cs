@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
+﻿using malone.Core.Identity.EntityFramework;
 using malone.Core.Identity.EntityFramework.Entities;
+using malone.Core.Sample.Api;
 using malone.Core.Sample.EF.SqlServer.Api.Models.v2;
 using malone.Core.Sample.EF.SqlServer.Api.Providers;
 using malone.Core.Sample.EF.SqlServer.Api.Results;
-using malone.Core.Sample.EF.SqlServer.Middle;
 using malone.Core.Sample.EF.SqlServer.Middle.BL;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -18,6 +11,14 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Web.Http;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
 
 namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v2
 {

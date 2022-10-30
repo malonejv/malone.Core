@@ -2,7 +2,6 @@
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Commons.Initializers;
 using malone.Core.Identity;
-using malone.Core.Identity.EntityFramework.Business;
 using malone.Core.Identity.EntityFramework.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -33,7 +32,7 @@ namespace malone.Core.Unity.IdentityEntityFrameworkInitializer
 			container.RegisterType<IIdentityValidator<CoreUser>, UserValidator<CoreUser, int>>();
 			container.RegisterType<IIdentityValidator<string>, PasswordValidator>();
 			container.RegisterType<IPasswordHasher, PasswordHasher>();
-			container.RegisterType<IUserManagerConfiguration, UserManagerConfiguration>();
+			//container.RegisterType<IUserManagerConfiguration, UserManagerConfiguration>();
 		}
 	}
 }

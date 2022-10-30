@@ -1,6 +1,18 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:45:05</date>
 
+using malone.Core.Identity.EntityFramework;
+using malone.Core.Identity.EntityFramework.Entities;
+using malone.Core.Sample.Api;
+using malone.Core.Sample.EF.SqlServer.Api.Models.v1;
+using malone.Core.Sample.EF.SqlServer.Api.Providers;
+using malone.Core.Sample.EF.SqlServer.Api.Results;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OAuth;
+using Microsoft.Web.Http;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -9,17 +21,6 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using malone.Core.Identity.EntityFramework.Entities;
-using malone.Core.Sample.EF.SqlServer.Api.Models.v1;
-using malone.Core.Sample.EF.SqlServer.Api.Providers;
-using malone.Core.Sample.EF.SqlServer.Api.Results;
-using malone.Core.Sample.EF.SqlServer.Middle;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.OAuth;
-using Microsoft.Web.Http;
 
 namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
 {

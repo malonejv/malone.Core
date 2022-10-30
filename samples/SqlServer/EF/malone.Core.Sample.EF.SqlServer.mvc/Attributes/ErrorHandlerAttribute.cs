@@ -5,6 +5,7 @@ using malone.Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -74,7 +75,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Attributes
                 {
                     var bvEx = ex as BusinessRulesValidationException;
 
-                    foreach (var val in bvEx.Results)
+                    foreach (var val in bvEx.Results.Where(r=>!r.IsValid).ToList())
                     {
                         ((Controller)filterContext.Controller).ModelState.AddModelError(val.ErrorCode, val.Message);
                         error.Paragraphs.Add(val.Message);

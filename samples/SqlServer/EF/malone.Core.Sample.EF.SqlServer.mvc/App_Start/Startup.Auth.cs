@@ -1,13 +1,15 @@
-﻿using System;
+﻿using malone.Core.Identity.EntityFramework;
 using malone.Core.Identity.EntityFramework.Entities;
-using malone.Core.Sample.EF.SqlServer.Middle;
 using malone.Core.Sample.EF.SqlServer.Middle.DAL.Context;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OpenIdConnect;
 using Owin;
+using System;
+using System.Configuration;
 
 namespace malone.Core.Sample.EF.SqlServer.mvc
 {
