@@ -1,6 +1,11 @@
-﻿using malone.Core.Commons.DI;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Text;
 using malone.Core.Commons.Helpers.Extensions;
-using malone.Core.Identity.EntityFramework;
 using malone.Core.Identity.EntityFramework.Context;
 using malone.Core.Identity.EntityFramework.Entities;
 using malone.Core.IoC;
@@ -8,13 +13,6 @@ using malone.Core.Sample.EF.SqlServer.Middle.DAL.Context.Conventions;
 using malone.Core.Sample.EF.SqlServer.Middle.DAL.Context.Mappings;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Data.Entity.Validation;
-using System.Linq;
-using System.Text;
 
 namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Context
 {
@@ -83,7 +81,7 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Context
         {
             try
             {
-                var userManager = ServiceLocator.Current.Get<UserService>();
+                var userManager = ServiceLocator.Current.Get<ApplicationUserManager>();
                 var AdminstradorDesc = RoleType.Administrador.GetDescription();
                 var UsuarioDesc = RoleType.Usuario.GetDescription();
 

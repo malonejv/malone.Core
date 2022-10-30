@@ -10,7 +10,6 @@ using malone.Core.Commons.Initializers;
 using malone.Core.DataAccess.Context;
 using malone.Core.DataAccess.Repositories;
 using malone.Core.EF.Repositories.Implementations;
-using malone.Core.Identity.EntityFramework;
 using malone.Core.Identity.EntityFramework.Entities;
 using malone.Core.IoC;
 using malone.Core.Sample.EF.SqlServer.Middle.DAL.Context;
@@ -50,7 +49,7 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Migrations
                 AppInitializer<UnityActivator, IUnityContainer, ConfigurationInitializer>.Initialize();
 
 
-                var userManager = ServiceLocator.Current.Get<UserService>();
+                var userManager = ServiceLocator.Current.Get<ApplicationUserManager>();
                 var AdminstradorDesc = RoleType.Administrador.GetDescription();
                 var UsuarioDesc = RoleType.Usuario.GetDescription();
 
@@ -153,7 +152,6 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Migrations
             {
                 throw ex;
             }
-
         }
     }
 
@@ -192,7 +190,7 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.DAL.Migrations
             container.RegisterType<IRepository<TodoList>, TodoListRepository>();
             container.RegisterType<IRepository<TaskItem>, Repository<TaskItem>>();
 
-            container.RegisterInstance(UserService.CreateAndConfigure(new Microsoft.AspNet.Identity.Owin.IdentityFactoryOptions<UserService>(), null));
+            //container.RegisterInstance(UserService.CreateAndConfigure(new Microsoft.AspNet.Identity.Owin.IdentityFactoryOptions<UserService>(), null));
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿using malone.Core.Identity.EntityFramework;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+using malone.Core.Sample.EF.SqlServer.Middle;
 using malone.Core.Sample.EF.SqlServer.mvc.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 
 namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
 {

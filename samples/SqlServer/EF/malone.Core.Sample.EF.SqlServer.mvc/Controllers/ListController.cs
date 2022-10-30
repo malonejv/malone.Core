@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.EF.Entities.Filters;
-using malone.Core.Identity.EntityFramework;
 using malone.Core.Identity.EntityFramework.Entities;
+using malone.Core.Sample.EF.SqlServer.Middle;
 using malone.Core.Sample.EF.SqlServer.Middle.BL;
-using malone.Core.Sample.EF.SqlServer.Middle.BL.Requests;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
 using malone.Core.Sample.EF.SqlServer.mvc.Attributes;
 using malone.Core.Sample.EF.SqlServer.mvc.Models;

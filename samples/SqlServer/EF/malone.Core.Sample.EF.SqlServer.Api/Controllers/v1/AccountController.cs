@@ -1,17 +1,6 @@
 ﻿//<author>Javier López Malone</author>
 //<date>25/11/2020 02:45:05</date>
 
-using malone.Core.Identity.EntityFramework;
-using malone.Core.Identity.EntityFramework.Entities;
-using malone.Core.Sample.EF.SqlServer.Api.Models.v1;
-using malone.Core.Sample.EF.SqlServer.Api.Providers;
-using malone.Core.Sample.EF.SqlServer.Api.Results;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.OAuth;
-using Microsoft.Web.Http;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -20,34 +9,45 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using malone.Core.Identity.EntityFramework.Entities;
+using malone.Core.Sample.EF.SqlServer.Api.Models.v1;
+using malone.Core.Sample.EF.SqlServer.Api.Providers;
+using malone.Core.Sample.EF.SqlServer.Api.Results;
+using malone.Core.Sample.EF.SqlServer.Middle;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OAuth;
+using Microsoft.Web.Http;
 
 namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
 {
-                [Authorize]
+    [Authorize]
     [ApiVersion("1.0")]
     [RoutePrefix("v{version:apiVersion}/Account")]
     public class AccountController : ApiController
     {
-                                private const string LocalLoginProvider = "Local";
+        private const string LocalLoginProvider = "Local";
 
-                                private UserService _userManager;
+        private ApplicationUserManager _userManager;
 
-                                public AccountController()
+        public AccountController()
         {
         }
 
-                                                public AccountController(UserService userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+        public AccountController(ApplicationUserManager userManager,
+ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
         }
 
-                                public UserService UserManager
+        public ApplicationUserManager UserManager
         {
             get
             {
-                return _userManager ?? Request.GetOwinContext().GetUserManager<UserService>();
+                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
             private set
             {
@@ -55,10 +55,10 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
             }
         }
 
-                                public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
+        public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         // GET Account/UserInfo
-                                        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
         public UserInfoViewModel GetUserInfo()
         {
@@ -73,7 +73,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // POST Account/Logout
-                                        [Route("Logout")]
+        [Route("Logout")]
         public IHttpActionResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
@@ -81,7 +81,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // GET Account/ManageInfo?returnUrl=%2F&generateState=true
-                                                        [Route("ManageInfo")]
+        [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
         {
             CoreUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId<int>());
@@ -121,7 +121,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // POST Account/ChangePassword
-                                                [Route("ChangePassword")]
+        [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -141,7 +141,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // POST Account/SetPassword
-                                                [Route("SetPassword")]
+        [Route("SetPassword")]
         public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -160,7 +160,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // POST Account/AddExternalLogin
-                                                [Route("AddExternalLogin")]
+        [Route("AddExternalLogin")]
         public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -198,7 +198,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // POST Account/RemoveLogin
-                                                [Route("RemoveLogin")]
+        [Route("RemoveLogin")]
         public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -227,7 +227,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // GET Account/ExternalLogin
-                                                        [OverrideAuthentication]
+        [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
         [AllowAnonymous]
         [Route("ExternalLogin", Name = "ExternalLogin")]
@@ -265,10 +265,8 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
 
-                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                   OAuthDefaults.AuthenticationType);
-                ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    CookieAuthenticationDefaults.AuthenticationType);
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager, OAuthDefaults.AuthenticationType);
+                ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager, CookieAuthenticationDefaults.AuthenticationType);
 
                 AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
                 Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
@@ -284,7 +282,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // GET Account/ExternalLogins?returnUrl=%2F&generateState=true
-                                                        [AllowAnonymous]
+        [AllowAnonymous]
         [Route("ExternalLogins")]
         public IEnumerable<ExternalLoginViewModel> GetExternalLogins(string returnUrl, bool generateState = false)
         {
@@ -325,7 +323,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // POST Account/Register
-                                                [AllowAnonymous]
+        [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
@@ -347,7 +345,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
         }
 
         // POST Account/RegisterExternal
-                                        [OverrideAuthentication]
+        [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("RegisterExternal")]
         public async Task<IHttpActionResult> RegisterExternal()//(RegisterExternalBindingModel model)
@@ -380,7 +378,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
             return Ok();
         }
 
-                                        protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
             {
@@ -391,12 +389,12 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
             base.Dispose(disposing);
         }
 
-                                private IAuthenticationManager Authentication
+        private IAuthenticationManager Authentication
         {
             get { return Request.GetOwinContext().Authentication; }
         }
 
-                                                private IHttpActionResult GetErrorResult(IdentityResult result)
+        private IHttpActionResult GetErrorResult(IdentityResult result)
         {
             if (result == null)
             {
@@ -425,15 +423,15 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
             return null;
         }
 
-                                private class ExternalLoginData
+        private class ExternalLoginData
         {
-                                                public string LoginProvider { get; set; }
+            public string LoginProvider { get; set; }
 
-                                                public string ProviderKey { get; set; }
+            public string ProviderKey { get; set; }
 
-                                                public string UserName { get; set; }
+            public string UserName { get; set; }
 
-                                                            public IList<Claim> GetClaims()
+            public IList<Claim> GetClaims()
             {
                 IList<Claim> claims = new List<Claim>();
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, ProviderKey, null, LoginProvider));
@@ -446,7 +444,7 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
                 return claims;
             }
 
-                                                                        public static ExternalLoginData FromIdentity(ClaimsIdentity identity)
+            public static ExternalLoginData FromIdentity(ClaimsIdentity identity)
             {
                 if (identity == null)
                 {
@@ -475,11 +473,11 @@ namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v1
             }
         }
 
-                                private static class RandomOAuthStateGenerator
+        private static class RandomOAuthStateGenerator
         {
-                                                private static RandomNumberGenerator _random = new RNGCryptoServiceProvider();
+            private static RandomNumberGenerator _random = new RNGCryptoServiceProvider();
 
-                                                                        public static string Generate(int strengthInBits)
+            public static string Generate(int strengthInBits)
             {
                 const int bitsPerByte = 8;
 
