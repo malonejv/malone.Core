@@ -8,36 +8,35 @@ namespace malone.Core.Sample.EF.SqlServer.mvc
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery.Message.js",
-                        "~/Scripts/url-helper.js"));
+                        "~/libs/jquery/jquery-{version}.js",
+                        "~/Content/js/jquery.Message.js",
+                        "~/Content/js/url-helper.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*",
-                        "~/Scripts/jquery.validate.unobstrusive*"));
+                        "~/libs/jquery.validate/jquery.validate*",
+                        "~/libs/jquery.validate/jquery.validate.unobstrusive*"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+                        "~/libs/modernizr/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/popper.js",
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/bootstrap-datepicker.js",
-                      "~/Scripts/bootstrap-datepicker.es.min.js",
-                      "~/Scripts/bootstrap-switch.js",
-                      "~/Scripts/jquery.datepicker.js",
-                      "~/Scripts/jquery.switch.js"));
+                      "~/libs/bootstrap/js/bootstrap.js",
+                      "~/libs/others/js/bootstrap-datepicker.js",
+                      "~/libs/others/js/bootstrap-datepicker.es.min.js",
+                      "~/libs/others/js/bootstrap-switch.js",
+                      "~/libs/others/js/jquery.datepicker.js",
+                      "~/libs/others/js/jquery.switch.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/ListController").Include(
-                      "~/Scripts/controller-list.js"));
+                      "~/Content/js/controller-list.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/bootstrap-datepicker3.css",
-                      "~/Content/bootstrap-switch.css",
-                      "~/Content/site.css"));
+                      "~/libs/bootstrap/css/bootstrap.css",
+                      "~/libs/others/css/bootstrap-datepicker3.css",
+                      "~/libs/others/css/bootstrap-switch.css",
+                      "~/Content/css/site.css"));
         }
     }
 }

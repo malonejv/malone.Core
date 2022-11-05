@@ -10,6 +10,7 @@ using malone.Core.Identity.EntityFramework.Entities;
 using malone.Core.Sample.EF.SqlServer.Middle.BL;
 using malone.Core.Sample.EF.SqlServer.Middle.BL.Requests;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
+using malone.Core.Sample.EF.SqlServer.mvc.Attributes;
 using malone.Core.Sample.EF.SqlServer.mvc.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -22,7 +23,6 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
         private UserService _userManager;
         private readonly ITodoListBC todoListBC;
         private readonly ITaskItemBC taskItemBC;
-        private readonly Mapper mapper;
 
         public UserService UserManager
         {
@@ -34,11 +34,10 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
             }
         }
 
-        public ListController(ITodoListBC todoListBC, ITaskItemBC taskItemBC, Mapper mapperInstance)
+        public ListController(ITodoListBC todoListBC, ITaskItemBC taskItemBC)
         {
             this.todoListBC = todoListBC.ThrowIfNull();
             this.taskItemBC = taskItemBC.ThrowIfNull();
-            this.mapper = mapperInstance.ThrowIfNull();
         }
 
         #region Lists
@@ -48,156 +47,74 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
             //Ejemplo para filtrar la lista
             var lists = GetUserLists();
 
-            return View(new ListIndexViewModel
-            {
-                Listas = lists,
-                NuevaLista = new TodoListViewModel()
-            });
+            return View(lists);
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Detail(int id)
         {
             var todoList = todoListBC.GetById(id, includeProperties: "Items,User");
 
-            return View(new ListDetailsViewModel
-            {
-                Lista = AsViewModel(todoList),
-                NuevaTarea = new TaskItemViewModel()
-            });
+            return View(TodoListViewModel.CreateFromEntity(todoList));
+        }
+
+        public ActionResult Create()
+        {
+            TodoListViewModel model = new TodoListViewModel();
+            return PartialView("_Create", model);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateHeaderAntiForgeryToken]
         public ActionResult Create(TodoListViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = CurrentUser();
-                todoListBC.Add(new TodoList(model.Name, user));
+                var id = todoListBC.Add(new TodoList(model.Name, user));
 
-                return RedirectToAction("Details", new { model.Id });
+                return Json(new { Url = Url.Action("Detail", new { Id= id }) });
             }
-            return View("Index", new ListIndexViewModel()
-            {
-                Listas = GetUserLists()
-            });
+            else
+                return PartialView("_Create", model);
         }
 
         public ActionResult Edit(int id)
         {
-            var lists = GetUserLists();
             var todoList = todoListBC.GetById(id);
 
-            return View("Index", new ListIndexViewModel
-            {
-                Listas = lists,
-                EditarLista = AsViewModel(todoList)
-            });
+            TodoListViewModel model = TodoListViewModel.CreateFromEntity(todoList);
+            return PartialView("_Edit", model);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateHeaderAntiForgeryToken]
         public ActionResult Edit(TodoListViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var todoList = todoListBC.GetById(model.Id);
+                var todoList = todoListBC.GetById(model.Id, includeProperties: "User");
                 todoList.UpdateName(model.Name);
                 todoListBC.Update(todoList);
 
-                return RedirectToAction("Index");
+                return Json(new { Url = Url.Action("Index") });
             }
-
-            return View("Index", new ListIndexViewModel()
-            {
-                Listas = GetUserLists()
-            });
+            return PartialView("_Edit", model);
         }
 
         public ActionResult Delete(int id)
         {
-            var todoList = todoListBC.GetById(id);
-            var lists = GetUserLists();
+            var todoList = todoListBC.GetById(id, includeProperties: "Items");
 
-            return View("Index", new ListIndexViewModel
-            {
-                Listas = lists,
-                EliminarLista = AsViewModel(todoList)
-            });
+            TodoListViewModel model = TodoListViewModel.CreateFromEntity(todoList);
+            return PartialView("_Delete", model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(TodoList todoList)
+        public ActionResult Delete(TodoListViewModel todoList)
         {
             todoListBC.Delete(todoList.Id);
             return RedirectToAction("Index");
-        }
-
-        #endregion
-
-        #region Tasks
-
-        [HttpPost]
-        //[ValidateAntiForgeryToken] 
-        public JsonResult CheckTask(int listId, int taskId)
-        {
-            var taskItem = taskItemBC.GetById(taskId);
-            taskItem.ToggleDone();
-
-            taskItemBC.Update(taskItem);
-
-            var redirectUrl = new UrlHelper(Request.RequestContext).Action("Details", new { id = listId });
-            return Json(new { Url = redirectUrl });
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddTask(ListDetailsViewModel model)
-        {
-            var todoList = todoListBC.GetById(model.Lista.Id, includeProperties: "Items,User");
-            model.Lista = AsViewModel(todoList);
-
-            if (ModelState.IsValid)
-            {
-                //model.Lista.Items.Add(model.NuevaTarea);
-                //taskItemBC.add(new TaskItem);
-                return RedirectToAction("Details", new { id = model.Lista.Id });
-            }
-            return View("Details", model);
-        }
-
-        public ActionResult EditTask(int listId, int taskId)
-        {
-            var list = todoListBC.GetById(listId, includeProperties: "Items");
-
-            return View("Details", new ListDetailsViewModel
-            {
-                Lista = AsViewModel( list),
-                //EditarTarea = list.Items.Where(t => t.Id == taskId).FirstOrDefault()
-            });
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditTask(ListDetailsViewModel model)
-        {
-            //if (ModelState.IsValid)
-            //{
-            //    taskItemBC.Update(new UpdateListRequest()
-            //    {
-            //        model.EditarTarea
-            //    });
-            //    return RedirectToAction("Details", new { model.Lista.Id });
-            //}
-            //model.Lista = todoListBC.GetById(model.Lista.Id, includeProperties: "Items");
-            return View("Details", model);
-        }
-
-        public ActionResult DeleteTask(int listId, int taskId)
-        {
-            taskItemBC.Delete(taskId);
-            return RedirectToAction("Details", new { id = listId });
         }
 
         #endregion
@@ -220,12 +137,8 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
                     Expression = (l => l.User.Id == userId)
                 }, includeProperties: "Items,User");
 
-            return AsViewModelList(list);
+            return TodoListViewModel.CreateFromList(list);
         }
-
-        protected IEnumerable<TodoListViewModel> AsViewModelList(IEnumerable<TodoList> list) => mapper.Map<IEnumerable<TodoList>, List<TodoListViewModel>>(list);
-
-        protected TodoListViewModel AsViewModel(TodoList entity) => mapper.Map<TodoList, TodoListViewModel>(entity);
 
         #endregion
     }

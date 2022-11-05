@@ -32,6 +32,16 @@ namespace malone.Core.Sample.EF.SqlServer.Middle.BL.Implementations
             return validationList;
         }
 
+        protected override ValidationResultList BeforeUpdatingValidation(TodoList entity)
+        {
+            var validationList = base.BeforeUpdatingValidation(entity);
+
+            validationList.Add(ValidarCaracteresEspeciales(entity));
+            validationList.Add(ValidarNombreRepetido(entity));
+
+            return validationList;
+        }
+
         private ValidationResult ValidarCaracteresEspeciales(TodoList entity)
         {
             try

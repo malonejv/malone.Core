@@ -1,0 +1,30 @@
+﻿@model malone.Core.Sample.EF.SqlServer.mvc.Models.TaskItemViewModel
+
+@{
+    var displayClear = !string.IsNullOrEmpty(Model.Description) ? "block" : "none";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "TaskForm", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ListId)
+
+    <div class="form-horizontal animate_animated animate_fadeIn">
+        <div class="input-group">
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control default-control", placeholder = "Nueva tarea" } })
+            <button id="btnClear" style="display: @displayClear"><i class="far fa-times-circle"></i></button>
+            <div class="input-group-append">
+                <button id="btnCreateTask" class="btn btn-primary">
+                    Crear
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

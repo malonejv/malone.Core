@@ -14,16 +14,12 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Attributes
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class ErrorHandlerAttribute : FilterAttribute, IExceptionFilter
     {
-        //private IContentLocalizationHandler ContentLocalizationHandler { get; set; }
-        //private IErrorLocalizationHandler ErrorLocalizationHandler { get; set; }
 
         public ICoreLogger Logger { get; set; }
 
         public ErrorHandlerAttribute()
         {
-            Logger = ServiceLocator.Current.Get<ICoreLogger>(); ;
-            //ContentLocalizationHandler = ServiceLocator.Current.Get<IContentLocalizationHandler>();
-            //ErrorLocalizationHandler = ServiceLocator.Current.Get<IErrorLocalizationHandler>();
+            Logger = ServiceLocator.Current.Get<ICoreLogger>();
         }
 
         public void OnException(ExceptionContext filterContext)
@@ -32,8 +28,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Attributes
             string culture = "";
             if (cookie != null)
                 culture = cookie.Value;
-            //else
-            //    culture = CultureHelper.GetImplementedCulture(null);
+
             CultureInfo ci = new CultureInfo(culture);
 
             StringBuilder sbMessage = new StringBuilder();
@@ -90,8 +85,6 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Attributes
                     error.Paragraphs.Add(message);
                 }
 
-                //if (filterContext.Controller.TempData != null && !filterContext.Controller.TempData.ContainsKey("ErrorMessage"))
-                //    filterContext.Controller.TempData["ErrorMessage"] = error;
                 filterContext.HttpContext.Session["ErrorMessage"] = error;
 
                 var rawUrl = filterContext.RequestContext.HttpContext.Request.RawUrl;

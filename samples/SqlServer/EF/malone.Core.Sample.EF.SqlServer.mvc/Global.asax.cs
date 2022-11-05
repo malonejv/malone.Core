@@ -3,7 +3,9 @@ using malone.Core.Sample.EF.SqlServer.Middle.Initializers;
 using malone.Core.Sample.EF.SqlServer.mvc;
 using malone.Core.Sample.EF.SqlServer.mvc.Initializers;
 using malone.Core.Unity;
+using System;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -23,6 +25,7 @@ namespace malone.Core.Sample.EF.SqlServer.mvc
 
     public class MvcApplication : System.Web.HttpApplication
     {
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();

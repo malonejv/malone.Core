@@ -1,10 +1,7 @@
 ﻿@using malone.Core.Sample.EF.SqlServer.mvc.Resources;
 @using malone.Core.Sample.EF.SqlServer.mvc.Attributes;
 @{
-
-    //var errorMessage = ViewBag.ErrorMessage;
     var errorMessage = (ErrorMessage)Session["ErrorMessage"];
-
 }
 <!DOCTYPE html>
 <html>
@@ -14,6 +11,8 @@
     <title>@ViewBag.Title - Orgnzr</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-blue">
@@ -46,9 +45,9 @@
                         <ul>
                             @foreach (var paragraph in errorMessage.Paragraphs)
                             {
-                            <li class='text-@errorMessage.Status'>
-                                @paragraph
-                            </li>
+                                <li class='text-@errorMessage.Status'>
+                                    @paragraph
+                                </li>
                             }
                         </ul>
                     }
