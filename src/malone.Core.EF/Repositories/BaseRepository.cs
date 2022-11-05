@@ -230,11 +230,11 @@ namespace malone.Core.EF.Repositories
 
 				if (orderBy != null)
 				{
-					return orderBy(query).AsNoTracking<T>();
+					return orderBy(query);
 				}
 				else
 				{
-					return query.AsNoTracking<T>();
+					return query;
 				}
 			}
 			catch (Exception ex)

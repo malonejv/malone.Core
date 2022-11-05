@@ -1,16 +1,20 @@
 ﻿@model malone.Core.Sample.EF.SqlServer.mvc.Models.TodoListViewModel
 
+@{
+    var displayClear = !string.IsNullOrEmpty(Model.Name) ? "block" : "none";
+}
 
-@using (Html.BeginForm("Create", "List", FormMethod.Post))
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "ListForm", role = "form" }))
 {
     @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-horizontal animate__animated animate__fadeIn">
         <div class="input-group">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nueva lista" } })
-            <div class="input-group-append">
-                <input type="submit" value="Crear" class="btn btn-primary" />
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control default-control", placeholder = "Nueva lista" } })
+            <button id="btnClear" style="display: @displayClear"><i class="far fa-times-circle"></i></button>
+            <div class="input-group-append btnclear-wrapper">
+                <button id="btnCreateList" class="btn btn-primary">
+                    Crear
+                </button>
             </div>
         </div>
         <div class="">

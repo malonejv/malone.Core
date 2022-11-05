@@ -1,29 +1,22 @@
-﻿@model malone.Core.Sample.EF.SqlServer.mvc.Models.ListIndexViewModel
+﻿@model IEnumerable<TodoListViewModel>
+@using malone.Core.Sample.EF.SqlServer.mvc.Models
 
 @{
     ViewBag.Title = "Listas";
 }
 
 <div class="row page-header rounded-bottom pt-1 pb-1 pt-md-2 pb-md-2 pt-lg-3 pb-lg-3 pt-xl-4 pb-xl-4">
-    <h2 class="col-12 col-xl-2 m-0 text-center text-xl-left">Listas</h2>
-    <div class="col-12 col-xl-10">
-
-        @if (Model.EditarLista != null)
-        {
-            @Html.Partial("_Edit", Model.EditarLista, ViewData)
-        }
-        else
-        {
-            @Html.Partial("_Create", Model.NuevaLista, ViewData)
-        }
+    <h2 class="col-12 text-center text-xl-left">Listas</h2>
+    <div id="formWrapper" class="col-12 mt-3">
+        @Html.Action("Create")
     </div>
 </div>
 
 <div class="list-container">
-    <div id="lists" class="list-group list-group-flush">
-        @foreach (var list in Model.Listas)
+    <div id="lists" class="list-group list-group-flush animate__animated animate__fadeIn">
+        @foreach (var list in Model)
         {
-            <a href="@Url.Action("Details", new { id = list.Id })" data-id="@list.Id" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <a href="@Url.Action("Detail", new { id = list.Id })" data-id="@list.Id" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                 @Html.DisplayFor(modelItem => list.Name)
                 <span class="pull-right">
                     <span class="badge bg-blue badge-pill" title="Pending">@list.Pending</span>
@@ -62,11 +55,7 @@
         </a>
     </li>
 </ul>
-
-@if (Model.EliminarLista != null)
-{
-    @Html.Partial("_Delete", Model.EliminarLista, ViewData)
-}
+<div id="modalWrapper"></div>
 
 @section Scripts{
     @Scripts.Render("~/bundles/ListController")

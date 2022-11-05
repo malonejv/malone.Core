@@ -103,70 +103,70 @@
       <HintPath>..\..\..\..\..\..\..\packages\log4net.2.0.15\lib\net45\log4net.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.2.1.22.38-dev\lib\net471\malone.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.2.1.22.43-dev\lib\net471\malone.Core.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.AdoNet, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.AdoNet.2.1.22.38-dev\lib\net471\malone.Core.AdoNet.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.AdoNet.2.1.22.43-dev\lib\net471\malone.Core.AdoNet.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.AdoNet.SqlServer, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.AdoNet.SqlServer.2.1.22.38-dev\lib\net471\malone.Core.AdoNet.SqlServer.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.AdoNet.SqlServer.2.1.22.43-dev\lib\net471\malone.Core.AdoNet.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Async, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Async.2.1.22.38-dev\lib\net471\malone.Core.Async.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Async.2.1.22.43-dev\lib\net471\malone.Core.Async.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Configuration, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Configuration.2.1.22.38-dev\lib\net471\malone.Core.Configuration.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Configuration.2.1.22.43-dev\lib\net471\malone.Core.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Dapper, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Dapper.2.1.22.38-dev\lib\net471\malone.Core.Dapper.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Dapper.2.1.22.43-dev\lib\net471\malone.Core.Dapper.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.EF, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.EF.2.1.22.38-dev\lib\net471\malone.Core.EF.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.EF.2.1.22.43-dev\lib\net471\malone.Core.EF.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Identity, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Identity.2.1.22.38-dev\lib\net471\malone.Core.Identity.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Identity.2.1.22.43-dev\lib\net471\malone.Core.Identity.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Identity.AdoNet.SqlServer, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Identity.AdoNet.SqlServer.2.1.22.38-dev\lib\net471\malone.Core.Identity.AdoNet.SqlServer.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Identity.AdoNet.SqlServer.2.1.22.43-dev\lib\net471\malone.Core.Identity.AdoNet.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Identity.Dapper, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Identity.Dapper.2.1.22.38-dev\lib\net471\malone.Core.Identity.Dapper.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Identity.Dapper.2.1.22.43-dev\lib\net471\malone.Core.Identity.Dapper.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Identity.EntityFramework, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Identity.EntityFramework.2.1.22.38-dev\lib\net471\malone.Core.Identity.EntityFramework.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Identity.EntityFramework.2.1.22.43-dev\lib\net471\malone.Core.Identity.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.IoC, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.IoC.2.1.22.38-dev\lib\net471\malone.Core.IoC.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.IoC.2.1.22.43-dev\lib\net471\malone.Core.IoC.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Localization, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Localization.2.1.22.38-dev\lib\net471\malone.Core.Localization.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Localization.2.1.22.43-dev\lib\net471\malone.Core.Localization.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Log4Net, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Log4Net.2.1.22.38-dev\lib\net471\malone.Core.Log4Net.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Log4Net.2.1.22.43-dev\lib\net471\malone.Core.Log4Net.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Logging, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Logging.2.1.22.38-dev\lib\net471\malone.Core.Logging.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Logging.2.1.22.43-dev\lib\net471\malone.Core.Logging.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Unity, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Unity.2.1.22.38-dev\lib\net471\malone.Core.Unity.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Unity.2.1.22.43-dev\lib\net471\malone.Core.Unity.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Unity.IdentityAdoNetSqlServerInitializer, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Unity.IdentityAdoNetSqlServerInitializer.2.1.22.38-dev\lib\net471\malone.Core.Unity.IdentityAdoNetSqlServerInitializer.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Unity.IdentityAdoNetSqlServerInitializer.2.1.22.43-dev\lib\net471\malone.Core.Unity.IdentityAdoNetSqlServerInitializer.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Unity.IdentityDapperInitializer, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Unity.IdentityDapperInitializer.2.1.22.38-dev\lib\net471\malone.Core.Unity.IdentityDapperInitializer.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Unity.IdentityDapperInitializer.2.1.22.43-dev\lib\net471\malone.Core.Unity.IdentityDapperInitializer.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Unity.IdentityEntityFrameworkInitializer, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Unity.IdentityEntityFrameworkInitializer.2.1.22.38-dev\lib\net471\malone.Core.Unity.IdentityEntityFrameworkInitializer.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Unity.IdentityEntityFrameworkInitializer.2.1.22.43-dev\lib\net471\malone.Core.Unity.IdentityEntityFrameworkInitializer.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Unity.Log4NetInitializer, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Unity.Log4NetInitializer.2.1.22.38-dev\lib\net471\malone.Core.Unity.Log4NetInitializer.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Unity.Log4NetInitializer.2.1.22.43-dev\lib\net471\malone.Core.Unity.Log4NetInitializer.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.Unity.ModulesInitializers, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Unity.ModulesInitializers.2.1.22.38-dev\lib\net471\malone.Core.Unity.ModulesInitializers.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.Unity.ModulesInitializers.2.1.22.43-dev\lib\net471\malone.Core.Unity.ModulesInitializers.dll</HintPath>
     </Reference>
     <Reference Include="malone.Core.WebApi, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.WebApi.2.1.22.38-dev\lib\net471\malone.Core.WebApi.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\packages\malone.Core.WebApi.2.1.22.43-dev\lib\net471\malone.Core.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
