@@ -4,11 +4,15 @@
 	using System.Collections.Generic;
 	using System.Data;
 	using System.Linq;
+	using System.Reflection;
+	using System.Text;
+	using malone.Core.AdoNet.Attributes;
 	using malone.Core.AdoNet.Context;
 	using malone.Core.AdoNet.Database;
 	using malone.Core.AdoNet.Entities;
 	using malone.Core.AdoNet.Entities.Filters;
 	using malone.Core.Commons.Exceptions;
+	using malone.Core.Commons.Helpers.Extensions;
 	using malone.Core.DataAccess.Context;
 	using malone.Core.DataAccess.Repositories;
 	using malone.Core.Entities.Filters;
@@ -20,18 +24,11 @@
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
 	public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>, IDisposable
-		where TEntity : class
+		where TEntity : class, new()
 	{
-		/// <summary>
-		/// Gets the Context.
-		/// </summary>
-		protected CoreDbContext Context { get; private set; }
-
-		/// <summary>
-		/// Gets the Logger.
-		/// </summary>
-		protected ICoreLogger Logger { get; }
-
+		protected CoreDbContext context;
+		protected ICoreLogger logger;
+		protected internal Type entityType;
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BaseRepository{TEntity}"/> class.
 		/// </summary>
@@ -42,8 +39,9 @@
 			CheckContext(context);
 			CheckLogger(logger);
 
-			Context = (CoreDbContext)context;
-			Logger = logger;
+			this.context = context.ThrowIfNull().ThrowIfNotDeriveOfType<CoreDbContext>(nameof(context));
+			this.logger = logger;
+			entityType = this.GetType().GetInterface("IBaseRepository`1").GetGenericArguments()[0];
 		}
 
 
@@ -53,7 +51,7 @@
 		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
 		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
-		protected abstract void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties);
+		protected virtual void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted) { }
 
 		/// <summary>
 		/// The GetAll.
@@ -65,30 +63,26 @@
 		public virtual IEnumerable<TEntity> GetAll(
 			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
 			bool includeDeleted = false,
-			string includeProperties = ""
-		   )
+			string includeProperties = "")
 		{
 			ThrowIfDisposed();
 			try
 			{
 				IQueryable<TEntity> queryableResult;
 
-				var command = Context.CreateCommand();
+				var command = context.CreateCommand();
 
-
-				var entityType = typeof(TEntity);
-				entityType = this.GetType().GetInterface("IBaseRepository`1").GetGenericArguments()[0];
 				string tableName = entityType.GetTableName();
-				List<string> columns = entityType.GetColumnNames();
+				var columns = entityType.GetColumnsInfo();
 
-				ConfigureParameterForSoftDelete(entityType, columns, includeDeleted);
+				string deletedCondition = DeleteCondintion(includeDeleted);
 
-				//TODO: Continuar aquí 03/03/2022
-				string whereClause = "";
-				string columnNames = columns.Aggregate((i, j) => $"{i}, {j}");
-				string query = $"SELECT {columnNames} FROM {tableName} WHERE {whereClause}";
+				string whereClause = !string.IsNullOrEmpty(deletedCondition) ? $" WHERE {deletedCondition}" : string.Empty;
 
-				ConfigureCommandForGetAll(command, includeDeleted, includeProperties);
+				string columnNames = columns.Select(c => c.Name).Aggregate((i, j) => $"{i}, {j}");
+				string query = $"SELECT {columnNames} FROM {tableName}{whereClause}";
+
+				ConfigureCommandForGetAll(command, includeDeleted);
 				queryableResult = GetQueryable(command, includeDeleted, orderBy);
 
 				return queryableResult.ToList<TEntity>();
@@ -96,9 +90,9 @@
 			catch (Exception ex)
 			{
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
@@ -111,7 +105,7 @@
 		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
 		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
-		protected abstract void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties);
+		protected abstract void ConfigureCommandForGet(IDbCommand command, bool includeDeleted);
 
 		/// <summary>
 		/// The Get.
@@ -134,16 +128,24 @@
 			{
 				IQueryable<TEntity> queryableResult;
 
-				var command = Context.CreateCommand();
-				ConfigureCommandForGet(command, includeDeleted, includeProperties);
+				var command = context.CreateCommand();
+
+				string tableName = entityType.GetTableName();
+				var columns = entityType.GetColumnsInfo();
+
+				string deletedCondition = DeleteCondintion(includeDeleted);
+
+				string whereClause = !string.IsNullOrEmpty(deletedCondition) ? $" WHERE {deletedCondition}" : string.Empty;
 
 				IEnumerable<DbParameterWithValue> parameters;
 
 				if (filter != default(TFilter) && typeof(IFilterExpressionAdoNet).IsAssignableFrom(typeof(TFilter)))
 				{
 					parameters = (filter as IFilterExpressionAdoNet).GetParameters(command);
-					Context.AddCommandParameters(command, parameters);
+					context.AddCommandParameters(command, parameters);
 				}
+
+				ConfigureCommandForGet(command, includeDeleted);
 
 				queryableResult = GetQueryable(command, includeDeleted, orderBy);
 
@@ -152,9 +154,9 @@
 			catch (Exception ex)
 			{
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
@@ -167,7 +169,7 @@
 		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
 		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
-		protected abstract void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties);
+		protected abstract void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted);
 
 		/// <summary>
 		/// The GetEntity.
@@ -190,15 +192,15 @@
 			{
 				IQueryable<TEntity> queryableResult;
 
-				var command = Context.CreateCommand();
-				ConfigureCommandForGetEntity(command, includeDeleted, includeProperties);
+				var command = context.CreateCommand();
+				ConfigureCommandForGetEntity(command, includeDeleted);
 
 				IEnumerable<DbParameterWithValue> parameters;
 
 				if (filter != default(TFilter) && typeof(IFilterExpressionAdoNet).IsAssignableFrom(typeof(TFilter)))
 				{
 					parameters = (filter as IFilterExpressionAdoNet).GetParameters(command);
-					Context.AddCommandParameters(command, parameters);
+					context.AddCommandParameters(command, parameters);
 				}
 
 				queryableResult = GetQueryable(command, includeDeleted, orderBy);
@@ -208,9 +210,9 @@
 			catch (Exception ex)
 			{
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
@@ -244,21 +246,21 @@
 			ThrowIfDisposed();
 			try
 			{
-				var command = Context.CreateCommand();
+				var command = context.CreateCommand();
 				ConfigureCommandForInsert(command);
 
 				List<DbParameterWithValue> parameters = new List<DbParameterWithValue>();
 				parameters = GetInsertParameters(parameters, entity);
-				Context.AddCommandParameters(command, parameters);
+				context.AddCommandParameters(command, parameters);
 
 				command.ExecuteNonQuery();
 			}
 			catch (Exception ex)
 			{
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS602, typeof(TEntity));
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
@@ -292,21 +294,21 @@
 			ThrowIfDisposed();
 			try
 			{
-				var command = Context.CreateCommand();
+				var command = context.CreateCommand();
 				ConfigureCommandForUpdate(command);
 
 				List<DbParameterWithValue> parameters = new List<DbParameterWithValue>();
 				parameters = GetUpdateParameters(parameters, entity);
-				Context.AddCommandParameters(command, parameters);
+				context.AddCommandParameters(command, parameters);
 
 				command.ExecuteNonQuery();
 			}
 			catch (Exception ex)
 			{
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
@@ -340,21 +342,21 @@
 			ThrowIfDisposed();
 			try
 			{
-				var command = Context.CreateCommand();
+				var command = context.CreateCommand();
 				ConfigureCommandForDelete(command);
 
 				List<DbParameterWithValue> parameters = new List<DbParameterWithValue>();
 				parameters = GetDeleteParameters(parameters, entityToDelete);
-				Context.AddCommandParameters(command, parameters);
+				context.AddCommandParameters(command, parameters);
 
 				command.ExecuteNonQuery();
 			}
 			catch (Exception ex)
 			{
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS603, typeof(TEntity));
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
@@ -412,7 +414,7 @@
 					//Context.Db.AddParameterIsDeleted(command, includeDeleted);
 				}
 
-				IDataAdapter adapter = Context.CreateAdapter(command);
+				IDataAdapter adapter = context.CreateAdapter(command);
 				DataSet ds = new DataSet();
 
 				adapter.Fill(ds);
@@ -444,26 +446,42 @@
 			catch (Exception ex)
 			{
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity));
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
 			}
 		}
 
-		protected void ConfigureParameterForSoftDelete(Type entityType, List<string> columns, bool includeDeleted)
+		protected bool ConfigureParameterForSoftDelete(Type entityType, List<string> columns, bool includeDeleted)
 		{
+			var softDeleted = false;
 			if (includeDeleted)
 			{
 				var allowSoftDelete = typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity));
-				var columnName = entityType.GetColumnName(nameof(ISoftDelete.IsDeleted));
-				if (allowSoftDelete && !columns.Contains(columnName))
+				if (allowSoftDelete)
 				{
-					columns.Add(columnName);
+					var columnName = entityType.GetColumnName(nameof(ISoftDelete.IsDeleted));
+					if (!columns.Contains(columnName))
+					{
+						columns.Add(columnName);
+					}
+					softDeleted = true;
 				}
 			}
+			return softDeleted;
+		}
+
+		protected string ConfigureWhereClause(IEnumerable<ColumnAttribute> columns)
+		{
+			StringBuilder whereClause = new StringBuilder(" WHERE ");
+			foreach (var column in columns)
+			{
+				whereClause.Append($" {column} = ");
+			}
+			return whereClause.ToString();
 		}
 
 		/// <summary>
@@ -471,7 +489,35 @@
 		/// </summary>
 		/// <param name="row">The row<see cref="DataRow"/>.</param>
 		/// <returns>The <see cref="TEntity"/>.</returns>
-		protected abstract TEntity Map(DataRow row);
+		protected virtual TEntity Map(DataRow row)
+		{
+			TEntity entity = null;
+			if (row != null)
+			{
+				entity = new TEntity();
+				var tEntity = entityType.GetType();
+
+				var columns = entityType.GetColumnsInfo();
+				foreach (var column in columns)
+				{
+					tEntity.GetProperty(column.PropertyName).SetValue(entityType, Convert.ChangeType(row[column.Name], column.PropertyType));
+				}
+			}
+			return entity;
+		}
+
+		private string DeleteCondintion(bool includeDeleted)
+		{
+			if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
+			{
+				if (!includeDeleted)
+				{
+					var isDeletedColumn = entityType.GetColumnInfo(nameof(ISoftDelete.IsDeleted));
+					return $"{isDeletedColumn.Name} = 0";
+				}
+			}
+			return string.Empty;
+		}
 
 		/// <summary>
 		/// Defines the _disposed.
@@ -504,12 +550,12 @@
 		/// <param name="disposing">The disposing<see cref="bool"/>.</param>
 		protected virtual void Dispose(bool disposing)
 		{
-			if (disposing && Context != null)
+			if (disposing && context != null)
 			{
-				Context.Dispose();
+				context.Dispose();
 			}
 			_disposed = true;
-			Context = null;
+			context = null;
 		}
 	}
 }

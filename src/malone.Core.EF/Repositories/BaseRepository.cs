@@ -17,61 +17,64 @@ namespace malone.Core.EF.Repositories
 	public class BaseRepository<T> : IBaseRepository<T>, IDisposable
 		where T : class
 	{
-		protected DbContext Context { get; set; }
-		protected DbSet<T> EntityDbSet { get; private set; }
-		protected ICoreLogger Logger { get; set; }
+		protected DbContext context;
+		protected DbSet<T> entityDbSet;
+		protected ICoreLogger logger;
 
 		#region Constructor
 
 		public BaseRepository(IContext context, ICoreLogger logger)
 		{
-			Context = context.ThrowIfNull().ThrowIfNotDeriveOfType<DbContext>(nameof(context));
-			Logger = logger.ThrowIfNull();
-			EntityDbSet = Context.Set<T>();
+			this.context = context.ThrowIfNull().ThrowIfNotDeriveOfType<DbContext>(nameof(context));
+			this.logger = logger.ThrowIfNull();
+			entityDbSet = this.context.Set<T>();
 		}
 
 		#endregion
 
 		#region Public methods
 
-		public virtual IEnumerable<T> GetAll(
+		public virtual IEnumerable<T> GetAll<TOpt>(
 			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-			bool includeDeleted = false,
-			string includeProperties = ""
-		   )
+			TOpt optionRequest = null)
+			where TOpt : class, IOptionRequest, new()
 		{
 			ThrowIfDisposed();
 			try
 			{
-				IQueryable<T> query = EntityDbSet;
+				OptionRequest options = (OptionRequest)Convert.ChangeType(optionRequest ?? new TOpt(), typeof(OptionRequest));
 
-				query = Get(query, orderBy, includeDeleted, includeProperties);
+				IQueryable<T> query = entityDbSet;
+
+				query = Get(query, orderBy, options.IncludeDeleted, options.IncludeProperties);
 
 				return query.ToList();
 			}
 			catch (Exception ex)
 			{
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(T));
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
 			}
 		}
 
-		public virtual IEnumerable<T> Get<TFilter>(
+		public virtual IEnumerable<T> Get<TOpt, TFilter>(
 		   TFilter filter = default(TFilter),
 		   Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-		   bool includeDeleted = false,
-		   string includeProperties = "")
+		   TOpt optionRequest = null)
+			where TOpt : class, IOptionRequest, new()
 			where TFilter : class, IFilterExpression
 		{
 			ThrowIfDisposed();
 			try
 			{
-				IQueryable<T> query = EntityDbSet;
+				OptionRequest options = (OptionRequest)Convert.ChangeType(optionRequest ?? new TOpt(), typeof(OptionRequest));
+
+				IQueryable<T> query = entityDbSet;
 
 				Expression<Func<T, bool>> filterExp = null;
 				if (filter != null)
@@ -85,7 +88,7 @@ namespace malone.Core.EF.Repositories
 					query = query.Where(filterExp);
 				}
 
-				query = Get(query, orderBy, includeDeleted, includeProperties);
+				query = Get(query, orderBy, options.IncludeDeleted, options.IncludeProperties);
 
 				return query.ToList();
 			}
@@ -93,28 +96,30 @@ namespace malone.Core.EF.Repositories
 			{
 
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(T));
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
 			}
 		}
 
-		public virtual T GetEntity<TFilter>(
+		public virtual T GetEntity<TOpt, TFilter>(
 			TFilter filter = default(TFilter),
 			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-			bool includeDeleted = false,
-			string includeProperties = "")
+			TOpt optionRequest = null)
+			where TOpt : class, IOptionRequest, new()
 			where TFilter : class, IFilterExpression
 		{
 			ThrowIfDisposed();
 			try
 			{
-				IQueryable<T> query = EntityDbSet;
+				OptionRequest options = (OptionRequest)Convert.ChangeType(optionRequest ?? new TOpt(), typeof(OptionRequest));
 
-				query = Get(query, orderBy, includeDeleted, includeProperties);
+				IQueryable<T> query = entityDbSet;
+
+				query = Get(query, orderBy, options.IncludeDeleted, options.IncludeProperties);
 
 				Expression<Func<T, bool>> filterExp = null;
 				if (filter != null)
@@ -132,9 +137,9 @@ namespace malone.Core.EF.Repositories
 			catch (Exception ex)
 			{
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS601, typeof(T));
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
@@ -146,14 +151,14 @@ namespace malone.Core.EF.Repositories
 			ThrowIfDisposed();
 			try
 			{
-					EntityDbSet.Add(entity);
+				entityDbSet.Add(entity);
 			}
 			catch (Exception ex)
 			{
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS602, typeof(T));
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
@@ -165,14 +170,14 @@ namespace malone.Core.EF.Repositories
 			ThrowIfDisposed();
 			try
 			{
-				Context.Entry(entity).State = EntityState.Modified;
+				context.Entry(entity).State = EntityState.Modified;
 			}
 			catch (Exception ex)
 			{
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(T));
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
@@ -184,14 +189,14 @@ namespace malone.Core.EF.Repositories
 			ThrowIfDisposed();
 			try
 			{
-				EntityDbSet.Remove(entity);
+				entityDbSet.Remove(entity);
 			}
 			catch (Exception ex)
 			{
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS603, typeof(T));
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
@@ -240,9 +245,9 @@ namespace malone.Core.EF.Repositories
 			catch (Exception ex)
 			{
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(T));
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
@@ -271,12 +276,12 @@ namespace malone.Core.EF.Repositories
 
 		protected virtual void Dispose(bool disposing)
 		{
-			if (disposing && Context != null)
+			if (disposing && context != null)
 			{
-				Context.Dispose();
+				context.Dispose();
 			}
 			_disposed = true;
-			Context = null;
+			context = null;
 		}
 
 		#endregion

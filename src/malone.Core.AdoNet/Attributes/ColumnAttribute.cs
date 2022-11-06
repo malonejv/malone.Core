@@ -41,7 +41,9 @@ namespace malone.Core.AdoNet.Attributes
 			}
 		}
 
-		public object Value { get; internal set; }
+		internal object Value { get; set; }
+		internal string PropertyName { get; set; }
+		internal Type PropertyType { get; set; }
 
 	}
 }

@@ -81,6 +81,7 @@
     <Compile Include="Entities\IBaseEntityAdoNetExtensions.cs" />
     <Compile Include="Entities\TypeAdoNetExtensions.cs" />
     <Compile Include="Parameters\IParameterConverter.cs" />
+    <Compile Include="Repositories\OptionRequest.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Entities\Filters\IFilterExpressionAdoNet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

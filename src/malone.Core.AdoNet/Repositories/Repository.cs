@@ -9,6 +9,7 @@
 	using malone.Core.Commons.Exceptions;
 	using malone.Core.DataAccess.Context;
 	using malone.Core.DataAccess.Repositories;
+	using malone.Core.Entities.Filters;
 	using malone.Core.Entities.Model;
 	using malone.Core.Logging;
 
@@ -19,7 +20,7 @@
 	/// <typeparam name="TEntity">.</typeparam>
 	public abstract class Repository<TKey, TEntity> : BaseRepository<TEntity>, IRepository<TKey, TEntity>, IDisposable
 		where TKey : IEquatable<TKey>
-		where TEntity : class, IBaseEntity<TKey>
+		where TEntity : class, IBaseEntity<TKey>, new()
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Repository{TKey, TEntity}"/> class.
@@ -36,7 +37,7 @@
 		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
 		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
-		protected abstract void ConfigureCommandForGetById(IDbCommand command, bool includeDeleted, string includeProperties);
+		protected abstract void ConfigureCommandForGetById(IDbCommand command, bool includeDeleted);
 
 		/// <summary>
 		/// The GetById.
@@ -48,20 +49,20 @@
 		public virtual TEntity GetById(
 			TKey id,
 			bool includeDeleted = false,
-			string includeProperties = "")
+		    string includeProperties = "")
 		{
 			ThrowIfDisposed();
 			try
 			{
 				IQueryable<TEntity> queryableResult;
 
-				var command = Context.CreateCommand();
-				ConfigureCommandForGetById(command, includeDeleted, includeProperties);
+				var command = context.CreateCommand();
+				ConfigureCommandForGetById(command, includeDeleted);
 
 				List<DbParameterWithValue> parameters = new List<DbParameterWithValue>();
 				DbParameterWithValue parameter = typeof(TEntity).GetKeyParameter<TKey>(id);
 				parameters.Add(parameter);
-				Context.AddCommandParameters(command, parameters);
+				context.AddCommandParameters(command, parameters);
 
 				queryableResult = GetQueryable(command, includeDeleted);
 
@@ -70,9 +71,9 @@
 			catch (Exception ex)
 			{
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS600, typeof(TEntity).Name);
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
@@ -104,21 +105,21 @@
 			ThrowIfDisposed();
 			try
 			{
-				var command = Context.CreateCommand();
+				var command = context.CreateCommand();
 				ConfigureCommandForUpdate(command);
 
 				List<DbParameterWithValue> parameters = new List<DbParameterWithValue>();
 				parameters = GetUpdateParameters(parameters, entity);
-				Context.AddCommandParameters(command, parameters);
+				context.AddCommandParameters(command, parameters);
 
 				command.ExecuteNonQuery();
 			}
 			catch (Exception ex)
 			{
 				var techEx = CoreExceptionFactory.CreateException<TechnicalException>(ex, CoreErrors.DATAACCESS604, typeof(TEntity));
-				if (Logger != null)
+				if (logger != null)
 				{
-					Logger.Error(techEx);
+					logger.Error(techEx);
 				}
 
 				throw techEx;
@@ -144,7 +145,7 @@
 	/// </summary>
 	/// <typeparam name="TEntity">.</typeparam>
 	public abstract class Repository<TEntity> : Repository<int, TEntity>, IRepository<TEntity>
-		where TEntity : class, IBaseEntity
+		where TEntity : class, IBaseEntity, new()
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Repository{TEntity}"/> class.

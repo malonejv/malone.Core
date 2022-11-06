@@ -264,7 +264,7 @@ namespace malone.Core.Commons.Helpers.Extensions
 		/// <param name="columnName">The columnName<see cref="string"/>.</param>
 		/// <returns>The <see cref="T"/>.</returns>
 		public static T AsTOrDefault<T>(this DataRow row, string columnName)
-where T : IEquatable<T>
+			where T : IEquatable<T>
 		{
 			if (row.IsNull())
 			{//TODO: Manejar con excepciones del Core
@@ -300,5 +300,6 @@ where T : IEquatable<T>
 
 			return (T)Convert.ChangeType(value, t);
 		}
+
 	}
 }

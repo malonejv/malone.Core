@@ -1,0 +1,49 @@
+﻿@model malone.Core.Sample.AN.SqlServer.mvc.Models.TodoListViewModel
+
+<div id="modalConfirmarEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Eliminar lista</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="modal-body">
+                    <p>Estas seguro de que quieres eliminar la lista?</p>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Pending) / @Html.DisplayNameFor(model => model.Done)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Pending) / @Html.DisplayFor(model => model.Done)
+                        </dd>
+
+                    </dl>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <a href="@Url.Action("Index")" class="btn btn-outline-secondary">Cancelar</a>
+                        <input type="submit" value="Confirmar" class="btn btn-primary" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

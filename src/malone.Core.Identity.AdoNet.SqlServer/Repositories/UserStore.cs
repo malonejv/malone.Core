@@ -16,7 +16,7 @@ using Microsoft.AspNet.Identity;
 
 namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 {
-	public abstract class UserStore<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim> :
+	public class UserStore<TKey, TUserEntity, TRoleEntity, TUserLogin, TUserRole, TUserClaim> :
 		IUserLoginStore<TUserEntity, TKey>,
 		IUserClaimStore<TUserEntity, TKey>,
 		IUserRoleStore<TUserEntity, TKey>,

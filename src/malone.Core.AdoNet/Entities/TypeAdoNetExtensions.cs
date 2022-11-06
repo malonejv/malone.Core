@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using malone.Core.AdoNet.Attributes;
+using malone.Core.Commons.Exceptions;
 using malone.Core.Commons.Helpers.Extensions;
 using malone.Core.Entities.Model;
 
@@ -26,25 +27,61 @@ namespace malone.Core.AdoNet.Entities
 					{
 						columnAttribute.Name = propertyInfo.Name;
 					}
-
-					object parameterValue = propertyInfo.GetValue(entityType) != propertyInfo.GetType().GetDefault() ? propertyInfo.GetValue(entityType) : DBNull.Value;
-					columnAttribute.Value = parameterValue;
 				}
 				else
 				{
 					columnAttribute = new ColumnAttribute();
 
 					columnAttribute.Name = propertyInfo.Name;
-
-					object parameterValue = propertyInfo.GetValue(entityType) != propertyInfo.GetType().GetDefault() ? propertyInfo.GetValue(entityType) : DBNull.Value;
-					columnAttribute.Value = parameterValue;
 				}
 
-				columns.Add(columnAttribute);
+				object parameterValue = propertyInfo.GetValue(entityType) != propertyInfo.GetType().GetDefault() ? propertyInfo.GetValue(entityType) : DBNull.Value;
+				columnAttribute.Value = parameterValue;
 
+				columnAttribute.PropertyName = propertyInfo.Name;
+				columnAttribute.PropertyType = propertyInfo.PropertyType;
+
+				columns.Add(columnAttribute);
 			}
 
 			return columns;
+		}
+
+		public static ColumnAttribute GetColumnInfo(this Type entityType, string propertyName)
+		{
+			ColumnAttribute columnAttribute;
+
+			PropertyInfo propertyInfo = entityType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
+
+			if (propertyInfo != null)
+			{
+				columnAttribute = propertyInfo.GetCustomAttribute<ColumnAttribute>();
+
+				if (columnAttribute != null)
+				{
+					if (columnAttribute.Name.IsNullOrEmpty())
+					{
+						columnAttribute.Name = propertyInfo.Name;
+					}
+				}
+				else
+				{
+					columnAttribute = new ColumnAttribute();
+
+					columnAttribute.Name = propertyInfo.Name;
+				}
+
+				object parameterValue = propertyInfo.GetValue(entityType) != propertyInfo.GetType().GetDefault() ? propertyInfo.GetValue(entityType) : DBNull.Value;
+				columnAttribute.Value = parameterValue;
+
+				columnAttribute.PropertyName = propertyInfo.Name;
+				columnAttribute.PropertyType = propertyInfo.PropertyType;
+
+			}
+			else
+				throw new Exception("Not a valid property name.");
+
+			return columnAttribute;
 		}
 
 		public static List<string> GetColumnNames(this Type entityType)
@@ -59,8 +96,8 @@ namespace malone.Core.AdoNet.Entities
 					columnNames.Add(columnAttribute.Name);
 				}
 				else if (prop.PropertyType.IsPrimitive
-				 || (prop.PropertyType.IsClass && prop.PropertyType.Name == "String")
-				 || (prop.PropertyType.IsGenericType && prop.PropertyType.Name == "Nullable`1"))
+					 || (prop.PropertyType.IsClass && prop.PropertyType.Name == "String")
+					 || (prop.PropertyType.IsGenericType && prop.PropertyType.Name == "Nullable`1"))
 				{
 					columnNames.Add(prop.Name);
 				}
@@ -75,17 +112,23 @@ namespace malone.Core.AdoNet.Entities
 
 			PropertyInfo propertyInfo = entityType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
 
-			ColumnAttribute columnAttribute = propertyInfo.GetCustomAttribute<ColumnAttribute>();
-			if (columnAttribute != null)
+			if (propertyInfo != null)
 			{
-				columnName = columnAttribute.Name;
-			}
-			else if (propertyInfo.PropertyType.IsPrimitive
+				ColumnAttribute columnAttribute = propertyInfo.GetCustomAttribute<ColumnAttribute>();
+				if (columnAttribute != null)
+				{
+					columnName = columnAttribute.Name;
+				}
+				else if (propertyInfo.PropertyType.IsPrimitive
 					 || (propertyInfo.PropertyType.IsClass && propertyInfo.PropertyType.Name == "String")
 					 || (propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.Name == "Nullable`1"))
-			{
-				columnName = propertyInfo.Name;
+				{
+					columnName = propertyInfo.Name;
+				}
 			}
+			else
+				throw new Exception("Not a valid property name.");
+			//TODO: Manejar con excepciones del Core
 
 			return columnName;
 		}
@@ -146,7 +189,7 @@ namespace malone.Core.AdoNet.Entities
 
 			if (columnAttribute == null)
 			{
-				//TODO: reemplazar por core errors
+				//TODO: Manejar con excepciones del Core
 				throw new Exception("Key field not found.");
 			}
 

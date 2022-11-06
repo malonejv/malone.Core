@@ -1,0 +1,30 @@
+﻿@model malone.Core.Sample.AN.SqlServer.mvc.Models.TaskItemViewModel
+
+@{
+    var displayClear = !string.IsNullOrEmpty(Model.Description) ? "block" : "none";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "TaskForm", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.ListId)
+
+    <div class="form-horizontal animate__animated animate__fadeIn">
+        <div class="input-group">
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control default-control", placeholder = "Descripción de la tarea" } })
+            <button id="btnClear" style="display: @displayClear"><i class="far fa-times-circle"></i></button>
+            <div class="input-group-append">
+                <a href="@Url.Action("Detail", "List", new { id = Model.ListId })" class="btn btn-outline-secondary">Cancelar</a>
+                <button id="btnEditTask" class="btn btn-primary">
+                    Actualizar
+                </button>
+            </div>
+        </div>
+        <div class="">@Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })</div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
