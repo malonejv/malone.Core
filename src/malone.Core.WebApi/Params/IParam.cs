@@ -1,6 +1,5 @@
 ﻿using System;
 using malone.Core.Entities.Model;
-using malone.Core.Services.Requests;
 
 namespace malone.Core.WebApi.Params
 {

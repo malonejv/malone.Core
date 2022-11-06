@@ -9,7 +9,6 @@ using malone.Core.DataAccess.UnitOfWork;
 using malone.Core.Entities.Filters;
 using malone.Core.Entities.Model;
 using malone.Core.Logging;
-using malone.Core.Services.Requests;
 
 namespace malone.Core.Services
 {

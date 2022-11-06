@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using malone.Core.Entities.Filters;
-using malone.Core.Services.Requests;
 
 namespace malone.Core.Services
 {

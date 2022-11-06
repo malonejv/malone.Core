@@ -2,7 +2,6 @@
 using System.Web.Http;
 using malone.Core.Entities.Model;
 using malone.Core.Services;
-using malone.Core.Services.Requests;
 using malone.Core.WebApi.Params;
 
 namespace malone.Core.WebApi
@@ -38,7 +37,7 @@ namespace malone.Core.WebApi
 		/// <summary>
 		/// The Post.
 		/// </summary>
-		/// <param name="param">The request <see cref="IRequest{TEntity}"/>.</param>
+		/// <param name="param">The request <typeparamref name="TAdd"/>.</param>
 		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
 		public virtual IHttpActionResult Post([FromBody] TAdd param)
 		{
@@ -53,7 +52,7 @@ namespace malone.Core.WebApi
 		/// <summary>
 		/// The Put.
 		/// </summary>
-		/// <param name="param">The request <see cref="IRequest{TEntity}"/>.</param>
+		/// <param name="param">The request <typeparamref name="TUpdate"/>.</param>
 		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
 		public virtual IHttpActionResult Put([FromBody] TUpdate param)
 		{

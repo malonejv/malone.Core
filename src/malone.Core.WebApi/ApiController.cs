@@ -6,7 +6,6 @@
 	using malone.Core.Commons.Exceptions;
 	using malone.Core.Entities.Model;
 	using malone.Core.Services;
-	using malone.Core.Services.Requests;
 	using malone.Core.WebApi.Params;
 
 	/// <summary>Defines the <see cref="ApiController{TKey, TFilter, TEntity, TService}" />.</summary>
@@ -157,7 +156,7 @@
 		/// The Put.
 		/// </summary>
 		/// <param name="id">The id<see cref="TKey"/>.</param>
-		/// <param name="param">The request <see cref="IRequest{TEntity}"/>.</param>
+		/// <param name="param">The request <typeparamref name="TUpdate"/>.</param>
 		/// <returns>The <see cref="IHttpActionResult"/>.</returns>
 		public virtual IHttpActionResult Put(TUpdate param)
 		{

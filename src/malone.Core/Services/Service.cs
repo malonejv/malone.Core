@@ -12,7 +12,6 @@ namespace malone.Core.Services
 	using malone.Core.DataAccess.UnitOfWork;
 	using malone.Core.Entities.Model;
 	using malone.Core.Logging;
-	using malone.Core.Services.Requests;
 
 	/// <summary>
 	/// Defines the <see cref="Service{TKey, TEntity}" />.

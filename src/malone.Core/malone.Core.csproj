@@ -84,7 +84,6 @@
     <Compile Include="Services\EF\IServiceExtensions.cs" />
     <Compile Include="Services\EF\IBaseServiceExtensions.cs" />
     <Compile Include="Services\IBaseService.cs" />
-    <Compile Include="Services\Requests\IRequest.cs" />
     <Compile Include="Services\Service.cs" />
     <Compile Include="Services\IService.cs" />
     <Compile Include="Services\Validations.cs" />
