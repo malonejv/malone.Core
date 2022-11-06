@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using malone.Core.Sample.EF.SqlServer.Middle.BL.Requests;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
-using malone.Core.Services.Requests;
 using malone.Core.WebApi.Params;
 
 namespace malone.Core.Sample.EF.SqlServer.Api.Controllers.v2.Params

@@ -258,8 +258,6 @@
     <Compile Include="BL\Implementations\TodoListBC.cs" />
     <Compile Include="BL\ITaskItemBC.cs" />
     <Compile Include="BL\ITodoListBC.cs" />
-    <Compile Include="BL\Requests\AddListRequest.cs" />
-    <Compile Include="BL\Requests\UpdateListRequest.cs" />
     <Compile Include="CL\Exceptions\ErrorCodes.cs" />
     <Compile Include="CL\Exceptions\ErrorLocalizationHandler.cs" />
     <Compile Include="CL\Exceptions\Exceptions.Designer.cs">
