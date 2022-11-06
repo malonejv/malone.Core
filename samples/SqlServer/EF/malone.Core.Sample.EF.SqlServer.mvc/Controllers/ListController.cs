@@ -10,6 +10,7 @@ using malone.Core.Sample.EF.SqlServer.Middle.BL;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
 using malone.Core.Sample.EF.SqlServer.mvc.Attributes;
 using malone.Core.Sample.EF.SqlServer.mvc.Models;
+using malone.Core.Services.EF;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
@@ -50,7 +51,12 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
 
         public ActionResult Detail(int id)
         {
-            var todoList = todoListBC.GetById(id, includeProperties: "Items,User");
+            var todoList = todoListBC
+                                    .Include(new string[] { 
+                                            nameof(TodoList.Items),
+                                            nameof(TodoList.User)
+                                        })
+                                    .GetById(id);
 
             return View(TodoListViewModel.CreateFromEntity(todoList));
         }
@@ -90,7 +96,11 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                var todoList = todoListBC.GetById(model.Id, includeProperties: "User");
+                var todoList = todoListBC
+                                    .Include(new string[] {
+                                            nameof(TodoList.User)
+                                        })
+                                    .GetById(model.Id);
                 todoList.UpdateName(model.Name);
                 todoListBC.Update(todoList);
 
@@ -101,7 +111,11 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
 
         public ActionResult Delete(int id)
         {
-            var todoList = todoListBC.GetById(id, includeProperties: "Items");
+            var todoList = todoListBC
+                                    .Include(new string[] {
+                                            nameof(TodoList.Items)
+                                        })
+                                    .GetById(id);
 
             TodoListViewModel model = TodoListViewModel.CreateFromEntity(todoList);
             return PartialView("_Delete", model);
@@ -129,11 +143,16 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
         {
             var userId = User.Identity.GetUserId<int>();
 
-            var list = todoListBC.Get(
-                new FilterExpression<TodoList>()
-                {
-                    Expression = (l => l.User.Id == userId)
-                }, includeProperties: "Items,User");
+            var list = todoListBC
+                                    .Include(new string[] {
+                                            nameof(TodoList.User),
+                                            nameof(TodoList.Items)
+                                        })
+                                    .Get(
+                                        new FilterExpression<TodoList>()
+                                        {
+                                            Expression = (l => l.User.Id == userId)
+                                        });
 
             return TodoListViewModel.CreateFromList(list);
         }

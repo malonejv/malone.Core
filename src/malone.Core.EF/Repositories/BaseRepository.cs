@@ -20,6 +20,7 @@ namespace malone.Core.EF.Repositories
 		protected DbContext context;
 		protected DbSet<T> entityDbSet;
 		protected ICoreLogger logger;
+		protected internal string includeProperties = "";
 
 		#region Constructor
 
@@ -34,19 +35,16 @@ namespace malone.Core.EF.Repositories
 
 		#region Public methods
 
-		public virtual IEnumerable<T> GetAll<TOpt>(
+		public virtual IEnumerable<T> GetAll(
 			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-			TOpt optionRequest = null)
-			where TOpt : class, IOptionRequest, new()
+			bool includeDeleted = false)
 		{
 			ThrowIfDisposed();
 			try
 			{
-				OptionRequest options = (OptionRequest)Convert.ChangeType(optionRequest ?? new TOpt(), typeof(OptionRequest));
-
 				IQueryable<T> query = entityDbSet;
 
-				query = Get(query, orderBy, options.IncludeDeleted, options.IncludeProperties);
+				query = Get(query, orderBy, includeDeleted, includeProperties);
 
 				return query.ToList();
 			}
@@ -62,18 +60,15 @@ namespace malone.Core.EF.Repositories
 			}
 		}
 
-		public virtual IEnumerable<T> Get<TOpt, TFilter>(
+		public virtual IEnumerable<T> Get<TFilter>(
 		   TFilter filter = default(TFilter),
 		   Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-		   TOpt optionRequest = null)
-			where TOpt : class, IOptionRequest, new()
+		   bool includeDeleted = false)
 			where TFilter : class, IFilterExpression
 		{
 			ThrowIfDisposed();
 			try
 			{
-				OptionRequest options = (OptionRequest)Convert.ChangeType(optionRequest ?? new TOpt(), typeof(OptionRequest));
-
 				IQueryable<T> query = entityDbSet;
 
 				Expression<Func<T, bool>> filterExp = null;
@@ -88,7 +83,7 @@ namespace malone.Core.EF.Repositories
 					query = query.Where(filterExp);
 				}
 
-				query = Get(query, orderBy, options.IncludeDeleted, options.IncludeProperties);
+				query = Get(query, orderBy, includeDeleted, includeProperties);
 
 				return query.ToList();
 			}
@@ -105,21 +100,18 @@ namespace malone.Core.EF.Repositories
 			}
 		}
 
-		public virtual T GetEntity<TOpt, TFilter>(
+		public virtual T GetEntity<TFilter>(
 			TFilter filter = default(TFilter),
 			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-			TOpt optionRequest = null)
-			where TOpt : class, IOptionRequest, new()
+			bool includeDeleted = false)
 			where TFilter : class, IFilterExpression
 		{
 			ThrowIfDisposed();
 			try
 			{
-				OptionRequest options = (OptionRequest)Convert.ChangeType(optionRequest ?? new TOpt(), typeof(OptionRequest));
-
 				IQueryable<T> query = entityDbSet;
 
-				query = Get(query, orderBy, options.IncludeDeleted, options.IncludeProperties);
+				query = Get(query, orderBy, includeDeleted, includeProperties);
 
 				Expression<Func<T, bool>> filterExp = null;
 				if (filter != null)

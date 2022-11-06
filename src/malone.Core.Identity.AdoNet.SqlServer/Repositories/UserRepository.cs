@@ -27,9 +27,9 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
 		#region Get
 
-		public override TUserEntity GetById(TKey id, bool includeDeleted = false, string includeProperties = "Claims,Roles,Logins")
+		public override TUserEntity GetById(TKey id, bool includeDeleted = false)
 		{
-			TUserEntity user = base.GetById(id, includeDeleted, includeProperties);
+			TUserEntity user = base.GetById(id, includeDeleted);
 
 			user.Claims = new List<TUserClaim>();
 			user.Roles = new List<TUserRole>();
@@ -38,7 +38,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			return user;
 		}
 
-		protected override void ConfigureCommandForGetById(IDbCommand command, bool includeDeleted, string includeProperties)
+		protected override void ConfigureCommandForGetById(IDbCommand command, bool includeDeleted)
 		{
 			string query = @"SELECT Id, Email, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName
                                FROM Users
@@ -48,9 +48,9 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			command.CommandType = CommandType.Text;
 		}
 
-		public override IEnumerable<TUserEntity> GetAll(Func<IQueryable<TUserEntity>, IOrderedQueryable<TUserEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Claims,Roles,Logins")
+		public override IEnumerable<TUserEntity> GetAll(Func<IQueryable<TUserEntity>, IOrderedQueryable<TUserEntity>> orderBy = null, bool includeDeleted = false)
 		{
-			IEnumerable<TUserEntity> users = base.GetAll(orderBy, includeDeleted, includeProperties);
+			IEnumerable<TUserEntity> users = base.GetAll(orderBy, includeDeleted);
 
 			foreach (var user in users)
 			{
@@ -60,7 +60,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			}
 			return users;
 		}
-		protected override void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties)
+		protected override void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted)
 		{
 			string query = @"SELECT Id, Email, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName
                                FROM Users;";
@@ -69,9 +69,9 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			command.CommandType = CommandType.Text;
 		}
 
-		public override IEnumerable<TUserEntity> Get<TFilter>(TFilter filter = null, Func<IQueryable<TUserEntity>, IOrderedQueryable<TUserEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Claims,Roles,Logins")
+		public override IEnumerable<TUserEntity> Get<TFilter>(TFilter filter = null, Func<IQueryable<TUserEntity>, IOrderedQueryable<TUserEntity>> orderBy = null, bool includeDeleted = false)
 		{
-			IEnumerable<TUserEntity> users = base.Get(filter, orderBy, includeDeleted, includeProperties);
+			IEnumerable<TUserEntity> users = base.Get(filter, orderBy, includeDeleted);
 
 			foreach (var user in users)
 			{
@@ -82,7 +82,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			return users;
 		}
 
-		protected override void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties)
+		protected override void ConfigureCommandForGet(IDbCommand command, bool includeDeleted)
 		{
 			string query = @"SELECT Id, Email, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName
                                FROM Users
@@ -92,9 +92,9 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			command.CommandType = CommandType.Text;
 		}
 
-		public override TUserEntity GetEntity<TFilter>(TFilter filter = null, Func<IQueryable<TUserEntity>, IOrderedQueryable<TUserEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Claims,Roles,Logins")
+		public override TUserEntity GetEntity<TFilter>(TFilter filter = null, Func<IQueryable<TUserEntity>, IOrderedQueryable<TUserEntity>> orderBy = null, bool includeDeleted = false)
 		{
-			TUserEntity user = base.GetEntity(filter, orderBy, includeDeleted, includeProperties);
+			TUserEntity user = base.GetEntity(filter, orderBy, includeDeleted);
 
 			user.Claims = new List<TUserClaim>();
 			user.Roles = new List<TUserRole>();
@@ -103,7 +103,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			return user;
 		}
 
-		protected override void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties)
+		protected override void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted)
 		{
 			string query = @"SELECT Id, Email, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName
                                FROM Users

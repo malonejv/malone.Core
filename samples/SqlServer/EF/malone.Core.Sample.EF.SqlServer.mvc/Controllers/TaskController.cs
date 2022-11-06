@@ -10,6 +10,7 @@ using malone.Core.Sample.EF.SqlServer.Middle.BL;
 using malone.Core.Sample.EF.SqlServer.Middle.EL.Model;
 using malone.Core.Sample.EF.SqlServer.mvc.Attributes;
 using malone.Core.Sample.EF.SqlServer.mvc.Models;
+using malone.Core.Services.EF;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
@@ -64,7 +65,12 @@ namespace malone.Core.Sample.EF.SqlServer.mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                var todoList = todoListBC.GetById(model.ListId, includeProperties: "Items,User");
+                var todoList = todoListBC
+                                        .Include(new string[] {
+                                                nameof(TodoList.Items),
+                                                nameof(TodoList.User)
+                                            })
+                                        .GetById(model.ListId);
                 var taskItem = new TaskItem(model.Description);
                 todoList.AddItem(taskItem);
 

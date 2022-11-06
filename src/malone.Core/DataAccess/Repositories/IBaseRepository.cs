@@ -17,6 +17,8 @@ namespace malone.Core.DataAccess.Repositories
 	{
 		#region Query
 
+
+
 		/// <summary>
 		/// The Get.
 		/// </summary>
@@ -24,13 +26,11 @@ namespace malone.Core.DataAccess.Repositories
 		/// <param name="filter">The filter <typeparamref name="TFilter"/>.</param>
 		/// <param name="orderBy">The orderBy <see cref="Func{IQueryable, IOrderedQueryable}"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted <see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties <see cref="string"/>.</param>
 		/// <returns>The <see cref="IEnumerable{T}"/>.</returns>
 		IEnumerable<T> Get<TFilter>(
 			TFilter filter = default(TFilter),
 			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-			bool includeDeleted = false,
-			string includeProperties = "")
+			bool includeDeleted = false)
 			where TFilter : class, IFilterExpression;
 
 		/// <summary>
@@ -38,12 +38,10 @@ namespace malone.Core.DataAccess.Repositories
 		/// </summary>
 		/// <param name="orderBy">The orderBy <see cref="Func{IQueryable, IOrderedQueryable}"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted <see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties <see cref="string"/>.</param>
 		/// <returns>The <see cref="IEnumerable{T}"/>.</returns>
 		IEnumerable<T> GetAll(
 			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-			bool includeDeleted = false,
-			string includeProperties = ""
+			bool includeDeleted = false
 			);
 
 		/// <summary>
@@ -53,13 +51,11 @@ namespace malone.Core.DataAccess.Repositories
 		/// <param name="filter">The filter <typeparamref name="TFilter"/>.</param>
 		/// <param name="orderBy">The orderBy <see cref="Func{IQueryable, IOrderedQueryable}"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted <see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties <see cref="string"/>.</param>
 		/// <returns>The <typeparamref name="T"/>.</returns>
 		T GetEntity<TFilter>(
 			TFilter filter = default(TFilter),
 			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-			bool includeDeleted = false,
-			string includeProperties = "")
+			bool includeDeleted = false)
 			where TFilter : class, IFilterExpression;
 
 		#endregion

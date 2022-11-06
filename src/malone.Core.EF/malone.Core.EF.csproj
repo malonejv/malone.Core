@@ -76,7 +76,6 @@
     </Compile>
     <Compile Include="Context\CoreDbContext.cs" />
     <Compile Include="Entities\IBaseEntityExtensions.cs" />
-    <Compile Include="Repositories\OptionRequest.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Entities\Filters\FilterExpression.cs" />
     <Compile Include="Entities\Filters\IFilterExpressionEF.cs" />

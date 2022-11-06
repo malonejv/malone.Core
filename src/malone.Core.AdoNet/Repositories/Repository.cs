@@ -36,7 +36,6 @@
 		/// </summary>
 		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
 		protected abstract void ConfigureCommandForGetById(IDbCommand command, bool includeDeleted);
 
 		/// <summary>
@@ -44,12 +43,10 @@
 		/// </summary>
 		/// <param name="id">The id<see cref="TKey"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
 		/// <returns>The <see cref="TEntity"/>.</returns>
 		public virtual TEntity GetById(
 			TKey id,
-			bool includeDeleted = false,
-		    string includeProperties = "")
+			bool includeDeleted = false)
 		{
 			ThrowIfDisposed();
 			try

@@ -19,12 +19,10 @@ namespace malone.Core.Services
 		/// </summary>
 		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable, IOrderedQueryable}"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
 		/// <returns>The <see cref="IEnumerable{TEntity}"/>.</returns>
 		IEnumerable<TEntity> GetAll(
 			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-			bool includeDeleted = false,
-			string includeProperties = ""
+			bool includeDeleted = false
 			);
 
 		/// <summary>
@@ -34,13 +32,11 @@ namespace malone.Core.Services
 		/// <param name="filter">The filter<typeparamref name="TFilter"/>.</param>
 		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable, IOrderedQueryable}"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
 		/// <returns>The <see cref="IEnumerable{TEntity}"/>.</returns>
 		IEnumerable<TEntity> Get<TFilter>(
 			TFilter filter = default(TFilter),
 			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-			bool includeDeleted = false,
-			string includeProperties = "")
+			bool includeDeleted = false)
 			where TFilter : class, IFilterExpression;
 
 		/// <summary>
@@ -50,13 +46,11 @@ namespace malone.Core.Services
 		/// <param name="filter">The filter <typeparamref name="TFilter"/>.</param>
 		/// <param name="orderBy">The orderBy <see cref="Func{IQueryable, IOrderedQueryable}"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted <see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties <see cref="string"/>.</param>
 		/// <returns>The <typeparamref name="TEntity"/>.</returns>
 		TEntity GetEntity<TFilter>(
 			TFilter filter = default(TFilter),
 			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-			bool includeDeleted = false,
-			string includeProperties = "")
+			bool includeDeleted = false)
 			where TFilter : class, IFilterExpression;
 
 		/// <summary>

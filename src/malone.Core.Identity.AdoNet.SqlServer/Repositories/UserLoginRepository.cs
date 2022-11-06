@@ -22,7 +22,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
 		#region Get
 
-		protected override void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties)
+		protected override void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted)
 		{
 			string query = @"SELECT LoginProvider, ProviderKey, UserId
                                FROM UsersLogins;";
@@ -31,7 +31,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			command.CommandType = CommandType.Text;
 		}
 
-		protected override void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties)
+		protected override void ConfigureCommandForGet(IDbCommand command, bool includeDeleted)
 		{
 			string query = @"SELECT LoginProvider, ProviderKey, UserId
                                FROM UsersLogins
@@ -41,7 +41,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			command.CommandType = CommandType.Text;
 		}
 
-		protected override void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties)
+		protected override void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted)
 		{
 			string query = @"SELECT LoginProvider, ProviderKey, UserId
                                FROM UsersLogins

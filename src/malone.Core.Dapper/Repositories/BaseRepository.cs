@@ -44,7 +44,7 @@ namespace malone.Core.Dapper.Repositories
 
 		#region GET ALL
 
-		protected virtual CommandDefinition ConfigureCommandForGetAll(bool includeDeleted, string includeProperties)
+		protected virtual CommandDefinition ConfigureCommandForGetAll(bool includeDeleted)
 		{
 			string tableName = TEntityType.GetTableName();
 			string columns = TEntityType.GetColumnNames();
@@ -59,8 +59,7 @@ namespace malone.Core.Dapper.Repositories
 
 		public virtual IEnumerable<TEntity> GetAll(
 			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-			bool includeDeleted = false,
-			string includeProperties = ""
+			bool includeDeleted = false
 		   )
 		{
 			ThrowIfDisposed();
@@ -68,7 +67,7 @@ namespace malone.Core.Dapper.Repositories
 			{
 				IQueryable<TEntity> queryableResult;
 
-				var command = ConfigureCommandForGetAll(includeDeleted, includeProperties);
+				var command = ConfigureCommandForGetAll(includeDeleted);
 				queryableResult = GetQueryable(command, orderBy);
 
 				return queryableResult.ToList<TEntity>();
@@ -89,7 +88,7 @@ namespace malone.Core.Dapper.Repositories
 
 		#region GET FILTERED
 
-		protected virtual CommandDefinition ConfigureCommandForGet<TFilter>(TFilter filter, bool includeDeleted, string includeProperties) where TFilter : class, IFilterExpression
+		protected virtual CommandDefinition ConfigureCommandForGet<TFilter>(TFilter filter, bool includeDeleted) where TFilter : class, IFilterExpression
 		{
 			string tableName = TEntityType.GetTableName();
 			string columns = TEntityType.GetColumnNames();
@@ -177,8 +176,7 @@ namespace malone.Core.Dapper.Repositories
 		public virtual IEnumerable<TEntity> Get<TFilter>(
 		   TFilter filter = default(TFilter),
 		   Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-		   bool includeDeleted = false,
-		   string includeProperties = "")
+		   bool includeDeleted = false)
 			where TFilter : class, IFilterExpression
 		{
 			ThrowIfDisposed();
@@ -186,7 +184,7 @@ namespace malone.Core.Dapper.Repositories
 			{
 				IQueryable<TEntity> query;
 
-				var command = ConfigureCommandForGet(filter, includeDeleted, includeProperties);
+				var command = ConfigureCommandForGet(filter, includeDeleted);
 				query = GetQueryable(command, orderBy);
 
 				return query.ToList<TEntity>();
@@ -207,16 +205,15 @@ namespace malone.Core.Dapper.Repositories
 
 		#region GET ENTITY
 
-		protected virtual CommandDefinition ConfigureCommandForGetEntity<TFilter>(TFilter filter, bool includeDeleted, string includeProperties) where TFilter : class, IFilterExpression
+		protected virtual CommandDefinition ConfigureCommandForGetEntity<TFilter>(TFilter filter, bool includeDeleted) where TFilter : class, IFilterExpression
 		{
-			return ConfigureCommandForGet(filter, includeDeleted, includeProperties);
+			return ConfigureCommandForGet(filter, includeDeleted);
 		}
 
 		public virtual TEntity GetEntity<TFilter>(
 			TFilter filter = default(TFilter),
 			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-			bool includeDeleted = false,
-			string includeProperties = "")
+			bool includeDeleted = false)
 			where TFilter : class, IFilterExpression
 		{
 			ThrowIfDisposed();
@@ -224,7 +221,7 @@ namespace malone.Core.Dapper.Repositories
 			{
 				IQueryable<TEntity> query;
 
-				var command = ConfigureCommandForGet(filter, includeDeleted, includeProperties);
+				var command = ConfigureCommandForGet(filter, includeDeleted);
 				query = GetQueryable(command, orderBy);
 
 				return query.SingleOrDefault<TEntity>();

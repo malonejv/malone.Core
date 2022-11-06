@@ -46,14 +46,15 @@ namespace malone.Core.Services
 		/// <inheritdoc />
 		public virtual TEntity GetById(
 			TKey id,
-			bool includeDeleted = false,
-			string includeProperties = "")
+			bool includeDeleted = false)
 		{
 			try
 			{
 				id.ThrowIfNull();
 
-				var result = repository.GetById(id, includeDeleted, includeProperties);
+				IncludeProperties(repository);
+
+				var result = repository.GetById(id, includeDeleted);
 
 				return result;
 			}

@@ -24,6 +24,7 @@ namespace malone.Core.Services
 		protected readonly IBaseRepository<TEntity> repository;
 		protected readonly IUnitOfWork uow;
 		protected readonly ICoreLogger logger;
+		protected internal string includeProperties = "";
 
 		#region Constructor 
 
@@ -45,13 +46,13 @@ namespace malone.Core.Services
 		///<inheritdoc/>
 		public virtual IEnumerable<TEntity> GetAll(
 			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-			bool includeDeleted = false,
-			string includeProperties = ""
-		)
+			bool includeDeleted = false)
 		{
 			try
 			{
-				var result = repository.GetAll(orderBy, includeDeleted, includeProperties);
+				IncludeProperties(repository);
+
+				var result = repository.GetAll(orderBy, includeDeleted);
 
 				return result;
 			}
@@ -74,13 +75,14 @@ namespace malone.Core.Services
 		public virtual IEnumerable<TEntity> Get<TFilter>(
 			TFilter filter = default(TFilter),
 			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-			bool includeDeleted = false,
-			string includeProperties = "")
+			bool includeDeleted = false)
 			where TFilter : class, IFilterExpression
 		{
 			try
 			{
-				var result = repository.Get(filter, orderBy, includeDeleted, includeProperties);
+				IncludeProperties(repository);
+
+				var result = repository.Get(filter, orderBy, includeDeleted);
 
 				return result;
 			}
@@ -103,13 +105,14 @@ namespace malone.Core.Services
 		public TEntity GetEntity<TFilter>(
 			TFilter filter = default(TFilter),
 			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-			bool includeDeleted = false,
-			string includeProperties = "")
+			bool includeDeleted = false)
 			where TFilter : class, IFilterExpression
 		{
 			try
 			{
-				var result = repository.GetEntity(filter, orderBy, includeDeleted, includeProperties);
+				IncludeProperties(repository);
+
+				var result = repository.GetEntity(filter, orderBy, includeDeleted);
 
 				return result;
 			}
@@ -242,7 +245,7 @@ namespace malone.Core.Services
 					var fieldName = nameof(ISoftDelete.IsDeleted);
 					var field = entity.GetType()
 											  .GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
-											  .FirstOrDefault(f=>f.Name == fieldName || f.Name.Contains($"<{fieldName}>"));
+											  .FirstOrDefault(f => f.Name == fieldName || f.Name.Contains($"<{fieldName}>"));
 					field.SetValue(entity, true);
 					repository.Update(softDelete as TEntity);
 				}
@@ -270,6 +273,16 @@ namespace malone.Core.Services
 			}
 		}
 
+		internal protected void IncludeProperties(IBaseRepository<TEntity> repository)
+		{
+			if (!string.IsNullOrEmpty(includeProperties))
+			{
+				var repositoryType = repository.GetType();
+				var includePropertiesField = repositoryType.GetField(nameof(BaseService<TEntity>.includeProperties), BindingFlags.NonPublic | BindingFlags.Instance);
+
+				includePropertiesField.SetValue(repository, includeProperties);
+			}
+		}
 	}
 
 }

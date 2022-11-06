@@ -29,6 +29,7 @@
 		protected CoreDbContext context;
 		protected ICoreLogger logger;
 		protected internal Type entityType;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BaseRepository{TEntity}"/> class.
 		/// </summary>
@@ -50,7 +51,6 @@
 		/// </summary>
 		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
 		protected virtual void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted) { }
 
 		/// <summary>
@@ -58,12 +58,10 @@
 		/// </summary>
 		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
 		/// <returns>The <see cref="IEnumerable{TEntity}"/>.</returns>
 		public virtual IEnumerable<TEntity> GetAll(
 			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-			bool includeDeleted = false,
-			string includeProperties = "")
+			bool includeDeleted = false)
 		{
 			ThrowIfDisposed();
 			try
@@ -104,7 +102,6 @@
 		/// </summary>
 		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
 		protected abstract void ConfigureCommandForGet(IDbCommand command, bool includeDeleted);
 
 		/// <summary>
@@ -114,13 +111,11 @@
 		/// <param name="filter">The filter<see cref="TFilter"/>.</param>
 		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
 		/// <returns>The <see cref="IEnumerable{TEntity}"/>.</returns>
 		public virtual IEnumerable<TEntity> Get<TFilter>(
 		   TFilter filter = default(TFilter),
 		   Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-		   bool includeDeleted = false,
-		   string includeProperties = "")
+		   bool includeDeleted = false)
 			where TFilter : class, IFilterExpression
 		{
 			ThrowIfDisposed();
@@ -168,7 +163,6 @@
 		/// </summary>
 		/// <param name="command">The command<see cref="IDbCommand"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
 		protected abstract void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted);
 
 		/// <summary>
@@ -178,13 +172,11 @@
 		/// <param name="filter">The filter<see cref="TFilter"/>.</param>
 		/// <param name="orderBy">The orderBy<see cref="Func{IQueryable{TEntity}, IOrderedQueryable{TEntity}}"/>.</param>
 		/// <param name="includeDeleted">The includeDeleted<see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties<see cref="string"/>.</param>
 		/// <returns>The <see cref="TEntity"/>.</returns>
 		public virtual TEntity GetEntity<TFilter>(
 			TFilter filter = default(TFilter),
 			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-			bool includeDeleted = false,
-			string includeProperties = "")
+			bool includeDeleted = false)
 			where TFilter : class, IFilterExpression
 		{
 			ThrowIfDisposed();

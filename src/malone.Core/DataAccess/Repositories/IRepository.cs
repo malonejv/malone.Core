@@ -20,12 +20,10 @@ namespace malone.Core.DataAccess.Repositories
 		/// </summary>
 		/// <param name="id">The id <typeparamref name="TKey">TKey</typeparamref>.</param>
 		/// <param name="includeDeleted">The includeDeleted <see cref="bool"/>.</param>
-		/// <param name="includeProperties">The includeProperties <see cref="string"/>.</param>
 		/// <returns>The <typeparamref name="TEntity">TEntity</typeparamref>.</returns>
 		TEntity GetById(
 			TKey id,
-			bool includeDeleted = false,
-			string includeProperties = "");
+			bool includeDeleted = false);
 
 	}
 

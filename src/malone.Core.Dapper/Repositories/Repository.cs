@@ -26,7 +26,7 @@ namespace malone.Core.Dapper.Repositories
 
 		#region GET BY ID
 
-		protected virtual CommandDefinition ConfigureCommandForGetById(TKey id, bool includeDeleted, string includeProperties)
+		protected virtual CommandDefinition ConfigureCommandForGetById(TKey id, bool includeDeleted)
 		{
 			string tableName = typeof(TEntity).GetTableName();
 			string columns = typeof(TEntity).GetColumnNames();
@@ -79,15 +79,14 @@ namespace malone.Core.Dapper.Repositories
 
 		public virtual TEntity GetById(
 			TKey id,
-			bool includeDeleted = false,
-			string includeProperties = "")
+			bool includeDeleted = false)
 		{
 			ThrowIfDisposed();
 			try
 			{
 				IQueryable<TEntity> query;
 
-				var command = ConfigureCommandForGetById(id, includeDeleted, includeProperties);
+				var command = ConfigureCommandForGetById(id, includeDeleted);
 				query = GetQueryable(command);
 
 				return query.SingleOrDefault<TEntity>();

@@ -25,16 +25,16 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 
 		#region Get
 
-		public override TRoleEntity GetById(TKey id, bool includeDeleted = false, string includeProperties = "Users")
+		public override TRoleEntity GetById(TKey id, bool includeDeleted = false)
 		{
-			TRoleEntity role = base.GetById(id, includeDeleted, includeProperties);
+			TRoleEntity role = base.GetById(id, includeDeleted);
 
 			role.Users = new List<TUserRole>();
 
 			return role;
 		}
 
-		protected override void ConfigureCommandForGetById(IDbCommand command, bool includeDeleted, string includeProperties)
+		protected override void ConfigureCommandForGetById(IDbCommand command, bool includeDeleted)
 		{
 			string query = @"SELECT Id, Name
                                FROM Roles
@@ -44,9 +44,9 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			command.CommandType = CommandType.Text;
 		}
 
-		public override IEnumerable<TRoleEntity> GetAll(Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Users")
+		public override IEnumerable<TRoleEntity> GetAll(Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null, bool includeDeleted = false)
 		{
-			IEnumerable<TRoleEntity> roles = base.GetAll(orderBy, includeDeleted, includeProperties);
+			IEnumerable<TRoleEntity> roles = base.GetAll(orderBy, includeDeleted);
 
 			foreach (var role in roles)
 			{
@@ -54,7 +54,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			}
 			return roles;
 		}
-		protected override void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted, string includeProperties)
+		protected override void ConfigureCommandForGetAll(IDbCommand command, bool includeDeleted)
 		{
 			string query = @"SELECT Id, Name
                                FROM Roles;";
@@ -63,9 +63,9 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			command.CommandType = CommandType.Text;
 		}
 
-		public override IEnumerable<TRoleEntity> Get<TFilter>(TFilter filter = null, Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Users")
+		public override IEnumerable<TRoleEntity> Get<TFilter>(TFilter filter = null, Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null, bool includeDeleted = false)
 		{
-			IEnumerable<TRoleEntity> roles = base.Get(filter, orderBy, includeDeleted, includeProperties);
+			IEnumerable<TRoleEntity> roles = base.Get(filter, orderBy, includeDeleted);
 
 			foreach (var role in roles)
 			{
@@ -73,7 +73,7 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			}
 			return roles;
 		}
-		protected override void ConfigureCommandForGet(IDbCommand command, bool includeDeleted, string includeProperties)
+		protected override void ConfigureCommandForGet(IDbCommand command, bool includeDeleted)
 		{
 			string query = @"SELECT Id, Name
                                FROM Roles
@@ -83,15 +83,15 @@ namespace malone.Core.Identity.AdoNet.SqlServer.Repositories
 			command.CommandType = CommandType.Text;
 		}
 
-		public override TRoleEntity GetEntity<TFilter>(TFilter filter = null, Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null, bool includeDeleted = false, string includeProperties = "Users")
+		public override TRoleEntity GetEntity<TFilter>(TFilter filter = null, Func<IQueryable<TRoleEntity>, IOrderedQueryable<TRoleEntity>> orderBy = null, bool includeDeleted = false)
 		{
-			TRoleEntity role = base.GetEntity(filter, orderBy, includeDeleted, includeProperties);
+			TRoleEntity role = base.GetEntity(filter, orderBy, includeDeleted);
 
 			role.Users = new List<TUserRole>();
 
 			return role;
 		}
-		protected override void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted, string includeProperties)
+		protected override void ConfigureCommandForGetEntity(IDbCommand command, bool includeDeleted)
 		{
 			string query = @"SELECT Id, Name
                                FROM Roles

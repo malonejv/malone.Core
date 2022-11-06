@@ -22,19 +22,16 @@ namespace malone.Core.EF.Repositories.Implementations
 
 		#region Public methods
 
-		public virtual TEntity GetById<TOpt>(
+		public virtual TEntity GetById(
 			TKey id,
-			TOpt optionRequest = null)
-			where TOpt : class, IOptionRequest, new()
+			bool includeDeleted = false)
 		{
 			ThrowIfDisposed();
 			try
 			{
-				OptionRequest options = (OptionRequest)Convert.ChangeType(optionRequest ?? new TOpt(), typeof(OptionRequest));
-
 				IQueryable<TEntity> query = entityDbSet;
 
-				query = Get(query, null, options.IncludeDeleted, options.IncludeProperties);
+				query = Get(query, null, includeDeleted, includeProperties);
 
 				return query.FirstOrDefault(e => e.Id.Equals(id));
 			}

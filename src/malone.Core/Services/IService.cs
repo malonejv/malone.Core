@@ -21,8 +21,7 @@ namespace malone.Core.Services
 		/// <typeparam name="TEntity">.</typeparam>
 		TEntity GetById(
 			TKey id,
-			bool includeDeleted = false,
-			string includeProperties = "");
+			bool includeDeleted = false);
 
 		///<inheritdoc/>
 		new TKey Add(TEntity entity, bool saveChanges = true);
